@@ -1,0 +1,776 @@
+<!doctype html>
+<title>VisuWord — 絵で覚える英単語</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#FF6B57">
+<style>
+:root {
+  --bg: #FFF8F0;
+  --bg-card: #FFFFFF;
+  --ink: #2B2320;
+  --ink-soft: #7A6F65;
+  --line: #F0E4D6;
+  --accent: #FF6B57;
+  --accent-soft: #FFE4DD;
+  --accent-ink: #C4402C;
+  --good: #34A868;
+  --good-soft: #DFF3E7;
+  --bad: #E0575A;
+  --bad-soft: #FBE0DF;
+  --gold: #F2B705;
+  --shadow: 0 2px 6px rgba(43,35,32,0.06), 0 10px 24px rgba(43,35,32,0.08);
+  --radius: 22px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1B1714;
+    --bg-card: #262019;
+    --ink: #F5EDE4;
+    --ink-soft: #B6A99C;
+    --line: #3A3128;
+    --accent: #FF8A78;
+    --accent-soft: #3D241F;
+    --accent-ink: #FFB6A8;
+    --good: #5FCB8E;
+    --good-soft: #1E3327;
+    --bad: #F0797C;
+    --bad-soft: #3A2323;
+    --gold: #F5CB4C;
+    --shadow: 0 2px 8px rgba(0,0,0,0.4), 0 10px 28px rgba(0,0,0,0.35);
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1B1714; --bg-card: #262019; --ink: #F5EDE4; --ink-soft: #B6A99C;
+  --line: #3A3128; --accent: #FF8A78; --accent-soft: #3D241F; --accent-ink: #FFB6A8;
+  --good: #5FCB8E; --good-soft: #1E3327; --bad: #F0797C; --bad-soft: #3A2323; --gold: #F5CB4C;
+  --shadow: 0 2px 8px rgba(0,0,0,0.4), 0 10px 28px rgba(0,0,0,0.35);
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body {
+  margin: 0; padding: 0; background: var(--bg); color: var(--ink);
+  font-family: -apple-system, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic UI", "Meiryo", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased; overflow-x: hidden; min-height: 100vh;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+button { font-family: inherit; }
+.num { font-variant-numeric: tabular-nums; }
+#app { max-width: 480px; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; }
+
+/* ---------- topbar ---------- */
+.topbar {
+  position: sticky; top: 0; z-index: 20;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(10px);
+  padding: 14px 18px 10px; display: flex; align-items: center; justify-content: space-between;
+}
+.topbar h1 { font-size: 17px; font-weight: 800; margin: 0; letter-spacing: -0.01em; }
+.streak { display: flex; align-items: center; gap: 4px; font-size: 13px; font-weight: 700; color: var(--gold); }
+.back-btn {
+  border: none; background: var(--accent-soft); color: var(--accent-ink); font-weight: 700;
+  font-size: 13px; padding: 7px 12px; border-radius: 999px; cursor: pointer;
+}
+
+/* ---------- screens ---------- */
+.screen { flex: 1; display: none; flex-direction: column; padding: 4px 18px 28px; }
+.screen.active { display: flex; }
+
+/* ---------- home ---------- */
+.hero {
+  background: linear-gradient(135deg, var(--accent) 0%, #FF9457 100%);
+  border-radius: var(--radius); padding: 20px; color: #fff; margin: 8px 0 18px;
+  box-shadow: var(--shadow); position: relative; overflow: hidden;
+}
+.hero .emo-row { font-size: 30px; letter-spacing: 6px; margin-bottom: 6px; opacity: 0.95; }
+.hero h2 { margin: 0 0 4px; font-size: 19px; font-weight: 800; }
+.hero p { margin: 0 0 14px; font-size: 13px; opacity: 0.92; }
+.hero .cta {
+  border: none; background: #fff; color: var(--accent-ink); font-weight: 800; font-size: 14px;
+  padding: 11px 18px; border-radius: 999px; cursor: pointer;
+}
+.stats-row { display: flex; gap: 10px; margin-bottom: 18px; }
+.stat-pill {
+  flex: 1; background: var(--bg-card); border: 1px solid var(--line); border-radius: 16px;
+  padding: 10px 12px; text-align: center; box-shadow: var(--shadow);
+}
+.stat-pill .n { font-size: 19px; font-weight: 800; }
+.stat-pill .l { font-size: 10.5px; color: var(--ink-soft); margin-top: 1px; }
+.section-title { font-size: 13px; font-weight: 800; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; margin: 4px 2px 10px; }
+.cat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px; }
+.cat-card {
+  background: var(--bg-card); border: 1px solid var(--line); border-radius: 18px; padding: 14px;
+  cursor: pointer; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 6px;
+}
+.cat-card .icon { font-size: 26px; }
+.cat-card .name { font-weight: 800; font-size: 14px; }
+.cat-card .prog-bar { height: 6px; border-radius: 4px; background: var(--line); overflow: hidden; margin-top: 2px; }
+.cat-card .prog-fill { height: 100%; background: var(--good); border-radius: 4px; }
+.cat-card .count { font-size: 11px; color: var(--ink-soft); }
+.quiz-entry {
+  margin-top: 8px; display: flex; align-items: center; justify-content: space-between;
+  background: var(--bg-card); border: 1px solid var(--line); border-radius: 18px; padding: 14px 16px;
+  box-shadow: var(--shadow); cursor: pointer;
+}
+.quiz-entry .l { font-weight: 800; font-size: 14px; }
+.quiz-entry .s { font-size: 11.5px; color: var(--ink-soft); }
+.quiz-entry .go { font-size: 20px; }
+
+/* ---------- study ---------- */
+.study-progress { display: flex; gap: 5px; margin: 10px 0 16px; }
+.study-progress i { flex: 1; height: 5px; border-radius: 3px; background: var(--line); }
+.study-progress i.done { background: var(--good); }
+.study-progress i.now { background: var(--accent); }
+.card-stage { flex: 1; display: flex; align-items: center; justify-content: center; position: relative; min-height: 360px; }
+.wcard {
+  width: 100%; background: var(--bg-card); border-radius: 28px; box-shadow: var(--shadow);
+  padding: 30px 22px 22px; text-align: center; position: relative; touch-action: pan-y;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+.wcard .visual-wrap { height: 130px; display: flex; align-items: center; justify-content: center; margin-bottom: 6px; }
+.wcard .visual { font-size: 78px; line-height: 1; display: inline-block; }
+.wcard .word { font-size: 30px; font-weight: 800; letter-spacing: -0.01em; margin-top: 6px; }
+.wcard .speak-btn {
+  border: none; background: var(--accent-soft); color: var(--accent-ink); width: 38px; height: 38px;
+  border-radius: 50%; font-size: 16px; margin-top: 10px; cursor: pointer;
+}
+.wcard .sentence {
+  margin-top: 16px; font-size: 14.5px; color: var(--ink-soft); line-height: 1.5; min-height: 22px;
+}
+.wcard .sentence b { color: var(--accent-ink); font-weight: 800; }
+.wcard .peek-btn {
+  margin-top: 10px; border: none; background: none; color: var(--ink-soft); font-size: 12px;
+  text-decoration: underline; cursor: pointer; padding: 4px;
+}
+.wcard .ja-reveal { font-size: 13.5px; color: var(--ink-soft); margin-top: 4px; min-height: 16px; }
+.wcard.fly-good { transform: translateX(140%) rotate(12deg); opacity: 0; }
+.wcard.fly-bad { transform: translateX(-140%) rotate(-12deg); opacity: 0; }
+.grade-row { display: flex; gap: 12px; margin-top: 18px; }
+.grade-btn {
+  flex: 1; border: none; border-radius: 18px; padding: 15px; font-weight: 800; font-size: 14.5px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+}
+.grade-btn.bad { background: var(--bad-soft); color: var(--bad); }
+.grade-btn.good { background: var(--good-soft); color: var(--good); }
+.hint-swipe { text-align: center; font-size: 11px; color: var(--ink-soft); margin-top: 10px; }
+
+/* ---------- quiz ---------- */
+.quiz-head { text-align: center; margin: 10px 0 6px; }
+.quiz-head .prompt-label { font-size: 12px; color: var(--ink-soft); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+.quiz-head .prompt-word { font-size: 26px; font-weight: 800; margin-top: 4px; }
+.quiz-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 22px; }
+.quiz-opt {
+  background: var(--bg-card); border: 2px solid var(--line); border-radius: 20px; padding: 20px 10px;
+  font-size: 46px; text-align: center; cursor: pointer; box-shadow: var(--shadow);
+}
+.quiz-opt.correct { border-color: var(--good); background: var(--good-soft); }
+.quiz-opt.wrong { border-color: var(--bad); background: var(--bad-soft); }
+
+/* ---------- result ---------- */
+.result-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+.result-wrap .big-emo { font-size: 64px; margin-bottom: 10px; }
+.result-wrap h2 { margin: 0 0 6px; font-size: 20px; font-weight: 800; }
+.result-wrap p { margin: 0 0 22px; color: var(--ink-soft); font-size: 14px; }
+.result-stats { display: flex; gap: 10px; margin-bottom: 26px; }
+.primary-btn {
+  border: none; background: var(--accent); color: #fff; font-weight: 800; font-size: 15px;
+  padding: 14px 26px; border-radius: 999px; cursor: pointer; width: 100%;
+}
+
+/* ---------- animations (visual "video-like" motion) ---------- */
+@keyframes vw-float { 0%,100%{ transform: translateY(0) } 50%{ transform: translateY(-10px) } }
+@keyframes vw-bounce { 0%,100%{ transform: translateY(0) scale(1) } 40%{ transform: translateY(-16px) scale(1.04) } 60%{ transform: translateY(0) scale(0.98) } }
+@keyframes vw-pulse { 0%,100%{ transform: scale(1) } 50%{ transform: scale(1.1) } }
+@keyframes vw-wiggle { 0%,100%{ transform: rotate(-8deg) } 50%{ transform: rotate(8deg) } }
+@keyframes vw-shake { 0%,100%{ transform: translateX(0) } 25%{ transform: translateX(-6px) rotate(-4deg) } 75%{ transform: translateX(6px) rotate(4deg) } }
+@keyframes vw-run { 0%,100%{ transform: translateX(-18px) } 50%{ transform: translateX(18px) scaleX(-1) } }
+@keyframes vw-spin { from{ transform: rotate(0) } to{ transform: rotate(360deg) } }
+@keyframes vw-fly { 0%{ transform: translate(-20px,6px) rotate(-6deg) } 50%{ transform: translate(20px,-10px) rotate(4deg) } 100%{ transform: translate(-20px,6px) rotate(-6deg) } }
+.anim-float { animation: vw-float 2.2s ease-in-out infinite; }
+.anim-bounce { animation: vw-bounce 1s ease-in-out infinite; }
+.anim-pulse { animation: vw-pulse 1.4s ease-in-out infinite; }
+.anim-wiggle { animation: vw-wiggle 0.7s ease-in-out infinite; }
+.anim-shake { animation: vw-shake 0.55s ease-in-out infinite; }
+.anim-run { animation: vw-run 0.9s ease-in-out infinite; display: inline-block; }
+.anim-spin { animation: vw-spin 2.4s linear infinite; display: inline-block; }
+.anim-fly { animation: vw-fly 2s ease-in-out infinite; display: inline-block; }
+
+.hidden { display: none !important; }
+</style>
+
+<div id="app">
+  <div class="topbar">
+    <button class="back-btn hidden" id="backBtn">← 戻る</button>
+    <h1 id="topTitle">VisuWord</h1>
+    <div class="streak" id="streakBadge">🔥 <span class="num">0</span></div>
+  </div>
+
+  <!-- HOME -->
+  <div class="screen active" id="screen-home">
+    <div class="hero">
+      <div class="emo-row">🍎🐶🏃😊🌧️</div>
+      <h2>絵と動きで単語を覚える</h2>
+      <p>日本語に訳さず、イメージ・音・例文でそのまま英語を理解しよう。</p>
+      <button class="cta" id="startTodayBtn">今日の学習をはじめる</button>
+    </div>
+    <div class="stats-row">
+      <div class="stat-pill"><div class="n num" id="statMastered">0</div><div class="l">覚えた単語</div></div>
+      <div class="stat-pill"><div class="n num" id="statTotal">0</div><div class="l">全単語</div></div>
+      <div class="stat-pill"><div class="n num" id="statDue">0</div><div class="l">復習待ち</div></div>
+    </div>
+    <div class="section-title">カテゴリー</div>
+    <div class="cat-grid" id="catGrid"></div>
+    <div class="quiz-entry" id="quizEntry">
+      <div>
+        <div class="l">🧩 絵えらびクイズ</div>
+        <div class="s">単語を聞いて正しい絵を選ぼう</div>
+      </div>
+      <div class="go">›</div>
+    </div>
+  </div>
+
+  <!-- STUDY -->
+  <div class="screen" id="screen-study">
+    <div class="study-progress" id="studyProgress"></div>
+    <div class="card-stage" id="cardStage"></div>
+    <div class="grade-row hidden" id="gradeRow">
+      <button class="grade-btn bad" id="gradeBad">😵 まだ</button>
+      <button class="grade-btn good" id="gradeGood">😊 覚えた</button>
+    </div>
+    <div class="hint-swipe">カードをタップすると例文が見えるよ</div>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="screen" id="screen-quiz">
+    <div class="quiz-head">
+      <div class="prompt-label">この単語の絵は？</div>
+      <div class="prompt-word" id="quizWord">—</div>
+      <button class="speak-btn" id="quizSpeakBtn">🔊</button>
+    </div>
+    <div class="quiz-opts" id="quizOpts"></div>
+  </div>
+
+  <!-- RESULT -->
+  <div class="screen" id="screen-result">
+    <div class="result-wrap">
+      <div class="big-emo" id="resultEmo">🎉</div>
+      <h2 id="resultTitle">お疲れさま！</h2>
+      <p id="resultDesc">今日のカードは全部終わったよ</p>
+      <div class="result-stats">
+        <div class="stat-pill"><div class="n num" id="resGood">0</div><div class="l">覚えた</div></div>
+        <div class="stat-pill"><div class="n num" id="resBad">0</div><div class="l">もう一度</div></div>
+      </div>
+      <button class="primary-btn" id="resultHomeBtn">ホームに戻る</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ================= DATA ================= */
+var CATS = [
+  { id:'animals',  name:'動物',     icon:'🐶', anim:'float' },
+  { id:'food',     name:'食べ物',   icon:'🍎', anim:'pulse' },
+  { id:'body',     name:'体',       icon:'✋', anim:'wiggle' },
+  { id:'people',   name:'家族・人', icon:'👨‍👩‍👧', anim:'float' },
+  { id:'school',   name:'学校',     icon:'🎒', anim:'pulse' },
+  { id:'nature',   name:'自然・天気', icon:'🌤️', anim:'float' },
+  { id:'actions',  name:'動作',     icon:'🏃', anim:'bounce' },
+  { id:'feelings', name:'気持ち・様子', icon:'😊', anim:'pulse' },
+  { id:'time',     name:'時間',     icon:'⏰', anim:'float' },
+  { id:'objects',  name:'日用品',   icon:'🎁', anim:'pulse' },
+  { id:'places',   name:'場所',     icon:'🏙️', anim:'float' },
+  { id:'colors',   name:'色・形',   icon:'🎨', anim:'spin' }
+];
+
+// per-action override animation for extra "video-like" motion
+var ACTION_ANIM = {
+  run:'run', walk:'run', jump:'bounce', swim:'run', fly:'fly', drive:'run',
+  eat:'wiggle', drink:'wiggle', cook:'wiggle', sleep:'pulse', read:'pulse',
+  write:'shake', sing:'pulse', dance:'wiggle', play:'bounce', study:'pulse',
+  listen:'pulse', speak:'shake', open:'shake', close:'shake'
+};
+
+function W(en, cat, emoji, ja, sentence) {
+  return { id: cat + '_' + en.replace(/[^a-z]/g,''), en: en, cat: cat, emoji: emoji, ja: ja, sentence: sentence };
+}
+
+var WORDS = [
+  // animals
+  W('dog','animals','🐶','犬','My dog runs in the park.'),
+  W('cat','animals','🐱','猫','The cat sleeps on the sofa.'),
+  W('bird','animals','🐦','鳥','A bird can fly in the sky.'),
+  W('fish','animals','🐟','魚','The fish swims in the river.'),
+  W('horse','animals','🐴','馬','She rides a horse every weekend.'),
+  W('cow','animals','🐮','牛','The cow gives us milk.'),
+  W('pig','animals','🐷','豚','The pig lives on the farm.'),
+  W('sheep','animals','🐑','羊','The sheep has soft wool.'),
+  W('rabbit','animals','🐰','うさぎ','The rabbit jumps very fast.'),
+  W('bear','animals','🐻','くま','A bear is very big and strong.'),
+  W('lion','animals','🦁','ライオン','The lion is the king of animals.'),
+  W('elephant','animals','🐘','ぞう','An elephant has a long nose.'),
+
+  // food
+  W('apple','food','🍎','りんご','I eat an apple every morning.'),
+  W('bread','food','🍞','パン','We have bread for breakfast.'),
+  W('rice','food','🍚','ご飯','I eat rice every day.'),
+  W('egg','food','🥚','卵','She cooks an egg for lunch.'),
+  W('milk','food','🥛','牛乳','He drinks milk every morning.'),
+  W('water','food','💧','水','Please drink a lot of water.'),
+  W('cake','food','🍰','ケーキ','We made a cake for the party.'),
+  W('banana','food','🍌','バナナ','A monkey likes to eat a banana.'),
+  W('orange','food','🍊','オレンジ','This orange is sweet and juicy.'),
+  W('meat','food','🥩','肉','My father likes to cook meat.'),
+  W('cheese','food','🧀','チーズ','I put cheese on my pizza.'),
+  W('tea','food','🍵','お茶','My grandmother drinks tea every day.'),
+
+  // body
+  W('head','body','🗣️','頭','I hit my head on the door.'),
+  W('eye','body','👁️','目','She has big, beautiful eyes.'),
+  W('ear','body','👂','耳','Rabbits have very long ears.'),
+  W('nose','body','👃','鼻','An elephant has a very long nose.'),
+  W('mouth','body','👄','口','Open your mouth, please.'),
+  W('hand','body','✋','手','Wash your hands before you eat.'),
+  W('foot','body','🦶','足','I hurt my foot yesterday.'),
+  W('arm','body','💪','腕','He has a strong arm.'),
+  W('leg','body','🦵','脚','The dog has four legs.'),
+  W('hair','body','💇','髪','Her hair is long and black.'),
+
+  // people
+  W('mother','people','👩','母','My mother makes dinner every night.'),
+  W('father','people','👨','父','My father drives me to school.'),
+  W('sister','people','👧','姉・妹','My sister is younger than me.'),
+  W('brother','people','👦','兄・弟','My brother plays soccer well.'),
+  W('friend','people','🧑‍🤝‍🧑','友達','She is my best friend.'),
+  W('teacher','people','👩‍🏫','先生','Our teacher is very kind.'),
+  W('doctor','people','🧑‍⚕️','医者','The doctor helps sick people.'),
+  W('baby','people','👶','赤ちゃん','The baby sleeps all day.'),
+  W('grandmother','people','👵','祖母','My grandmother tells great stories.'),
+  W('grandfather','people','👴','祖父','My grandfather likes fishing.'),
+
+  // school
+  W('book','school','📖','本','I read a book every night.'),
+  W('pen','school','🖊️','ペン','Can I borrow your pen?'),
+  W('pencil','school','✏️','鉛筆','She writes with a pencil.'),
+  W('desk','school','🪑','机','My books are on the desk.'),
+  W('bag','school','🎒','バッグ','I put my books in my bag.'),
+  W('notebook','school','📓','ノート','Write the answer in your notebook.'),
+  W('eraser','school','🧼','消しゴム','May I use your eraser?'),
+  W('ruler','school','📏','ものさし','Use a ruler to draw a straight line.'),
+  W('classroom','school','🏫','教室','Our classroom is on the third floor.'),
+  W('computer','school','💻','コンピューター','I use a computer to study English.'),
+
+  // nature
+  W('sun','nature','☀️','太陽','The sun is very bright today.'),
+  W('moon','nature','🌙','月','We can see the moon at night.'),
+  W('star','nature','⭐','星','The sky is full of stars.'),
+  W('sky','nature','🌤️','空','The sky is blue and clear.'),
+  W('rain','nature','🌧️','雨','It will rain this afternoon.'),
+  W('snow','nature','❄️','雪','Snow falls in winter.'),
+  W('wind','nature','💨','風','The wind is very strong today.'),
+  W('cloud','nature','☁️','雲','A big cloud is in the sky.'),
+  W('tree','nature','🌳','木','A tall tree grows in our garden.'),
+  W('mountain','nature','⛰️','山','We climbed the mountain last summer.'),
+  W('river','nature','🏞️','川','Fish swim in the river.'),
+  W('sea','nature','🌊','海','We swim in the sea every summer.'),
+
+  // actions
+  W('run','actions','🏃','走る','I run in the park every morning.'),
+  W('walk','actions','🚶','歩く','We walk to school together.'),
+  W('jump','actions','🤸','跳ぶ','The kids jump on the bed.'),
+  W('eat','actions','🍽️','食べる','We eat dinner at seven.'),
+  W('drink','actions','🥤','飲む','I drink water after running.'),
+  W('sleep','actions','😴','眠る','The cat sleeps all afternoon.'),
+  W('read','actions','📖','読む','I read a book before bed.'),
+  W('write','actions','✍️','書く','She writes a letter to her friend.'),
+  W('swim','actions','🏊','泳ぐ','We swim in the pool on Sundays.'),
+  W('fly','actions','✈️','飛ぶ','Birds fly high in the sky.'),
+  W('sing','actions','🎤','歌う','She sings very well.'),
+  W('dance','actions','💃','踊る','They dance at the party.'),
+  W('cook','actions','🍳','料理する','My father cooks dinner on Sundays.'),
+  W('drive','actions','🚗','運転する','He drives to work every day.'),
+  W('play','actions','⚽','遊ぶ・する','We play soccer after school.'),
+  W('study','actions','📚','勉強する','I study English every night.'),
+  W('listen','actions','🎧','聞く','I listen to music on the bus.'),
+  W('speak','actions','🗣️','話す','She speaks English very well.'),
+  W('open','actions','📂','開ける','Please open the window.'),
+  W('close','actions','🔒','閉める','Close the door, please.'),
+
+  // feelings
+  W('happy','feelings','😊','嬉しい','I feel happy today.'),
+  W('sad','feelings','😢','悲しい','She looks very sad.'),
+  W('angry','feelings','😠','怒っている','He was angry about the news.'),
+  W('tired','feelings','😪','疲れた','I am tired after school.'),
+  W('hungry','feelings','😋','お腹が空いた','I am hungry. Let\'s eat lunch.'),
+  W('thirsty','feelings','🥵','喉が渇いた','I am thirsty. I need water.'),
+  W('big','feelings','🐘','大きい','An elephant is a big animal.'),
+  W('small','feelings','🐜','小さい','An ant is a small insect.'),
+  W('hot','feelings','🥵','熱い・暑い','This soup is very hot.'),
+  W('cold','feelings','🥶','冷たい・寒い','It is cold outside today.'),
+  W('fast','feelings','🐆','速い','A cheetah runs very fast.'),
+  W('slow','feelings','🐢','遅い','A turtle walks very slowly.'),
+  W('new','feelings','✨','新しい','I bought a new bag.'),
+  W('old','feelings','📜','古い・年をとった','This is an old, old book.'),
+
+  // time
+  W('morning','time','🌅','朝','I run every morning.'),
+  W('night','time','🌃','夜','I read books at night.'),
+  W('today','time','📅','今日','Today is a beautiful day.'),
+  W('tomorrow','time','➡️','明日','I have a test tomorrow.'),
+  W('yesterday','time','⬅️','昨日','I watched a movie yesterday.'),
+  W('week','time','🗓️','週','I study English every week.'),
+  W('month','time','📆','月(月間)','We have a test next month.'),
+  W('year','time','🎊','年','Happy New Year!'),
+  W('birthday','time','🎂','誕生日','My birthday is in April.'),
+  W('holiday','time','🏖️','休日','We go to the beach on holiday.'),
+
+  // objects
+  W('phone','objects','📱','電話','I call my friend on my phone.'),
+  W('key','objects','🔑','鍵','I lost my house key.'),
+  W('door','objects','🚪','ドア','Please close the door.'),
+  W('window','objects','🪟','窓','Open the window, it\'s hot.'),
+  W('clock','objects','🕐','時計','The clock says three o\'clock.'),
+  W('bed','objects','🛏️','ベッド','I sleep in my bed every night.'),
+  W('table','objects','🪑','テーブル','Put the plates on the table.'),
+  W('cup','objects','☕','カップ','She drinks tea from a cup.'),
+  W('umbrella','objects','☂️','傘','Take an umbrella, it will rain.'),
+  W('box','objects','📦','箱','There is a gift in the box.'),
+  W('gift','objects','🎁','プレゼント','I got a nice gift for my birthday.'),
+  W('camera','objects','📷','カメラ','He takes photos with his camera.'),
+
+  // places
+  W('school','places','🏫','学校','I go to school by bike.'),
+  W('hospital','places','🏥','病院','My mother works at a hospital.'),
+  W('station','places','🚉','駅','The train station is near my house.'),
+  W('park','places','🌳','公園','We play in the park after school.'),
+  W('store','places','🏬','店','I bought a shirt at the store.'),
+  W('restaurant','places','🍽️','レストラン','We ate dinner at a restaurant.'),
+  W('library','places','📚','図書館','I read books at the library.'),
+  W('zoo','places','🦁','動物園','We saw lions at the zoo.'),
+  W('airport','places','🛫','空港','We waited at the airport.'),
+  W('beach','places','🏖️','ビーチ','We swim at the beach in summer.'),
+  W('city','places','🏙️','都市','Tokyo is a very big city.'),
+  W('farm','places','🚜','農場','My uncle grows rice on his farm.'),
+
+  // colors/shapes
+  W('red','colors','🔴','赤','Her dress is bright red.'),
+  W('blue','colors','🔵','青','The sky is blue today.'),
+  W('yellow','colors','🟡','黄色','The sun looks yellow.'),
+  W('green','colors','🟢','緑','The leaves are green in summer.'),
+  W('black','colors','⚫','黒','My cat is black and white.'),
+  W('white','colors','⚪','白','Snow is white and cold.'),
+  W('circle','colors','⭕','丸','Draw a circle on the paper.'),
+  W('square','colors','🟦','四角','A box has a square shape.'),
+  W('triangle','colors','🔺','三角','A slice of pizza is a triangle.'),
+  W('heart','colors','❤️','心・ハート','She drew a heart on the card.')
+];
+
+var CAT_BY_ID = {};
+CATS.forEach(function(c){ CAT_BY_ID[c.id] = c; });
+
+/* ================= STORAGE ================= */
+var LS_PROGRESS = 'vw_progress_v1';
+var LS_STREAK = 'vw_streak_v1';
+var BOX_INTERVAL_DAYS = [0, 1, 3, 7, 14]; // index = box level
+var MASTER_BOX = 4;
+
+function todayStr() { return new Date().toISOString().slice(0,10); }
+function daysBetween(a, b) { return Math.floor((new Date(b) - new Date(a)) / 86400000); }
+
+function loadProgress() {
+  try { return JSON.parse(localStorage.getItem(LS_PROGRESS)) || {}; } catch(e) { return {}; }
+}
+function saveProgress(p) { try { localStorage.setItem(LS_PROGRESS, JSON.stringify(p)); } catch(e) {} }
+
+function loadStreak() {
+  try { return JSON.parse(localStorage.getItem(LS_STREAK)) || { count: 0, lastDate: null }; }
+  catch(e) { return { count: 0, lastDate: null }; }
+}
+function saveStreak(s) { try { localStorage.setItem(LS_STREAK, JSON.stringify(s)); } catch(e) {} }
+
+function bumpStreak() {
+  var s = loadStreak();
+  var t = todayStr();
+  if (s.lastDate === t) return s;
+  if (s.lastDate) {
+    var d = daysBetween(s.lastDate, t);
+    s.count = (d === 1) ? s.count + 1 : 1;
+  } else {
+    s.count = 1;
+  }
+  s.lastDate = t;
+  saveStreak(s);
+  return s;
+}
+
+var progress = loadProgress();
+
+function getEntry(id) {
+  return progress[id] || { box: 0, next: todayStr() };
+}
+function setEntry(id, box) {
+  var days = BOX_INTERVAL_DAYS[Math.min(box, BOX_INTERVAL_DAYS.length - 1)];
+  var next = new Date();
+  next.setDate(next.getDate() + days);
+  progress[id] = { box: box, next: next.toISOString().slice(0,10) };
+  saveProgress(progress);
+}
+function isDue(id) {
+  var e = getEntry(id);
+  return e.next <= todayStr();
+}
+function isMastered(id) { return getEntry(id).box >= MASTER_BOX; }
+
+/* ================= NAV ================= */
+var screens = ['home','study','quiz','result'];
+function showScreen(name) {
+  screens.forEach(function(s){
+    document.getElementById('screen-' + s).classList.toggle('active', s === name);
+  });
+  document.getElementById('backBtn').classList.toggle('hidden', name === 'home');
+  var titles = { home:'VisuWord', study:'学習中', quiz:'絵えらびクイズ', result:'結果' };
+  document.getElementById('topTitle').textContent = titles[name];
+}
+document.getElementById('backBtn').onclick = function(){ renderHome(); showScreen('home'); };
+
+/* ================= SPEECH ================= */
+function speak(text) {
+  try {
+    if (!('speechSynthesis' in window)) return;
+    var u = new SpeechSynthesisUtterance(text);
+    u.lang = 'en-US';
+    u.rate = 0.9;
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(u);
+  } catch(e) {}
+}
+
+/* ================= HOME ================= */
+function renderHome() {
+  var streak = loadStreak();
+  document.querySelector('#streakBadge .num').textContent = streak.count || 0;
+
+  var masteredCount = WORDS.filter(function(w){ return isMastered(w.id); }).length;
+  var dueCount = WORDS.filter(function(w){ return isDue(w.id); }).length;
+  document.getElementById('statMastered').textContent = masteredCount;
+  document.getElementById('statTotal').textContent = WORDS.length;
+  document.getElementById('statDue').textContent = dueCount;
+
+  var grid = document.getElementById('catGrid');
+  grid.innerHTML = '';
+  CATS.forEach(function(cat) {
+    var words = WORDS.filter(function(w){ return w.cat === cat.id; });
+    var mastered = words.filter(function(w){ return isMastered(w.id); }).length;
+    var pct = words.length ? Math.round(mastered / words.length * 100) : 0;
+    var card = document.createElement('div');
+    card.className = 'cat-card';
+    card.innerHTML =
+      '<div class="icon">' + cat.icon + '</div>' +
+      '<div class="name">' + cat.name + '</div>' +
+      '<div class="prog-bar"><div class="prog-fill" style="width:' + pct + '%"></div></div>' +
+      '<div class="count">' + mastered + ' / ' + words.length + ' 語</div>';
+    card.onclick = function(){ startStudy(cat.id); };
+    grid.appendChild(card);
+  });
+
+  document.getElementById('quizEntry').onclick = startQuiz;
+  document.getElementById('startTodayBtn').onclick = function(){ startStudy(null); };
+}
+
+/* ================= STUDY ================= */
+var studyQueue = [];
+var studyIdx = 0;
+var studyResults = { good: 0, bad: 0 };
+var studyCatId = null;
+
+function buildQueue(catId) {
+  var pool = WORDS.filter(function(w){ return !catId || w.cat === catId; });
+  var due = pool.filter(function(w){ return isDue(w.id); });
+  due.sort(function(a,b){ return getEntry(a.id).box - getEntry(b.id).box; });
+  return due.slice(0, 20);
+}
+
+function startStudy(catId) {
+  studyCatId = catId;
+  studyQueue = buildQueue(catId);
+  studyIdx = 0;
+  studyResults = { good: 0, bad: 0 };
+  if (studyQueue.length === 0) {
+    showEmptyResult();
+    return;
+  }
+  showScreen('study');
+  renderStudyProgress();
+  renderCard();
+}
+
+function renderStudyProgress() {
+  var wrap = document.getElementById('studyProgress');
+  wrap.innerHTML = '';
+  studyQueue.forEach(function(_, i){
+    var el = document.createElement('i');
+    if (i < studyIdx) el.className = 'done';
+    else if (i === studyIdx) el.className = 'now';
+    wrap.appendChild(el);
+  });
+}
+
+var dragState = null;
+
+function renderCard() {
+  document.getElementById('gradeRow').classList.remove('hidden');
+  var stage = document.getElementById('cardStage');
+  var w = studyQueue[studyIdx];
+  var cat = CAT_BY_ID[w.cat];
+  var anim = ACTION_ANIM[w.en] || cat.anim;
+
+  var card = document.createElement('div');
+  card.className = 'wcard';
+  card.innerHTML =
+    '<div class="visual-wrap"><span class="visual anim-' + anim + '">' + w.emoji + '</span></div>' +
+    '<div class="word">' + w.en + '</div>' +
+    '<button class="speak-btn">🔊</button>' +
+    '<div class="sentence hidden"></div>' +
+    '<button class="peek-btn hidden">日本語を見る（？）</button>' +
+    '<div class="ja-reveal"></div>';
+
+  card.querySelector('.speak-btn').onclick = function(e){ e.stopPropagation(); speak(w.en); };
+
+  var revealed = false;
+  card.onclick = function(){
+    if (revealed) return;
+    revealed = true;
+    var sentEl = card.querySelector('.sentence');
+    var re = new RegExp('\\b' + w.en + '\\b', 'i');
+    sentEl.innerHTML = w.sentence.replace(re, '<b>' + w.en + '</b>');
+    sentEl.classList.remove('hidden');
+    card.querySelector('.peek-btn').classList.remove('hidden');
+  };
+  card.querySelector('.peek-btn').onclick = function(e){
+    e.stopPropagation();
+    card.querySelector('.ja-reveal').textContent = w.ja;
+  };
+
+  // swipe gesture
+  card.addEventListener('pointerdown', function(e){
+    dragState = { x: e.clientX, dx: 0 };
+    card.style.transition = 'none';
+  });
+  card.addEventListener('pointermove', function(e){
+    if (!dragState) return;
+    dragState.dx = e.clientX - dragState.x;
+    card.style.transform = 'translateX(' + dragState.dx + 'px) rotate(' + (dragState.dx / 18) + 'deg)';
+  });
+  function endDrag() {
+    if (!dragState) return;
+    card.style.transition = '';
+    var dx = dragState.dx;
+    dragState = null;
+    if (dx > 90) { grade('good'); }
+    else if (dx < -90) { grade('bad'); }
+    else { card.style.transform = ''; }
+  }
+  card.addEventListener('pointerup', endDrag);
+  card.addEventListener('pointercancel', endDrag);
+
+  stage.innerHTML = '';
+  stage.appendChild(card);
+  window._currentCard = card;
+  speak(w.en);
+}
+
+function grade(result) {
+  var w = studyQueue[studyIdx];
+  var e = getEntry(w.id);
+  var newBox = result === 'good' ? Math.min(e.box + 1, MASTER_BOX) : 0;
+  setEntry(w.id, newBox);
+  studyResults[result]++;
+  bumpStreak();
+
+  var card = window._currentCard;
+  if (card) card.className = 'wcard ' + (result === 'good' ? 'fly-good' : 'fly-bad');
+
+  setTimeout(function(){
+    studyIdx++;
+    renderStudyProgress();
+    if (studyIdx >= studyQueue.length) {
+      showStudyResult();
+    } else {
+      renderCard();
+    }
+  }, 220);
+}
+document.getElementById('gradeGood').onclick = function(){ grade('good'); };
+document.getElementById('gradeBad').onclick = function(){ grade('bad'); };
+
+function showStudyResult() {
+  document.getElementById('resultEmo').textContent = studyResults.bad === 0 ? '🎉' : '👍';
+  document.getElementById('resultTitle').textContent = 'お疲れさま！';
+  document.getElementById('resultDesc').textContent = '今日のカードは全部終わったよ';
+  document.getElementById('resGood').textContent = studyResults.good;
+  document.getElementById('resBad').textContent = studyResults.bad;
+  showScreen('result');
+}
+function showEmptyResult() {
+  document.getElementById('resultEmo').textContent = '✨';
+  document.getElementById('resultTitle').textContent = '復習待ちの単語はないよ';
+  document.getElementById('resultDesc').textContent = 'クイズで練習するか、また後で来てね';
+  document.getElementById('resGood').textContent = 0;
+  document.getElementById('resBad').textContent = 0;
+  showScreen('result');
+}
+document.getElementById('resultHomeBtn').onclick = function(){ renderHome(); showScreen('home'); };
+
+/* ================= QUIZ ================= */
+var quizWord = null;
+function startQuiz() {
+  showScreen('quiz');
+  nextQuiz();
+}
+function nextQuiz() {
+  var target = WORDS[Math.floor(Math.random() * WORDS.length)];
+  quizWord = target;
+  var sameCat = WORDS.filter(function(w){ return w.cat === target.cat && w.id !== target.id; });
+  var distractors = [];
+  var poolCopy = sameCat.slice();
+  while (distractors.length < 3 && poolCopy.length) {
+    var idx = Math.floor(Math.random() * poolCopy.length);
+    distractors.push(poolCopy.splice(idx, 1)[0]);
+  }
+  while (distractors.length < 3) {
+    var r = WORDS[Math.floor(Math.random() * WORDS.length)];
+    if (r.id !== target.id && !distractors.find(function(d){ return d.id === r.id; })) distractors.push(r);
+  }
+  var options = distractors.concat([target]).sort(function(){ return Math.random() - 0.5; });
+
+  document.getElementById('quizWord').textContent = target.en;
+  document.getElementById('quizSpeakBtn').onclick = function(){ speak(target.en); };
+  var optsWrap = document.getElementById('quizOpts');
+  optsWrap.innerHTML = '';
+  options.forEach(function(opt){
+    var el = document.createElement('div');
+    el.className = 'quiz-opt';
+    el.textContent = opt.emoji;
+    el.onclick = function(){ answerQuiz(opt, target, el, optsWrap); };
+    optsWrap.appendChild(el);
+  });
+  speak(target.en);
+}
+function answerQuiz(opt, target, el, optsWrap) {
+  if (optsWrap.dataset.locked) return;
+  optsWrap.dataset.locked = '1';
+  var correct = opt.id === target.id;
+  el.classList.add(correct ? 'correct' : 'wrong');
+  var e = getEntry(target.id);
+  setEntry(target.id, correct ? Math.min(e.box + 1, MASTER_BOX) : 0);
+  if (!correct) {
+    Array.prototype.forEach.call(optsWrap.children, function(c){
+      if (c.textContent === target.emoji) c.classList.add('correct');
+    });
+  }
+  setTimeout(function(){
+    optsWrap.dataset.locked = '';
+    nextQuiz();
+  }, 900);
+}
+
+/* ================= INIT ================= */
+renderHome();
+</script>
