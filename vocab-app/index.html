@@ -216,8 +216,10 @@ button { font-family: inherit; }
       <div class="stat-pill"><div class="n num" id="statTotal">0</div><div class="l">全単語</div></div>
       <div class="stat-pill"><div class="n num" id="statDue">0</div><div class="l">復習待ち</div></div>
     </div>
-    <div class="section-title">カテゴリー</div>
-    <div class="cat-grid" id="catGrid"></div>
+    <div class="section-title">基礎カテゴリー</div>
+    <div class="cat-grid" id="catGridBasic"></div>
+    <div class="section-title">中学・高校 必修語（応用）</div>
+    <div class="cat-grid" id="catGridAdvanced"></div>
     <div class="quiz-entry" id="quizEntry">
       <div>
         <div class="l">🧩 絵えらびクイズ</div>
@@ -266,18 +268,21 @@ button { font-family: inherit; }
 <script>
 /* ================= DATA ================= */
 var CATS = [
-  { id:'animals',  name:'動物',     icon:'🐶', anim:'float' },
-  { id:'food',     name:'食べ物',   icon:'🍎', anim:'pulse' },
-  { id:'body',     name:'体',       icon:'✋', anim:'wiggle' },
-  { id:'people',   name:'家族・人', icon:'👨‍👩‍👧', anim:'float' },
-  { id:'school',   name:'学校',     icon:'🎒', anim:'pulse' },
-  { id:'nature',   name:'自然・天気', icon:'🌤️', anim:'float' },
-  { id:'actions',  name:'動作',     icon:'🏃', anim:'bounce' },
-  { id:'feelings', name:'気持ち・様子', icon:'😊', anim:'pulse' },
-  { id:'time',     name:'時間',     icon:'⏰', anim:'float' },
-  { id:'objects',  name:'日用品',   icon:'🎁', anim:'pulse' },
-  { id:'places',   name:'場所',     icon:'🏙️', anim:'float' },
-  { id:'colors',   name:'色・形',   icon:'🎨', anim:'spin' }
+  { id:'animals',  name:'動物',     icon:'🐶', anim:'float', level:1 },
+  { id:'food',     name:'食べ物',   icon:'🍎', anim:'pulse', level:1 },
+  { id:'body',     name:'体',       icon:'✋', anim:'wiggle', level:1 },
+  { id:'people',   name:'家族・人', icon:'👨‍👩‍👧', anim:'float', level:1 },
+  { id:'school',   name:'学校',     icon:'🎒', anim:'pulse', level:1 },
+  { id:'nature',   name:'自然・天気', icon:'🌤️', anim:'float', level:1 },
+  { id:'actions',  name:'動作',     icon:'🏃', anim:'bounce', level:1 },
+  { id:'feelings', name:'気持ち・様子', icon:'😊', anim:'pulse', level:1 },
+  { id:'time',     name:'時間',     icon:'⏰', anim:'float', level:1 },
+  { id:'objects',  name:'日用品',   icon:'🎁', anim:'pulse', level:1 },
+  { id:'places',   name:'場所',     icon:'🏙️', anim:'float', level:1 },
+  { id:'colors',   name:'色・形',   icon:'🎨', anim:'spin', level:1 },
+  { id:'thinking', name:'考える・行動する', icon:'🧠', anim:'pulse', level:2 },
+  { id:'qualities', name:'様子・性質(上級)', icon:'⚖️', anim:'pulse', level:2 },
+  { id:'society',  name:'社会・環境', icon:'🌍', anim:'float', level:2 }
 ];
 
 // per-action override animation for extra "video-like" motion
@@ -285,7 +290,15 @@ var ACTION_ANIM = {
   run:'run', walk:'run', jump:'bounce', swim:'run', fly:'fly', drive:'run',
   eat:'wiggle', drink:'wiggle', cook:'wiggle', sleep:'pulse', read:'pulse',
   write:'shake', sing:'pulse', dance:'wiggle', play:'bounce', study:'pulse',
-  listen:'pulse', speak:'shake', open:'shake', close:'shake'
+  listen:'pulse', speak:'shake', open:'shake', close:'shake',
+  increase:'bounce', decrease:'shake', improve:'bounce', decide:'shake',
+  explain:'shake', describe:'shake', compare:'wiggle', continue:'run',
+  consider:'pulse', encourage:'bounce', communicate:'shake', protect:'pulse',
+  believe:'pulse', realize:'bounce', achieve:'bounce', solve:'pulse',
+  borrow:'shake', lend:'shake', introduce:'wiggle', invite:'wiggle',
+  promise:'pulse', suggest:'shake', prepare:'pulse', arrive:'run',
+  leave:'run', return:'run', follow:'run', collect:'wiggle', spend:'shake',
+  waste:'shake', imagine:'pulse', discover:'bounce', agree:'wiggle', disagree:'shake'
 };
 
 function W(en, cat, emoji, ja, sentence) {
@@ -459,7 +472,90 @@ var WORDS = [
   W('circle','colors','⭕','丸','Draw a circle on the paper.'),
   W('square','colors','🟦','四角','A box has a square shape.'),
   W('triangle','colors','🔺','三角','A slice of pizza is a triangle.'),
-  W('heart','colors','❤️','心・ハート','She drew a heart on the card.')
+  W('heart','colors','❤️','心・ハート','She drew a heart on the card.'),
+
+  // thinking / advanced actions (中学・高校 必修語)
+  W('decide','thinking','🤔✅','決める','I need to decide what to eat.'),
+  W('increase','thinking','📈','増える・増やす','The price of rice will increase this year.'),
+  W('decrease','thinking','📉','減る・減らす','The number of students will decrease next year.'),
+  W('improve','thinking','📈💪','良くなる・改善する','I want to improve my English skills.'),
+  W('explain','thinking','🗣️💡','説明する','Can you explain this word to me?'),
+  W('describe','thinking','🖼️🗣️','(様子を)説明する','Please describe your dog to me.'),
+  W('compare','thinking','⚖️','比べる','Let\'s compare these two bags.'),
+  W('continue','thinking','🔁➡️','続ける','Please continue your story.'),
+  W('consider','thinking','🤔📝','よく考える','I will consider your idea.'),
+  W('encourage','thinking','📣💪','励ます','My teacher always encourages me.'),
+  W('communicate','thinking','💬🔄','伝え合う','We communicate in English at school.'),
+  W('protect','thinking','🛡️','守る','We must protect the environment.'),
+  W('believe','thinking','🙏💭','信じる','I believe you can do it.'),
+  W('realize','thinking','💡','気づく','I realized my mistake.'),
+  W('achieve','thinking','🏆','達成する','She achieved her dream.'),
+  W('solve','thinking','🧩✅','解決する','Can you solve this problem?'),
+  W('borrow','thinking','🤲⬅️','借りる','May I borrow your pen?'),
+  W('lend','thinking','🤲➡️','貸す','Can you lend me your pen?'),
+  W('introduce','thinking','👋🆕','紹介する','Let me introduce my friend.'),
+  W('invite','thinking','💌','招待する','I will invite you to my party.'),
+  W('promise','thinking','🤝📝','約束する','I promise to call you.'),
+  W('suggest','thinking','💡🗣️','提案する','She suggested a good idea.'),
+  W('prepare','thinking','🎒✅','準備する','We prepare for the test.'),
+  W('arrive','thinking','🛬','着く','The train will arrive soon.'),
+  W('leave','thinking','🚪➡️','出発する・去る','I leave home at seven.'),
+  W('return','thinking','🔄🏠','戻る','He will return next week.'),
+  W('follow','thinking','👣','ついていく・従う','Please follow me.'),
+  W('collect','thinking','🗃️➕','集める','I collect old coins.'),
+  W('spend','thinking','💸⏳','(お金・時間を)使う','I spend an hour reading every day.'),
+  W('waste','thinking','🗑️💸','無駄にする','Don\'t waste your money.'),
+  W('imagine','thinking','💭✨','想像する','Imagine a world without cars.'),
+  W('discover','thinking','🔭✨','発見する','Scientists discovered a new star.'),
+  W('agree','thinking','👍🤝','同意する','I agree with your idea.'),
+  W('disagree','thinking','👎🙅','反対する','I disagree with that plan.'),
+
+  // qualities (中学・高校 必修語・形容詞)
+  W('important','qualities','❗⭐','重要な','This is a very important test.'),
+  W('difficult','qualities','🤯🧩','難しい','Math is difficult for me.'),
+  W('dangerous','qualities','⚠️','危険な','Swimming here is dangerous.'),
+  W('safe','qualities','🛟✅','安全な','This park is safe for kids.'),
+  W('popular','qualities','👍🌟','人気の','This song is very popular.'),
+  W('famous','qualities','🌟📸','有名な','He is a famous singer.'),
+  W('similar','qualities','🟰👯','似ている','These two bags are similar.'),
+  W('different','qualities','🔀','違う','Our ideas are different.'),
+  W('several','qualities','🔢✋','いくつかの','I have several books.'),
+  W('various','qualities','🎨🔀','様々な','There are various kinds of food.'),
+  W('useful','qualities','🛠️✅','役に立つ','This tool is very useful.'),
+  W('careful','qualities','⚠️👀','注意深い','Be careful on the road.'),
+  W('special','qualities','✨🎁','特別な','Today is a special day.'),
+  W('common','qualities','🔁👥','よくある','This is a common problem.'),
+  W('possible','qualities','✅🔓','可能な','It is possible to finish today.'),
+  W('necessary','qualities','✅❗','必要な','Water is necessary for life.'),
+  W('polite','qualities','🙏😊','礼儀正しい','She is very polite.'),
+  W('brave','qualities','🦁💪','勇敢な','The firefighter was very brave.'),
+  W('honest','qualities','🤝✔️','誠実な','He is an honest person.'),
+  W('active','qualities','⚡🏃','活発な','My little brother is very active.'),
+  W('proud','qualities','🏆😌','誇りに思う','I am proud of my sister.'),
+
+  // society / environment (中学・高校 必修語・名詞)
+  W('environment','society','🌍🌳','環境','We must protect the environment.'),
+  W('information','society','📰💡','情報','I found information on the internet.'),
+  W('experience','society','🎒🗺️','経験','Travel gives you good experience.'),
+  W('opportunity','society','🚪✨','機会','This job is a great opportunity.'),
+  W('technology','society','💻🤖','技術','Technology changes our lives.'),
+  W('society','society','🏙️👥','社会','We live together in society.'),
+  W('culture','society','🎭🌏','文化','I want to learn Japanese culture.'),
+  W('history','society','📜🏛️','歴史','We study history at school.'),
+  W('future','society','🔮🚀','未来','What will the future look like?'),
+  W('problem','society','❗🧩','問題','We need to solve this problem.'),
+  W('reason','society','❓💡','理由','Tell me the reason for this.'),
+  W('purpose','society','🎯','目的','What is the purpose of this trip?'),
+  W('idea','society','💡','考え・アイデア','That\'s a great idea!'),
+  W('opinion','society','🗣️💭','意見','What is your opinion about this?'),
+  W('fact','society','📌✅','事実','That is an important fact.'),
+  W('example','society','📝👉','例','Give me an example, please.'),
+  W('result','society','🏁📊','結果','The result of the test was good.'),
+  W('effect','society','💥📈','効果・影響','This medicine has a good effect.'),
+  W('method','society','🧭🛠️','方法','This is a new method of learning.'),
+  W('system','society','⚙️','仕組み','Our school has a new computer system.'),
+  W('government','society','🏛️','政府','The government made a new law.'),
+  W('population','society','👥📈','人口','The population of this city is growing.')
 ];
 
 var CAT_BY_ID = {};
@@ -553,8 +649,10 @@ function renderHome() {
   document.getElementById('statTotal').textContent = WORDS.length;
   document.getElementById('statDue').textContent = dueCount;
 
-  var grid = document.getElementById('catGrid');
-  grid.innerHTML = '';
+  var gridBasic = document.getElementById('catGridBasic');
+  var gridAdvanced = document.getElementById('catGridAdvanced');
+  gridBasic.innerHTML = '';
+  gridAdvanced.innerHTML = '';
   CATS.forEach(function(cat) {
     var words = WORDS.filter(function(w){ return w.cat === cat.id; });
     var mastered = words.filter(function(w){ return isMastered(w.id); }).length;
@@ -567,7 +665,7 @@ function renderHome() {
       '<div class="prog-bar"><div class="prog-fill" style="width:' + pct + '%"></div></div>' +
       '<div class="count">' + mastered + ' / ' + words.length + ' 語</div>';
     card.onclick = function(){ startStudy(cat.id); };
-    grid.appendChild(card);
+    (cat.level === 2 ? gridAdvanced : gridBasic).appendChild(card);
   });
 
   document.getElementById('quizEntry').onclick = startQuiz;
