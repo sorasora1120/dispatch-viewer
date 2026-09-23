@@ -99,16 +99,29 @@ button { font-family: inherit; }
 .stat-pill .n { font-size: 19px; font-weight: 800; }
 .stat-pill .l { font-size: 10.5px; color: var(--ink-soft); margin-top: 1px; }
 .section-title { font-size: 13px; font-weight: 800; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; margin: 4px 2px 10px; }
-.cat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px; }
-.cat-card {
-  background: var(--bg-card); border: 1px solid var(--line); border-radius: 18px; padding: 14px;
-  cursor: pointer; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 6px;
+.level-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 8px; }
+.level-card {
+  background: var(--bg-card); border: 1px solid var(--line); border-radius: 18px; padding: 14px 16px;
+  cursor: pointer; box-shadow: var(--shadow); display: flex; align-items: center; gap: 12px;
 }
-.cat-card .icon { font-size: 26px; }
-.cat-card .name { font-weight: 800; font-size: 14px; }
-.cat-card .prog-bar { height: 6px; border-radius: 4px; background: var(--line); overflow: hidden; margin-top: 2px; }
-.cat-card .prog-fill { height: 100%; background: var(--good); border-radius: 4px; }
-.cat-card .count { font-size: 11px; color: var(--ink-soft); }
+.level-card .badge {
+  width: 46px; height: 46px; border-radius: 14px; display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 14px; color: #fff; flex-shrink: 0;
+}
+.level-card .body { flex: 1; min-width: 0; }
+.level-card .name { font-weight: 800; font-size: 14.5px; }
+.level-card .sub { font-size: 11px; color: var(--ink-soft); margin-top: 1px; }
+.level-card .prog-bar { height: 6px; border-radius: 4px; background: var(--line); overflow: hidden; margin-top: 7px; }
+.level-card .prog-fill { height: 100%; background: var(--good); border-radius: 4px; }
+.level-card .count { font-size: 11px; color: var(--ink-soft); margin-top: 4px; }
+.level-card .go { font-size: 20px; color: var(--ink-soft); }
+.freq-disclaimer { font-size: 10.5px; color: var(--ink-soft); line-height: 1.5; margin: 2px 2px 14px; }
+.card-badges { display: flex; justify-content: center; gap: 6px; margin-bottom: 8px; flex-wrap: wrap; }
+.card-badges .pill {
+  font-size: 10.5px; font-weight: 700; color: var(--accent-ink); background: var(--accent-soft);
+  padding: 3px 9px; border-radius: 999px; letter-spacing: 0.02em;
+}
+.card-badges .stars { color: var(--gold); letter-spacing: 1px; }
 .quiz-entry {
   margin-top: 8px; display: flex; align-items: center; justify-content: space-between;
   background: var(--bg-card); border: 1px solid var(--line); border-radius: 18px; padding: 14px 16px;
@@ -239,10 +252,9 @@ button { font-family: inherit; }
       <div class="stat-pill"><div class="n num" id="statTotal">0</div><div class="l">全単語</div></div>
       <div class="stat-pill"><div class="n num" id="statDue">0</div><div class="l">復習待ち</div></div>
     </div>
-    <div class="section-title">基礎カテゴリー</div>
-    <div class="cat-grid" id="catGridBasic"></div>
-    <div class="section-title">中学・高校 必修語（応用）</div>
-    <div class="cat-grid" id="catGridAdvanced"></div>
+    <div class="section-title">英検レベル別 でる順</div>
+    <div class="level-list" id="levelList"></div>
+    <p class="freq-disclaimer">頻出度・でる順はアプリ内での推定値です（英検協会の公式統計ではありません）。</p>
     <div class="quiz-entry" id="quizEntry">
       <div>
         <div class="l">🧩 絵えらびクイズ</div>
@@ -304,23 +316,35 @@ button { font-family: inherit; }
 
 <script>
 /* ================= DATA ================= */
+// internal only now (drives each word's emoji-motion style + Pexels search hints);
+// the level shown to the user is the Eiken level on each WORD entry, not this.
 var CATS = [
-  { id:'animals',  name:'動物',     icon:'🐶', anim:'float', level:1 },
-  { id:'food',     name:'食べ物',   icon:'🍎', anim:'pulse', level:1 },
-  { id:'body',     name:'体',       icon:'✋', anim:'wiggle', level:1 },
-  { id:'people',   name:'家族・人', icon:'👨‍👩‍👧', anim:'float', level:1 },
-  { id:'school',   name:'学校',     icon:'🎒', anim:'pulse', level:1 },
-  { id:'nature',   name:'自然・天気', icon:'🌤️', anim:'float', level:1 },
-  { id:'actions',  name:'動作',     icon:'🏃', anim:'bounce', level:1 },
-  { id:'feelings', name:'気持ち・様子', icon:'😊', anim:'pulse', level:1 },
-  { id:'time',     name:'時間',     icon:'⏰', anim:'float', level:1 },
-  { id:'objects',  name:'日用品',   icon:'🎁', anim:'pulse', level:1 },
-  { id:'places',   name:'場所',     icon:'🏙️', anim:'float', level:1 },
-  { id:'colors',   name:'色・形',   icon:'🎨', anim:'spin', level:1 },
-  { id:'thinking', name:'考える・行動する', icon:'🧠', anim:'pulse', level:2 },
-  { id:'qualities', name:'様子・性質(上級)', icon:'⚖️', anim:'pulse', level:2 },
-  { id:'society',  name:'社会・環境', icon:'🌍', anim:'float', level:2 }
+  { id:'animals',  icon:'🐶', anim:'float' },
+  { id:'food',     icon:'🍎', anim:'pulse' },
+  { id:'body',     icon:'✋', anim:'wiggle' },
+  { id:'people',   icon:'👨‍👩‍👧', anim:'float' },
+  { id:'school',   icon:'🎒', anim:'pulse' },
+  { id:'nature',   icon:'🌤️', anim:'float' },
+  { id:'actions',  icon:'🏃', anim:'bounce' },
+  { id:'feelings', icon:'😊', anim:'pulse' },
+  { id:'time',     icon:'⏰', anim:'float' },
+  { id:'objects',  icon:'🎁', anim:'pulse' },
+  { id:'places',   icon:'🏙️', anim:'float' },
+  { id:'colors',   icon:'🎨', anim:'spin' },
+  { id:'thinking', icon:'🧠', anim:'pulse' },
+  { id:'qualities', icon:'⚖️', anim:'pulse' },
+  { id:'society',  icon:'🌍', anim:'float' }
 ];
+
+var LEVELS = [
+  { id:'5',  name:'英検5級',   sub:'超基本（小学レベル）', color:'#8FBF6B' },
+  { id:'4',  name:'英検4級',   sub:'基本（中学初級）',     color:'#5FB3A3' },
+  { id:'3',  name:'英検3級',   sub:'中学卒業レベル',       color:'#4C8FD9' },
+  { id:'p2', name:'英検準2級', sub:'高校中級レベル',       color:'#B173D9' },
+  { id:'2',  name:'英検2級',   sub:'高校卒業レベル',       color:'#E0575A' }
+];
+var LEVEL_BY_ID = {};
+LEVELS.forEach(function(l){ LEVEL_BY_ID[l.id] = l; });
 
 // per-action override animation for extra "video-like" motion
 var ACTION_ANIM = {
@@ -364,265 +388,267 @@ var QUERY_OVERRIDE = {
   circle:'circle shape geometry'
 };
 
-function W(en, cat, emoji, ja, sentence) {
-  return { id: cat + '_' + en.replace(/[^a-z]/g,''), en: en, cat: cat, emoji: emoji, ja: ja, sentence: sentence };
+function W(en, cat, emoji, ja, sentence, level, freq) {
+  return {
+    id: cat + '_' + en.replace(/[^a-z]/g,''), en: en, cat: cat, emoji: emoji, ja: ja, sentence: sentence,
+    level: level, freq: freq
+  };
 }
 
 var WORDS = [
   // animals
-  W('dog','animals','🐶','犬','My dog runs in the park.'),
-  W('cat','animals','🐱','猫','The cat sleeps on the sofa.'),
-  W('bird','animals','🐦','鳥','A bird can fly in the sky.'),
-  W('fish','animals','🐟','魚','The fish swims in the river.'),
-  W('horse','animals','🐴','馬','She rides a horse every weekend.'),
-  W('cow','animals','🐮','牛','The cow gives us milk.'),
-  W('pig','animals','🐷','豚','The pig lives on the farm.'),
-  W('sheep','animals','🐑','羊','The sheep has soft wool.'),
-  W('rabbit','animals','🐰','うさぎ','The rabbit jumps very fast.'),
-  W('bear','animals','🐻','くま','A bear is very big and strong.'),
-  W('lion','animals','🦁','ライオン','The lion is the king of animals.'),
-  W('elephant','animals','🐘','ぞう','An elephant has a long nose.'),
-
+  W('dog','animals','🐶','犬','My dog runs in the park.','5',20),
+  W('cat','animals','🐱','猫','The cat sleeps on the sofa.','5',20),
+  W('bird','animals','🐦','鳥','A bird can fly in the sky.','5',20),
+  W('fish','animals','🐟','魚','The fish swims in the river.','5',20),
+  W('horse','animals','🐴','馬','She rides a horse every weekend.','5',19),
+  W('cow','animals','🐮','牛','The cow gives us milk.','5',19),
+  W('pig','animals','🐷','豚','The pig lives on the farm.','5',19),
+  W('sheep','animals','🐑','羊','The sheep has soft wool.','5',19),
+  W('rabbit','animals','🐰','うさぎ','The rabbit jumps very fast.','5',19),
+  W('bear','animals','🐻','くま','A bear is very big and strong.','5',19),
+  W('lion','animals','🦁','ライオン','The lion is the king of animals.','5',18),
+  W('elephant','animals','🐘','ぞう','An elephant has a long nose.','5',18),
   // food
-  W('apple','food','🍎','りんご','I eat an apple every morning.'),
-  W('bread','food','🍞','パン','We have bread for breakfast.'),
-  W('rice','food','🍚','ご飯','I eat rice every day.'),
-  W('egg','food','🥚','卵','She cooks an egg for lunch.'),
-  W('milk','food','🥛','牛乳','He drinks milk every morning.'),
-  W('water','food','💧','水','Please drink a lot of water.'),
-  W('cake','food','🍰','ケーキ','We made a cake for the party.'),
-  W('banana','food','🍌','バナナ','A monkey likes to eat a banana.'),
-  W('orange','food','🍊','オレンジ','This orange is sweet and juicy.'),
-  W('meat','food','🥩','肉','My father likes to cook meat.'),
-  W('cheese','food','🧀','チーズ','I put cheese on my pizza.'),
-  W('tea','food','🍵','お茶','My grandmother drinks tea every day.'),
-
+  W('apple','food','🍎','りんご','I eat an apple every morning.','5',18),
+  W('bread','food','🍞','パン','We have bread for breakfast.','5',18),
+  W('rice','food','🍚','ご飯','I eat rice every day.','5',18),
+  W('egg','food','🥚','卵','She cooks an egg for lunch.','5',18),
+  W('milk','food','🥛','牛乳','He drinks milk every morning.','5',17),
+  W('water','food','💧','水','Please drink a lot of water.','5',17),
+  W('cake','food','🍰','ケーキ','We made a cake for the party.','5',17),
+  W('banana','food','🍌','バナナ','A monkey likes to eat a banana.','5',17),
+  W('orange','food','🍊','オレンジ','This orange is sweet and juicy.','5',17),
+  W('meat','food','🥩','肉','My father likes to cook meat.','5',17),
+  W('cheese','food','🧀','チーズ','I put cheese on my pizza.','5',16),
+  W('tea','food','🍵','お茶','My grandmother drinks tea every day.','5',16),
   // body
-  W('head','body','🗣️','頭','I hit my head on the door.'),
-  W('eye','body','👁️','目','She has big, beautiful eyes.'),
-  W('ear','body','👂','耳','Rabbits have very long ears.'),
-  W('nose','body','👃','鼻','An elephant has a very long nose.'),
-  W('mouth','body','👄','口','Open your mouth, please.'),
-  W('hand','body','✋','手','Wash your hands before you eat.'),
-  W('foot','body','🦶','足','I hurt my foot yesterday.'),
-  W('arm','body','💪','腕','He has a strong arm.'),
-  W('leg','body','🦵','脚','The dog has four legs.'),
-  W('hair','body','💇','髪','Her hair is long and black.'),
-
+  W('head','body','🗣️','頭','I hit my head on the door.','5',16),
+  W('eye','body','👁️','目','She has big, beautiful eyes.','5',16),
+  W('ear','body','👂','耳','Rabbits have very long ears.','5',16),
+  W('nose','body','👃','鼻','An elephant has a very long nose.','5',16),
+  W('mouth','body','👄','口','Open your mouth, please.','5',15),
+  W('hand','body','✋','手','Wash your hands before you eat.','5',15),
+  W('foot','body','🦶','足','I hurt my foot yesterday.','5',15),
+  W('arm','body','💪','腕','He has a strong arm.','5',15),
+  W('leg','body','🦵','脚','The dog has four legs.','5',15),
+  W('hair','body','💇','髪','Her hair is long and black.','5',15),
   // people
-  W('mother','people','👩','母','My mother makes dinner every night.'),
-  W('father','people','👨','父','My father drives me to school.'),
-  W('sister','people','👧','姉・妹','My sister is younger than me.'),
-  W('brother','people','👦','兄・弟','My brother plays soccer well.'),
-  W('friend','people','🧑‍🤝‍🧑','友達','She is my best friend.'),
-  W('teacher','people','👩‍🏫','先生','Our teacher is very kind.'),
-  W('doctor','people','🧑‍⚕️','医者','The doctor helps sick people.'),
-  W('baby','people','👶','赤ちゃん','The baby sleeps all day.'),
-  W('grandmother','people','👵','祖母','My grandmother tells great stories.'),
-  W('grandfather','people','👴','祖父','My grandfather likes fishing.'),
-
+  W('mother','people','👩','母','My mother makes dinner every night.','5',14),
+  W('father','people','👨','父','My father drives me to school.','5',14),
+  W('sister','people','👧','姉・妹','My sister is younger than me.','5',14),
+  W('brother','people','👦','兄・弟','My brother plays soccer well.','5',14),
+  W('friend','people','🧑‍🤝‍🧑','友達','She is my best friend.','5',14),
+  W('teacher','people','👩‍🏫','先生','Our teacher is very kind.','5',14),
+  W('doctor','people','🧑‍⚕️','医者','The doctor helps sick people.','5',14),
+  W('baby','people','👶','赤ちゃん','The baby sleeps all day.','5',13),
+  W('grandmother','people','👵','祖母','My grandmother tells great stories.','5',13),
+  W('grandfather','people','👴','祖父','My grandfather likes fishing.','5',13),
   // school
-  W('book','school','📖','本','I read a book every night.'),
-  W('pen','school','🖊️','ペン','Can I borrow your pen?'),
-  W('pencil','school','✏️','鉛筆','She writes with a pencil.'),
-  W('desk','school','🪑','机','My books are on the desk.'),
-  W('bag','school','🎒','バッグ','I put my books in my bag.'),
-  W('notebook','school','📓','ノート','Write the answer in your notebook.'),
-  W('eraser','school','🧼','消しゴム','May I use your eraser?'),
-  W('ruler','school','📏','ものさし','Use a ruler to draw a straight line.'),
-  W('classroom','school','🏫','教室','Our classroom is on the third floor.'),
-  W('computer','school','💻','コンピューター','I use a computer to study English.'),
-
+  W('book','school','📖','本','I read a book every night.','5',13),
+  W('pen','school','🖊️','ペン','Can I borrow your pen?','5',13),
+  W('pencil','school','✏️','鉛筆','She writes with a pencil.','5',13),
+  W('desk','school','🪑','机','My books are on the desk.','5',12),
+  W('bag','school','🎒','バッグ','I put my books in my bag.','5',12),
+  W('notebook','school','📓','ノート','Write the answer in your notebook.','5',12),
+  W('eraser','school','🧼','消しゴム','May I use your eraser?','5',12),
+  W('ruler','school','📏','ものさし','Use a ruler to draw a straight line.','5',12),
+  W('classroom','school','🏫','教室','Our classroom is on the third floor.','5',12),
+  W('computer','school','💻','コンピューター','I use a computer to study English.','4',20),
   // nature
-  W('sun','nature','☀️','太陽','The sun is very bright today.'),
-  W('moon','nature','🌙','月','We can see the moon at night.'),
-  W('star','nature','⭐','星','The sky is full of stars.'),
-  W('sky','nature','🌤️','空','The sky is blue and clear.'),
-  W('rain','nature','🌧️','雨','It will rain this afternoon.'),
-  W('snow','nature','❄️','雪','Snow falls in winter.'),
-  W('wind','nature','💨','風','The wind is very strong today.'),
-  W('cloud','nature','☁️','雲','A big cloud is in the sky.'),
-  W('tree','nature','🌳','木','A tall tree grows in our garden.'),
-  W('mountain','nature','⛰️','山','We climbed the mountain last summer.'),
-  W('river','nature','🏞️','川','Fish swim in the river.'),
-  W('sea','nature','🌊','海','We swim in the sea every summer.'),
-
+  W('sun','nature','☀️','太陽','The sun is very bright today.','5',11),
+  W('moon','nature','🌙','月','We can see the moon at night.','5',11),
+  W('star','nature','⭐','星','The sky is full of stars.','5',11),
+  W('sky','nature','🌤️','空','The sky is blue and clear.','5',11),
+  W('rain','nature','🌧️','雨','It will rain this afternoon.','5',11),
+  W('snow','nature','❄️','雪','Snow falls in winter.','5',11),
+  W('wind','nature','💨','風','The wind is very strong today.','5',10),
+  W('cloud','nature','☁️','雲','A big cloud is in the sky.','5',10),
+  W('tree','nature','🌳','木','A tall tree grows in our garden.','5',10),
+  W('mountain','nature','⛰️','山','We climbed the mountain last summer.','4',20),
+  W('river','nature','🏞️','川','Fish swim in the river.','4',19),
+  W('sea','nature','🌊','海','We swim in the sea every summer.','4',19),
   // actions
-  W('run','actions','🏃','走る','I run in the park every morning.'),
-  W('walk','actions','🚶','歩く','We walk to school together.'),
-  W('jump','actions','🤸','跳ぶ','The kids jump on the bed.'),
-  W('eat','actions','🍽️','食べる','We eat dinner at seven.'),
-  W('drink','actions','🥤','飲む','I drink water after running.'),
-  W('sleep','actions','😴','眠る','The cat sleeps all afternoon.'),
-  W('read','actions','📖','読む','I read a book before bed.'),
-  W('write','actions','✍️','書く','She writes a letter to her friend.'),
-  W('swim','actions','🏊','泳ぐ','We swim in the pool on Sundays.'),
-  W('fly','actions','✈️','飛ぶ','Birds fly high in the sky.'),
-  W('sing','actions','🎤','歌う','She sings very well.'),
-  W('dance','actions','💃','踊る','They dance at the party.'),
-  W('cook','actions','🍳','料理する','My father cooks dinner on Sundays.'),
-  W('drive','actions','🚗','運転する','He drives to work every day.'),
-  W('play','actions','⚽','遊ぶ・する','We play soccer after school.'),
-  W('study','actions','📚','勉強する','I study English every night.'),
-  W('listen','actions','🎧','聞く','I listen to music on the bus.'),
-  W('speak','actions','🗣️','話す','She speaks English very well.'),
-  W('open','actions','📂','開ける','Please open the window.'),
-  W('close','actions','🔒','閉める','Close the door, please.'),
-
+  W('run','actions','🏃','走る','I run in the park every morning.','5',10),
+  W('walk','actions','🚶','歩く','We walk to school together.','5',10),
+  W('jump','actions','🤸','跳ぶ','The kids jump on the bed.','5',10),
+  W('eat','actions','🍽️','食べる','We eat dinner at seven.','5',9),
+  W('drink','actions','🥤','飲む','I drink water after running.','5',9),
+  W('sleep','actions','😴','眠る','The cat sleeps all afternoon.','5',9),
+  W('read','actions','📖','読む','I read a book before bed.','5',9),
+  W('write','actions','✍️','書く','She writes a letter to her friend.','5',9),
+  W('swim','actions','🏊','泳ぐ','We swim in the pool on Sundays.','5',9),
+  W('fly','actions','✈️','飛ぶ','Birds fly high in the sky.','5',9),
+  W('sing','actions','🎤','歌う','She sings very well.','4',18),
+  W('dance','actions','💃','踊る','They dance at the party.','4',18),
+  W('cook','actions','🍳','料理する','My father cooks dinner on Sundays.','4',17),
+  W('drive','actions','🚗','運転する','He drives to work every day.','4',17),
+  W('play','actions','⚽','遊ぶ・する','We play soccer after school.','5',8),
+  W('study','actions','📚','勉強する','I study English every night.','4',16),
+  W('listen','actions','🎧','聞く','I listen to music on the bus.','4',16),
+  W('speak','actions','🗣️','話す','She speaks English very well.','4',15),
+  W('open','actions','📂','開ける','Please open the window.','4',15),
+  W('close','actions','🔒','閉める','Close the door, please.','4',14),
   // feelings
-  W('happy','feelings','😊','嬉しい','I feel happy today.'),
-  W('sad','feelings','😢','悲しい','She looks very sad.'),
-  W('angry','feelings','😠','怒っている','He was angry about the news.'),
-  W('tired','feelings','😪','疲れた','I am tired after school.'),
-  W('hungry','feelings','😋','お腹が空いた','I am hungry. Let\'s eat lunch.'),
-  W('thirsty','feelings','🥵','喉が渇いた','I am thirsty. I need water.'),
-  W('big','feelings','🐘','大きい','An elephant is a big animal.'),
-  W('small','feelings','🐜','小さい','An ant is a small insect.'),
-  W('hot','feelings','🥵','熱い・暑い','This soup is very hot.'),
-  W('cold','feelings','🥶','冷たい・寒い','It is cold outside today.'),
-  W('fast','feelings','🐆','速い','A cheetah runs very fast.'),
-  W('slow','feelings','🐢','遅い','A turtle walks very slowly.'),
-  W('new','feelings','✨','新しい','I bought a new bag.'),
-  W('old','feelings','📜','古い・年をとった','This is an old, old book.'),
-
+  W('happy','feelings','😊','嬉しい','I feel happy today.','5',8),
+  W('sad','feelings','😢','悲しい','She looks very sad.','5',8),
+  W('angry','feelings','😠','怒っている','He was angry about the news.','5',8),
+  W('tired','feelings','😪','疲れた','I am tired after school.','4',14),
+  W('hungry','feelings','😋','お腹が空いた','I am hungry. Let\'s eat lunch.','4',14),
+  W('thirsty','feelings','🥵','喉が渇いた','I am thirsty. I need water.','4',13),
+  W('big','feelings','🐘','大きい','An elephant is a big animal.','5',8),
+  W('small','feelings','🐜','小さい','An ant is a small insect.','5',8),
+  W('hot','feelings','🥵','熱い・暑い','This soup is very hot.','5',7),
+  W('cold','feelings','🥶','冷たい・寒い','It is cold outside today.','5',7),
+  W('fast','feelings','🐆','速い','A cheetah runs very fast.','4',13),
+  W('slow','feelings','🐢','遅い','A turtle walks very slowly.','4',12),
+  W('new','feelings','✨','新しい','I bought a new bag.','5',7),
+  W('old','feelings','📜','古い・年をとった','This is an old, old book.','5',7),
   // time
-  W('morning','time','🌅','朝','I run every morning.'),
-  W('night','time','🌃','夜','I read books at night.'),
-  W('today','time','📅','今日','Today is a beautiful day.'),
-  W('tomorrow','time','➡️','明日','I have a test tomorrow.'),
-  W('yesterday','time','⬅️','昨日','I watched a movie yesterday.'),
-  W('week','time','🗓️','週','I study English every week.'),
-  W('month','time','📆','月(月間)','We have a test next month.'),
-  W('year','time','🎊','年','Happy New Year!'),
-  W('birthday','time','🎂','誕生日','My birthday is in April.'),
-  W('holiday','time','🏖️','休日','We go to the beach on holiday.'),
-
+  W('morning','time','🌅','朝','I run every morning.','5',7),
+  W('night','time','🌃','夜','I read books at night.','5',7),
+  W('today','time','📅','今日','Today is a beautiful day.','5',6),
+  W('tomorrow','time','➡️','明日','I have a test tomorrow.','5',6),
+  W('yesterday','time','⬅️','昨日','I watched a movie yesterday.','5',6),
+  W('week','time','🗓️','週','I study English every week.','4',12),
+  W('month','time','📆','月(月間)','We have a test next month.','4',11),
+  W('year','time','🎊','年','Happy New Year!','4',11),
+  W('birthday','time','🎂','誕生日','My birthday is in April.','4',10),
+  W('holiday','time','🏖️','休日','We go to the beach on holiday.','4',10),
   // objects
-  W('phone','objects','📱','電話','I call my friend on my phone.'),
-  W('key','objects','🔑','鍵','I lost my house key.'),
-  W('door','objects','🚪','ドア','Please close the door.'),
-  W('window','objects','🪟','窓','Open the window, it\'s hot.'),
-  W('clock','objects','🕐','時計','The clock says three o\'clock.'),
-  W('bed','objects','🛏️','ベッド','I sleep in my bed every night.'),
-  W('table','objects','🪑','テーブル','Put the plates on the table.'),
-  W('cup','objects','☕','カップ','She drinks tea from a cup.'),
-  W('umbrella','objects','☂️','傘','Take an umbrella, it will rain.'),
-  W('box','objects','📦','箱','There is a gift in the box.'),
-  W('gift','objects','🎁','プレゼント','I got a nice gift for my birthday.'),
-  W('camera','objects','📷','カメラ','He takes photos with his camera.'),
-
+  W('phone','objects','📱','電話','I call my friend on my phone.','5',6),
+  W('key','objects','🔑','鍵','I lost my house key.','5',6),
+  W('door','objects','🚪','ドア','Please close the door.','5',6),
+  W('window','objects','🪟','窓','Open the window, it\'s hot.','5',5),
+  W('clock','objects','🕐','時計','The clock says three o\'clock.','5',5),
+  W('bed','objects','🛏️','ベッド','I sleep in my bed every night.','5',5),
+  W('table','objects','🪑','テーブル','Put the plates on the table.','5',5),
+  W('cup','objects','☕','カップ','She drinks tea from a cup.','5',5),
+  W('umbrella','objects','☂️','傘','Take an umbrella, it will rain.','4',9),
+  W('box','objects','📦','箱','There is a gift in the box.','4',9),
+  W('gift','objects','🎁','プレゼント','I got a nice gift for my birthday.','4',9),
+  W('camera','objects','📷','カメラ','He takes photos with his camera.','4',8),
   // places
-  W('school','places','🏫','学校','I go to school by bike.'),
-  W('hospital','places','🏥','病院','My mother works at a hospital.'),
-  W('station','places','🚉','駅','The train station is near my house.'),
-  W('park','places','🌳','公園','We play in the park after school.'),
-  W('store','places','🏬','店','I bought a shirt at the store.'),
-  W('restaurant','places','🍽️','レストラン','We ate dinner at a restaurant.'),
-  W('library','places','📚','図書館','I read books at the library.'),
-  W('zoo','places','🦁','動物園','We saw lions at the zoo.'),
-  W('airport','places','🛫','空港','We waited at the airport.'),
-  W('beach','places','🏖️','ビーチ','We swim at the beach in summer.'),
-  W('city','places','🏙️','都市','Tokyo is a very big city.'),
-  W('farm','places','🚜','農場','My uncle grows rice on his farm.'),
-
-  // colors/shapes
-  W('red','colors','🔴','赤','Her dress is bright red.'),
-  W('blue','colors','🔵','青','The sky is blue today.'),
-  W('yellow','colors','🟡','黄色','The sun looks yellow.'),
-  W('green','colors','🟢','緑','The leaves are green in summer.'),
-  W('black','colors','⚫','黒','My cat is black and white.'),
-  W('white','colors','⚪','白','Snow is white and cold.'),
-  W('circle','colors','⭕','丸','Draw a circle on the paper.'),
-  W('square','colors','🟦','四角','A box has a square shape.'),
-  W('triangle','colors','🔺','三角','A slice of pizza is a triangle.'),
-  W('heart','colors','❤️','心・ハート','She drew a heart on the card.'),
-
-  // thinking / advanced actions (中学・高校 必修語)
-  W('decide','thinking','🤔✅','決める','I need to decide what to eat.'),
-  W('increase','thinking','📈','増える・増やす','The price of rice will increase this year.'),
-  W('decrease','thinking','📉','減る・減らす','The number of students will decrease next year.'),
-  W('improve','thinking','📈💪','良くなる・改善する','I want to improve my English skills.'),
-  W('explain','thinking','🗣️💡','説明する','Can you explain this word to me?'),
-  W('describe','thinking','🖼️🗣️','(様子を)説明する','Please describe your dog to me.'),
-  W('compare','thinking','⚖️','比べる','Let\'s compare these two bags.'),
-  W('continue','thinking','🔁➡️','続ける','Please continue your story.'),
-  W('consider','thinking','🤔📝','よく考える','I will consider your idea.'),
-  W('encourage','thinking','📣💪','励ます','My teacher always encourages me.'),
-  W('communicate','thinking','💬🔄','伝え合う','We communicate in English at school.'),
-  W('protect','thinking','🛡️','守る','We must protect the environment.'),
-  W('believe','thinking','🙏💭','信じる','I believe you can do it.'),
-  W('realize','thinking','💡','気づく','I realized my mistake.'),
-  W('achieve','thinking','🏆','達成する','She achieved her dream.'),
-  W('solve','thinking','🧩✅','解決する','Can you solve this problem?'),
-  W('borrow','thinking','🤲⬅️','借りる','May I borrow your pen?'),
-  W('lend','thinking','🤲➡️','貸す','Can you lend me your pen?'),
-  W('introduce','thinking','👋🆕','紹介する','Let me introduce my friend.'),
-  W('invite','thinking','💌','招待する','I will invite you to my party.'),
-  W('promise','thinking','🤝📝','約束する','I promise to call you.'),
-  W('suggest','thinking','💡🗣️','提案する','She suggested a good idea.'),
-  W('prepare','thinking','🎒✅','準備する','We prepare for the test.'),
-  W('arrive','thinking','🛬','着く','The train will arrive soon.'),
-  W('leave','thinking','🚪➡️','出発する・去る','I leave home at seven.'),
-  W('return','thinking','🔄🏠','戻る','He will return next week.'),
-  W('follow','thinking','👣','ついていく・従う','Please follow me.'),
-  W('collect','thinking','🗃️➕','集める','I collect old coins.'),
-  W('spend','thinking','💸⏳','(お金・時間を)使う','I spend an hour reading every day.'),
-  W('waste','thinking','🗑️💸','無駄にする','Don\'t waste your money.'),
-  W('imagine','thinking','💭✨','想像する','Imagine a world without cars.'),
-  W('discover','thinking','🔭✨','発見する','Scientists discovered a new star.'),
-  W('agree','thinking','👍🤝','同意する','I agree with your idea.'),
-  W('disagree','thinking','👎🙅','反対する','I disagree with that plan.'),
-
-  // qualities (中学・高校 必修語・形容詞)
-  W('important','qualities','❗⭐','重要な','This is a very important test.'),
-  W('difficult','qualities','🤯🧩','難しい','Math is difficult for me.'),
-  W('dangerous','qualities','⚠️','危険な','Swimming here is dangerous.'),
-  W('safe','qualities','🛟✅','安全な','This park is safe for kids.'),
-  W('popular','qualities','👍🌟','人気の','This song is very popular.'),
-  W('famous','qualities','🌟📸','有名な','He is a famous singer.'),
-  W('similar','qualities','🟰👯','似ている','These two bags are similar.'),
-  W('different','qualities','🔀','違う','Our ideas are different.'),
-  W('several','qualities','🔢✋','いくつかの','I have several books.'),
-  W('various','qualities','🎨🔀','様々な','There are various kinds of food.'),
-  W('useful','qualities','🛠️✅','役に立つ','This tool is very useful.'),
-  W('careful','qualities','⚠️👀','注意深い','Be careful on the road.'),
-  W('special','qualities','✨🎁','特別な','Today is a special day.'),
-  W('common','qualities','🔁👥','よくある','This is a common problem.'),
-  W('possible','qualities','✅🔓','可能な','It is possible to finish today.'),
-  W('necessary','qualities','✅❗','必要な','Water is necessary for life.'),
-  W('polite','qualities','🙏😊','礼儀正しい','She is very polite.'),
-  W('brave','qualities','🦁💪','勇敢な','The firefighter was very brave.'),
-  W('honest','qualities','🤝✔️','誠実な','He is an honest person.'),
-  W('active','qualities','⚡🏃','活発な','My little brother is very active.'),
-  W('proud','qualities','🏆😌','誇りに思う','I am proud of my sister.'),
-
-  // society / environment (中学・高校 必修語・名詞)
-  W('environment','society','🌍🌳','環境','We must protect the environment.'),
-  W('information','society','📰💡','情報','I found information on the internet.'),
-  W('experience','society','🎒🗺️','経験','Travel gives you good experience.'),
-  W('opportunity','society','🚪✨','機会','This job is a great opportunity.'),
-  W('technology','society','💻🤖','技術','Technology changes our lives.'),
-  W('society','society','🏙️👥','社会','We live together in society.'),
-  W('culture','society','🎭🌏','文化','I want to learn Japanese culture.'),
-  W('history','society','📜🏛️','歴史','We study history at school.'),
-  W('future','society','🔮🚀','未来','What will the future look like?'),
-  W('problem','society','❗🧩','問題','We need to solve this problem.'),
-  W('reason','society','❓💡','理由','Tell me the reason for this.'),
-  W('purpose','society','🎯','目的','What is the purpose of this trip?'),
-  W('idea','society','💡','考え・アイデア','That\'s a great idea!'),
-  W('opinion','society','🗣️💭','意見','What is your opinion about this?'),
-  W('fact','society','📌✅','事実','That is an important fact.'),
-  W('example','society','📝👉','例','Give me an example, please.'),
-  W('result','society','🏁📊','結果','The result of the test was good.'),
-  W('effect','society','💥📈','効果・影響','This medicine has a good effect.'),
-  W('method','society','🧭🛠️','方法','This is a new method of learning.'),
-  W('system','society','⚙️','仕組み','Our school has a new computer system.'),
-  W('government','society','🏛️','政府','The government made a new law.'),
-  W('population','society','👥📈','人口','The population of this city is growing.')
+  W('school','places','🏫','学校','I go to school by bike.','5',5),
+  W('hospital','places','🏥','病院','My mother works at a hospital.','4',8),
+  W('station','places','🚉','駅','The train station is near my house.','4',7),
+  W('park','places','🌳','公園','We play in the park after school.','5',4),
+  W('store','places','🏬','店','I bought a shirt at the store.','5',4),
+  W('restaurant','places','🍽️','レストラン','We ate dinner at a restaurant.','4',7),
+  W('library','places','📚','図書館','I read books at the library.','4',6),
+  W('zoo','places','🦁','動物園','We saw lions at the zoo.','5',4),
+  W('airport','places','🛫','空港','We waited at the airport.','4',6),
+  W('beach','places','🏖️','ビーチ','We swim at the beach in summer.','5',4),
+  W('city','places','🏙️','都市','Tokyo is a very big city.','4',5),
+  W('farm','places','🚜','農場','My uncle grows rice on his farm.','4',5),
+  // colors
+  W('red','colors','🔴','赤','Her dress is bright red.','5',4),
+  W('blue','colors','🔵','青','The sky is blue today.','5',4),
+  W('yellow','colors','🟡','黄色','The sun looks yellow.','5',3),
+  W('green','colors','🟢','緑','The leaves are green in summer.','5',3),
+  W('black','colors','⚫','黒','My cat is black and white.','5',3),
+  W('white','colors','⚪','白','Snow is white and cold.','5',3),
+  W('circle','colors','⭕','丸','Draw a circle on the paper.','4',4),
+  W('square','colors','🟦','四角','A box has a square shape.','4',4),
+  W('triangle','colors','🔺','三角','A slice of pizza is a triangle.','4',3),
+  W('heart','colors','❤️','心・ハート','She drew a heart on the card.','4',3),
+  // thinking
+  W('decide','thinking','🤔✅','決める','I need to decide what to eat.','3',20),
+  W('increase','thinking','📈','増える・増やす','The price of rice will increase this year.','2',20),
+  W('decrease','thinking','📉','減る・減らす','The number of students will decrease next year.','2',18),
+  W('improve','thinking','📈💪','良くなる・改善する','I want to improve my English skills.','p2',20),
+  W('explain','thinking','🗣️💡','説明する','Can you explain this word to me?','3',20),
+  W('describe','thinking','🖼️🗣️','(様子を)説明する','Please describe your dog to me.','p2',19),
+  W('compare','thinking','⚖️','比べる','Let\'s compare these two bags.','3',19),
+  W('continue','thinking','🔁➡️','続ける','Please continue your story.','3',19),
+  W('consider','thinking','🤔📝','よく考える','I will consider your idea.','p2',19),
+  W('encourage','thinking','📣💪','励ます','My teacher always encourages me.','p2',18),
+  W('communicate','thinking','💬🔄','伝え合う','We communicate in English at school.','p2',18),
+  W('protect','thinking','🛡️','守る','We must protect the environment.','p2',17),
+  W('believe','thinking','🙏💭','信じる','I believe you can do it.','p2',17),
+  W('realize','thinking','💡','気づく','I realized my mistake.','p2',16),
+  W('achieve','thinking','🏆','達成する','She achieved her dream.','p2',16),
+  W('solve','thinking','🧩✅','解決する','Can you solve this problem?','p2',15),
+  W('borrow','thinking','🤲⬅️','借りる','May I borrow your pen?','3',18),
+  W('lend','thinking','🤲➡️','貸す','Can you lend me your pen?','3',18),
+  W('introduce','thinking','👋🆕','紹介する','Let me introduce my friend.','3',17),
+  W('invite','thinking','💌','招待する','I will invite you to my party.','3',17),
+  W('promise','thinking','🤝📝','約束する','I promise to call you.','3',16),
+  W('suggest','thinking','💡🗣️','提案する','She suggested a good idea.','p2',15),
+  W('prepare','thinking','🎒✅','準備する','We prepare for the test.','3',16),
+  W('arrive','thinking','🛬','着く','The train will arrive soon.','3',15),
+  W('leave','thinking','🚪➡️','出発する・去る','I leave home at seven.','3',15),
+  W('return','thinking','🔄🏠','戻る','He will return next week.','3',14),
+  W('follow','thinking','👣','ついていく・従う','Please follow me.','3',14),
+  W('collect','thinking','🗃️➕','集める','I collect old coins.','3',13),
+  W('spend','thinking','💸⏳','(お金・時間を)使う','I spend an hour reading every day.','3',13),
+  W('waste','thinking','🗑️💸','無駄にする','Don\'t waste your money.','p2',14),
+  W('imagine','thinking','💭✨','想像する','Imagine a world without cars.','p2',13),
+  W('discover','thinking','🔭✨','発見する','Scientists discovered a new star.','p2',13),
+  W('agree','thinking','👍🤝','同意する','I agree with your idea.','3',12),
+  W('disagree','thinking','👎🙅','反対する','I disagree with that plan.','3',12),
+  // qualities
+  W('important','qualities','❗⭐','重要な','This is a very important test.','3',11),
+  W('difficult','qualities','🤯🧩','難しい','Math is difficult for me.','3',11),
+  W('dangerous','qualities','⚠️','危険な','Swimming here is dangerous.','3',10),
+  W('safe','qualities','🛟✅','安全な','This park is safe for kids.','3',10),
+  W('popular','qualities','👍🌟','人気の','This song is very popular.','3',9),
+  W('famous','qualities','🌟📸','有名な','He is a famous singer.','3',9),
+  W('similar','qualities','🟰👯','似ている','These two bags are similar.','3',8),
+  W('different','qualities','🔀','違う','Our ideas are different.','3',8),
+  W('several','qualities','🔢✋','いくつかの','I have several books.','3',7),
+  W('various','qualities','🎨🔀','様々な','There are various kinds of food.','p2',12),
+  W('useful','qualities','🛠️✅','役に立つ','This tool is very useful.','3',7),
+  W('careful','qualities','⚠️👀','注意深い','Be careful on the road.','3',6),
+  W('special','qualities','✨🎁','特別な','Today is a special day.','3',6),
+  W('common','qualities','🔁👥','よくある','This is a common problem.','3',5),
+  W('possible','qualities','✅🔓','可能な','It is possible to finish today.','3',5),
+  W('necessary','qualities','✅❗','必要な','Water is necessary for life.','3',4),
+  W('polite','qualities','🙏😊','礼儀正しい','She is very polite.','p2',12),
+  W('brave','qualities','🦁💪','勇敢な','The firefighter was very brave.','3',4),
+  W('honest','qualities','🤝✔️','誠実な','He is an honest person.','3',3),
+  W('active','qualities','⚡🏃','活発な','My little brother is very active.','p2',11),
+  W('proud','qualities','🏆😌','誇りに思う','I am proud of my sister.','p2',11),
+  // society
+  W('environment','society','🌍🌳','環境','We must protect the environment.','p2',10),
+  W('information','society','📰💡','情報','I found information on the internet.','p2',10),
+  W('experience','society','🎒🗺️','経験','Travel gives you good experience.','p2',9),
+  W('opportunity','society','🚪✨','機会','This job is a great opportunity.','p2',8),
+  W('technology','society','💻🤖','技術','Technology changes our lives.','2',16),
+  W('society','society','🏙️👥','社会','We live together in society.','2',14),
+  W('culture','society','🎭🌏','文化','I want to learn Japanese culture.','p2',8),
+  W('history','society','📜🏛️','歴史','We study history at school.','p2',7),
+  W('future','society','🔮🚀','未来','What will the future look like?','p2',7),
+  W('problem','society','❗🧩','問題','We need to solve this problem.','p2',6),
+  W('reason','society','❓💡','理由','Tell me the reason for this.','p2',6),
+  W('purpose','society','🎯','目的','What is the purpose of this trip?','2',12),
+  W('idea','society','💡','考え・アイデア','That\'s a great idea!','p2',5),
+  W('opinion','society','🗣️💭','意見','What is your opinion about this?','p2',5),
+  W('fact','society','📌✅','事実','That is an important fact.','p2',4),
+  W('example','society','📝👉','例','Give me an example, please.','p2',4),
+  W('result','society','🏁📊','結果','The result of the test was good.','p2',3),
+  W('effect','society','💥📈','効果・影響','This medicine has a good effect.','2',11),
+  W('method','society','🧭🛠️','方法','This is a new method of learning.','2',9),
+  W('system','society','⚙️','仕組み','Our school has a new computer system.','2',7),
+  W('government','society','🏛️','政府','The government made a new law.','2',5),
+  W('population','society','👥📈','人口','The population of this city is growing.','2',3)
 ];
 
 var CAT_BY_ID = {};
 CATS.forEach(function(c){ CAT_BY_ID[c.id] = c; });
+
+var LEVEL_TOTAL = {};
+var levelRankCounters = {};
+WORDS.forEach(function(w){
+  LEVEL_TOTAL[w.level] = (LEVEL_TOTAL[w.level] || 0) + 1;
+  levelRankCounters[w.level] = (levelRankCounters[w.level] || 0) + 1;
+  w.rank = levelRankCounters[w.level]; // でる順: WORDS内の並び = 頻出度(freq)降順を反映した順序
+});
+
+function freqStars(freq) {
+  var n = Math.max(1, Math.min(5, Math.round(freq / 4)));
+  return '★★★★★'.slice(0, n) + '☆☆☆☆☆'.slice(0, 5 - n);
+}
 
 /* ================= STORAGE ================= */
 var LS_PROGRESS = 'vw_progress_v1';
@@ -778,23 +804,25 @@ function renderHome() {
   document.getElementById('statTotal').textContent = WORDS.length;
   document.getElementById('statDue').textContent = dueCount;
 
-  var gridBasic = document.getElementById('catGridBasic');
-  var gridAdvanced = document.getElementById('catGridAdvanced');
-  gridBasic.innerHTML = '';
-  gridAdvanced.innerHTML = '';
-  CATS.forEach(function(cat) {
-    var words = WORDS.filter(function(w){ return w.cat === cat.id; });
+  var list = document.getElementById('levelList');
+  list.innerHTML = '';
+  LEVELS.forEach(function(lv) {
+    var words = WORDS.filter(function(w){ return w.level === lv.id; });
     var mastered = words.filter(function(w){ return isMastered(w.id); }).length;
+    var due = words.filter(function(w){ return isDue(w.id); }).length;
     var pct = words.length ? Math.round(mastered / words.length * 100) : 0;
     var card = document.createElement('div');
-    card.className = 'cat-card';
+    card.className = 'level-card';
     card.innerHTML =
-      '<div class="icon">' + cat.icon + '</div>' +
-      '<div class="name">' + cat.name + '</div>' +
-      '<div class="prog-bar"><div class="prog-fill" style="width:' + pct + '%"></div></div>' +
-      '<div class="count">' + mastered + ' / ' + words.length + ' 語</div>';
-    card.onclick = function(){ startStudy(cat.id); };
-    (cat.level === 2 ? gridAdvanced : gridBasic).appendChild(card);
+      '<div class="badge" style="background:' + lv.color + '">' + lv.name.replace('英検','') + '</div>' +
+      '<div class="body">' +
+        '<div class="name">' + lv.name + ' <span style="color:var(--ink-soft);font-weight:500;">（' + lv.sub + '）</span></div>' +
+        '<div class="prog-bar"><div class="prog-fill" style="width:' + pct + '%"></div></div>' +
+        '<div class="count">' + mastered + ' / ' + words.length + ' 語 覚えた' + (due ? '　·　復習待ち ' + due : '') + '</div>' +
+      '</div>' +
+      '<div class="go">›</div>';
+    card.onclick = function(){ startStudy(lv.id); };
+    list.appendChild(card);
   });
 
   document.getElementById('quizEntry').onclick = startQuiz;
@@ -805,18 +833,22 @@ function renderHome() {
 var studyQueue = [];
 var studyIdx = 0;
 var studyResults = { good: 0, bad: 0 };
-var studyCatId = null;
+var studyLevelId = null;
 
-function buildQueue(catId) {
-  var pool = WORDS.filter(function(w){ return !catId || w.cat === catId; });
+function buildQueue(levelId) {
+  var pool = WORDS.filter(function(w){ return !levelId || w.level === levelId; });
   var due = pool.filter(function(w){ return isDue(w.id); });
-  due.sort(function(a,b){ return getEntry(a.id).box - getEntry(b.id).box; });
+  // でる順優先: box(習熟度)が低い単語をまず、その中では頻出度が高い(rankが小さい)単語を先に
+  due.sort(function(a,b){
+    var boxDiff = getEntry(a.id).box - getEntry(b.id).box;
+    return boxDiff !== 0 ? boxDiff : a.rank - b.rank;
+  });
   return due.slice(0, 20);
 }
 
-function startStudy(catId) {
-  studyCatId = catId;
-  studyQueue = buildQueue(catId);
+function startStudy(levelId) {
+  studyLevelId = levelId;
+  studyQueue = buildQueue(levelId);
   studyIdx = 0;
   studyResults = { good: 0, bad: 0 };
   if (studyQueue.length === 0) {
@@ -851,9 +883,16 @@ function renderCard() {
   var anim = ACTION_ANIM[w.en] || cat.anim;
   var myToken = ++mediaToken;
 
+  var lv = LEVEL_BY_ID[w.level];
+
   var card = document.createElement('div');
   card.className = 'wcard';
   card.innerHTML =
+    '<div class="card-badges">' +
+      '<span class="pill" style="background:' + lv.color + ';color:#fff;">' + lv.name + '</span>' +
+      '<span class="pill">でる順 ' + w.rank + ' / ' + LEVEL_TOTAL[w.level] + '</span>' +
+      '<span class="pill stars">' + freqStars(w.freq) + '</span>' +
+    '</div>' +
     '<div class="visual-wrap"><span class="visual anim-' + anim + '">' + w.emoji + '</span></div>' +
     '<div class="word">' + w.en + '</div>' +
     '<button class="speak-btn">🔊</button>' +
