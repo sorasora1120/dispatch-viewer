@@ -252,9 +252,9 @@ button { font-family: inherit; }
       <div class="stat-pill"><div class="n num" id="statTotal">0</div><div class="l">全単語</div></div>
       <div class="stat-pill"><div class="n num" id="statDue">0</div><div class="l">復習待ち</div></div>
     </div>
-    <div class="section-title">英検レベル別 でる順</div>
+    <div class="section-title">レベル別 重要度順（CEFR参考）</div>
     <div class="level-list" id="levelList"></div>
-    <p class="freq-disclaimer">頻出度・でる順はアプリ内での推定値です（英検協会の公式統計ではありません）。</p>
+    <p class="freq-disclaimer">レベル・重要度は、CEFR（ヨーロッパ言語共通参照枠）の考え方や一般的な語彙の難易度を参考にしたClaudeによる推定です。英検の級はよく知られる大まかな対応関係を目安として添えたもので、英検協会の公式データ・認定ではありません。</p>
     <div class="quiz-entry" id="quizEntry">
       <div>
         <div class="l">🧩 絵えらびクイズ</div>
@@ -336,12 +336,15 @@ var CATS = [
   { id:'society',  icon:'🌍', anim:'float' }
 ];
 
+// レベル分けは CEFR(ヨーロッパ言語共通参照枠)の難易度感を参考にしたClaudeによる推定。
+// 英検の級は、CEFR-Jプロジェクト等で一般に紹介されている「おおよその対応関係」を目安として添えているだけで、
+// 英検協会が公式に認定したものではない。
 var LEVELS = [
-  { id:'5',  name:'英検5級',   sub:'超基本（小学レベル）', color:'#8FBF6B' },
-  { id:'4',  name:'英検4級',   sub:'基本（中学初級）',     color:'#5FB3A3' },
-  { id:'3',  name:'英検3級',   sub:'中学卒業レベル',       color:'#4C8FD9' },
-  { id:'p2', name:'英検準2級', sub:'高校中級レベル',       color:'#B173D9' },
-  { id:'2',  name:'英検2級',   sub:'高校卒業レベル',       color:'#E0575A' }
+  { id:'5',  badge:'Lv.1', name:'CEFR Pre-A1〜A1', sub:'超基礎・英検5級 相当', color:'#8FBF6B' },
+  { id:'4',  badge:'Lv.2', name:'CEFR A1',         sub:'基礎・英検4級 相当',   color:'#5FB3A3' },
+  { id:'3',  badge:'Lv.3', name:'CEFR A1〜A2',      sub:'標準・英検3級 相当',   color:'#4C8FD9' },
+  { id:'p2', badge:'Lv.4', name:'CEFR A2〜B1',      sub:'応用・英検準2級 相当', color:'#B173D9' },
+  { id:'2',  badge:'Lv.5', name:'CEFR B1',         sub:'発展・英検2級 相当',   color:'#E0575A' }
 ];
 var LEVEL_BY_ID = {};
 LEVELS.forEach(function(l){ LEVEL_BY_ID[l.id] = l; });
@@ -642,7 +645,7 @@ var levelRankCounters = {};
 WORDS.forEach(function(w){
   LEVEL_TOTAL[w.level] = (LEVEL_TOTAL[w.level] || 0) + 1;
   levelRankCounters[w.level] = (levelRankCounters[w.level] || 0) + 1;
-  w.rank = levelRankCounters[w.level]; // でる順: WORDS内の並び = 頻出度(freq)降順を反映した順序
+  w.rank = levelRankCounters[w.level]; // 重要度順位: WORDS内の並び = freq(重要度)降順を反映した順序
 });
 
 function freqStars(freq) {
@@ -814,7 +817,7 @@ function renderHome() {
     var card = document.createElement('div');
     card.className = 'level-card';
     card.innerHTML =
-      '<div class="badge" style="background:' + lv.color + '">' + lv.name.replace('英検','') + '</div>' +
+      '<div class="badge" style="background:' + lv.color + '">' + lv.badge + '</div>' +
       '<div class="body">' +
         '<div class="name">' + lv.name + ' <span style="color:var(--ink-soft);font-weight:500;">（' + lv.sub + '）</span></div>' +
         '<div class="prog-bar"><div class="prog-fill" style="width:' + pct + '%"></div></div>' +
@@ -838,7 +841,7 @@ var studyLevelId = null;
 function buildQueue(levelId) {
   var pool = WORDS.filter(function(w){ return !levelId || w.level === levelId; });
   var due = pool.filter(function(w){ return isDue(w.id); });
-  // でる順優先: box(習熟度)が低い単語をまず、その中では頻出度が高い(rankが小さい)単語を先に
+  // 重要度優先: box(習熟度)が低い単語をまず、その中では重要度が高い(rankが小さい)単語を先に
   due.sort(function(a,b){
     var boxDiff = getEntry(a.id).box - getEntry(b.id).box;
     return boxDiff !== 0 ? boxDiff : a.rank - b.rank;
@@ -889,8 +892,8 @@ function renderCard() {
   card.className = 'wcard';
   card.innerHTML =
     '<div class="card-badges">' +
-      '<span class="pill" style="background:' + lv.color + ';color:#fff;">' + lv.name + '</span>' +
-      '<span class="pill">でる順 ' + w.rank + ' / ' + LEVEL_TOTAL[w.level] + '</span>' +
+      '<span class="pill" style="background:' + lv.color + ';color:#fff;">' + lv.badge + ' ' + lv.name + '</span>' +
+      '<span class="pill">重要度順 ' + w.rank + ' / ' + LEVEL_TOTAL[w.level] + '</span>' +
       '<span class="pill stars">' + freqStars(w.freq) + '</span>' +
     '</div>' +
     '<div class="visual-wrap"><span class="visual anim-' + anim + '">' + w.emoji + '</span></div>' +
