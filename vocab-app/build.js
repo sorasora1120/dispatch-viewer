@@ -5,8 +5,16 @@
 const fs = require('fs');
 const path = require('path');
 
+const EMOJI_NAMES = require('unicode-emoji-json/data-by-emoji.json');
+const FLUENT = require('@iconify-json/fluent-emoji-flat/icons.json');
+
 const ROOT = __dirname;
-const LEVELS = [['lv1', '5'], ['lv2', '4'], ['lv3', '3'], ['lv4', 'p2'], ['lv5', '2']];
+const LEVELS = [['lv1', '5'], ['lv2', '4'], ['lv3', '3'], ['lv4', 'p2'], ['lv5', '2'], ['lv6', 'p1'], ['lv7', '1']];
+// Fluent icon names that don't follow the Unicode short name
+const ART_NAME_OVERRIDES = {
+  '🕐': 'one-oclock', '👒': 'womans-hat', '🔺': 'red-triangle', '👢': 'womans-boot',
+  '👯': 'person-with-bunny-ears', '🤗': 'hugging-face'
+};
 // keep in sync with PICTURE_CATS / PICTURE_WORDS / posOf in src/app.html
 const PICTURE_CATS = new Set(['animals', 'food', 'body', 'people', 'school', 'nature', 'objects', 'places', 'colors', 'actions', 'transport', 'clothes', 'sports']);
 const PICTURE_WORDS = new Set(['happy', 'sad', 'angry', 'tired', 'hungry', 'cold', 'surprised', 'scared']);
@@ -60,6 +68,22 @@ for (const w of words) {
   sentenceOwner.set(w.sentence, w.en);
 }
 
+// Every emoji is drawn with a bundled Fluent Emoji (flat) illustration so it looks the same on every device.
+const segmenter = new Intl.Segmenter('en', { granularity: 'grapheme' });
+const art = {};
+for (const w of words) {
+  for (const { segment: g } of segmenter.segment(w.emoji)) {
+    if (g in art) continue;
+    const info = EMOJI_NAMES[g] || EMOJI_NAMES[g.replace(/️/g, '')] || EMOJI_NAMES[g + '️'];
+    const name = ART_NAME_OVERRIDES[g] || (info && info.slug.replace(/_/g, '-'));
+    const icon = name && (FLUENT.icons[name] || (FLUENT.aliases && FLUENT.aliases[name] && FLUENT.icons[FLUENT.aliases[name].parent]));
+    if (!icon) { errors.push(`${w.where} "${w.en}": no illustration for ${g} (${name || 'not an emoji'})`); art[g] = null; continue; }
+    const width = icon.width || FLUENT.width || 16;
+    const height = icon.height || FLUENT.height || 16;
+    art[g] = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${icon.left || 0} ${icon.top || 0} ${width} ${height}">${icon.body}</svg>`;
+  }
+}
+
 warnings.forEach((m) => console.warn('warn  ' + m));
 if (errors.length) {
   errors.forEach((m) => console.error('ERROR ' + m));
@@ -73,12 +97,20 @@ const wordLines = words.map((w) =>
 const defs = {};
 words.forEach((w) => { if (w.def) defs[w.en] = w.def; });
 const data = 'var WORDS = [\n' + wordLines.join(',\n') + '\n];\n\n' +
-  '// Simple English definitions: the way abstract words get tested without Japanese.\nvar DEFS = ' + J(defs, null, 2) + ';';
+  '// Simple English definitions: the way abstract words get tested without Japanese.\nvar DEFS = ' + J(defs, null, 2) + ';\n\n' +
+  '// Fluent Emoji (flat) illustrations, (c) Microsoft Corporation, MIT License.\nvar ART = ' + J(art) + ';';
 
 let html = template.replace('/*__WORDS__*/', () => data);
 new Function(html.match(/<script>([\s\S]*)<\/script>/)[1]); // throws on a syntax error
 
-fs.writeFileSync(path.join(ROOT, 'index.html'), html.replace('<!--ARTIFACT_NOTE-->\n', ''));
+const appHtml = html.replace('<!--ARTIFACT_NOTE-->\n', '');
+fs.writeFileSync(path.join(ROOT, 'index.html'), appHtml);
+// Capacitor bundles www/ into the iOS app. The native app must work fully offline and
+// make no third-party requests on launch, so it uses the system fonts instead of Google Fonts.
+const nativeHtml = appHtml.replace(/<link rel="stylesheet" href="https:\/\/fonts\.googleapis\.com[^>]*>\n/, '');
+if (nativeHtml === appHtml) throw new Error('Google Fonts link not found; update the native-build strip in build.js');
+fs.mkdirSync(path.join(ROOT, 'www'), { recursive: true });
+fs.writeFileSync(path.join(ROOT, 'www/index.html'), nativeHtml);
 
 const artifactIdx = process.argv.indexOf('--artifact');
 if (artifactIdx > 0) {
@@ -93,4 +125,6 @@ if (artifactIdx > 0) {
 }
 
 const byLevel = LEVELS.map(([f, l]) => `${f}:${words.filter((w) => w.level === l).length}`).join(' ');
-console.log(`built index.html: ${words.length} words (${byLevel}), ${Object.keys(defs).length} definitions, ${warnings.length} warning(s)`);
+const artKb = Math.round(Object.values(art).join('').length / 1024);
+console.log(`built index.html: ${words.length} words (${byLevel}), ${Object.keys(defs).length} definitions, ` +
+  `${Object.keys(art).length} illustrations (${artKb} KB), ${warnings.length} warning(s)`);

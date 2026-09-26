@@ -1,0 +1,154 @@
+# en|category|emoji|日本語|example sentence|simple English definition (optional)
+# emoji starting with ~ is decoration only (never used as a picture answer)
+# ---- B2 vocabulary (英検準1級相当) ----
+abandon|thinking|~🚗❄️|放棄する・見捨てる|They had to abandon the car in the snow.|to leave someone or something and not come back
+accelerate|thinking|~🏎️|加速する|The car accelerated on the highway.|to become faster
+accommodate|thinking|~🏨|収容する・対応する|The hotel can accommodate 300 guests.|to have enough space for people; or to adjust to someone's needs
+accumulate|thinking|~📚|蓄積する|Dust accumulated on the old books.|to gradually gather or increase
+acknowledge|thinking|~🙇|認める|He acknowledged his mistake.|to accept or admit that something is true
+acquire|thinking|~🎓|獲得する・習得する|She acquired a good knowledge of French.|to get or learn something
+advocate|thinking|~📣|提唱する・擁護する|Many doctors advocate regular exercise.|to publicly support an idea or plan
+allocate|thinking|~🥧|割り当てる|The city allocated money for new parks.|to give a share of something for a purpose
+anticipate|thinking|~🔭|予想する|We anticipate a large crowd at the concert.|to expect something and prepare for it
+appreciate|thinking|~🙏|感謝する・正しく評価する|I really appreciate your help.|to be thankful for something; or to understand its value
+assess|thinking|~📝|評価する|Teachers assess students' progress every term.|to judge the quality or value of something
+attribute|thinking|~🔗|〜のおかげ[せい]とする|He attributes his success to hard work.|to say that something is caused by something else
+cease|thinking|~🛑|やめる・終わる|The factory ceased production last year.|to stop
+clarify|thinking|~💡|明確にする|Could you clarify what you mean?|to make something easier to understand
+collaborate|thinking|~🤝|協力する|Two universities collaborated on the research.|to work together with others
+compensate|thinking|~💴|補償する・埋め合わせる|The company compensated the workers for their loss.|to pay or give something to make up for a loss
+comply|thinking|~📜|従う|All members must comply with the rules.|to obey a rule or request
+conceal|thinking|~🙈|隠す|He tried to conceal his anger.|to hide something
+confront|thinking|~🥊|立ち向かう|We must confront the problem directly.|to face and deal with a difficult situation
+constitute|thinking|~🧩|構成する|Women constitute half of the workforce.|to form or make up something
+dedicate|thinking|~❤️|捧げる|She dedicated her life to helping the poor.|to give all your time or energy to something
+deteriorate|thinking|~📉|悪化する|His health deteriorated quickly.|to become worse
+diminish|thinking|~🔉|減少する・弱まる|The pain will diminish over time.|to become smaller or less important
+disrupt|thinking|~🚧|混乱させる|The strike disrupted train services.|to stop something from continuing normally
+distinguish|thinking|~👯|区別する|Can you distinguish between the twins?|to see the difference between things
+eliminate|thinking|~🗑️|取り除く|We must eliminate waste.|to get rid of something completely
+emerge|thinking|~🌅|現れる|The sun emerged from behind the clouds.|to come out or appear
+enhance|thinking|~✨|高める|Good lighting enhances the room.|to improve the quality of something
+ensure|thinking|~🔒|確実にする|Please ensure that the door is locked.|to make certain that something happens
+exaggerate|thinking|~🎈|誇張する|He tends to exaggerate his stories.|to make something seem bigger or better than it is
+exhibit|thinking|~🖼️|展示する|The museum exhibits ancient art.|to show something in public
+facilitate|thinking|~🛝|促進する・容易にする|The new system facilitates communication.|to make something easier
+flourish|thinking|~🌻|繁栄する|Small businesses flourish in this town.|to grow and do very well
+highlight|thinking|~🖍️|強調する|The report highlights the need for change.|to draw attention to something important
+illustrate|thinking|~🖼️|説明する・例示する|This example illustrates the problem clearly.|to explain by using examples or pictures
+implement|thinking|~⚙️|実行する|The school will implement a new rule next year.|to put a plan into action
+impose|thinking|~⚖️|課す・押し付ける|The government imposed a new tax.|to force a rule or tax on people
+interpret|thinking|~🗣️|解釈する・通訳する|How do you interpret this poem?|to explain the meaning of something
+modify|thinking|~🔧|修正する|We need to modify the plan slightly.|to change something a little
+neglect|thinking|~🥀|怠る・放置する|Don't neglect your health.|to not give enough care to something
+obtain|thinking|~🛂|手に入れる|You can obtain a visa at the embassy.|to get something, often with effort
+overcome|thinking|~🧗|克服する|She worked hard to overcome her fear of speaking in public.|to deal with and control a problem
+possess|thinking|~💎|所有する|He possesses great talent.|to own or have something
+pursue|thinking|~🏃|追求する|She decided to pursue a career in medicine.|to try to achieve something over a long time
+regulate|thinking|~🎛️|規制する・調整する|The law regulates the use of drones.|to control something with rules
+reinforce|thinking|~🧱|強化する|Practice reinforces what you learn.|to make something stronger
+resemble|thinking|~👩👧|似ている|She resembles her mother.|to look like someone or something
+restore|thinking|~🏯|修復する・回復させる|They restored the old temple.|to bring something back to its original condition
+retain|thinking|~🧊|保持する|Some fabrics retain heat well.|to continue to have or keep something
+sustain|thinking|~♻️|維持する・支える|We cannot sustain this speed for long.|to keep something going
+undergo|thinking|~🏥|経験する・受ける|He will undergo surgery next week.|to experience something difficult or necessary
+utilize|thinking|~☀️|利用する|We should utilize solar energy more.|to use something for a practical purpose
+withdraw|thinking|~🏧|引き出す・撤退する|I need to withdraw money from the bank.|to take out; or to move back from a place
+abundance|society|~🌾|豊富さ|The region has an abundance of fresh water.|a large amount of something
+accommodation|society|~🛏️|宿泊施設|The price includes accommodation and meals.|a place to stay or live
+acquisition|society|~🗣️🧒|獲得・習得|Language acquisition is easier for children.|the act of getting or learning something
+alliance|society|~🤝|同盟|The two countries formed an alliance.|an agreement between groups to work together
+ambition|society|~🚀|野心・大望|Her ambition is to become a lawyer.|a strong wish to achieve something
+approach|society|~🧭|取り組み方|We need a new approach to this problem.|a way of dealing with something
+assumption|society|~💭|仮定・思い込み|Your assumption is wrong.|something you believe is true without proof
+awareness|society|~💡|意識・認識|We need to raise awareness of climate change.|knowing that something important exists
+burden|society|~🎒|重荷・負担|Taxes are a heavy burden for small companies.|something difficult that you have to carry or deal with
+commitment|society|~🤞|約束・献身|She showed great commitment to her work.|a promise, or strong willingness to give time and energy
+compromise|society|~🤝|妥協|Both sides agreed to a compromise.|an agreement where each side gives up something
+consensus|society|~👍👍|合意|The committee reached a consensus.|agreement among everyone in a group
+controversy|society|~🔥|論争|The new law caused a lot of controversy.|a lot of public disagreement
+criterion|society|~📏|基準|Price is not the only criterion.|a standard used to judge something
+deadline|society|~⏰|締め切り|The deadline for the report is Friday.|the latest time to finish something
+dilemma|society|~🔀|板挟み・ジレンマ|I faced a dilemma: work or family.|a situation where you must choose between two difficult options
+discrimination|society|~🚫|差別|Discrimination based on gender is illegal.|unfair treatment of people because of who they are
+enthusiasm|society|~🔥|熱意|He spoke with great enthusiasm.|strong excitement and interest
+feedback|society|~💬|意見・反応|Thank you for your feedback.|comments about how well someone did something
+fluency|society|~🗣️|流暢さ|Reading every day improves your fluency.|the ability to speak or write easily
+guideline|society|~📋|指針|Please follow the safety guidelines.|advice about how to do something
+hypothesis|society|~🧪|仮説|The scientist tested her hypothesis.|an idea that has not yet been proved
+incentive|society|~🥕|動機・奨励策|The bonus is a good incentive to work harder.|something that encourages you to do something
+infrastructure|society|~🛣️|インフラ・基盤|The country needs better infrastructure.|basic systems such as roads, power, and water
+initiative|society|~🚩|主導権・新たな取り組み|She took the initiative and solved the problem.|the ability to act first; or a new plan
+insight|society|~🔍|洞察|The book gives insight into Japanese culture.|a clear understanding of something
+integrity|society|~🧭|誠実さ・高潔さ|He is a man of integrity.|the quality of being honest and having strong morals
+interaction|society|~🔄|交流・相互作用|Social interaction is important for children.|communication or activity between people or things
+legislation|society|~📜|法律・立法|New legislation protects consumers.|laws made by a government
+motivation|society|~🔋|やる気・動機|Her motivation for studying is strong.|the reason or wish to do something
+obstacle|society|~🚧|障害|Lack of money is a major obstacle.|something that blocks your way
+outcome|society|~🏁|結果|We are waiting for the outcome of the election.|the final result
+precaution|society|~🧯|予防措置|Take precautions against fire.|an action taken to prevent something bad
+prejudice|society|~🙅|偏見|We should fight prejudice.|an unfair opinion formed without knowledge
+privilege|society|~👑|特権・光栄|It is a privilege to meet you.|a special right or advantage
+prospect|society|~🌄|見込み・展望|The prospect of finding a job is good.|the possibility that something will happen
+reputation|society|~⭐|評判|The restaurant has a good reputation.|what people think about someone or something
+revenue|society|~💰|収益・歳入|The company's revenue grew last year.|money that a business or government receives
+sacrifice|society|~🕯️|犠牲|Parents make many sacrifices for their children.|giving up something important for something else
+scarcity|society|~🏜️|不足・希少|The scarcity of water is a serious problem.|a situation where there is not enough of something
+shortage|society|~📉|不足|There is a shortage of nurses.|a lack of something that is needed
+stereotype|society|~🏷️|固定観念|It is a stereotype that all Japanese are shy.|a fixed, simple idea about a type of person
+substance|society|~🧪|物質|This substance is dangerous.|a material of a particular kind
+tension|society|~😬|緊張|There was tension between the two leaders.|a feeling of stress or unfriendliness
+threat|society|~⚠️|脅威|Climate change is a threat to our future.|something that may cause harm
+transition|society|~🔄|移行|The transition to a new system took a year.|a change from one state to another
+vehicle|society|~🚙|乗り物|Electric vehicles are becoming popular.|a machine for carrying people or goods
+virtue|society|~😇|美徳|Patience is a virtue.|a good quality in a person
+abstract|qualities|~🌀|抽象的な|This idea is too abstract for children.|based on ideas, not real things
+adequate|qualities|~🆗|十分な・適切な|The room has adequate light.|good enough for a purpose
+ambiguous|qualities|~❓|あいまいな|His answer was ambiguous.|having more than one possible meaning
+apparent|qualities|~👀|明白な|It was apparent that she was tired.|easy to see or understand
+arrogant|qualities|~😤|傲慢な|He is arrogant and never listens.|thinking you are better than other people
+authentic|qualities|~🍕|本物の|This is an authentic Italian pizza.|real; not a copy
+bold|qualities|~🦁|大胆な|She made a bold decision.|brave and willing to take risks
+chronic|qualities|~🤕|慢性の|He suffers from chronic back pain.|lasting for a long time
+comprehensive|qualities|~📚|包括的な|We need a comprehensive plan.|including everything that is needed
+consistent|qualities|~📈|一貫した|Her work is consistent.|always the same; not changing
+contemporary|qualities|~🖼️|現代の|I like contemporary art.|of the present time
+cruel|qualities|~😈|残酷な|It is cruel to hurt animals.|causing pain on purpose
+decent|qualities|~👔|まともな|He found a decent job.|good enough; acceptable
+desperate|qualities|~😫|必死の|They were desperate for water.|willing to do anything because a situation is very bad
+distinct|qualities|~🔎|はっきりと異なる|There is a distinct difference between the two.|clearly different or easy to notice
+dominant|qualities|~👑|支配的な|English is the dominant language on the internet.|most powerful or important
+eager|qualities|~🙋|熱心な|The students were eager to learn.|wanting to do something very much
+elaborate|qualities|~🧵|手の込んだ|They made an elaborate plan.|detailed and complicated
+enormous|qualities|~🐋|莫大な・巨大な|The project cost an enormous amount of money.|extremely large
+exceptional|qualities|~🌟|並外れた|She is an exceptional student.|much better than usual
+fundamental|qualities|~🧱|根本的な|There is a fundamental problem with the plan.|basic and very important
+genuine|qualities|~💎|本物の・心からの|Her smile was genuine.|real and sincere
+hostile|qualities|~😠|敵意のある|The crowd became hostile.|unfriendly and angry
+inevitable|qualities|~🌊|避けられない|Change is inevitable.|certain to happen
+intense|qualities|~🔥|強烈な|The heat was intense.|very strong
+keen|qualities|~🤩|熱心な・鋭い|He is keen on football.|very interested; eager
+mature|qualities|~🧑|成熟した|She is very mature for her age.|behaving like an adult
+modest|qualities|~🙂|謙虚な・控えめな|He is modest about his success.|not talking much about your own success
+notable|qualities|~📌|注目すべき|There was a notable increase in sales.|important or interesting
+optimistic|qualities|~🌞|楽観的な|I am optimistic about the future.|hopeful that good things will happen
+pessimistic|qualities|~🌧️|悲観的な|He is pessimistic about the economy.|expecting bad things to happen
+plausible|qualities|~🤔|もっともらしい|His excuse sounded plausible.|seeming reasonable or likely to be true
+prominent|qualities|~🏔️|著名な・目立つ|She is a prominent scientist.|well known and important
+reluctant|qualities|~😒|気が進まない|He was reluctant to help.|not wanting to do something
+remarkable|qualities|~🎇|注目すべき・驚くべき|She made remarkable progress.|unusual and surprising in a good way
+sincere|qualities|~🤲|誠実な|Please accept my sincere apology.|honest and meaning what you say
+subtle|qualities|~🎚️|微妙な|There is a subtle difference in taste.|small and not easy to notice
+superior|qualities|~🥇|優れた|This product is superior to that one.|better than others
+tremendous|qualities|~💥|すさまじい|The team made a tremendous effort.|very great in amount or level
+vague|qualities|~🌫️|漠然とした|He gave a vague answer.|not clear or exact
+vital|qualities|~❤️|極めて重要な|Water is vital for all living things.|necessary and very important
+vulnerable|qualities|~🐣|傷つきやすい|Children are vulnerable to disease.|easily hurt or harmed
+accordingly|adverbs|~➡️|それに応じて|Read the rules and act accordingly.|in a way that fits the situation
+merely|adverbs|~🤏|単に|It was merely a joke.|only; just
+moreover|adverbs|~➕|その上|The hotel is cheap. Moreover, it is near the station.|also; in addition
+somewhat|adverbs|~〰️|やや|I was somewhat surprised.|a little; to some degree
+thereby|adverbs|~➡️|それによって|He trained hard, thereby improving his speed.|as a result of this action
+undoubtedly|adverbs|~✅|疑いなく|She is undoubtedly the best player.|certainly; without doubt
+hence|adverbs|~🔚|それゆえ|He was ill, hence his absence.|for this reason
+whereas|adverbs|~⚖️|〜である一方|I like tea, whereas my brother likes coffee.|while on the other hand

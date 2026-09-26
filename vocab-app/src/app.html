@@ -141,7 +141,7 @@ button:focus-visible, .redsheet:focus-visible { outline: 3px solid var(--accent)
 }
 .word-row:last-child { border-bottom: none; }
 .word-row .rk { font-size: 11px; color: var(--ink-2); text-align: right; }
-.word-row .em { font-size: 22px; text-align: center; }
+.word-row .em { display: flex; justify-content: center; }
 .word-row .en { font-family: var(--display); font-weight: 600; font-size: 16px; }
 .word-row .ret { display: block; height: 3px; border-radius: 2px; background: var(--line); margin-top: 4px; overflow: hidden; }
 .word-row .ret i { display: block; height: 100%; }
@@ -169,8 +169,20 @@ button:focus-visible, .redsheet:focus-visible { outline: 3px solid var(--accent)
   background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 22px 18px;
   display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; box-shadow: var(--shadow);
 }
-.visual-wrap { min-height: 120px; width: 100%; display: flex; align-items: center; justify-content: center; }
-.visual { font-size: 84px; line-height: 1; display: inline-block; }
+.visual-wrap { min-height: 170px; width: 100%; display: flex; align-items: center; justify-content: center; }
+.visual { display: inline-flex; line-height: 1; }
+.visual-wrap .visual { padding: 16px; border-radius: 50%; background: radial-gradient(circle, var(--accent-soft) 0%, transparent 68%); }
+.art { position: relative; display: inline-flex; align-items: center; justify-content: center; }
+.art img { display: block; -webkit-user-drag: none; user-select: none; }
+.art-lg { font-size: 110px; } .art-lg .art-main { width: 136px; height: 136px; } .art-lg .art-item { width: 84px; height: 84px; }
+.art-md { font-size: 64px; } .art-md .art-main { width: 84px; height: 84px; } .art-md .art-item { width: 46px; height: 46px; }
+.art-sm { font-size: 44px; } .art-sm .art-main { width: 60px; height: 60px; } .art-sm .art-item { width: 34px; height: 34px; }
+.art-xs { font-size: 22px; } .art-xs .art-main { width: 28px; height: 28px; } .art-xs .art-item { width: 16px; height: 16px; }
+.art-row { gap: 6px; }
+.art-badge { position: absolute; right: -10%; bottom: -8%; width: 48%; height: 48%; border-radius: 50%; background: var(--card); box-shadow: var(--shadow); display: flex; align-items: center; justify-content: center; }
+.art-badge-img { width: 74%; height: 74%; }
+.art-xs .art-badge { box-shadow: none; border: 1px solid var(--line); }
+.art-text { line-height: 1; }
 .word-line { display: flex; align-items: center; gap: 10px; justify-content: center; flex-wrap: wrap; }
 .word { font-family: var(--display); font-weight: 800; font-size: 38px; letter-spacing: -0.02em; line-height: 1.1; margin: 0; }
 .speak {
@@ -196,7 +208,7 @@ mark { background: linear-gradient(transparent 55%, var(--marker) 55%); color: i
 }
 .redsheet .ja { color: var(--sheet); font-weight: 700; }
 .redsheet .film {
-  position: absolute; inset: 0; border-radius: 6px; background: rgba(229, 72, 77, 0.88); color: #fff;
+  position: absolute; inset: 0; border-radius: 6px; background: #E5484D; color: #fff;
   font-size: 11.5px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 4px;
   transition: transform 0.25s ease, opacity 0.25s ease;
 }
@@ -213,7 +225,6 @@ mark { background: linear-gradient(transparent 55%, var(--marker) 55%); color: i
   background: var(--card); border: 2px solid var(--line); border-radius: 18px; transition: transform 0.12s ease, border-color 0.15s ease;
 }
 .pic-opt { aspect-ratio: 1.25; display: flex; align-items: center; justify-content: center; }
-.pic-opt .visual { font-size: 54px; }
 .word-opt { min-height: 60px; font-family: var(--display); font-weight: 600; font-size: 18px; padding: 10px; }
 .pic-opt:active, .word-opt:active { transform: scale(0.97); }
 .pic-opt.correct, .word-opt.correct { border-color: var(--good); background: var(--good-soft); }
@@ -234,7 +245,6 @@ mark { background: linear-gradient(transparent 55%, var(--marker) 55%); color: i
 .sheet.good .sheet-head { color: var(--good); }
 .sheet.bad .sheet-head { color: var(--bad); }
 .sheet-word { display: flex; gap: 14px; align-items: flex-start; }
-.sheet-word .visual { font-size: 48px; }
 .sheet-word .word { font-size: 26px; }
 .sheet-word > div { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; min-width: 0; }
 @keyframes sheet-up { from { transform: translateY(40px); opacity: 0; } to { transform: none; opacity: 1; } }
@@ -352,6 +362,9 @@ mark { background: linear-gradient(transparent 55%, var(--marker) 55%); color: i
     <button class="cta wide" id="saveKeyBtn">保存する</button>
     <div class="note" id="keyStatus" style="text-align:center;"></div>
 
+    <div class="section-title">クレジット</div>
+    <p class="note">イラスト: <a href="https://github.com/microsoft/fluentui-emoji" target="_blank" rel="noopener">Fluent Emoji</a> © Microsoft Corporation（MIT License）<br>単語の選定・訳・例文・英語の説明はアプリ独自のもので、英検協会などの公式データではありません。</p>
+
     <div class="section-title">データ</div>
     <button class="danger-btn" id="resetBtn">学習記録をリセット</button>
     <div class="confirm-row hidden" id="resetConfirm">
@@ -393,7 +406,9 @@ var LEVELS = [
   { id:'4',  badge:'Lv.2', name:'CEFR A1',         sub:'基礎・英検4級 相当',   color:'#5FB3A3' },
   { id:'3',  badge:'Lv.3', name:'CEFR A1〜A2',      sub:'標準・英検3級 相当',   color:'#4C8FD9' },
   { id:'p2', badge:'Lv.4', name:'CEFR A2〜B1',      sub:'応用・英検準2級 相当', color:'#B173D9' },
-  { id:'2',  badge:'Lv.5', name:'CEFR B1',         sub:'発展・英検2級 相当',   color:'#E0575A' }
+  { id:'2',  badge:'Lv.5', name:'CEFR B1',         sub:'発展・英検2級 相当',   color:'#E0575A' },
+  { id:'p1', badge:'Lv.6', name:'CEFR B2',         sub:'上級・英検準1級 相当', color:'#D97A1E' },
+  { id:'1',  badge:'Lv.7', name:'CEFR C1',         sub:'最上級・英検1級 相当', color:'#8A6A0A' }
 ];
 var LEVEL_BY_ID = {};
 LEVELS.forEach(function(l){ LEVEL_BY_ID[l.id] = l; });
@@ -491,7 +506,30 @@ var SYNONYM_GROUPS = [
   ['free','independent'], ['trip','travel'], ['fix','repair'], ['rest','relax'], ['old','elderly'],
   ['happen','appear'], ['information','knowledge','news'], ['mistake','wrong'], ['earth','world'],
   ['sea','ocean'], ['shop','store'], ['home','house'], ['picture','photo'], ['movie','concert'],
-  ['family','parent'], ['kid','child'], ['end','finish'], ['clever','smart']
+  ['family','parent'], ['kid','child'], ['end','finish'], ['clever','smart'],
+  // B2 / C1
+  ['hinder','hamper','disrupt','undermine'], ['mitigate','alleviate','diminish','reduce','curtail'],
+  ['improve','enhance','ameliorate','reinforce'], ['deteriorate','exacerbate'], ['shortage','scarcity','deficit'],
+  ['vital','crucial','essential','indispensable','fundamental','necessary'], ['enormous','tremendous','huge','vast'],
+  ['genuine','authentic','real','sincere','candid','honest'], ['obvious','apparent','conspicuous','distinct'],
+  ['vague','ambiguous','abstract'], ['eager','keen'], ['modify','change','transform'],
+  ['obtain','acquire','get','gain'], ['use','utilize','exploit'], ['keep','retain','maintain','sustain'],
+  ['stop','cease','deter','prevent'], ['hide','conceal'], ['remove','eliminate'], ['appear','emerge'],
+  ['result','outcome','consequence','repercussion','implication','aftermath'],
+  ['examine','scrutinize','analyze','assess','ascertain'], ['substantiate','corroborate','vindicate','confirm'],
+  ['careful','meticulous','scrupulous','prudent'], ['possible','feasible','viable','plausible'],
+  ['common','prevalent','pervasive','ubiquitous'], ['bias','prejudice','discrimination','stereotype'],
+  ['boring','tedious'], ['diligent','tenacious'], ['ingenious','original'], ['old','obsolete'],
+  ['support','endorse','advocate'], ['concede','acknowledge','admit'], ['reject','refuse','refute','deny'],
+  ['abandon','relinquish','withdraw'], ['clear','transparent','coherent'],
+  ['problem','dilemma','predicament','obstacle','drawback','burden'],
+  ['conflict','friction','tension','controversy','turmoil'], ['consensus','compromise','agreement'],
+  ['important','prominent','notable','significant','remarkable','exceptional'], ['fair','impartial'],
+  ['difference','discrepancy','disparity','anomaly'], ['enigma','paradox'], ['rich','affluence','abundance'],
+  ['increase','augment','accumulate','proliferation','inflation'], ['threat','risk'],
+  ['disaster','catastrophe'], ['motivation','incentive','impetus','ambition','enthusiasm'],
+  ['arrogant','superior','dominant'], ['cruel','hostile','detrimental','harmful'],
+  ['huge','enormous'], ['volatile','unstable'], ['innate','natural'], ['frugal','modest']
 ];
 var SYNONYMS = {};
 SYNONYM_GROUPS.forEach(function(g){
@@ -762,7 +800,37 @@ $('startLessonBtn').onclick = function(){ startLesson(null); };
 $('quitBtn').onclick = function(){ L = null; closeSheet(); goHome(); };
 
 function animOf(w) { return ACTION_ANIM[w.en] || (CAT_BY_ID[w.cat] && CAT_BY_ID[w.cat].anim) || 'float'; }
-function visualHTML(w, animate) { return '<span class="visual' + (animate ? ' anim-' + animOf(w) : '') + '">' + w.emoji + '</span>'; }
+var splitEmoji = (typeof Intl !== 'undefined' && Intl.Segmenter)
+  ? (function(seg){ return function(s){ return Array.from(seg.segment(s), function(x){ return x.segment; }); }; })(new Intl.Segmenter('en', { granularity: 'grapheme' }))
+  : function(s){ return Array.from(s); };
+var artUri = {};
+// one short blob: URL per picture, so a 300-row list doesn't carry 300 copies of the SVG text
+function artUrl(g) {
+  if (!artUri[g]) {
+    try { artUri[g] = URL.createObjectURL(new Blob([ART[g]], { type: 'image/svg+xml' })); }
+    catch (e) { artUri[g] = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(ART[g]); }
+  }
+  return artUri[g];
+}
+function artImg(g, cls) {
+  if (!ART[g]) return '<span class="' + cls + ' art-text">' + g + '</span>';
+  return '<img class="' + cls + '" src="' + artUrl(g) + '" alt="" draggable="false" loading="lazy" decoding="async">';
+}
+// 1 picture: shown alone. 2: the second is a small badge on the first (🤔 + ✅ = "decide").
+// 3 or more: a row of equal pictures (🍎🍌🍇 = "fruit").
+function artHTML(w, size) {
+  var parts = splitEmoji(w.emoji);
+  var cls = 'art art-' + size;
+  if (parts.length === 1) return '<span class="' + cls + '">' + artImg(parts[0], 'art-main') + '</span>';
+  if (parts.length === 2) {
+    return '<span class="' + cls + ' art-pair">' + artImg(parts[0], 'art-main') +
+      '<span class="art-badge">' + artImg(parts[1], 'art-badge-img') + '</span></span>';
+  }
+  return '<span class="' + cls + ' art-row">' + parts.map(function(p){ return artImg(p, 'art-item'); }).join('') + '</span>';
+}
+function visualHTML(w, animate, size) {
+  return '<span class="visual' + (animate ? ' anim-' + animOf(w) : '') + '">' + artHTML(w, size || 'lg') + '</span>';
+}
 function markSentence(w) { return esc(w.sentence).replace(wordRegex(w), function(m){ return '<mark>' + m + '</mark>'; }); }
 function blankSentence(w) { return esc(w.sentence).replace(wordRegex(w), '<span class="blank" aria-label="空欄">____</span>'); }
 function redSheetHTML(w) {
@@ -821,7 +889,7 @@ function renderListen(s, body) {
     '<button class="big-speak" data-say="' + esc(w.en) + '" data-slow aria-label="もう一度聞く">🔊<span>もう一度</span></button>' +
     '<button class="text-reveal" id="textReveal">音が出ない？ 文字で表示</button>' +
     '<div class="pic-grid">' + opts.map(function(o, i){
-      return '<button class="pic-opt" data-i="' + i + '" aria-label="選択肢' + (i + 1) + '">' + visualHTML(o, false) + '</button>';
+      return '<button class="pic-opt" data-i="' + i + '" aria-label="選択肢' + (i + 1) + '">' + visualHTML(o, false, 'md') + '</button>';
     }).join('') + '</div>';
   wire(body);
   $('textReveal').onclick = function(){ this.outerHTML = '<div class="word" style="text-align:center;font-size:30px;">' + esc(w.en) + '</div>'; };
@@ -905,12 +973,12 @@ function showSheet(s, correct) {
   if (correct) {
     sheet.innerHTML =
       '<div class="sheet-head">✓ 正解！</div>' +
-      '<div class="sheet-word">' + visualHTML(w, false) + '<div><div class="word-line"><span class="word">' + esc(w.en) + '</span>' + sayBtn(w.en, true) + '</div></div></div>' +
+      '<div class="sheet-word">' + visualHTML(w, false, 'sm') + '<div><div class="word-line"><span class="word">' + esc(w.en) + '</span>' + sayBtn(w.en, true) + '</div></div></div>' +
       '<button class="cta wide" id="sheetNext">次へ</button>';
   } else {
     sheet.innerHTML =
       '<div class="sheet-head">✗ 正解はこちら</div>' +
-      '<div class="sheet-word">' + visualHTML(w, false) + '<div>' +
+      '<div class="sheet-word">' + visualHTML(w, false, 'sm') + '<div>' +
         '<div class="word-line"><span class="word">' + esc(w.en) + '</span>' + sayBtn(w.en, true) + '</div>' +
         '<p class="sentence">' + markSentence(w) + '</p>' +
         (DEFS[w.en] ? '<p class="def">' + esc(DEFS[w.en]) + '</p>' : '') +
@@ -944,7 +1012,7 @@ function finishLesson() {
   var pct = total ? Math.round(L.correct / total * 100) : 100;
   var msg = pct >= 90 ? 'すばらしい！この調子。' : pct >= 70 ? 'いい感じ。間違えた単語は明日また出ます。' : '間違えた単語は、忘れる前にまた出題します。';
   var missed = L.missed.map(function(w){
-    return '<div class="word-row" style="grid-template-columns:34px 1fr auto;"><span class="em">' + w.emoji + '</span>' +
+    return '<div class="word-row" style="grid-template-columns:34px 1fr auto;"><span class="em">' + artHTML(w, 'xs') + '</span>' +
       '<span><span class="en">' + esc(w.en) + '</span></span>' + sayBtn(w.en, true) + '</div>';
   }).join('');
   $('resultBody').innerHTML =
@@ -1025,7 +1093,7 @@ function openLevel(id) {
     var st = !e ? ['未学習', 's-new'] : e.box >= MASTER_BOX ? ['定着', 's-master'] : ['学習中', 's-learn'];
     var r = retention(e);
     return '<button class="word-row" data-say="' + esc(w.en) + '">' +
-      '<span class="rk num">' + w.rank + '</span><span class="em">' + w.emoji + '</span>' +
+      '<span class="rk num">' + w.rank + '</span><span class="em">' + artHTML(w, 'xs') + '</span>' +
       '<span><span class="en">' + esc(w.en) + '</span>' +
         (r === null ? '' : '<span class="ret"><i style="width:' + Math.round(r * 100) + '%;background:' + retColor(r) + '"></i></span>') +
       '</span>' +

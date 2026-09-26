@@ -1,0 +1,9 @@
+{
+  "appId": "com.sorasora1120.visuword",
+  "appName": "VisuWord",
+  "webDir": "www",
+  "ios": {
+    "backgroundColor": "#F3F5FA",
+    "contentInset": "never"
+  }
+}

@@ -34,11 +34,11 @@ foot|body|🦶|足|I hurt my foot yesterday.
 arm|body|💪|腕|He has a strong arm.
 leg|body|🦵|脚|The dog has four legs.
 hair|body|💇|髪|Her hair is long and black.
-mother|people|~👩‍👦|母|My mother makes dinner every night.
-father|people|~👨‍👧|父|My father drives me to school.
-sister|people|~👭|姉・妹|My sister is younger than me.
-brother|people|~👬|兄・弟|My brother plays soccer well.
-friend|people|🧑‍🤝‍🧑|友達|She is my best friend.
+mother|people|~👩👦|母|My mother makes dinner every night.
+father|people|~👨👧|父|My father drives me to school.
+sister|people|~👧👧|姉・妹|My sister is younger than me.
+brother|people|~👦👦|兄・弟|My brother plays soccer well.
+friend|people|🫂|友達|She is my best friend.
 teacher|people|👩‍🏫|先生|Our teacher is very kind.
 doctor|people|🧑‍⚕️|医者|The doctor helps sick people.
 baby|people|👶|赤ちゃん|The baby sleeps all day.
@@ -175,7 +175,7 @@ very|adverbs|~❗|とても|It is very cold today.|to a large degree; really
 here|adverbs|~📍|ここに・ここで|Come here, please.|in or to this place
 now|adverbs|~⏱️|今|I am busy now.|at this moment
 again|adverbs|~🔄|もう一度・また|Please say it again.|one more time
-together|adverbs|~👫|一緒に|Let's play together.|with each other; with other people
+together|adverbs|~🧑🧑|一緒に|Let's play together.|with each other; with other people
 animal|animals|~🐾|動物|There are many animals at the zoo.
 monkey|animals|🐒|猿|The monkey is eating a banana.
 mouse|animals|🐭|ねずみ|A small mouse lives in the house.
@@ -229,7 +229,7 @@ girl|people|👧|女の子|The girl has long hair.
 child|people|🧒|子ども|The child is playing in the park.
 man|people|👨|男性|That man is my teacher.
 woman|people|👩|女性|The woman is reading a book.
-family|people|👨‍👩‍👧‍👦|家族|I love my family.
+family|people|👨👩👧|家族|I love my family.
 student|people|🧑‍🎓|生徒・学生|He is a student at this school.
 name|people|~📛|名前|What is your name?
 chair|school|🪑|いす|Please sit on the chair.

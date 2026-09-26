@@ -110,7 +110,7 @@ October|time|~📅|10月|Halloween is in October.
 November|time|~📅|11月|It gets cold in November.
 December|time|~📅|12月|Christmas is in December.
 people|people|~👥|人々|Many people live in Tokyo.
-classmate|people|~🧑‍🤝‍🧑|同級生|He is my classmate.
+classmate|people|~🧑‍🎓🧑‍🎓|同級生|He is my classmate.
 player|people|~🏃|選手|He is a good baseball player.
 subject|school|~📚|教科|What is your favorite subject?
 class|school|~🧑‍🏫|授業・クラス|Our English class starts at nine.

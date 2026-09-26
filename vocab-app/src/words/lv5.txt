@@ -178,7 +178,7 @@ valuable|qualities|~💎|貴重な|This ring is very valuable.|worth a lot
 vast|qualities|~🌌|広大な|Russia is a vast country.|very large
 visible|qualities|~👁️|目に見える|The mountain is visible from here.|able to be seen
 permanent|qualities|~🗿|永久的な|He found a permanent job.|lasting for a very long time or forever
-approximately|adverbs|~≈|約・およそ|It takes approximately two hours.|about; close to
+approximately|adverbs|~📏|約・およそ|It takes approximately two hours.|about; close to
 apparently|adverbs|~🤔|どうやら〜らしい|Apparently, the shop is closed today.|it seems that
 eventually|adverbs|~🏁|最終的に|He eventually found the key.|in the end; after a long time
 frequently|adverbs|~🔂|頻繁に|He frequently travels abroad.|often

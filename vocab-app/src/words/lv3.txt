@@ -129,7 +129,7 @@ artist|people|🧑‍🎨|芸術家|The artist painted a big picture.
 singer|people|🧑‍🎤|歌手|The singer has a beautiful voice.
 king|people|🤴|王|The king lived in a big castle.
 queen|people|👸|女王|The queen wore a beautiful dress.
-parent|people|~👨‍👩‍👧|親|My parents are kind.
+parent|people|~👨👩|親|My parents are kind.
 son|people|~👦|息子|They have two sons.
 daughter|people|~👧|娘|Their daughter is five years old.
 neighbor|people|~🏠👋|近所の人|Our neighbor is very friendly.
