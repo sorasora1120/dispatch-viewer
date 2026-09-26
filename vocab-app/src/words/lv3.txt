@@ -1,0 +1,209 @@
+# en|category|emoji|日本語|example sentence|simple English definition (optional)
+# emoji starting with ~ is decoration only (never used as a picture answer)
+decide|thinking|🤔✅|決める|I need to decide what to eat.|to make a choice about something
+explain|thinking|🗣️💡|説明する|Can you explain this word to me?|to tell someone about something so they understand it
+compare|thinking|⚖️|比べる|Let's compare these two bags.|to look at two things to see how they are the same or different
+continue|thinking|🔁➡️|続ける|Please continue your story.|to keep doing something without stopping
+borrow|thinking|🤲⬅️|借りる|May I borrow your pen?|to take something from someone and give it back later
+lend|thinking|🤲➡️|貸す|Can you lend me your pen?|to give something to someone for a short time
+introduce|thinking|👋🆕|紹介する|Let me introduce my friend.|to tell people each other's names when they first meet
+invite|thinking|💌|招待する|I will invite you to my party.|to ask someone to come to an event
+promise|thinking|🤝📝|約束する|I promise to call you.|to say that you will surely do something
+prepare|thinking|🎒✅|準備する|We prepare for the test.|to get ready for something
+arrive|thinking|🛬|着く|The train will arrive soon.|to reach a place
+leave|thinking|🚪➡️|出発する・去る|I leave home at seven.|to go away from a place
+return|thinking|🔄🏠|戻る|He will return next week.|to come or go back to a place
+follow|thinking|👣|ついていく・従う|Please follow me.|to go after someone or something
+collect|thinking|🗃️➕|集める|I collect old coins.|to bring things together and keep them
+spend|thinking|💸⏳|(お金・時間を)使う|I spend an hour reading every day.|to use money or time
+agree|thinking|👍🤝|同意する|I agree with your idea.|to have the same idea as someone
+disagree|thinking|👎🙅|反対する|I disagree with that plan.|to have a different idea from someone
+important|qualities|❗⭐|重要な|This is a very important test.|having a big effect; something you must care about
+difficult|qualities|🤯🧩|難しい|Math is difficult for me.|not easy to do or understand
+dangerous|qualities|⚠️|危険な|Swimming here is dangerous.|able to hurt you
+safe|qualities|🛟✅|安全な|This park is safe for kids.|not able to hurt you; free from danger
+popular|qualities|👍🌟|人気の|This song is very popular.|liked by many people
+famous|qualities|🌟📸|有名な|He is a famous singer.|known by many people
+similar|qualities|🟰👯|似ている|These two bags are similar.|almost the same
+different|qualities|🔀|違う|Our ideas are different.|not the same
+several|qualities|🔢✋|いくつかの|I have several books.|more than two, but not many
+useful|qualities|🛠️✅|役に立つ|This tool is very useful.|helping you to do something
+careful|qualities|⚠️👀|注意深い|Be careful on the road.|paying attention so that you do not make mistakes
+special|qualities|✨🎁|特別な|Today is a special day.|different from usual, and better
+common|qualities|🔁👥|よくある|This is a common problem.|happening often or seen in many places
+possible|qualities|✅🔓|可能な|It is possible to finish today.|able to happen or be done
+necessary|qualities|✅❗|必要な|Water is necessary for life.|needed; you must have it
+brave|qualities|🦁💪|勇敢な|The firefighter was very brave.|not afraid of danger
+honest|qualities|🤝✔️|誠実な|He is an honest person.|always telling the truth
+# ---- added: A1-A2 vocabulary ----
+become|thinking|~🦋|〜になる|I want to become a doctor.|to start to be something
+begin|thinking|~🎬|始まる・始める|The movie begins at seven.|to start
+bring|thinking|~🎒➡️|持ってくる|Please bring your lunch tomorrow.|to take something with you to a place
+build|thinking|~🏗️|建てる|They will build a new school here.|to make a house or other structure
+change|thinking|~🔄|変える・変わる|Let's change the plan.|to make or become different
+choose|thinking|~☝️|選ぶ|Please choose one card.|to pick one from several things
+cross|thinking|~🚸|渡る・横切る|Look both ways before you cross the street.|to go from one side to the other
+fail|thinking|~❌|失敗する・落ちる|I failed the test.|to not succeed
+fight|thinking|~🥊|戦う・けんかする|My brothers often fight.|to use force or angry words against someone
+fill|thinking|~🫗|満たす|Fill the glass with water.|to make something full
+find|thinking|~🔍|見つける|I can't find my key.|to see or get something you were looking for
+fix|thinking|~🔧|直す・修理する|Can you fix my bike?|to repair something that is broken
+grow|thinking|~🌱|育つ・育てる|We grow tomatoes in our garden.|to become bigger; or to make plants get bigger
+happen|thinking|~💥|起こる|What happened?|to take place; to occur
+hope|thinking|~🌈|望む|I hope you get well soon.|to want something to happen and think it may happen
+hurry|thinking|~🏃💨|急ぐ|Hurry up! We are late.|to move or do things quickly
+join|thinking|~🤝➕|参加する|I want to join the tennis club.|to become a member of a group
+keep|thinking|~🔒📦|保つ・取っておく|Keep your room clean.|to continue to have something, or to stay the same
+lose|thinking|~😢|失う・負ける|Don't lose your ticket.|to not be able to find something; or to not win
+mean|thinking|~💭|意味する|What does this word mean?|to have a certain meaning
+meet|thinking|~🤝👋|会う|Nice to meet you.|to see and talk with someone
+miss|thinking|~🚃💨|逃す・恋しく思う|I missed the train this morning.|to be too late for something; or to feel sad without someone
+notice|thinking|~👀❗|気づく|I noticed a mistake in my notebook.|to see or become aware of something
+order|thinking|~📋|注文する|I ordered a pizza.|to ask for food or goods that you will pay for
+pass|thinking|~✅|合格する・手渡す|I passed the test!|to succeed in a test; or to give something to someone
+plan|thinking|~🗺️|計画する|We plan to visit Kyoto.|to decide what you will do before you do it
+practice|thinking|~🎹🔁|練習する|I practice the piano every day.|to do something again and again to get better
+put|thinking|~📥|置く|Put your bag on the desk.|to move something into a place
+save|thinking|~🐷💰|貯める・救う|I save money every month.|to keep money for later; or to keep someone from danger
+send|thinking|~📤|送る|I will send you an email.|to make something go to another person or place
+share|thinking|~🍪🤲|分け合う・共有する|Let's share this cake.|to have or use something with other people
+shout|thinking|~📢|叫ぶ|Don't shout in the library.|to say something very loudly
+show|thinking|~👉|見せる|Please show me your picture.|to let someone see something
+stay|thinking|~🏨|滞在する・とどまる|We stayed at a hotel near the beach.|to remain in a place
+taste|thinking|~👅|味がする・味わう|This soup tastes good.|to have a certain flavor
+touch|thinking|~👆|触る|Don't touch the painting.|to put your hand on something
+turn|thinking|~↪️|曲がる・回す|Turn left at the next corner.|to change direction
+understand|thinking|~💡✅|理解する|I understand the question.|to know what something means
+worry|thinking|~😟|心配する|Don't worry. It's OK.|to think about problems and feel afraid
+win|thinking|~🏆|勝つ|Our team will win.|to be the best in a game or contest
+wish|thinking|~🌠|願う|I wish you a happy birthday.|to want something that may not be possible
+wear|thinking|~👕|着ている・身につける|She wears a uniform at school.|to have clothes on your body
+check|thinking|~✔️|確認する|Please check your answers.|to look at something to see if it is correct
+count|thinking|~🔢|数える|Can you count to ten in English?|to say numbers in order
+dream|thinking|~💭🌙|夢(を見る)|I had a strange dream last night.|pictures and stories in your mind while you sleep
+cover|thinking|~🛏️|覆う|Snow covered the ground.|to put something over something else
+drop|thinking|~⬇️|落とす|Don't drop the glass.|to let something fall
+break|thinking|~💥|壊す|Be careful not to break the cup.|to make something go into pieces or stop working
+hold|thinking|~🤲|持つ・開催する|Hold my hand.|to have something in your hands
+pick|thinking|~🍎✋|選ぶ・摘む|Pick one color you like.|to choose; or to take a flower or fruit from a plant
+rest|thinking|~🛋️|休む・休息|Let's take a rest.|a time when you relax or sleep
+relax|thinking|~🧘|くつろぐ|I relax on Sunday.|to rest and feel calm
+smell|thinking|~👃🌸|においがする|This flower smells sweet.|to have a certain scent
+welcome|thinking|~🙌|歓迎する|Welcome to Japan!|to greet someone in a friendly way when they arrive
+thank|thinking|~🙏|感謝する|Thank you for your help.|to say that you are grateful
+guess|thinking|~🤷|推測する|Guess what I have in my hand.|to give an answer without knowing for sure
+exercise|thinking|~🏋️|運動する・運動|I exercise every morning.|physical activity to stay healthy
+sound|thinking|~🔉|〜に聞こえる|That sounds great!|to seem a certain way when you hear about it
+accident|society|~🚑💥|事故|There was a car accident near my house.|something bad that happens by chance
+advice|society|~💡👂|助言|Thank you for your advice.|an idea about what someone should do
+chance|society|~🎲|機会・可能性|This is a good chance to speak English.|a time when something is possible
+event|society|~🎪|行事・出来事|The school festival is a big event.|something important that happens
+festival|society|~🎆|祭り|We went to the summer festival.|a special time with events and celebrations
+hobby|society|~🎣|趣味|My hobby is fishing.|something you do for fun in your free time
+language|society|~🗣️🌐|言語|How many languages can you speak?|the words people use to communicate
+life|society|~🌱|生活・人生|Life in the city is busy.|the way a person lives; or being alive
+memory|society|~🧠📷|思い出・記憶|This trip is a good memory for me.|something you remember from the past
+message|society|~💬|伝言・メッセージ|Can I leave a message?|words that you send to someone
+news|society|~📰|ニュース|I watch the news every morning.|information about recent events
+price|society|~🏷️|値段|The price of this bag is too high.|the amount of money you pay for something
+rule|society|~📜|規則|We must follow the school rules.|something that tells you what you can or cannot do
+secret|society|~🤫|秘密|Can you keep a secret?|something that other people must not know
+story|society|~📖✨|物語・話|This is a sad story.|words that tell about real or imagined events
+trip|society|~🧳|旅行|We went on a school trip to Kyoto.|a journey to a place and back
+volunteer|society|~🙋|ボランティア|I did volunteer work at the park.|a person who works without pay to help others
+war|society|~⚔️|戦争|My grandfather told me about the war.|fighting between countries
+peace|society|~☮️|平和|We all want peace.|a time with no war or fighting
+nature|society|~🏞️|自然|I love nature.|plants, animals, and land that people did not make
+space|society|~🚀|宇宙・空間|I want to go to space someday.|the area outside the earth; or an empty area
+concert|society|~🎤|コンサート|We went to a concert last night.|a show where people play music
+uncle|people|~🧔|おじ|My uncle lives in Canada.
+aunt|people|~👩|おば|My aunt is a nurse.
+cousin|people|~🧒|いとこ|My cousin lives in Hokkaido.
+nurse|people|~👩‍⚕️💉|看護師|The nurse was very kind to me.
+police officer|people|👮|警察官|The police officer helped the old man.
+firefighter|people|🧑‍🚒|消防士|My father is a firefighter.
+farmer|people|🧑‍🌾|農家|The farmer grows vegetables.
+scientist|people|🧑‍🔬|科学者|She wants to be a scientist.
+pilot|people|🧑‍✈️|パイロット|The pilot flies a big plane.
+artist|people|🧑‍🎨|芸術家|The artist painted a big picture.
+singer|people|🧑‍🎤|歌手|The singer has a beautiful voice.
+king|people|🤴|王|The king lived in a big castle.
+queen|people|👸|女王|The queen wore a beautiful dress.
+parent|people|~👨‍👩‍👧|親|My parents are kind.
+son|people|~👦|息子|They have two sons.
+daughter|people|~👧|娘|Their daughter is five years old.
+neighbor|people|~🏠👋|近所の人|Our neighbor is very friendly.
+guest|people|~🛎️|客|We have guests tonight.
+member|people|~🪪|メンバー・一員|He is a member of the soccer team.
+museum|places|~🖼️🏛️|博物館・美術館|We visited the art museum.
+hotel|places|🏨|ホテル|This hotel is near the station.
+post office|places|🏤|郵便局|I sent a letter at the post office.
+supermarket|places|~🏪🛒|スーパー|I buy food at the supermarket.
+church|places|⛪|教会|There is an old church in the town.
+factory|places|🏭|工場|My uncle works at a car factory.
+castle|places|🏯|城|We visited Osaka Castle.
+village|places|🛖|村|My grandmother lives in a small village.
+bridge|places|🌉|橋|We walked across the bridge.
+tower|places|🗼|塔・タワー|Tokyo Tower is very tall.
+forest|nature|🌲|森|Many animals live in the forest.
+planet|nature|🪐|惑星|Mars is a red planet.
+earth|nature|🌍|地球|We live on the earth.
+hill|nature|~⛰️|丘|There is a small hill near my school.
+air|nature|~🌬️|空気|The air is fresh in the mountains.
+ticket|objects|🎫|切符・チケット|I bought a ticket for the concert.
+movie|objects|🎞️|映画|Let's watch a movie tonight.
+photo|objects|~📸|写真|Can I take a photo here?
+newspaper|objects|🗞️|新聞|My father reads the newspaper every morning.
+card|objects|~💌|カード|I wrote a birthday card.
+glass|objects|~🥛|コップ・ガラス|Can I have a glass of water?
+medicine|objects|💊|薬|Take this medicine after meals.
+dictionary|school|~📕|辞書|Use a dictionary to check the word.
+uniform|school|~👔|制服|We wear uniforms at school.
+club|school|~🏀👥|部活・クラブ|I am in the tennis club.
+boat|transport|🚤|ボート|We took a boat on the lake.
+subway|transport|🚇|地下鉄|I take the subway to work.
+race|sports|~🏁|競争・レース|He won the race.
+season|time|~🍁|季節|Which season do you like?
+afraid|qualities|~😨|怖がって|I am afraid of dogs.|feeling fear; scared
+bored|qualities|~🥱|退屈した|I was bored during the long meeting.|tired and unhappy because nothing is interesting
+boring|qualities|~😪|退屈な|This movie is boring.|not interesting
+interesting|qualities|~🤩|おもしろい・興味深い|This book is very interesting.|making you want to know more
+exciting|qualities|~🎢|わくわくさせる|The game was very exciting.|making you feel happy and full of energy
+excited|qualities|~🤗|わくわくした|I am excited about the trip.|feeling very happy and full of energy about something
+delicious|qualities|~😋|とてもおいしい|This pizza is delicious.|tasting very good
+expensive|qualities|~💸|高価な|This watch is very expensive.|costing a lot of money
+cheap|qualities|~🪙|安い|This shirt was cheap.|not costing much money
+strong|qualities|~💪|強い|He is very strong.|having a lot of power
+weak|qualities|~🥀|弱い|I felt weak when I was sick.|not strong
+quiet|qualities|~🤫|静かな|The library is very quiet.|making little or no noise
+loud|qualities|~📢|(音が)大きい・うるさい|The music is too loud.|making a lot of noise
+rich|qualities|~💎|金持ちの|He is very rich.|having a lot of money
+poor|qualities|~🪫|貧しい・かわいそうな|They were poor, but happy.|having very little money
+kind|qualities|~🤗|親切な|She is kind to everyone.|nice and helpful to other people
+friendly|qualities|~😊👋|親しみやすい|The people here are friendly.|kind and pleasant to people you meet
+sick|qualities|~🤒|病気の|I was sick yesterday.|not healthy; ill
+healthy|qualities|~🥦|健康な|Eat vegetables to stay healthy.|strong and not sick
+glad|qualities|~😊|うれしい|I'm glad to see you.|pleased and happy about something
+sorry|qualities|~🙇|すまなく思って|I'm sorry I'm late.|feeling bad about something you did
+sure|qualities|~👌|確かな|Are you sure?|knowing that something is true
+ready|qualities|~🏁|準備ができた|Are you ready to go?|prepared to do something
+same|qualities|~🟰|同じ|We are in the same class.|exactly like another; not different
+wonderful|qualities|~🌟|すばらしい|We had a wonderful time.|very, very good
+terrible|qualities|~😖|ひどい|The weather was terrible.|very bad
+lucky|qualities|~🍀|幸運な|You are very lucky!|having good things happen by chance
+hard|qualities|~🪨|難しい・かたい|This question is hard.|difficult; or not soft
+wide|qualities|~↔️|広い|This road is very wide.|large from one side to the other
+dark|qualities|~🌑|暗い|It gets dark early in winter.|with little or no light
+bright|qualities|~🔆|明るい|This room is bright.|full of light
+empty|qualities|~🫙|空の|The box is empty.|with nothing inside
+real|qualities|~✔️|本当の・本物の|Is this a real diamond?|true; not fake
+foreign|qualities|~🌐|外国の|I want to learn a foreign language.|from another country
+already|adverbs|~✅|すでに・もう|I have already finished my homework.|before now; sooner than expected
+yet|adverbs|~⏳|まだ・もう|Have you eaten lunch yet?|until now (in questions and negative sentences)
+still|adverbs|~⏸️|まだ|It is still raining.|continuing until now
+just|adverbs|~🎯|ちょうど・たった今|I just arrived.|a very short time ago; or exactly
+once|adverbs|~1️⃣|一度・かつて|I have been there once.|one time
+twice|adverbs|~2️⃣|二度|I have visited Kyoto twice.|two times
+ago|adverbs|~⏪|〜前に|I met him three years ago.|before now
+maybe|adverbs|~🤷|たぶん|Maybe it will rain.|perhaps; it is possible
+really|adverbs|~❗|本当に|I really like this song.|very much; truly

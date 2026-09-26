@@ -1,0 +1,172 @@
+# en|category|emoji|日本語|example sentence|simple English definition (optional)
+# emoji starting with ~ is decoration only (never used as a picture answer)
+computer|school|💻|コンピューター|I use a computer to study English.
+mountain|nature|⛰️|山|We climbed the mountain last summer.
+river|nature|🏞️|川|Fish swim in the river.
+sea|nature|🌊|海|We swim in the sea every summer.
+sing|actions|🎤|歌う|She sings very well.
+dance|actions|💃|踊る|They dance at the party.
+cook|actions|🍳|料理する|My father cooks dinner on Sundays.
+drive|actions|~🚗💨|運転する|He drives to work every day.
+study|actions|📚|勉強する|I study English every night.
+listen|actions|🎧|聞く|I listen to music on the bus.
+speak|actions|~🗣️💬|話す|She speaks English very well.
+open|actions|📂|開ける|Please open the window.
+close|actions|🔒|閉める|Close the door, please.
+tired|feelings|😪|疲れた|I am tired after school.
+hungry|feelings|😋|お腹が空いた|I am hungry. Let's eat lunch.
+thirsty|feelings|~🥵💧|喉が渇いた|I am thirsty. I need water.|needing something to drink
+fast|feelings|~🐆|速い|A cheetah runs very fast.|moving quickly
+slow|feelings|~🐢💤|遅い|The bus is very slow today.|not moving quickly
+week|time|~🗓️|週|I study English every week.
+month|time|~📆|月(月間)|We have a test next month.
+year|time|~🎊|年|Happy New Year!
+birthday|time|🎂|誕生日|My birthday is in April.
+holiday|time|~🌴🗓️|休日|We go to the beach on holiday.
+umbrella|objects|☂️|傘|Take an umbrella, it will rain.
+box|objects|📦|箱|There is a gift in the box.
+gift|objects|🎁|プレゼント|I got a nice gift for my birthday.
+camera|objects|📷|カメラ|He takes photos with his camera.
+hospital|places|🏥|病院|My mother works at a hospital.
+station|places|🚉|駅|The train station is near my house.
+restaurant|places|🍽️|レストラン|We ate dinner at a restaurant.
+library|places|~🏛️📚|図書館|I read books at the library.
+airport|places|🛫|空港|We waited at the airport.
+city|places|🏙️|都市|Tokyo is a very big city.
+farm|places|🚜|農場|My uncle grows rice on his farm.
+circle|colors|⭕|丸|Draw a circle on the paper.
+square|colors|🟦|四角|A box has a square shape.
+triangle|colors|🔺|三角|A slice of pizza is a triangle.
+heart|colors|❤️|心・ハート|She drew a heart on the card.
+# ---- added: A1 vocabulary ----
+feel|thinking|~💓|感じる|I feel cold in this room.
+hear|thinking|~👂🔊|聞こえる|I can hear the birds.
+remember|thinking|~🧠📌|覚えている・思い出す|I remember his face.
+forget|thinking|~🧠💨|忘れる|Don't forget your key.
+need|thinking|~❗|必要とする|I need a pen.
+try|thinking|~💪|やってみる|Let's try again.
+visit|thinking|~🧳🏠|訪れる|I visited my aunt last week.
+enjoy|thinking|~😆|楽しむ|We enjoyed the party.
+travel|thinking|~🧳✈️|旅行する|I want to travel around the world.
+move|thinking|~📦➡️|動く・引っ越す|We will move to a new house.
+finish|thinking|~🏁|終える|I finished my homework.
+ask|thinking|~🙋|尋ねる・頼む|Can I ask you a question?
+spell|thinking|~🔤✍️|つづる|How do you spell your name?
+watch|actions|~👀📺|(じっと)見る|I watch TV after dinner.
+pay|actions|💳|払う|I will pay by card.
+sell|actions|~🏷️|売る|They sell fresh fruit here.
+carry|actions|~📦🚶|運ぶ|Can you carry this box?
+push|actions|~👉🚪|押す|Push the door to open it.
+pull|actions|~👈🚪|引く|Pull the rope hard.
+wake|actions|~⏰😪|目を覚ます|I wake up at six every day.
+hide|actions|🙈|隠れる・隠す|The cat likes to hide under the bed.
+wave|actions|👋|手を振る|She waved to me from the bus.
+paint|actions|~🖌️|(絵の具で)描く・塗る|We paint the wall white.
+skate|actions|⛸️|スケートをする|We skate on the lake in winter.
+ski|actions|⛷️|スキーをする|I ski with my family every winter.
+free|qualities|~🆓|暇な・無料の|Are you free tomorrow?|not busy; or costing no money
+warm|qualities|~🌤️|暖かい|It is warm today.|a little hot, in a pleasant way
+cool|qualities|~😎|涼しい・かっこいい|It is cool in the morning.|a little cold, in a pleasant way
+dirty|qualities|~🧺|汚い|My shoes are dirty.|not clean
+heavy|qualities|~🏋️|重い|This box is very heavy.|weighing a lot
+right|qualities|~✅|正しい・右の|Your answer is right.|correct
+wrong|qualities|~❌|間違った|That answer is wrong.|not correct
+full|qualities|~🈵|満腹の・いっぱいの|I'm full. I can't eat any more.|having no more space; or having eaten enough
+little|qualities|~🤏|小さい・少しの|I have a little brother.|small; or not much
+large|qualities|~🐋|大きい|This is a large park.|big in size
+pretty|qualities|~🌷|かわいい・きれいな|What a pretty flower!|nice to look at; attractive
+high|qualities|~⬆️|高い|That mountain is very high.|far above the ground
+low|qualities|~⬇️|低い|The table is too low.|not high; close to the ground
+soft|qualities|~🧸|やわらかい|This pillow is soft.|not hard; easy to press
+sunny|qualities|~☀️|晴れた|It is sunny today.|with a lot of sunshine
+cloudy|qualities|~☁️|くもりの|It is cloudy this morning.|with many clouds in the sky
+rainy|qualities|~🌧️|雨の|It was rainy all day.|with a lot of rain
+windy|qualities|~💨|風の強い|It is windy today.|with a lot of wind
+surprised|feelings|😲|驚いた|I was surprised at the news.|feeling shock because something was not expected
+scared|feelings|😱|怖がった|The little boy was scared of the dark.|afraid
+there|adverbs|~👉📍|そこに・そこで|I went there last year.|in or to that place
+early|adverbs|~🌅|早く|Let's leave early tomorrow.|before the usual or expected time
+late|adverbs|~⏰💦|遅く・遅れて|Don't be late for school.|after the usual or expected time
+soon|adverbs|~⏳|すぐに・まもなく|See you soon!|in a short time from now
+also|adverbs|~➕|〜もまた|I also like cats.|in addition; too
+well|adverbs|~👍|上手に・よく|He plays the guitar well.|in a good or skillful way
+too|adverbs|~➕❗|〜も・〜すぎる|This bag is too heavy.|more than is good; or also
+only|adverbs|~☝️|〜だけ|I have only one brother.|nothing more than; just
+then|adverbs|~➡️|そのとき・それから|Finish your homework, then play.|at that time; or next
+tonight|time|~🌙|今夜|It will be cold tonight.
+minute|time|~⏱️|分|Wait a minute, please.
+weekend|time|~🎉|週末|What do you do on the weekend?
+vacation|time|~🏖️🗓️|休暇|We went to Hawaii during summer vacation.
+January|time|~📅|1月|New Year's Day is in January.
+February|time|~📅|2月|February is the shortest month.
+March|time|~📅|3月|School ends in March in Japan.
+April|time|~📅|4月|The new school year starts in April.
+May|time|~📅|5月|We have a long holiday in May.
+June|time|~📅|6月|It rains a lot in June.
+July|time|~📅|7月|Summer vacation starts in July.
+August|time|~📅|8月|August is very hot in Japan.
+September|time|~📅|9月|School starts again in September.
+October|time|~📅|10月|Halloween is in October.
+November|time|~📅|11月|It gets cold in November.
+December|time|~📅|12月|Christmas is in December.
+people|people|~👥|人々|Many people live in Tokyo.
+classmate|people|~🧑‍🤝‍🧑|同級生|He is my classmate.
+player|people|~🏃|選手|He is a good baseball player.
+subject|school|~📚|教科|What is your favorite subject?
+class|school|~🧑‍🏫|授業・クラス|Our English class starts at nine.
+lesson|school|~📖|レッスン・授業|We have a swimming lesson today.
+page|school|~📃|ページ|Open your book to page ten.
+song|school|~🎶|歌|Let's sing a song together.
+fun|society|~🎉|楽しみ・楽しいこと|We had a lot of fun at the party.
+party|society|~🥳|パーティー|Let's have a birthday party.
+weather|nature|~⛅|天気|How is the weather today?
+sand|nature|~🏜️|砂|The children played in the sand.
+lake|nature|~🛶|湖|We went fishing at the lake.
+world|places|~🌏|世界|There are many countries in the world.
+country|places|~🗾|国|Japan is a beautiful country.
+street|places|~🛣️|通り|Be careful on this street.
+pool|places|~🏊|プール|The pool is open in summer.
+kitchen|places|~🍳|台所|My mother is in the kitchen.
+bathroom|places|🛁|浴室・トイレ|Where is the bathroom?
+office|places|~🏢💼|事務所・会社|My mother goes to the office by train.
+building|places|🏢|建物|That building is very tall.
+road|places|🛣️|道路|This road goes to the sea.
+corner|places|~↩️|角|The shop is on the corner.
+chopsticks|objects|🥢|はし|Can you use chopsticks?
+sofa|objects|🛋️|ソファー|Let's sit on the sofa.
+mirror|objects|🪞|鏡|Look in the mirror.
+candle|objects|🕯️|ろうそく|There are ten candles on the cake.
+robot|objects|🤖|ロボット|This robot can talk.
+calendar|objects|📆|カレンダー|Look at the calendar on the wall.
+volleyball|sports|🏐|バレーボール|We play volleyball in P.E. class.
+badminton|sports|🏸|バドミントン|I play badminton with my sister.
+truck|transport|🚚|トラック|A big truck is on the road.
+helicopter|transport|🚁|ヘリコプター|A helicopter is flying over the city.
+cap|clothes|🧢|(つばのある)帽子|He always wears a red cap.
+shorts|clothes|🩳|半ズボン|He wears shorts in summer.
+gloves|clothes|🧤|手袋|Wear gloves when it's cold.
+scarf|clothes|🧣|マフラー|My grandmother made this scarf for me.
+boots|clothes|👢|ブーツ|These boots are good for snow.
+kimono|clothes|👘|着物|She wore a kimono at the festival.
+pet|animals|~🐕🐈|ペット|Do you have a pet?
+wolf|animals|🐺|オオカミ|The wolf lives in the cold forest.
+koala|animals|🐨|コアラ|Koalas live in Australia.
+owl|animals|🦉|フクロウ|Owls can see well at night.
+shark|animals|🦈|サメ|Sharks have sharp teeth.
+insect|animals|~🐞🐛|昆虫|Many insects live in the grass.
+spider|animals|🕷️|クモ|There is a spider on the wall.
+deer|animals|🦌|シカ|We fed the deer in Nara.
+kangaroo|animals|🦘|カンガルー|A kangaroo can jump very high.
+meal|food|~🍽️|食事|Wash your hands before each meal.
+dessert|food|🍮|デザート|Let's have ice cream for dessert.
+onion|food|🧅|たまねぎ|I don't like onions.
+mushroom|food|🍄|きのこ|We found mushrooms in the forest.
+bean|food|🫘|豆|My grandmother cooks beans.
+butter|food|🧈|バター|Put some butter on your bread.
+honey|food|🍯|はちみつ|Bees make honey.
+pie|food|🥧|パイ|My mother baked an apple pie.
+cherry|food|🍒|さくらんぼ|I ate a cherry.
+pineapple|food|🍍|パイナップル|This pineapple is very sweet.
+popcorn|food|🍿|ポップコーン|We ate popcorn at the movie theater.
+donut|food|🍩|ドーナツ|I had a donut with my coffee.
+neck|body|~🧣|首|My neck hurts after studying.

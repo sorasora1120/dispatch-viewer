@@ -1,0 +1,191 @@
+# en|category|emoji|日本語|example sentence|simple English definition (optional)
+# emoji starting with ~ is decoration only (never used as a picture answer)
+increase|thinking|📈|増える・増やす|The price of rice will increase this year.|to become bigger in number or amount
+decrease|thinking|📉|減る・減らす|The number of students will decrease next year.|to become smaller in number or amount
+technology|society|💻🤖|技術|Technology changes our lives.|machines and tools made by using science
+society|society|🏙️👥|社会|We live together in society.|people living together as a group
+purpose|society|🎯|目的|What is the purpose of this trip?|why you do something; your goal
+effect|society|💥📈|効果・影響|This medicine has a good effect.|a change caused by something
+method|society|🧭🛠️|方法|This is a new method of learning.|a way of doing something
+system|society|⚙️|仕組み|Our school has a new computer system.|a set of parts that work together
+government|society|🏛️|政府|The government made a new law.|the group of people who control a country
+population|society|👥📈|人口|The population of this city is growing.|the number of people living in a place
+# ---- added: B1 vocabulary ----
+analyze|thinking|~🔬📊|分析する|Scientists analyzed the data.|to study something carefully to understand it
+argue|thinking|~😠💬|言い争う・主張する|My sisters often argue about small things.|to disagree with someone angrily; or to give reasons for an opinion
+attract|thinking|~🧲|引きつける|The festival attracts many visitors.|to make people want to come or look
+claim|thinking|~📢|主張する|He claims that he saw a ghost.|to say that something is true
+combine|thinking|~➕|組み合わせる|Combine the eggs and sugar.|to put two or more things together
+conclude|thinking|~🏁|結論を下す|The report concluded that the plan was too expensive.|to decide something after thinking about the facts
+confirm|thinking|~✅|確認する|Please confirm your reservation.|to show or say that something is true or certain
+connect|thinking|~🔗|つなぐ|Connect the printer to the computer.|to join two things together
+consume|thinking|~🍽️⚡|消費する|This machine consumes a lot of electricity.|to use energy, food, or other things
+contribute|thinking|~🤲|貢献する|Everyone contributed to the project.|to give or add something to help
+convince|thinking|~💬👍|納得させる|I convinced my parents to buy a dog.|to make someone believe or agree
+deliver|thinking|~🚚|配達する|The store will deliver the sofa tomorrow.|to take things to a person or place
+demand|thinking|~📣|要求する|The workers demanded higher pay.|to ask for something strongly
+deny|thinking|~🙅|否定する|He did not deny that he broke the window.|to say that something is not true
+determine|thinking|~🎯|決定する・特定する|The weather will determine our plans.|to decide or find out something
+establish|thinking|~🏛️|設立する|The school was established in 1950.|to start a company or organization
+estimate|thinking|~📐|見積もる|I estimate the trip will cost 50,000 yen.|to guess an amount or size
+examine|thinking|~🔎|調べる・診察する|The doctor examined my throat.|to look at something carefully
+expand|thinking|~↔️|拡大する|The company plans to expand into Asia.|to become bigger
+explore|thinking|~🧭|探検する|We explored the old castle.|to travel around a place to learn about it
+focus|thinking|~🎯|集中する|Focus on your studies.|to give all your attention to something
+gain|thinking|~📈|得る・増す|He gained a lot of experience abroad.|to get something useful; or to increase
+identify|thinking|~🔍🪪|特定する・見分ける|Can you identify this bird?|to recognize who or what someone or something is
+ignore|thinking|~🙉|無視する|Don't ignore my message.|to pay no attention to someone or something
+indicate|thinking|~👉|示す|The sign indicates the way to the exit.|to show or point to something
+invest|thinking|~💹|投資する|He invested money in a new company.|to put money into something to make more money
+involve|thinking|~🔗👥|伴う・巻き込む|The job involves a lot of travel.|to include something as a necessary part
+maintain|thinking|~🔧|維持する|It is hard to maintain a healthy diet.|to keep something in good condition
+measure|thinking|~📏|測る|Measure the length of the table.|to find the size or amount of something
+occur|thinking|~💥|起こる|Accidents often occur at night.|to happen
+participate|thinking|~🙋|参加する|Many students participated in the contest.|to take part in an activity
+persuade|thinking|~🗣️👍|説得する|She persuaded me to join the club.|to make someone agree to do something
+predict|thinking|~🔮|予測する|It is hard to predict the weather.|to say what will happen in the future
+promote|thinking|~📣|促進する・昇進させる|The city promotes tourism.|to help something grow; or to give someone a higher job
+recover|thinking|~🩹|回復する|He recovered from his illness quickly.|to become healthy again
+reflect|thinking|~🪞|反射する・反映する|The lake reflects the mountains.|to show an image like a mirror; or to think carefully
+reject|thinking|~❌|拒絶する|The company rejected my plan.|to refuse to accept something
+rely|thinking|~🤝|頼る|You can rely on me.|to trust and depend on someone or something
+remove|thinking|~🗑️|取り除く|Please remove your shoes.|to take something away
+require|thinking|~📋|必要とする|This job requires English skills.|to need something
+reveal|thinking|~🎁|明らかにする|The report revealed the truth.|to show something that was hidden
+select|thinking|~☑️|選ぶ|Select one answer from the list.|to choose carefully
+suffer|thinking|~🤕|苦しむ|Many people suffer from hay fever in spring.|to feel pain or have a problem
+threaten|thinking|~⚠️|脅かす|Pollution threatens many animals.|to be a danger to something
+transform|thinking|~🦋|一変させる|The old factory was transformed into a museum.|to change something completely
+translate|thinking|~🔤🔁|翻訳する|Can you translate this letter into English?|to change words into another language
+admire|thinking|~😍|感心する・称賛する|I admire her courage.|to respect and like someone very much
+adapt|thinking|~🦎|適応する|Animals adapt to their environment.|to change to fit a new situation
+agriculture|society|~🌾|農業|Agriculture is important in this area.|farming
+analysis|society|~📊|分析|The analysis showed some problems.|careful study of something to understand it
+anxiety|society|~😰|不安|She felt anxiety before the exam.|a feeling of worry
+atmosphere|society|~🌫️|雰囲気・大気|This cafe has a nice atmosphere.|the feeling of a place; or the air around the earth
+balance|society|~⚖️|バランス・均衡|Try to keep a good balance between work and rest.|a state where things are equal or steady
+budget|society|~💴📋|予算|We have a small budget for the trip.|the amount of money you can spend
+challenge|society|~🧗|挑戦・難題|Learning a new language is a big challenge.|something difficult that tests your ability
+climate|society|~🌡️🌍|気候|The climate here is warm.|the usual weather in a place
+competition|society|~🏅|競争・大会|She won first prize in the competition.|a contest to find the best
+concept|society|~💭|概念|The concept of time is hard to explain.|a general idea
+conflict|society|~⚔️|対立・紛争|There is a conflict between the two groups.|a strong disagreement or fight
+consequence|society|~➡️❗|(悪い)結果|Every action has consequences.|a result of something, often a bad one
+debate|society|~🗣️⚖️|討論|We had a debate about school uniforms.|a discussion where people give different opinions
+democracy|society|~🗳️|民主主義|In a democracy, people vote for their leaders.|a system where people choose their government
+device|society|~📱|装置・機器|A smartphone is a useful device.|a machine or tool made for a purpose
+diversity|society|~🌈👥|多様性|The city is famous for its cultural diversity.|many different kinds of people or things
+economy|society|~💹|経済|The economy is growing slowly.|the system of money, trade, and business in a country
+employment|society|~💼|雇用|The factory brought employment to the town.|having a paid job
+equipment|society|~🎒🛠️|設備・用具|You need special equipment for camping.|tools and machines needed for an activity
+evolution|society|~🐒🚶|進化|Darwin studied evolution.|the slow change of living things over a long time
+expert|society|~🎓|専門家|She is an expert on Japanese history.|a person who knows a lot about something
+factor|society|~🧩|要因|Price is an important factor.|one of the things that causes a result
+fuel|society|~⛽|燃料|Cars need fuel to run.|something burned to make heat or power
+function|society|~⚙️|機能|What is the function of this button?|the job that something does
+identity|society|~🪪|身元・独自性|Language is part of our identity.|who or what a person is
+impact|society|~💥|影響・衝撃|Social media has a big impact on young people.|a strong effect
+income|society|~💴|収入|His income is high.|money that you get from work
+individual|society|~🧍|個人|Every individual has rights.|one person
+influence|society|~🌊|影響(力)|My father had a big influence on me.|the power to change what someone thinks or does
+innovation|society|~💡🚀|革新|Innovation helps companies grow.|a new idea or way of doing something
+investment|society|~💹|投資|Education is a good investment.|putting money or time into something to get a benefit
+issue|society|~❗|問題・論点|Climate change is an important issue.|an important topic or problem
+literature|society|~📚|文学|I like English literature.|books, poems, and plays
+majority|society|~👥👥|大多数|The majority of students agreed.|more than half of a group
+minority|society|~👤|少数(派)|A minority of people voted no.|less than half of a group
+network|society|~🕸️|ネットワーク・網|We have a network of friends around the world.|a group of connected people or things
+nutrition|society|~🥗|栄養|Good nutrition is important for health.|the food your body needs to grow and stay healthy
+organization|society|~🏢|組織|She works for an international organization.|a group of people working together for a purpose
+perspective|society|~👓|観点|Try to see things from a different perspective.|a way of thinking about something
+phenomenon|society|~🌌|現象|A rainbow is a natural phenomenon.|something that happens and can be seen
+policy|society|~📜|政策・方針|The government changed its policy.|a plan of action by a government or company
+poverty|society|~🪫|貧困|Many children live in poverty.|the state of being poor
+principle|society|~📏|原則・主義|Honesty is my basic principle.|a basic rule or belief
+priority|society|~🥇|優先事項|Safety is our first priority.|something more important than other things
+profession|society|~💼|(専門的な)職業|Teaching is a respected profession.|a job that needs special training
+profit|society|~💰📈|利益|The company made a big profit.|money you make after paying costs
+property|society|~🏠🔑|財産・所有物|This house is my father's property.|things that someone owns
+range|society|~↔️|範囲・品ぞろえ|The store sells a wide range of goods.|a group of different things of the same kind; or the limits of something
+region|society|~🗺️|地域|This region is famous for rice.|a large area
+responsibility|society|~🧑‍⚖️|責任|Taking care of a pet is a big responsibility.|a duty to take care of something
+risk|society|~🎲|危険(性)|There is a risk of fire.|the chance that something bad will happen
+species|society|~🦜|(生物の)種|Many species of birds live here.|a group of animals or plants of the same kind
+strategy|society|~♟️|戦略|We need a new strategy to win.|a plan to achieve a goal
+structure|society|~🏗️|構造|The structure of this bridge is strong.|the way parts are put together
+survey|society|~📋📊|調査|The survey shows that most students like sports.|questions asked to many people to learn their opinions
+symptom|society|~🤒|症状|A fever is a common symptom of a cold.|a sign of an illness
+theory|society|~📐💭|理論|Einstein's theory changed science.|an idea that explains something
+tourism|society|~🗺️|観光(業)|Tourism is important for Kyoto.|the business of travel for fun
+trade|society|~🚢📦|貿易・取引|Japan does a lot of trade with China.|buying and selling between countries
+trend|society|~📈|傾向・流行|There is a trend toward healthy eating.|a general change in one direction
+welfare|society|~🤲|福祉|The city spends money on welfare.|help given to people who need it
+accurate|qualities|~🎯|正確な|This clock is accurate.|correct in every detail
+alternative|qualities|~🔀|代わりの|We need an alternative plan.|able to be used instead of something else
+annual|qualities|~📅|年に一度の|The annual festival is in August.|happening once a year
+anxious|qualities|~😟|心配な|I am anxious about the test results.|worried
+appropriate|qualities|~👔|適切な|Jeans are not appropriate for the ceremony.|right for a situation
+artificial|qualities|~🤖|人工の|These flowers are artificial.|made by people, not natural
+aware|qualities|~💡|気づいている|Are you aware of the danger?|knowing that something exists
+basic|qualities|~🔤|基本的な|I know basic Spanish.|simple and most important
+brief|qualities|~⏱️|短い・簡潔な|He gave a brief speech.|short
+capable|qualities|~💪|能力がある|She is capable of running the company.|able to do something well
+complex|qualities|~🕸️|複雑な|This machine is very complex.|having many parts; difficult to understand
+confident|qualities|~😎|自信のある|She is confident about her English.|sure of yourself
+constant|qualities|~🔁|絶え間ない|The constant noise kept me awake.|happening all the time
+crucial|qualities|~❗|極めて重要な|Sleep is crucial for good health.|extremely important
+current|qualities|~📍|現在の|What is the current temperature?|happening now
+domestic|qualities|~🏠|国内の・家庭の|Domestic flights are cheaper.|inside one country; or about the home
+efficient|qualities|~⚡|効率的な|This new car is very efficient.|working well without wasting time or energy
+elderly|qualities|~👵|年配の|We should help elderly people.|old
+essential|qualities|~🔑|不可欠な|A good dictionary is essential for learning.|absolutely necessary
+extreme|qualities|~🌋|極端な|The weather here is extreme.|very great; much more than usual
+financial|qualities|~💴|財政の・金融の|The company has financial problems.|about money
+flexible|qualities|~🤸|柔軟な|My work hours are flexible.|able to change easily
+frequent|qualities|~🔂|頻繁な|There are frequent buses to the airport.|happening often
+harmful|qualities|~☠️|有害な|Smoking is harmful to your health.|causing damage
+huge|qualities|~🐋|巨大な|The stadium is huge.|very big
+ideal|qualities|~🌟|理想的な|This is an ideal place for a picnic.|perfect
+illegal|qualities|~🚫|違法な|It is illegal to park here.|against the law
+immediate|qualities|~⚡|即座の|We need an immediate answer.|happening now, without waiting
+independent|qualities|~🕊️|独立した|She wants to be independent from her parents.|not needing help from others
+legal|qualities|~⚖️|合法の|Is it legal to drive at 18?|allowed by the law
+likely|qualities|~🤔|ありそうな|It is likely to rain tonight.|probably going to happen
+mental|qualities|~🧠|精神の|Mental health is as important as physical health.|about the mind
+obvious|qualities|~👀|明らかな|The answer is obvious.|easy to see or understand
+original|qualities|~✨|独創的な・元の|This is an original idea.|new and different; or first
+physical|qualities|~💪|身体の・物理的な|Physical exercise is good for you.|about the body
+potential|qualities|~🌱|潜在的な|This is a potential problem.|possible in the future
+previous|qualities|~⏪|前の|I met him at my previous school.|coming before
+primary|qualities|~🥇|主要な・初等の|Our primary goal is safety.|most important; or first
+rapid|qualities|~🚀|急速な|There was a rapid increase in prices.|very fast
+rare|qualities|~🦄|珍しい|This is a rare bird.|not common
+reasonable|qualities|~👌|手頃な・妥当な|The price is reasonable.|fair; not too expensive
+relevant|qualities|~🔗|関連のある|This question is not relevant to the topic.|connected to what is being discussed
+reliable|qualities|~🤝|信頼できる|He is a reliable friend.|able to be trusted
+responsible|qualities|~🧑‍⚖️|責任のある|Who is responsible for this project?|having a duty to take care of something
+rural|qualities|~🌾|田舎の|My grandparents live in a rural area.|of the countryside
+severe|qualities|~⛈️|深刻な・厳しい|The storm caused severe damage.|very bad or serious
+significant|qualities|~📈|重要な・かなりの|There was a significant change.|large or important
+specific|qualities|~🎯|特定の・具体的な|Can you give me a specific example?|clear and exact
+stable|qualities|~⚓|安定した|The patient's condition is stable.|not changing; steady
+sufficient|qualities|~🆗|十分な|We have sufficient time.|enough
+suitable|qualities|~👌|適した|This movie is suitable for children.|right for a purpose
+temporary|qualities|~⏳|一時的な|This is a temporary job.|lasting for a short time
+typical|qualities|~🍙|典型的な|This is a typical Japanese breakfast.|usual and normal for a type
+urban|qualities|~🏙️|都会の|More people live in urban areas.|of the city
+valuable|qualities|~💎|貴重な|This ring is very valuable.|worth a lot
+vast|qualities|~🌌|広大な|Russia is a vast country.|very large
+visible|qualities|~👁️|目に見える|The mountain is visible from here.|able to be seen
+permanent|qualities|~🗿|永久的な|He found a permanent job.|lasting for a very long time or forever
+approximately|adverbs|~≈|約・およそ|It takes approximately two hours.|about; close to
+apparently|adverbs|~🤔|どうやら〜らしい|Apparently, the shop is closed today.|it seems that
+eventually|adverbs|~🏁|最終的に|He eventually found the key.|in the end; after a long time
+frequently|adverbs|~🔂|頻繁に|He frequently travels abroad.|often
+gradually|adverbs|~📶|徐々に|The weather gradually got warmer.|slowly, little by little
+immediately|adverbs|~⚡|すぐに|Call me immediately.|at once; right now
+meanwhile|adverbs|~⏸️|その間に|Meanwhile, I cooked dinner.|at the same time
+nevertheless|adverbs|~↔️|それにもかかわらず|It was raining. Nevertheless, we played soccer.|even so; however
+rarely|adverbs|~🦄|めったに〜ない|I rarely eat meat.|not often
+relatively|adverbs|~⚖️|比較的|This test was relatively easy.|compared to others
+therefore|adverbs|~➡️|それゆえに|He was sick. Therefore, he stayed home.|for that reason

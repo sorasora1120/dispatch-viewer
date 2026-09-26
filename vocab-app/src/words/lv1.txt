@@ -1,0 +1,310 @@
+# en|category|emoji|日本語|example sentence|simple English definition (optional)
+# emoji starting with ~ is decoration only (never used as a picture answer)
+dog|animals|🐶|犬|My dog runs in the park.
+cat|animals|🐱|猫|The cat sleeps on the sofa.
+bird|animals|🐦|鳥|A bird can fly in the sky.
+fish|animals|🐟|魚|The fish swims in the river.
+horse|animals|🐴|馬|She rides a horse every weekend.
+cow|animals|🐮|牛|The cow gives us milk.
+pig|animals|🐷|豚|The pig lives on the farm.
+sheep|animals|🐑|羊|The sheep has soft wool.
+rabbit|animals|🐰|うさぎ|The rabbit jumps very fast.
+bear|animals|🐻|くま|A bear is very big and strong.
+lion|animals|🦁|ライオン|The lion is the king of animals.
+elephant|animals|🐘|ぞう|An elephant has a long nose.
+apple|food|🍎|りんご|I eat an apple every morning.
+bread|food|🍞|パン|We have bread for breakfast.
+rice|food|🍚|ご飯|I eat rice every day.
+egg|food|🥚|卵|She cooks an egg for lunch.
+milk|food|🥛|牛乳|He drinks milk every morning.
+water|food|💧|水|Please drink a lot of water.
+cake|food|🍰|ケーキ|We made a cake for the party.
+banana|food|🍌|バナナ|A monkey likes to eat a banana.
+orange|food|🍊|オレンジ|This orange is sweet and juicy.
+meat|food|🥩|肉|My father likes to cook meat.
+cheese|food|🧀|チーズ|I put cheese on my pizza.
+tea|food|🍵|お茶|My grandmother drinks tea every day.
+head|body|~🗣️|頭|I hit my head on the door.
+eye|body|👁️|目|She has big, beautiful eyes.
+ear|body|👂|耳|Rabbits have very long ears.
+nose|body|👃|鼻|An elephant has a very long nose.
+mouth|body|👄|口|Open your mouth, please.
+hand|body|✋|手|Wash your hands before you eat.
+foot|body|🦶|足|I hurt my foot yesterday.
+arm|body|💪|腕|He has a strong arm.
+leg|body|🦵|脚|The dog has four legs.
+hair|body|💇|髪|Her hair is long and black.
+mother|people|~👩‍👦|母|My mother makes dinner every night.
+father|people|~👨‍👧|父|My father drives me to school.
+sister|people|~👭|姉・妹|My sister is younger than me.
+brother|people|~👬|兄・弟|My brother plays soccer well.
+friend|people|🧑‍🤝‍🧑|友達|She is my best friend.
+teacher|people|👩‍🏫|先生|Our teacher is very kind.
+doctor|people|🧑‍⚕️|医者|The doctor helps sick people.
+baby|people|👶|赤ちゃん|The baby sleeps all day.
+grandmother|people|👵|祖母|My grandmother tells great stories.
+grandfather|people|👴|祖父|My grandfather likes fishing.
+book|school|📖|本|I read a book every night.
+pen|school|🖊️|ペン|Can I borrow your pen?
+pencil|school|✏️|鉛筆|She writes with a pencil.
+desk|school|~🧑‍💻|机|My books are on the desk.
+bag|school|🎒|バッグ|I put my books in my bag.
+notebook|school|📓|ノート|Write the answer in your notebook.
+eraser|school|~✏️❌|消しゴム|May I use your eraser?
+ruler|school|📏|ものさし|Use a ruler to draw a straight line.
+classroom|school|~📝🏫|教室|Our classroom is on the third floor.
+sun|nature|☀️|太陽|The sun is very bright today.
+moon|nature|🌙|月|We can see the moon at night.
+star|nature|⭐|星|The sky is full of stars.
+sky|nature|🌤️|空|The sky is blue and clear.
+rain|nature|🌧️|雨|It will rain this afternoon.
+snow|nature|❄️|雪|Snow falls in winter.
+wind|nature|💨|風|The wind is very strong today.
+cloud|nature|☁️|雲|A big cloud is in the sky.
+tree|nature|🌳|木|A tall tree grows in our garden.
+run|actions|🏃|走る|I run in the park every morning.
+walk|actions|🚶|歩く|We walk to school together.
+jump|actions|🤸|跳ぶ|The kids jump on the bed.
+eat|actions|🍴|食べる|We eat dinner at seven.
+drink|actions|🥤|飲む|I drink water after running.
+sleep|actions|😴|眠る|The cat sleeps all afternoon.
+read|actions|~👓📖|読む|I read a book before bed.
+write|actions|✍️|書く|She writes a letter to her friend.
+swim|actions|🏊|泳ぐ|We swim in the pool on Sundays.
+fly|actions|🕊️|飛ぶ|Birds fly high in the sky.
+play|actions|🛝|遊ぶ・する|We play soccer after school.
+happy|feelings|😊|嬉しい|I feel happy today.
+sad|feelings|😢|悲しい|She looks very sad.
+angry|feelings|😠|怒っている|He was angry about the news.
+big|feelings|~🦣|大きい|An elephant is a big animal.|large in size
+small|feelings|~🐜|小さい|An ant is a small insect.|little in size
+hot|feelings|~🥵|熱い・暑い|This soup is very hot.|very warm
+cold|feelings|🥶|冷たい・寒い|It is cold outside today.
+new|feelings|~✨|新しい|I bought a new bag.|just made or bought; not used before
+old|feelings|~📜|古い・年をとった|This is an old, old book.|having lived or been used for a long time
+morning|time|~🌅|朝|I run every morning.
+night|time|~🌃|夜|I read books at night.
+today|time|~📅|今日|Today is a beautiful day.
+tomorrow|time|~➡️📅|明日|I have a test tomorrow.
+yesterday|time|~⬅️📅|昨日|I watched a movie yesterday.
+phone|objects|📱|電話|I call my friend on my phone.
+key|objects|🔑|鍵|I lost my house key.
+door|objects|🚪|ドア|Please close the door.
+window|objects|🪟|窓|Open the window, it's hot.
+clock|objects|🕐|時計|The clock says three o'clock.
+bed|objects|🛏️|ベッド|I sleep in my bed every night.
+table|objects|~🍽️🪑|テーブル|Put the plates on the table.
+cup|objects|~☕🍵|カップ|She drinks tea from a cup.
+school|places|🏫|学校|I go to school by bike.
+park|places|⛲|公園|We play in the park after school.
+store|places|🏬|店|I bought a shirt at the store.
+zoo|places|~🦓🎟️|動物園|We saw lions at the zoo.
+beach|places|🏖️|ビーチ|We swim at the beach in summer.
+red|colors|🔴|赤|Her dress is bright red.
+blue|colors|🔵|青|The sky is blue today.
+yellow|colors|🟡|黄色|The sun looks yellow.
+green|colors|🟢|緑|The leaves are green in summer.
+black|colors|⚫|黒|My cat is black and white.
+white|colors|⚪|白|Snow is white and cold.
+# ---- added: core Pre-A1 / A1 vocabulary ----
+go|actions|~➡️🚶|行く|I go to school by bus.
+come|actions|~👋|来る|Please come to my house.
+have|thinking|~🤲|持っている・食べる|I have two brothers.
+like|thinking|~👍|好きだ|I like soccer very much.
+want|thinking|~🙏|ほしい|I want a new bike.
+see|actions|👀|見る・見える|I can see the mountain from here.
+look|actions|~👁️👉|見る|Look at this picture.
+know|thinking|~🧠|知っている|I know his name.
+think|thinking|~🤔|思う・考える|I think it will rain.
+make|actions|~🛠️|作る|Let's make a cake.
+get|thinking|~📥|手に入れる・(起き)上がる|I get up at six.
+take|actions|~✋|取る・持っていく|Take an umbrella with you.
+give|actions|~🎁🤲|与える|I give my dog food every morning.
+use|thinking|~🛠️👆|使う|Can I use your phone?
+say|thinking|~💬|言う|Say it again, please.
+tell|thinking|~🗣️👂|伝える・話す|Tell me your name.
+talk|thinking|~💬💬|話す・しゃべる|We talk on the phone every night.
+love|thinking|~💕|大好きだ・愛する|I love ice cream.
+live|thinking|~🏠|住む|I live in Osaka.
+work|thinking|~💼|働く|My father works in Tokyo.
+start|thinking|~▶️|始める|Let's start the game.
+stop|thinking|~🛑|止まる・やめる|Stop the car here.
+wait|thinking|~⏳|待つ|Please wait here.
+learn|thinking|~📘|学ぶ|I want to learn Chinese.
+teach|thinking|~🧑‍🏫|教える|She teaches English at our school.
+help|actions|~🤝|助ける・手伝う|Can you help me?
+buy|actions|🛒|買う|I want to buy a new bag.
+sit|actions|~🧎|座る|Please sit down.
+stand|actions|🧍|立つ|Please stand up.
+wash|actions|🧼|洗う|Wash your hands before lunch.
+clean|actions|🧹|掃除する・きれいにする|Please clean the table after dinner.
+cut|actions|✂️|切る|Cut the paper with scissors.
+draw|actions|🖍️|(線で)描く|I like to draw animals.
+throw|actions|~🤾|投げる|Throw the ball to me.
+catch|actions|~🧤⚾|捕る・つかまえる|Can you catch the ball?
+kick|actions|~🦵⚽|蹴る|He kicked the ball hard.
+climb|actions|🧗|登る|We climb the mountain every summer.
+ride|actions|🚴|乗る|I ride my bike to school.
+smile|actions|~😄|ほほえむ|She always smiles at me.
+cry|actions|😭|泣く|The baby started to cry.
+laugh|actions|😂|笑う|We laughed at his joke.
+brush|actions|🪥|みがく|I brush my teeth every night.
+call|actions|📞|電話する・呼ぶ|I will call you tonight.
+good|qualities|~👍|よい|This is a good book.|of high quality; pleasant
+bad|qualities|~👎|悪い|I had a bad dream.|not good; unpleasant
+nice|qualities|~✨|すてきな|What a nice day!|pleasant and kind
+beautiful|qualities|~🌸✨|美しい|The sunset is beautiful.|very pleasant to look at
+cute|qualities|~🥰|かわいい|Your cat is so cute.|small, sweet, and nice to look at
+long|qualities|~📏|長い|This river is very long.|measuring a lot from one end to the other
+short|qualities|~✂️📏|短い・背が低い|This pencil is short.|not long, or not tall
+tall|qualities|~🦒📏|背が高い|My brother is very tall.|higher than most people or things
+young|qualities|~🧒|若い|My mother looks young.|in the early part of life; not old
+easy|qualities|~👌|簡単な|This test is easy.|not difficult; not needing much effort
+busy|qualities|~🏃💦|忙しい|I am busy today.|having a lot of things to do
+favorite|qualities|~⭐|大好きな・お気に入りの|Blue is my favorite color.|liked more than all the others
+sweet|qualities|~🍭|甘い|This cake is very sweet.|tasting like sugar
+great|qualities|~🌟|すばらしい|You did a great job!|very good
+many|qualities|~🔢|たくさんの(数えられるもの)|I have many friends.|a large number of
+fine|qualities|~🙆|元気な・よい|I'm fine, thank you.|healthy and well; all right
+always|adverbs|~🔁|いつも|I always get up early.|at all times; every time
+usually|adverbs|~📅|たいてい・ふつうは|I usually walk to school.|in most cases; most of the time
+often|adverbs|~🔂|よく・しばしば|I often play tennis with my sister.|many times
+sometimes|adverbs|~🎲|ときどき|I sometimes eat bread for breakfast.|at some times, but not always
+never|adverbs|~🚫|決して〜ない|I never eat natto.|not at any time
+very|adverbs|~❗|とても|It is very cold today.|to a large degree; really
+here|adverbs|~📍|ここに・ここで|Come here, please.|in or to this place
+now|adverbs|~⏱️|今|I am busy now.|at this moment
+again|adverbs|~🔄|もう一度・また|Please say it again.|one more time
+together|adverbs|~👫|一緒に|Let's play together.|with each other; with other people
+animal|animals|~🐾|動物|There are many animals at the zoo.
+monkey|animals|🐒|猿|The monkey is eating a banana.
+mouse|animals|🐭|ねずみ|A small mouse lives in the house.
+tiger|animals|🐯|トラ|The tiger has orange and black stripes.
+panda|animals|🐼|パンダ|The panda is eating bamboo.
+frog|animals|🐸|カエル|A green frog is sitting on a leaf.
+duck|animals|🦆|アヒル・カモ|The duck is swimming in the pond.
+chicken|animals|🐔|ニワトリ・鶏肉|The chicken lays an egg every day.
+penguin|animals|🐧|ペンギン|A penguin cannot fly, but it swims well.
+snake|animals|🐍|ヘビ|The snake is very long.
+turtle|animals|🐢|カメ|The turtle walks slowly on the sand.
+bee|animals|🐝|ハチ|A bee is flying around the flowers.
+butterfly|animals|🦋|チョウ|A butterfly is sitting on the flower.
+whale|animals|🐳|クジラ|A whale is the biggest animal in the sea.
+dolphin|animals|🐬|イルカ|The dolphin jumps out of the water.
+fox|animals|🦊|キツネ|A fox lives in the forest.
+giraffe|animals|🦒|キリン|A giraffe has a very long neck.
+juice|food|🧃|ジュース|I drink orange juice every morning.
+coffee|food|☕|コーヒー|My father drinks coffee after lunch.
+pizza|food|🍕|ピザ|We ate pizza for dinner.
+sandwich|food|🥪|サンドイッチ|I made a sandwich for lunch.
+salad|food|🥗|サラダ|I eat salad with dinner.
+soup|food|🍲|スープ|My mother made chicken soup.
+ice cream|food|🍦|アイスクリーム|I like chocolate ice cream.
+chocolate|food|🍫|チョコレート|She gave me some chocolate.
+cookie|food|🍪|クッキー|These cookies are sweet.
+candy|food|🍬|あめ・お菓子|Don't eat too much candy.
+potato|food|🥔|じゃがいも|I like potato salad.
+tomato|food|🍅|トマト|This tomato is red and fresh.
+carrot|food|🥕|にんじん|Rabbits like carrots.
+strawberry|food|🍓|いちご|I like strawberry jam.
+grape|food|🍇|ぶどう|We ate grapes after dinner.
+lemon|food|🍋|レモン|This lemon is very sour.
+peach|food|🍑|もも|This peach is soft and sweet.
+melon|food|🍈|メロン|The melon is big and sweet.
+watermelon|food|🍉|スイカ|We ate watermelon at the beach.
+corn|food|🌽|とうもろこし|We grow corn on the farm.
+noodle|food|🍜|めん類|I eat noodles for lunch.
+hamburger|food|🍔|ハンバーガー|He ate a big hamburger.
+breakfast|food|~🍳🥐|朝食|I eat breakfast at seven.
+lunch|food|🍱|昼食|We eat lunch at school.
+dinner|food|~🍽️🌙|夕食|What's for dinner tonight?
+fruit|food|~🍎🍌🍇|果物|I eat fruit every day.
+vegetable|food|~🥕🥦|野菜|Eat more vegetables.
+salt|food|🧂|塩|Please pass me the salt.
+face|body|~🙂|顔|Wash your face every morning.
+tooth|body|🦷|歯|My tooth hurts.
+finger|body|☝️|指|I cut my finger.
+boy|people|👦|男の子|The boy is playing with a ball.
+girl|people|👧|女の子|The girl has long hair.
+child|people|🧒|子ども|The child is playing in the park.
+man|people|👨|男性|That man is my teacher.
+woman|people|👩|女性|The woman is reading a book.
+family|people|👨‍👩‍👧‍👦|家族|I love my family.
+student|people|🧑‍🎓|生徒・学生|He is a student at this school.
+name|people|~📛|名前|What is your name?
+chair|school|🪑|いす|Please sit on the chair.
+test|school|~📝|テスト|We have a math test today.
+homework|school|~📚✏️|宿題|I do my homework after dinner.
+math|school|~➗|数学・算数|Math is my favorite subject.
+English|school|~🔤|英語|English is spoken in many countries.
+science|school|🔬|理科・科学|We do experiments in science class.
+music|school|🎵|音楽|I listen to music every day.
+art|school|🎨|美術|I like art class.
+paper|school|📄|紙|Write your name on the paper.
+letter|school|✉️|手紙|I wrote a letter to my grandmother.
+picture|school|🖼️|絵・写真|She drew a picture of her dog.
+question|school|❓|質問|Can I ask a question?
+answer|school|~💬|答え|I know the answer.
+word|school|~🔤📖|単語・言葉|I learned a new word today.
+flower|nature|🌸|花|This flower smells nice.
+garden|nature|~🏡🌷|庭|We have a small garden.
+leaf|nature|🍃|葉|A leaf fell from the tree.
+grass|nature|~🌱|草|The cows eat grass.
+rainbow|nature|🌈|虹|We saw a rainbow after the rain.
+fire|nature|🔥|火|Don't play with fire.
+ice|nature|🧊|氷|Put some ice in my drink.
+rock|nature|🪨|岩・石|He sat on a big rock.
+island|nature|🏝️|島|Japan is an island country.
+spring|nature|~🌷|春|Flowers bloom in spring.
+summer|nature|~🌻|夏|We go to the sea in summer.
+fall|nature|~🍂|秋|The leaves turn red in fall.
+winter|nature|~⛄|冬|It snows a lot in winter.
+day|time|~📅☀️|日|Have a nice day!
+hour|time|~⏰|1時間|I studied for an hour.
+time|time|~🕰️|時間・時刻|What time is it?
+evening|time|~🌆|夕方・晩|I watch TV in the evening.
+afternoon|time|~🌇|午後|We play soccer in the afternoon.
+Monday|time|~📅|月曜日|I have a piano lesson on Monday.
+Tuesday|time|~📅|火曜日|The museum is closed on Tuesday.
+Wednesday|time|~📅|水曜日|I go to the library on Wednesday.
+Thursday|time|~📅|木曜日|My mother works late on Thursday.
+Friday|time|~📅|金曜日|Let's go shopping on Friday.
+Saturday|time|~📅|土曜日|I play tennis on Saturday.
+Sunday|time|~📅|日曜日|We stay home on Sunday.
+ball|objects|⚽|ボール|The dog is playing with a ball.
+toy|objects|🧸|おもちゃ|The baby likes this toy.
+bike|objects|🚲|自転車|My bike is new.
+TV|objects|📺|テレビ|Turn off the TV, please.
+money|objects|💰|お金|I don't have much money.
+spoon|objects|🥄|スプーン|Eat your soup with a spoon.
+piano|objects|🎹|ピアノ|She plays the piano very well.
+guitar|objects|🎸|ギター|My brother plays the guitar.
+map|objects|🗺️|地図|Let's look at the map.
+car|transport|🚗|車|My father has a red car.
+bus|transport|🚌|バス|I take the bus to school.
+train|transport|🚃|電車|The train is late today.
+plane|transport|✈️|飛行機|The plane is flying over the sea.
+ship|transport|🚢|船|We went to the island by ship.
+taxi|transport|🚕|タクシー|Let's take a taxi.
+house|places|🏠|家|My house is near the park.
+room|places|~🛋️|部屋|My room is on the second floor.
+home|places|~🏡|家・家庭|I go home at five.
+shop|places|🏪|店|I bought this pen at a small shop.
+bank|places|🏦|銀行|My father works at a bank.
+town|places|~🏘️|町|I live in a small town.
+shoe|clothes|👟|靴|I bought new shoes.
+hat|clothes|👒|帽子|She is wearing a big hat.
+shirt|clothes|👕|シャツ|He is wearing a white shirt.
+dress|clothes|👗|ドレス・ワンピース|She has a beautiful red dress.
+sock|clothes|🧦|靴下|I can't find my socks.
+jacket|clothes|🧥|上着|Wear your jacket. It's cold.
+glasses|clothes|👓|めがね|My father wears glasses.
+soccer|sports|~⚽🥅|サッカー|Soccer is popular in Brazil.
+tennis|sports|🎾|テニス|My sister is on the tennis team.
+baseball|sports|⚾|野球|Baseball is popular in Japan.
+basketball|sports|🏀|バスケットボール|He is tall, so he is good at basketball.
+game|sports|~🎮|試合・ゲーム|We won the game!
+team|sports|~👥|チーム|Our team is very strong.
+sport|sports|~🏅|スポーツ|What sport do you like?
+brown|colors|🟤|茶色|My dog is brown.
+purple|colors|🟣|紫|She likes purple flowers.
