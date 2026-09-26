@@ -1,323 +1,367 @@
 <!doctype html>
-<title>VisuWord — 絵で覚える英単語</title>
+<title>VisuWord</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#FF6B57">
+<meta name="theme-color" content="#141B2D">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap">
 <style>
 :root {
-  --bg: #FFF8F0;
-  --bg-card: #FFFFFF;
-  --ink: #2B2320;
-  --ink-soft: #7A6F65;
-  --line: #F0E4D6;
-  --accent: #FF6B57;
-  --accent-soft: #FFE4DD;
-  --accent-ink: #C4402C;
-  --good: #34A868;
-  --good-soft: #DFF3E7;
-  --bad: #E0575A;
-  --bad-soft: #FBE0DF;
-  --gold: #F2B705;
-  --shadow: 0 2px 6px rgba(43,35,32,0.06), 0 10px 24px rgba(43,35,32,0.08);
-  --radius: 22px;
+  --ground: #F3F5FA;
+  --card: #FFFFFF;
+  --ink: #141B2D;
+  --ink-2: #5B6478;
+  --line: #E2E6EF;
+  --accent: #3552F2;
+  --accent-soft: #E6EAFE;
+  --accent-ink: #2238B8;
+  --marker: rgba(255, 207, 51, 0.75);
+  --good: #178F5F;
+  --good-soft: #DDF4EA;
+  --bad: #D93A40;
+  --bad-soft: #FCE3E4;
+  --warn: #C98A06;
+  --sheet: #E5484D;
+  --navy: #141B2D;
+  --on-navy: #F3F5FA;
+  --on-navy-2: #A9B2CC;
+  --shadow: 0 1px 2px rgba(20,27,45,0.05), 0 6px 20px rgba(20,27,45,0.06);
+  --display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body: "Zen Kaku Gothic New", -apple-system, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic UI", Meiryo, sans-serif;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #1B1714;
-    --bg-card: #262019;
-    --ink: #F5EDE4;
-    --ink-soft: #B6A99C;
-    --line: #3A3128;
-    --accent: #FF8A78;
-    --accent-soft: #3D241F;
-    --accent-ink: #FFB6A8;
-    --good: #5FCB8E;
-    --good-soft: #1E3327;
-    --bad: #F0797C;
-    --bad-soft: #3A2323;
-    --gold: #F5CB4C;
-    --shadow: 0 2px 8px rgba(0,0,0,0.4), 0 10px 28px rgba(0,0,0,0.35);
+    color-scheme: dark;
+    --ground: #0E1322; --card: #171E31; --ink: #E7EBF5; --ink-2: #98A1B7; --line: #262F46;
+    --accent: #7B8FFF; --accent-soft: #232C52; --accent-ink: #B7C2FF;
+    --marker: rgba(242, 201, 76, 0.38);
+    --good: #3CCB8E; --good-soft: #15332A; --bad: #FF6B70; --bad-soft: #3A1E24; --warn: #F2C94C;
+    --navy: #1E2640; --on-navy: #E7EBF5; --on-navy-2: #98A1B7;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.3);
   }
 }
 :root[data-theme="dark"] {
-  --bg: #1B1714; --bg-card: #262019; --ink: #F5EDE4; --ink-soft: #B6A99C;
-  --line: #3A3128; --accent: #FF8A78; --accent-soft: #3D241F; --accent-ink: #FFB6A8;
-  --good: #5FCB8E; --good-soft: #1E3327; --bad: #F0797C; --bad-soft: #3A2323; --gold: #F5CB4C;
-  --shadow: 0 2px 8px rgba(0,0,0,0.4), 0 10px 28px rgba(0,0,0,0.35);
+  color-scheme: dark;
+  --ground: #0E1322; --card: #171E31; --ink: #E7EBF5; --ink-2: #98A1B7; --line: #262F46;
+  --accent: #7B8FFF; --accent-soft: #232C52; --accent-ink: #B7C2FF;
+  --marker: rgba(242, 201, 76, 0.38);
+  --good: #3CCB8E; --good-soft: #15332A; --bad: #FF6B70; --bad-soft: #3A1E24; --warn: #F2C94C;
+  --navy: #1E2640; --on-navy: #E7EBF5; --on-navy-2: #98A1B7;
+  --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.3);
 }
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-html, body {
-  margin: 0; padding: 0; background: var(--bg); color: var(--ink);
-  font-family: -apple-system, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic UI", "Meiryo", system-ui, sans-serif;
-  -webkit-font-smoothing: antialiased; overflow-x: hidden; min-height: 100vh;
-  padding-bottom: env(safe-area-inset-bottom);
-}
-button { font-family: inherit; }
+html, body { margin: 0; background: var(--ground); color: var(--ink); }
+body { font-family: var(--body); font-size: 15px; line-height: 1.55; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+button { font-family: inherit; color: inherit; cursor: pointer; }
+button:focus-visible, .redsheet:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 .num { font-variant-numeric: tabular-nums; }
-#app { max-width: 480px; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; }
+.hidden { display: none !important; }
+#app { max-width: 520px; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; }
 
-/* ---------- topbar ---------- */
+/* ---------- top bar ---------- */
 .topbar {
-  position: sticky; top: 0; z-index: 20;
-  background: color-mix(in srgb, var(--bg) 88%, transparent);
-  backdrop-filter: blur(10px);
-  padding: 14px 18px 10px; display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
+  display: flex; align-items: center; gap: 10px; padding: 12px 16px;
+  background: color-mix(in srgb, var(--ground) 90%, transparent); backdrop-filter: blur(10px);
 }
-.topbar h1 { font-size: 17px; font-weight: 800; margin: 0; letter-spacing: -0.01em; }
-.streak { display: flex; align-items: center; gap: 4px; font-size: 13px; font-weight: 700; color: var(--gold); }
-.back-btn {
-  border: none; background: var(--accent-soft); color: var(--accent-ink); font-weight: 700;
-  font-size: 13px; padding: 7px 12px; border-radius: 999px; cursor: pointer;
+.brand { flex: 1; font-family: var(--display); font-weight: 800; font-size: 20px; letter-spacing: -0.02em; }
+.brand span { background: linear-gradient(transparent 58%, var(--marker) 58%); }
+.top-right { display: flex; align-items: center; gap: 8px; }
+.streak { font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 3px; }
+.icon-btn {
+  border: 1px solid var(--line); background: var(--card); width: 36px; height: 36px; border-radius: 12px;
+  font-size: 16px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
 }
-.gear-btn {
-  border: none; background: none; font-size: 18px; cursor: pointer; padding: 2px; line-height: 1;
-  color: var(--ink-soft);
-}
+#app.in-lesson .topbar { display: none; }
 
-/* ---------- screens ---------- */
-.screen { flex: 1; display: none; flex-direction: column; padding: 4px 18px 28px; }
+.screen { display: none; flex-direction: column; gap: 18px; padding: 4px 16px 32px; flex: 1; }
 .screen.active { display: flex; }
+.section-title { font-size: 12px; font-weight: 700; color: var(--ink-2); letter-spacing: 0.08em; margin: 0 2px -8px; }
 
 /* ---------- home ---------- */
-.hero {
-  background: linear-gradient(135deg, var(--accent) 0%, #FF9457 100%);
-  border-radius: var(--radius); padding: 20px; color: #fff; margin: 8px 0 18px;
-  box-shadow: var(--shadow); position: relative; overflow: hidden;
+.today {
+  background: var(--navy); color: var(--on-navy); border-radius: 22px; padding: 20px;
+  display: flex; flex-direction: column; gap: 6px; box-shadow: var(--shadow);
 }
-.hero .emo-row { font-size: 30px; letter-spacing: 6px; margin-bottom: 6px; opacity: 0.95; }
-.hero h2 { margin: 0 0 4px; font-size: 19px; font-weight: 800; }
-.hero p { margin: 0 0 14px; font-size: 13px; opacity: 0.92; }
-.hero .cta {
-  border: none; background: #fff; color: var(--accent-ink); font-weight: 800; font-size: 14px;
-  padding: 11px 18px; border-radius: 999px; cursor: pointer;
+.today-label { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; color: var(--on-navy-2); }
+.today-main { font-size: 15px; font-weight: 700; display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; }
+.today-main .num { font-family: var(--display); font-size: 40px; font-weight: 800; line-height: 1; letter-spacing: -0.03em; }
+.today-main .plus { color: var(--on-navy-2); font-weight: 500; margin: 0 4px; }
+.today-sub { font-size: 12.5px; color: var(--on-navy-2); }
+.cta {
+  border: none; background: var(--accent); color: #fff; font-weight: 800; font-size: 16px;
+  padding: 14px 20px; border-radius: 16px; margin-top: 10px; letter-spacing: 0.02em;
 }
-.stats-row { display: flex; gap: 10px; margin-bottom: 18px; }
-.stat-pill {
-  flex: 1; background: var(--bg-card); border: 1px solid var(--line); border-radius: 16px;
-  padding: 10px 12px; text-align: center; box-shadow: var(--shadow);
-}
-.stat-pill .n { font-size: 19px; font-weight: 800; }
-.stat-pill .l { font-size: 10.5px; color: var(--ink-soft); margin-top: 1px; }
-.section-title { font-size: 13px; font-weight: 800; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; margin: 4px 2px 10px; }
-.level-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 8px; }
-.level-card {
-  background: var(--bg-card); border: 1px solid var(--line); border-radius: 18px; padding: 14px 16px;
-  cursor: pointer; box-shadow: var(--shadow); display: flex; align-items: center; gap: 12px;
-}
-.level-card .badge {
-  width: 46px; height: 46px; border-radius: 14px; display: flex; align-items: center; justify-content: center;
-  font-weight: 800; font-size: 14px; color: #fff; flex-shrink: 0;
-}
-.level-card .body { flex: 1; min-width: 0; }
-.level-card .name { font-weight: 800; font-size: 14.5px; }
-.level-card .sub { font-size: 11px; color: var(--ink-soft); margin-top: 1px; }
-.level-card .prog-bar { height: 6px; border-radius: 4px; background: var(--line); overflow: hidden; margin-top: 7px; }
-.level-card .prog-fill { height: 100%; background: var(--good); border-radius: 4px; }
-.level-card .count { font-size: 11px; color: var(--ink-soft); margin-top: 4px; }
-.level-card .go { font-size: 20px; color: var(--ink-soft); }
-.freq-disclaimer { font-size: 10.5px; color: var(--ink-soft); line-height: 1.5; margin: 2px 2px 14px; }
-.card-badges { display: flex; justify-content: center; gap: 6px; margin-bottom: 8px; flex-wrap: wrap; }
-.card-badges .pill {
-  font-size: 10.5px; font-weight: 700; color: var(--accent-ink); background: var(--accent-soft);
-  padding: 3px 9px; border-radius: 999px; letter-spacing: 0.02em;
-}
-.card-badges .stars { color: var(--gold); letter-spacing: 1px; }
-.quiz-entry {
-  margin-top: 8px; display: flex; align-items: center; justify-content: space-between;
-  background: var(--bg-card); border: 1px solid var(--line); border-radius: 18px; padding: 14px 16px;
-  box-shadow: var(--shadow); cursor: pointer;
-}
-.quiz-entry .l { font-weight: 800; font-size: 14px; }
-.quiz-entry .s { font-size: 11.5px; color: var(--ink-soft); }
-.quiz-entry .go { font-size: 20px; }
+.today .cta { background: #FFCF33; color: #141B2D; }
+.cta.wide { width: 100%; margin-top: 0; }
+.cta:disabled { opacity: 0.5; }
 
-/* ---------- study ---------- */
-.study-progress { display: flex; gap: 5px; margin: 10px 0 16px; }
-.study-progress i { flex: 1; height: 5px; border-radius: 3px; background: var(--line); }
-.study-progress i.done { background: var(--good); }
-.study-progress i.now { background: var(--accent); }
-.card-stage { flex: 1; display: flex; align-items: center; justify-content: center; position: relative; min-height: 360px; }
-.wcard {
-  width: 100%; background: var(--bg-card); border-radius: 28px; box-shadow: var(--shadow);
-  padding: 30px 22px 22px; text-align: center; position: relative; touch-action: pan-y;
+.panel { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+.panel-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.panel-head h2 { margin: 0; font-size: 15px; font-weight: 700; }
+.hint { font-size: 11.5px; color: var(--ink-2); }
+.memory-bar { display: flex; height: 12px; border-radius: 6px; overflow: hidden; background: var(--line); }
+.memory-bar i { display: block; height: 100%; transition: width 0.4s ease; }
+.m-strong { background: var(--good); }
+.m-weak { background: var(--warn); }
+.m-fading { background: var(--bad); }
+.memory-legend { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; font-size: 12px; color: var(--ink-2); }
+.memory-legend b { display: block; font-family: var(--display); font-size: 22px; color: var(--ink); line-height: 1.1; }
+.memory-legend .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 4px; vertical-align: 1px; }
+.memory-empty { font-size: 13px; color: var(--ink-2); margin: 0; }
+
+.level-list { display: flex; flex-direction: column; gap: 8px; }
+.level-card {
+  display: flex; align-items: center; gap: 12px; text-align: left; width: 100%;
+  background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 12px 14px;
+}
+.lv-badge {
+  width: 44px; height: 44px; border-radius: 12px; color: #fff; font-family: var(--display); font-weight: 800;
+  font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.lv-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 5px; }
+.lv-name { font-weight: 700; font-size: 14.5px; }
+.lv-name small { font-weight: 500; color: var(--ink-2); font-size: 12px; margin-left: 4px; }
+.lv-bar { position: relative; height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; }
+.lv-bar i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 3px; }
+.lv-bar .seen { background: var(--accent-soft); }
+.lv-bar .master { background: var(--good); }
+.lv-count { font-size: 11.5px; color: var(--ink-2); }
+.chev { color: var(--ink-2); font-size: 18px; }
+.disclaimer { font-size: 11px; color: var(--ink-2); line-height: 1.6; margin: 0 2px; }
+
+/* ---------- level detail ---------- */
+.level-head { display: flex; gap: 14px; align-items: center; }
+.level-head .lv-badge { width: 56px; height: 56px; font-size: 16px; border-radius: 16px; }
+.level-head h2 { margin: 0; font-size: 18px; }
+.level-head p { margin: 2px 0 0; color: var(--ink-2); font-size: 13px; }
+.word-list { display: flex; flex-direction: column; background: var(--card); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.word-row {
+  display: grid; grid-template-columns: 30px 34px 1fr auto; align-items: center; gap: 10px;
+  padding: 10px 14px; border: none; border-bottom: 1px solid var(--line); background: none; text-align: left; width: 100%;
+}
+.word-row:last-child { border-bottom: none; }
+.word-row .rk { font-size: 11px; color: var(--ink-2); text-align: right; }
+.word-row .em { font-size: 22px; text-align: center; }
+.word-row .en { font-family: var(--display); font-weight: 600; font-size: 16px; }
+.word-row .ret { display: block; height: 3px; border-radius: 2px; background: var(--line); margin-top: 4px; overflow: hidden; }
+.word-row .ret i { display: block; height: 100%; }
+.chip { font-size: 10.5px; font-weight: 700; padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
+.s-new { background: var(--line); color: var(--ink-2); }
+.s-learn { background: var(--accent-soft); color: var(--accent-ink); }
+.s-master { background: var(--good-soft); color: var(--good); }
+
+/* ---------- lesson ---------- */
+.lesson-top {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; display: flex; align-items: center; gap: 12px;
+  padding: 12px 0; background: var(--ground);
+}
+.lesson-bar { flex: 1; height: 10px; border-radius: 5px; background: var(--line); overflow: hidden; }
+.lesson-bar i { display: block; height: 100%; width: 0; background: var(--accent); border-radius: 5px; transition: width 0.3s ease; }
+.lesson-count { font-size: 12px; color: var(--ink-2); min-width: 40px; text-align: right; }
+.lesson-body { display: flex; flex-direction: column; gap: 16px; padding-bottom: 220px; }
+.step-tag {
+  align-self: flex-start; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; padding: 3px 10px; border-radius: 999px;
+  background: var(--accent-soft); color: var(--accent-ink);
+}
+.step-tag.new { background: #FFCF33; color: #141B2D; }
+.prompt { margin: 0; font-size: 19px; font-weight: 700; text-wrap: balance; }
+.learn-card {
+  background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 22px 18px;
+  display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; box-shadow: var(--shadow);
+}
+.visual-wrap { min-height: 120px; width: 100%; display: flex; align-items: center; justify-content: center; }
+.visual { font-size: 84px; line-height: 1; display: inline-block; }
+.word-line { display: flex; align-items: center; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.word { font-family: var(--display); font-weight: 800; font-size: 38px; letter-spacing: -0.02em; line-height: 1.1; margin: 0; }
+.speak {
+  border: none; background: var(--accent-soft); color: var(--accent-ink); width: 40px; height: 40px; border-radius: 50%;
+  font-size: 17px; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center;
+}
+.speak.sm { width: 30px; height: 30px; font-size: 13px; vertical-align: middle; }
+.sentence { margin: 0; font-size: 16px; line-height: 1.7; }
+.sentence.big { font-size: 20px; font-family: var(--display); font-weight: 600; background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 20px 18px; }
+mark { background: linear-gradient(transparent 55%, var(--marker) 55%); color: inherit; font-weight: 700; padding: 0 1px; }
+.blank { display: inline-block; min-width: 90px; border-bottom: 3px solid var(--accent); color: transparent; }
+.def { margin: 0; font-size: 14px; color: var(--ink-2); font-style: italic; }
+.def::before { content: "= "; font-style: normal; font-weight: 700; color: var(--accent-ink); }
+.def.big {
+  font-family: var(--display); font-style: normal; font-weight: 600; font-size: 20px; color: var(--ink); line-height: 1.5;
+  background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 14px; padding: 18px;
+}
+.def.big::before { content: none; }
+
+.redsheet {
+  position: relative; border: none; background: none; padding: 4px 10px; border-radius: 6px; font-size: 15px;
+  min-width: 150px; min-height: 30px; white-space: nowrap;
+}
+.redsheet .ja { color: var(--sheet); font-weight: 700; }
+.redsheet .film {
+  position: absolute; inset: 0; border-radius: 6px; background: rgba(229, 72, 77, 0.88); color: #fff;
+  font-size: 11.5px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 4px;
   transition: transform 0.25s ease, opacity 0.25s ease;
 }
-.wcard .visual-wrap { height: 170px; display: flex; align-items: center; justify-content: center; margin-bottom: 6px; }
-.wcard .visual { font-size: 78px; line-height: 1; display: inline-block; }
-.wcard .media-box {
-  width: 100%; height: 170px; border-radius: 20px; overflow: hidden; position: relative;
-  background: var(--accent-soft);
-}
-.wcard .media-box img, .wcard .media-box video {
-  width: 100%; height: 100%; object-fit: cover; display: block;
-  animation: vw-kenburns 6s ease-in-out infinite alternate;
-}
-.wcard .media-box .media-skel {
-  width: 100%; height: 100%; background: var(--line); animation: vw-pulse 1.3s ease-in-out infinite;
-}
-.wcard .media-tag {
-  position: absolute; bottom: 6px; right: 8px; font-size: 10px; font-weight: 700; color: #fff;
-  background: rgba(0,0,0,0.45); padding: 2px 7px; border-radius: 999px; letter-spacing: 0.03em;
-}
-.wcard .word { font-size: 30px; font-weight: 800; letter-spacing: -0.01em; margin-top: 6px; }
-.wcard .speak-btn {
-  border: none; background: var(--accent-soft); color: var(--accent-ink); width: 38px; height: 38px;
-  border-radius: 50%; font-size: 16px; margin-top: 10px; cursor: pointer;
-}
-.wcard .sentence {
-  margin-top: 16px; font-size: 14.5px; color: var(--ink-soft); line-height: 1.5; min-height: 22px;
-}
-.wcard .sentence b { color: var(--accent-ink); font-weight: 800; }
-.wcard .peek-btn {
-  margin-top: 10px; border: none; background: none; color: var(--ink-soft); font-size: 12px;
-  text-decoration: underline; cursor: pointer; padding: 4px;
-}
-.wcard .ja-reveal { font-size: 13.5px; color: var(--ink-soft); margin-top: 4px; min-height: 16px; }
-.wcard.fly-good { transform: translateX(140%) rotate(12deg); opacity: 0; }
-.wcard.fly-bad { transform: translateX(-140%) rotate(-12deg); opacity: 0; }
-.grade-row { display: flex; gap: 12px; margin-top: 18px; }
-.grade-btn {
-  flex: 1; border: none; border-radius: 18px; padding: 15px; font-weight: 800; font-size: 14.5px; cursor: pointer;
-  display: flex; align-items: center; justify-content: center; gap: 6px;
-}
-.grade-btn.bad { background: var(--bad-soft); color: var(--bad); }
-.grade-btn.good { background: var(--good-soft); color: var(--good); }
-.hint-swipe { text-align: center; font-size: 11px; color: var(--ink-soft); margin-top: 10px; }
+.redsheet.lifted .film { transform: translateY(-110%); opacity: 0; }
 
-/* ---------- quiz ---------- */
-.quiz-head { text-align: center; margin: 10px 0 6px; }
-.quiz-head .prompt-label { font-size: 12px; color: var(--ink-soft); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
-.quiz-head .prompt-word { font-size: 26px; font-weight: 800; margin-top: 4px; }
-.quiz-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 22px; }
-.quiz-opt {
-  background: var(--bg-card); border: 2px solid var(--line); border-radius: 20px; padding: 20px 10px;
-  font-size: 46px; text-align: center; cursor: pointer; box-shadow: var(--shadow);
+.big-speak {
+  align-self: center; border: none; background: var(--accent); color: #fff; width: 120px; height: 120px; border-radius: 50%;
+  font-size: 40px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; box-shadow: var(--shadow);
 }
-.quiz-opt.correct { border-color: var(--good); background: var(--good-soft); }
-.quiz-opt.wrong { border-color: var(--bad); background: var(--bad-soft); }
+.big-speak span { font-size: 11px; font-weight: 700; }
+.text-reveal { align-self: center; border: none; background: none; color: var(--ink-2); font-size: 12px; text-decoration: underline; padding: 4px; }
+.pic-grid, .word-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.pic-opt, .word-opt {
+  background: var(--card); border: 2px solid var(--line); border-radius: 18px; transition: transform 0.12s ease, border-color 0.15s ease;
+}
+.pic-opt { aspect-ratio: 1.25; display: flex; align-items: center; justify-content: center; }
+.pic-opt .visual { font-size: 54px; }
+.word-opt { min-height: 60px; font-family: var(--display); font-weight: 600; font-size: 18px; padding: 10px; }
+.pic-opt:active, .word-opt:active { transform: scale(0.97); }
+.pic-opt.correct, .word-opt.correct { border-color: var(--good); background: var(--good-soft); }
+.pic-opt.wrong, .word-opt.wrong { border-color: var(--bad); background: var(--bad-soft); }
+.pic-opt:disabled, .word-opt:disabled { cursor: default; }
+.step-actions { display: flex; gap: 10px; }
+.ghost-btn { flex: 1; border: 2px solid var(--line); background: var(--card); border-radius: 16px; font-weight: 700; font-size: 15px; padding: 13px; }
+
+.sheet {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; max-width: 520px; margin: 0 auto;
+  padding: 16px 16px calc(16px + env(safe-area-inset-bottom, 0px)); border-radius: 22px 22px 0 0;
+  background: var(--card); box-shadow: 0 -8px 30px rgba(0,0,0,0.12); display: flex; flex-direction: column; gap: 12px;
+  animation: sheet-up 0.22s ease;
+}
+.sheet.good { border-top: 4px solid var(--good); }
+.sheet.bad { border-top: 4px solid var(--bad); }
+.sheet-head { font-weight: 900; font-size: 18px; }
+.sheet.good .sheet-head { color: var(--good); }
+.sheet.bad .sheet-head { color: var(--bad); }
+.sheet-word { display: flex; gap: 14px; align-items: flex-start; }
+.sheet-word .visual { font-size: 48px; }
+.sheet-word .word { font-size: 26px; }
+.sheet-word > div { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; min-width: 0; }
+@keyframes sheet-up { from { transform: translateY(40px); opacity: 0; } to { transform: none; opacity: 1; } }
 
 /* ---------- result ---------- */
-.result-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-.result-wrap .big-emo { font-size: 64px; margin-bottom: 10px; }
-.result-wrap h2 { margin: 0 0 6px; font-size: 20px; font-weight: 800; }
-.result-wrap p { margin: 0 0 22px; color: var(--ink-soft); font-size: 14px; }
-.result-stats { display: flex; gap: 10px; margin-bottom: 26px; }
-.primary-btn {
-  border: none; background: var(--accent); color: #fff; font-weight: 800; font-size: 15px;
-  padding: 14px 26px; border-radius: 999px; cursor: pointer; width: 100%;
-}
+.result-hero { text-align: center; padding: 20px 0 4px; }
+.result-hero .score { font-family: var(--display); font-weight: 800; font-size: 64px; letter-spacing: -0.04em; line-height: 1; }
+.result-hero p { margin: 8px 0 0; color: var(--ink-2); }
+.result-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+.stat { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 12px; text-align: center; }
+.stat b { display: block; font-family: var(--display); font-size: 24px; }
+.stat span { font-size: 11.5px; color: var(--ink-2); }
 
-/* ---------- animations (visual "video-like" motion) ---------- */
-@keyframes vw-float { 0%,100%{ transform: translateY(0) } 50%{ transform: translateY(-10px) } }
-@keyframes vw-bounce { 0%,100%{ transform: translateY(0) scale(1) } 40%{ transform: translateY(-16px) scale(1.04) } 60%{ transform: translateY(0) scale(0.98) } }
-@keyframes vw-pulse { 0%,100%{ transform: scale(1) } 50%{ transform: scale(1.1) } }
-@keyframes vw-wiggle { 0%,100%{ transform: rotate(-8deg) } 50%{ transform: rotate(8deg) } }
-@keyframes vw-shake { 0%,100%{ transform: translateX(0) } 25%{ transform: translateX(-6px) rotate(-4deg) } 75%{ transform: translateX(6px) rotate(4deg) } }
-@keyframes vw-run { 0%,100%{ transform: translateX(-18px) } 50%{ transform: translateX(18px) scaleX(-1) } }
+/* ---------- settings ---------- */
+.seg { display: flex; gap: 6px; }
+.seg button { flex: 1; border: 2px solid var(--line); background: var(--card); border-radius: 12px; padding: 10px; font-weight: 700; }
+.seg button.on { border-color: var(--accent); background: var(--accent-soft); color: var(--accent-ink); }
+.note { font-size: 12.5px; color: var(--ink-2); line-height: 1.7; margin: 0; }
+.note a { color: var(--accent-ink); font-weight: 700; }
+.field { width: 100%; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line); background: var(--card); color: var(--ink); font-size: 14px; font-family: inherit; }
+.danger-btn { border: 2px solid var(--bad-soft); background: var(--card); color: var(--bad); border-radius: 12px; padding: 12px; font-weight: 700; }
+.confirm-row { display: flex; gap: 8px; align-items: center; font-size: 13px; flex-wrap: wrap; }
+.confirm-row button { border: none; border-radius: 10px; padding: 8px 14px; font-weight: 700; }
+.confirm-row .yes { background: var(--bad); color: #fff; }
+.confirm-row .no { background: var(--line); }
+
+/* ---------- motion ---------- */
+@keyframes vw-float { 0%,100%{ transform: translateY(0) } 50%{ transform: translateY(-8px) } }
+@keyframes vw-bounce { 0%,100%{ transform: translateY(0) } 40%{ transform: translateY(-14px) } 60%{ transform: translateY(0) scale(0.98) } }
+@keyframes vw-pulse { 0%,100%{ transform: scale(1) } 50%{ transform: scale(1.08) } }
+@keyframes vw-wiggle { 0%,100%{ transform: rotate(-7deg) } 50%{ transform: rotate(7deg) } }
+@keyframes vw-shake { 0%,100%{ transform: translateX(0) } 25%{ transform: translateX(-5px) rotate(-3deg) } 75%{ transform: translateX(5px) rotate(3deg) } }
+@keyframes vw-run { 0%,100%{ transform: translateX(-16px) } 50%{ transform: translateX(16px) } }
 @keyframes vw-spin { from{ transform: rotate(0) } to{ transform: rotate(360deg) } }
-@keyframes vw-fly { 0%{ transform: translate(-20px,6px) rotate(-6deg) } 50%{ transform: translate(20px,-10px) rotate(4deg) } 100%{ transform: translate(-20px,6px) rotate(-6deg) } }
-@keyframes vw-kenburns { from{ transform: scale(1) } to{ transform: scale(1.14) } }
+@keyframes vw-fly { 0%,100%{ transform: translate(-18px,6px) rotate(-6deg) } 50%{ transform: translate(18px,-10px) rotate(4deg) } }
+@keyframes vw-kenburns { from{ transform: scale(1) } to{ transform: scale(1.12) } }
 .anim-float { animation: vw-float 2.2s ease-in-out infinite; }
 .anim-bounce { animation: vw-bounce 1s ease-in-out infinite; }
 .anim-pulse { animation: vw-pulse 1.4s ease-in-out infinite; }
-.anim-wiggle { animation: vw-wiggle 0.7s ease-in-out infinite; }
-.anim-shake { animation: vw-shake 0.55s ease-in-out infinite; }
-.anim-run { animation: vw-run 0.9s ease-in-out infinite; display: inline-block; }
-.anim-spin { animation: vw-spin 2.4s linear infinite; display: inline-block; }
-.anim-fly { animation: vw-fly 2s ease-in-out infinite; display: inline-block; }
-
-.hidden { display: none !important; }
+.anim-wiggle { animation: vw-wiggle 0.8s ease-in-out infinite; }
+.anim-shake { animation: vw-shake 0.6s ease-in-out infinite; }
+.anim-run { animation: vw-run 1s ease-in-out infinite; }
+.anim-spin { animation: vw-spin 3s linear infinite; }
+.anim-fly { animation: vw-fly 2s ease-in-out infinite; }
+.media-box { width: 100%; height: 180px; border-radius: 16px; overflow: hidden; position: relative; background: var(--accent-soft); }
+.media-box img, .media-box video { width: 100%; height: 100%; object-fit: cover; display: block; animation: vw-kenburns 6s ease-in-out infinite alternate; }
+.media-tag { position: absolute; bottom: 6px; right: 8px; font-size: 10px; font-weight: 700; color: #fff; background: rgba(0,0,0,0.5); padding: 2px 7px; border-radius: 999px; }
+@media (prefers-reduced-motion: reduce) {
+  [class*="anim-"], .media-box img, .media-box video, .sheet { animation: none !important; }
+}
 </style>
 
 <div id="app">
-  <div class="topbar">
-    <button class="back-btn hidden" id="backBtn">← 戻る</button>
-    <h1 id="topTitle">VisuWord</h1>
-    <div style="display:flex;align-items:center;gap:10px;">
-      <div class="streak" id="streakBadge">🔥 <span class="num">0</span></div>
-      <button class="gear-btn" id="settingsBtn">⚙️</button>
+  <header class="topbar">
+    <button class="icon-btn hidden" id="backBtn" aria-label="戻る">←</button>
+    <div class="brand" id="topTitle">Visu<span>Word</span></div>
+    <div class="top-right">
+      <div class="streak" id="streakBadge" title="連続学習日数">🔥<b class="num">0</b></div>
+      <button class="icon-btn" id="settingsBtn" aria-label="設定">⚙︎</button>
     </div>
-  </div>
+  </header>
 
-  <!-- HOME -->
-  <div class="screen active" id="screen-home">
-    <div class="hero">
-      <div class="emo-row">🍎🐶🏃😊🌧️</div>
-      <h2>絵と動きで単語を覚える</h2>
-      <p>日本語に訳さず、イメージ・音・例文でそのまま英語を理解しよう。</p>
-      <button class="cta" id="startTodayBtn">今日の学習をはじめる</button>
+  <section class="screen active" id="screen-home">
+    <div class="today">
+      <div class="today-label">今日のレッスン</div>
+      <div class="today-main">
+        <span class="num" id="todayReview">0</span>復習
+        <span class="plus">+</span>
+        <span class="num" id="todayNew">0</span>新出
+      </div>
+      <div class="today-sub" id="todaySub"></div>
+      <button class="cta" id="startLessonBtn">はじめる</button>
     </div>
-    <div class="stats-row">
-      <div class="stat-pill"><div class="n num" id="statMastered">0</div><div class="l">覚えた単語</div></div>
-      <div class="stat-pill"><div class="n num" id="statTotal">0</div><div class="l">全単語</div></div>
-      <div class="stat-pill"><div class="n num" id="statDue">0</div><div class="l">復習待ち</div></div>
+
+    <div class="panel">
+      <div class="panel-head"><h2>記憶の状態</h2><span class="hint">忘却曲線から推定</span></div>
+      <div id="memoryBody"></div>
     </div>
-    <div class="section-title">レベル別 重要度順（CEFR参考）</div>
+
+    <div class="section-title">レベル（CEFR参考）</div>
     <div class="level-list" id="levelList"></div>
-    <p class="freq-disclaimer">レベル・重要度は、CEFR（ヨーロッパ言語共通参照枠）の考え方や一般的な語彙の難易度を参考にしたClaudeによる推定です。英検の級はよく知られる大まかな対応関係を目安として添えたもので、英検協会の公式データ・認定ではありません。</p>
-    <div class="quiz-entry" id="quizEntry">
-      <div>
-        <div class="l">🧩 絵えらびクイズ</div>
-        <div class="s">単語を聞いて正しい絵を選ぼう</div>
-      </div>
-      <div class="go">›</div>
-    </div>
-  </div>
+    <p class="disclaimer">レベル・重要度順は、CEFR（ヨーロッパ言語共通参照枠）の考え方や一般的な語彙の難易度を参考にした独自の推定です。英検の級は大まかな対応関係の目安で、英検協会の公式データ・認定ではありません。</p>
+  </section>
 
-  <!-- STUDY -->
-  <div class="screen" id="screen-study">
-    <div class="study-progress" id="studyProgress"></div>
-    <div class="card-stage" id="cardStage"></div>
-    <div class="grade-row hidden" id="gradeRow">
-      <button class="grade-btn bad" id="gradeBad">😵 まだ</button>
-      <button class="grade-btn good" id="gradeGood">😊 覚えた</button>
-    </div>
-    <div class="hint-swipe">カードをタップすると例文が見えるよ</div>
-  </div>
+  <section class="screen" id="screen-level">
+    <div class="level-head" id="levelHead"></div>
+    <button class="cta wide" id="levelStartBtn">このレベルを学習する</button>
+    <div class="word-list" id="wordList"></div>
+  </section>
 
-  <!-- QUIZ -->
-  <div class="screen" id="screen-quiz">
-    <div class="quiz-head">
-      <div class="prompt-label">この単語の絵は？</div>
-      <div class="prompt-word" id="quizWord">—</div>
-      <button class="speak-btn" id="quizSpeakBtn">🔊</button>
+  <section class="screen" id="screen-lesson">
+    <div class="lesson-top">
+      <button class="icon-btn" id="quitBtn" aria-label="レッスンをやめる">✕</button>
+      <div class="lesson-bar"><i id="lessonFill"></i></div>
+      <span class="num lesson-count" id="lessonCount"></span>
     </div>
-    <div class="quiz-opts" id="quizOpts"></div>
-  </div>
+    <div class="lesson-body" id="lessonBody"></div>
+    <div class="sheet hidden" id="sheet"></div>
+  </section>
 
-  <!-- RESULT -->
-  <div class="screen" id="screen-result">
-    <div class="result-wrap">
-      <div class="big-emo" id="resultEmo">🎉</div>
-      <h2 id="resultTitle">お疲れさま！</h2>
-      <p id="resultDesc">今日のカードは全部終わったよ</p>
-      <div class="result-stats">
-        <div class="stat-pill"><div class="n num" id="resGood">0</div><div class="l">覚えた</div></div>
-        <div class="stat-pill"><div class="n num" id="resBad">0</div><div class="l">もう一度</div></div>
-      </div>
-      <button class="primary-btn" id="resultHomeBtn">ホームに戻る</button>
+  <section class="screen" id="screen-result">
+    <div id="resultBody" style="display:flex;flex-direction:column;gap:18px;"></div>
+  </section>
+
+  <section class="screen" id="screen-settings">
+    <div class="section-title">1回のレッスンで覚える新しい単語</div>
+    <div class="seg" id="newPerSeg">
+      <button data-n="3">3語</button><button data-n="5">5語</button><button data-n="10">10語</button>
     </div>
-  </div>
 
-  <!-- SETTINGS -->
-  <div class="screen" id="screen-settings">
-    <div class="section-title">写真・動画表示</div>
-    <p style="font-size:13px;color:var(--ink-soft);line-height:1.6;margin:0 0 14px;">
-      無料のPexels APIキーを登録すると、絵文字の代わりに本物の写真・動画で単語を学習できます。
-      <a href="https://www.pexels.com/api/" target="_blank" rel="noopener" style="color:var(--accent-ink);font-weight:700;">pexels.com/api</a>
-      で無料登録し、発行されたキーを下に貼ってください（数分で取得できます）。キーが無い場合は絵文字表示のままになります。
-    </p>
-    <input id="pexelsKeyInput" type="text" placeholder="Pexels API キーを貼り付け"
-      style="width:100%;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:var(--bg-card);color:var(--ink);font-size:14px;margin-bottom:12px;box-sizing:border-box;">
-    <button class="primary-btn" id="saveKeyBtn" style="margin-bottom:10px;">保存する</button>
-    <div id="keyStatus" style="font-size:12.5px;color:var(--ink-soft);text-align:center;"></div>
-  </div>
+    <div class="section-title">写真・動画（Pexels）</div>
+    <p class="note">無料の <a href="https://www.pexels.com/api/" target="_blank" rel="noopener">Pexels API</a> キーを登録すると、新しい単語を覚えるときに絵文字の代わりに本物の写真（名詞など）や動画（動詞）が表示されます。</p>
+        <input class="field" id="pexelsKeyInput" type="text" placeholder="Pexels API キー" autocomplete="off">
+    <button class="cta wide" id="saveKeyBtn">保存する</button>
+    <div class="note" id="keyStatus" style="text-align:center;"></div>
+
+    <div class="section-title">データ</div>
+    <button class="danger-btn" id="resetBtn">学習記録をリセット</button>
+    <div class="confirm-row hidden" id="resetConfirm">
+      <span>記録とストリークがすべて消えます。</span>
+      <button class="yes" id="resetYes">消す</button><button class="no" id="resetNo">やめる</button>
+    </div>
+  </section>
 </div>
 
 <script>
 /* ================= DATA ================= */
-// internal only now (drives each word's emoji-motion style + Pexels search hints);
-// the level shown to the user is the Eiken level on each WORD entry, not this.
 var CATS = [
   { id:'animals',  icon:'🐶', anim:'float' },
   { id:'food',     icon:'🍎', anim:'pulse' },
@@ -637,425 +681,673 @@ var WORDS = [
   W('population','society','👥📈','人口','The population of this city is growing.','2',3)
 ];
 
+// Simple English definitions for abstract words that a picture can't carry.
+var DEFS = {
+  decide: "to make a choice about something",
+  increase: "to become bigger in number or amount",
+  decrease: "to become smaller in number or amount",
+  improve: "to become better",
+  explain: "to tell someone about something so they understand it",
+  describe: "to say what something or someone is like",
+  compare: "to look at two things to see how they are the same or different",
+  "continue": "to keep doing something without stopping",
+  consider: "to think carefully about something",
+  encourage: "to give someone hope or confidence to do something",
+  communicate: "to share ideas or feelings with other people",
+  protect: "to keep someone or something safe from harm",
+  believe: "to feel sure that something is true",
+  realize: "to suddenly understand or notice something",
+  achieve: "to succeed in doing something after trying hard",
+  solve: "to find the answer to a problem",
+  borrow: "to take something from someone and give it back later",
+  lend: "to give something to someone for a short time",
+  introduce: "to tell people each other's names when they first meet",
+  invite: "to ask someone to come to an event",
+  promise: "to say that you will surely do something",
+  suggest: "to give an idea for someone to think about",
+  prepare: "to get ready for something",
+  arrive: "to reach a place",
+  leave: "to go away from a place",
+  "return": "to come or go back to a place",
+  follow: "to go after someone or something",
+  collect: "to bring things together and keep them",
+  spend: "to use money or time",
+  waste: "to use something badly so that it is lost",
+  imagine: "to make a picture of something in your mind",
+  discover: "to find something for the first time",
+  agree: "to have the same idea as someone",
+  disagree: "to have a different idea from someone",
+  important: "having a big effect; something you must care about",
+  difficult: "not easy to do or understand",
+  dangerous: "able to hurt you",
+  safe: "not able to hurt you; free from danger",
+  popular: "liked by many people",
+  famous: "known by many people",
+  similar: "almost the same",
+  different: "not the same",
+  several: "more than two, but not many",
+  various: "of many different kinds",
+  useful: "helping you to do something",
+  careful: "paying attention so that you do not make mistakes",
+  special: "different from usual, and better",
+  common: "happening often or seen in many places",
+  possible: "able to happen or be done",
+  necessary: "needed; you must have it",
+  polite: "speaking and acting in a kind and correct way",
+  brave: "not afraid of danger",
+  honest: "always telling the truth",
+  active: "moving around and doing many things",
+  proud: "happy about something that you or others did",
+  environment: "the air, water, and land around us",
+  information: "facts about something",
+  experience: "something that happens to you and teaches you",
+  opportunity: "a good time or chance to do something",
+  technology: "machines and tools made by using science",
+  society: "people living together as a group",
+  culture: "the way of life, art, and customs of a group of people",
+  history: "the things that happened in the past",
+  future: "the time that will come",
+  problem: "something difficult that needs to be fixed",
+  reason: "why something happens",
+  purpose: "why you do something; your goal",
+  idea: "a thought or plan in your mind",
+  opinion: "what you think about something",
+  fact: "something that is true",
+  example: "one thing that shows what other things are like",
+  result: "what happens because of something",
+  effect: "a change caused by something",
+  method: "a way of doing something",
+  system: "a set of parts that work together",
+  government: "the group of people who control a country",
+  population: "the number of people living in a place",
+  thirsty: "needing something to drink",
+  big: "large in size",
+  small: "little in size",
+  hot: "very warm",
+  fast: "moving quickly",
+  slow: "not moving quickly",
+  "new": "just made or bought; not used before",
+  old: "having lived or been used for a long time"
+};
+
+// Confusable pairs: shown against each other so the learner has to tell them apart.
+var PAIR_LIST = [
+  ['borrow','lend'], ['arrive','leave'], ['increase','decrease'], ['agree','disagree'],
+  ['safe','dangerous'], ['similar','different'], ['happy','sad'], ['big','small'],
+  ['hot','cold'], ['fast','slow'], ['new','old'], ['open','close'], ['morning','night'],
+  ['yesterday','tomorrow'], ['mother','father'], ['sister','brother'],
+  ['grandmother','grandfather'], ['walk','run'], ['listen','speak'], ['fact','opinion'],
+  ['result','reason'], ['famous','popular'], ['collect','spend'], ['sun','moon']
+];
+var PAIRS = {};
+PAIR_LIST.forEach(function(p){ PAIRS[p[0]] = p[1]; PAIRS[p[1]] = p[0]; });
+
 var CAT_BY_ID = {};
 CATS.forEach(function(c){ CAT_BY_ID[c.id] = c; });
-
+var WORD_BY_EN = {};
 var LEVEL_TOTAL = {};
-var levelRankCounters = {};
+var PICTURE_CATS = { animals:1, food:1, body:1, people:1, school:1, nature:1, objects:1, places:1, colors:1, actions:1 };
+var PICTURE_WORDS = { happy:1, sad:1, angry:1, tired:1, hungry:1, cold:1 };
+var emojiCount = {};
+WORDS.forEach(function(w){ emojiCount[w.emoji] = (emojiCount[w.emoji] || 0) + 1; });
+
+function posOf(w) {
+  if (w.cat === 'actions' || w.cat === 'thinking') return 'v';
+  if (w.cat === 'feelings' || w.cat === 'qualities') return 'adj';
+  if (w.cat === 'colors') return 'color';
+  return 'n';
+}
+function wordRegex(w) { return new RegExp('\\b' + w.en + '(?:s|es|ed|d|ing)?\\b', 'gi'); }
+
+var levelCounter = {};
 WORDS.forEach(function(w){
+  WORD_BY_EN[w.en] = w;
   LEVEL_TOTAL[w.level] = (LEVEL_TOTAL[w.level] || 0) + 1;
-  levelRankCounters[w.level] = (levelRankCounters[w.level] || 0) + 1;
-  w.rank = levelRankCounters[w.level]; // 重要度順位: WORDS内の並び = freq(重要度)降順を反映した順序
+  levelCounter[w.level] = (levelCounter[w.level] || 0) + 1;
+  w.rank = levelCounter[w.level];
+  w.pos = posOf(w);
+  // a picture option is only fair when the emoji is concrete and not shared with another word
+  w.pictureable = !!(PICTURE_CATS[w.cat] || PICTURE_WORDS[w.en]) && emojiCount[w.emoji] === 1;
+  // adjectives/colors make ambiguous blanks ("This park is ___ for kids": safe? dangerous?)
+  w.blankable = (w.pos === 'n' || w.pos === 'v') && wordRegex(w).test(w.sentence);
 });
 
-function freqStars(freq) {
-  var n = Math.max(1, Math.min(5, Math.round(freq / 4)));
-  return '★★★★★'.slice(0, n) + '☆☆☆☆☆'.slice(0, 5 - n);
+/* ================= UTIL ================= */
+function $(id) { return document.getElementById(id); }
+function esc(s) {
+  return String(s).replace(/[&<>"']/g, function(c){
+    return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c];
+  });
 }
+function pad(n) { return (n < 10 ? '0' : '') + n; }
+function localDate(d) { d = d || new Date(); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
+function addDays(n) { var d = new Date(); d.setDate(d.getDate() + n); return localDate(d); }
+function shuffle(a) {
+  a = a.slice();
+  for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; }
+  return a;
+}
+function loadJSON(k, fallback) {
+  try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : fallback; } catch (e) { return fallback; }
+}
+function saveJSON(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+function removeKey(k) { try { localStorage.removeItem(k); } catch (e) {} }
 
-/* ================= STORAGE ================= */
+/* ================= MEMORY MODEL ================= */
 var LS_PROGRESS = 'vw_progress_v1';
 var LS_STREAK = 'vw_streak_v1';
-var BOX_INTERVAL_DAYS = [0, 1, 3, 7, 14]; // index = box level
+var LS_SETTINGS = 'vw_settings_v1';
+var INTERVAL = [0, 1, 3, 7, 14];      // days until next review, by box
+var STABILITY = [0.6, 1.5, 4, 10, 25]; // forgetting-curve time constant, by box
 var MASTER_BOX = 4;
 
-function todayStr() { return new Date().toISOString().slice(0,10); }
-function daysBetween(a, b) { return Math.floor((new Date(b) - new Date(a)) / 86400000); }
+var progress = loadJSON(LS_PROGRESS, {});
+var settings = loadJSON(LS_SETTINGS, { newPer: 5, focus: null });
 
-function loadProgress() {
-  try { return JSON.parse(localStorage.getItem(LS_PROGRESS)) || {}; } catch(e) { return {}; }
+function entryOf(w) { return progress[w.id] || null; }
+function lastReviewed(e) {
+  if (e.last) return new Date(e.last).getTime();
+  var d = new Date(e.next + 'T00:00:00');
+  d.setDate(d.getDate() - INTERVAL[Math.min(e.box, MASTER_BOX)]);
+  return d.getTime();
 }
-function saveProgress(p) { try { localStorage.setItem(LS_PROGRESS, JSON.stringify(p)); } catch(e) {} }
-
-function loadStreak() {
-  try { return JSON.parse(localStorage.getItem(LS_STREAK)) || { count: 0, lastDate: null }; }
-  catch(e) { return { count: 0, lastDate: null }; }
+function retention(e) {
+  if (!e) return null;
+  var days = Math.max(0, (Date.now() - lastReviewed(e)) / 86400000);
+  var r = Math.exp(-days / STABILITY[Math.min(e.box, MASTER_BOX)]);
+  // box 0 means the last answer was wrong: it isn't "fresh in memory" just because it was seen a minute ago
+  return e.box === 0 ? Math.min(r, 0.4) : r;
 }
-function saveStreak(s) { try { localStorage.setItem(LS_STREAK, JSON.stringify(s)); } catch(e) {} }
+function isDue(e) { return !!e && e.next <= localDate(); }
+function record(w, correct) {
+  var e = entryOf(w);
+  var box = correct ? (e ? Math.min(e.box + 1, MASTER_BOX) : 1) : 0;
+  progress[w.id] = { box: box, next: addDays(INTERVAL[box]), last: new Date().toISOString() };
+  saveJSON(LS_PROGRESS, progress);
+}
+function retColor(r) { return r >= 0.8 ? 'var(--good)' : r >= 0.5 ? 'var(--warn)' : 'var(--bad)'; }
 
+function loadStreak() { return loadJSON(LS_STREAK, { count: 0, lastDate: null }); }
 function bumpStreak() {
   var s = loadStreak();
-  var t = todayStr();
-  if (s.lastDate === t) return s;
-  if (s.lastDate) {
-    var d = daysBetween(s.lastDate, t);
-    s.count = (d === 1) ? s.count + 1 : 1;
-  } else {
-    s.count = 1;
-  }
+  var t = localDate();
+  if (s.lastDate === t) return;
+  var gap = s.lastDate ? Math.round((new Date(t + 'T00:00:00') - new Date(s.lastDate + 'T00:00:00')) / 86400000) : null;
+  s.count = gap === 1 ? s.count + 1 : 1;
   s.lastDate = t;
-  saveStreak(s);
-  return s;
+  saveJSON(LS_STREAK, s);
 }
-
-var progress = loadProgress();
-
-function getEntry(id) {
-  return progress[id] || { box: 0, next: todayStr() };
-}
-function setEntry(id, box) {
-  var days = BOX_INTERVAL_DAYS[Math.min(box, BOX_INTERVAL_DAYS.length - 1)];
-  var next = new Date();
-  next.setDate(next.getDate() + days);
-  progress[id] = { box: box, next: next.toISOString().slice(0,10) };
-  saveProgress(progress);
-}
-function isDue(id) {
-  var e = getEntry(id);
-  return e.next <= todayStr();
-}
-function isMastered(id) { return getEntry(id).box >= MASTER_BOX; }
-
-/* ================= NAV ================= */
-var screens = ['home','study','quiz','result','settings'];
-function showScreen(name) {
-  screens.forEach(function(s){
-    document.getElementById('screen-' + s).classList.toggle('active', s === name);
-  });
-  document.getElementById('backBtn').classList.toggle('hidden', name === 'home');
-  var titles = { home:'VisuWord', study:'学習中', quiz:'絵えらびクイズ', result:'結果', settings:'設定' };
-  document.getElementById('topTitle').textContent = titles[name];
-}
-document.getElementById('backBtn').onclick = function(){ renderHome(); showScreen('home'); };
-
-/* ================= SETTINGS / MEDIA ================= */
-var LS_PEXELS_KEY = 'vw_pexels_key';
-var LS_MEDIA_CACHE = 'vw_media_cache_v1';
-
-function getPexelsKey() { try { return localStorage.getItem(LS_PEXELS_KEY) || ''; } catch(e) { return ''; } }
-function loadMediaCache() {
-  try { return JSON.parse(localStorage.getItem(LS_MEDIA_CACHE)) || {}; } catch(e) { return {}; }
-}
-function saveMediaCache(c) { try { localStorage.setItem(LS_MEDIA_CACHE, JSON.stringify(c)); } catch(e) {} }
-var mediaCache = loadMediaCache();
-
-document.getElementById('settingsBtn').onclick = function(){
-  document.getElementById('pexelsKeyInput').value = getPexelsKey();
-  document.getElementById('keyStatus').textContent = getPexelsKey()
-    ? '現在キーが登録されています。写真・動画表示が有効です。'
-    : 'キー未登録：絵文字表示のままです。';
-  showScreen('settings');
-};
-document.getElementById('saveKeyBtn').onclick = function(){
-  var v = document.getElementById('pexelsKeyInput').value.trim();
-  try { localStorage.setItem(LS_PEXELS_KEY, v); } catch(e) {}
-  document.getElementById('keyStatus').textContent = v
-    ? '保存しました。次のカードから写真・動画を試します。'
-    : 'キーを削除しました。絵文字表示に戻ります。';
-};
-
-// verbs/thinking words read better as a short looping video; everything else as a photo
-function mediaKindFor(word) {
-  return (word.cat === 'actions' || word.cat === 'thinking') ? 'video' : 'photo';
-}
-
-function fetchPexelsMedia(word) {
-  var key = getPexelsKey();
-  if (!key) return Promise.resolve(null);
-  var query = QUERY_OVERRIDE[word.en] || word.en;
-  var kind = mediaKindFor(word);
-  var url = kind === 'video'
-    ? 'https://api.pexels.com/videos/search?query=' + encodeURIComponent(query) + '&per_page=1&orientation=square'
-    : 'https://api.pexels.com/v1/search?query=' + encodeURIComponent(query) + '&per_page=1&orientation=square';
-
-  return fetch(url, { headers: { Authorization: key } })
-    .then(function(r){ if (!r.ok) throw new Error('pexels http ' + r.status); return r.json(); })
-    .then(function(data){
-      if (kind === 'video') {
-        var v = data.videos && data.videos[0];
-        if (!v) return null;
-        var files = (v.video_files || []).filter(function(f){ return f.file_type === 'video/mp4'; })
-          .sort(function(a,b){ return a.width - b.width; });
-        var pick = files.filter(function(f){ return f.width >= 300; })[0] || files[0];
-        return pick ? { kind:'video', url: pick.link } : null;
-      }
-      var p = data.photos && data.photos[0];
-      return p ? { kind:'photo', url: p.src.medium } : null;
-    })
-    .catch(function(){ return null; });
-}
-
-function getMedia(word) {
-  if (mediaCache[word.id] !== undefined) return Promise.resolve(mediaCache[word.id]);
-  return fetchPexelsMedia(word).then(function(media){
-    mediaCache[word.id] = media;
-    saveMediaCache(mediaCache);
-    return media;
-  });
+function currentStreak() {
+  var s = loadStreak();
+  if (!s.lastDate) return 0;
+  var gap = Math.round((new Date(localDate() + 'T00:00:00') - new Date(s.lastDate + 'T00:00:00')) / 86400000);
+  return gap <= 1 ? s.count : 0;
 }
 
 /* ================= SPEECH ================= */
-function speak(text) {
+var canSpeak = 'speechSynthesis' in window;
+function speak(text, rate) {
+  if (!canSpeak) return;
   try {
-    if (!('speechSynthesis' in window)) return;
     var u = new SpeechSynthesisUtterance(text);
     u.lang = 'en-US';
-    u.rate = 0.9;
+    u.rate = rate || 0.9;
     window.speechSynthesis.cancel();
     window.speechSynthesis.speak(u);
-  } catch(e) {}
+  } catch (e) {}
+}
+
+/* ================= MEDIA (Pexels) ================= */
+var LS_PEXELS_KEY = 'vw_pexels_key';
+var LS_MEDIA_CACHE = 'vw_media_cache_v1';
+var mediaCache = loadJSON(LS_MEDIA_CACHE, {});
+function getPexelsKey() { try { return localStorage.getItem(LS_PEXELS_KEY) || ''; } catch (e) { return ''; } }
+function fetchPexelsMedia(w) {
+  var key = getPexelsKey();
+  if (!key) return Promise.resolve(null);
+  var query = QUERY_OVERRIDE[w.en] || w.en;
+  var video = w.pos === 'v';
+  var url = video
+    ? 'https://api.pexels.com/videos/search?query=' + encodeURIComponent(query) + '&per_page=1&orientation=landscape'
+    : 'https://api.pexels.com/v1/search?query=' + encodeURIComponent(query) + '&per_page=1&orientation=landscape';
+  return fetch(url, { headers: { Authorization: key } })
+    .then(function(r){ if (!r.ok) throw new Error('pexels ' + r.status); return r.json(); })
+    .then(function(data){
+      if (video) {
+        var v = data.videos && data.videos[0];
+        if (!v) return null;
+        var files = (v.video_files || []).filter(function(f){ return f.file_type === 'video/mp4'; })
+          .sort(function(a, b){ return a.width - b.width; });
+        var pick = files.filter(function(f){ return f.width >= 480; })[0] || files[files.length - 1];
+        return pick ? { kind: 'video', url: pick.link } : null;
+      }
+      var p = data.photos && data.photos[0];
+      return p ? { kind: 'photo', url: p.src.medium } : null;
+    })
+    .catch(function(){ return null; });
+}
+function getMedia(w) {
+  if (mediaCache[w.id] !== undefined) return Promise.resolve(mediaCache[w.id]);
+  return fetchPexelsMedia(w).then(function(m){
+    if (m) { mediaCache[w.id] = m; saveJSON(LS_MEDIA_CACHE, mediaCache); }
+    return m;
+  });
+}
+
+/* ================= NAV ================= */
+var SCREENS = ['home', 'level', 'lesson', 'result', 'settings'];
+function showScreen(name) {
+  SCREENS.forEach(function(s){ $('screen-' + s).classList.toggle('active', s === name); });
+  $('app').classList.toggle('in-lesson', name === 'lesson');
+  $('backBtn').classList.toggle('hidden', name === 'home');
+  var titles = { home: 'Visu<span>Word</span>', level: 'レベル', result: 'レッスン結果', settings: '設定' };
+  if (titles[name]) $('topTitle').innerHTML = titles[name];
+  $('streakBadge').querySelector('b').textContent = currentStreak();
+  window.scrollTo(0, 0);
+}
+function goHome() { renderHome(); showScreen('home'); }
+$('backBtn').onclick = goHome;
+
+function wire(root) {
+  root.querySelectorAll('[data-say]').forEach(function(b){
+    b.onclick = function(e){ e.stopPropagation(); speak(b.getAttribute('data-say'), b.hasAttribute('data-slow') ? 0.85 : 0.9); };
+  });
+  root.querySelectorAll('.redsheet').forEach(function(b){
+    b.onclick = function(e){ e.stopPropagation(); b.classList.toggle('lifted'); };
+  });
+}
+
+/* ================= LESSON PLANNING ================= */
+function unseenIn(levelId) { return WORDS.filter(function(w){ return w.level === levelId && !entryOf(w); }); }
+function focusLevel() {
+  if (settings.focus && unseenIn(settings.focus).length) return settings.focus;
+  for (var i = 0; i < LEVELS.length; i++) if (unseenIn(LEVELS[i].id).length) return LEVELS[i].id;
+  return LEVELS[LEVELS.length - 1].id;
+}
+function quizTypes(w) {
+  var t = [];
+  if (w.pictureable) t.push('listen');
+  if (w.blankable) t.push('context');
+  if (DEFS[w.en]) t.push('define');
+  if (!t.length) t.push('recall');
+  return t;
+}
+function pickType(w, avoid) {
+  var t = quizTypes(w);
+  var c = t.filter(function(x){ return x !== avoid; });
+  if (!c.length) c = t;
+  return c[Math.floor(Math.random() * c.length)];
+}
+function buildLesson(levelId, allowPractice) {
+  var focus = levelId || focusLevel();
+  var inScope = function(w){ return !levelId || w.level === levelId; };
+  var reviews = WORDS.filter(function(w){ return inScope(w) && isDue(entryOf(w)); })
+    .sort(function(a, b){ return retention(entryOf(a)) - retention(entryOf(b)); })
+    .slice(0, 12);
+  var fresh = WORDS.filter(function(w){ return w.level === focus && !entryOf(w); }).slice(0, settings.newPer);
+  var practice = false;
+  if (!reviews.length && !fresh.length && allowPractice) {
+    reviews = WORDS.filter(function(w){ return inScope(w) && entryOf(w); })
+      .sort(function(a, b){ return retention(entryOf(a)) - retention(entryOf(b)); })
+      .slice(0, 10);
+    practice = true;
+  }
+  var steps = fresh.map(function(w){ return { type: 'learn', w: w }; });
+  shuffle(fresh.concat(reviews)).forEach(function(w){ steps.push({ type: pickType(w), w: w }); });
+  return { steps: steps, focus: focus, nReview: reviews.length, nNew: fresh.length, practice: practice };
+}
+
+function distractors(w, mode) {
+  var ok = function(o){
+    if (o.id === w.id) return false;
+    if (mode === 'listen') return o.pictureable && o.emoji !== w.emoji;
+    if (o.pos !== w.pos) return false;
+    // in a sentence blank, a same-theme word or an antonym often fits just as well — keep those out
+    if (mode === 'context') return o.cat !== w.cat && PAIRS[w.en] !== o.en;
+    return true;
+  };
+  var picked = [];
+  var pair = mode !== 'context' && PAIRS[w.en] && WORD_BY_EN[PAIRS[w.en]];
+  if (pair && ok(pair)) picked.push(pair);
+  var tiers = [
+    WORDS.filter(function(o){ return ok(o) && o.cat === w.cat; }),
+    WORDS.filter(function(o){ return ok(o) && o.level === w.level; }),
+    WORDS.filter(ok)
+  ];
+  for (var t = 0; t < tiers.length && picked.length < 3; t++) {
+    shuffle(tiers[t]).forEach(function(o){ if (picked.length < 3 && picked.indexOf(o) < 0) picked.push(o); });
+  }
+  return picked;
+}
+
+/* ================= LESSON RUNTIME ================= */
+var L = null;
+var stepToken = 0;
+
+function startLesson(levelId) {
+  var plan = buildLesson(levelId, true);
+  if (!plan.steps.length) { goHome(); return; }
+  L = { steps: plan.steps, i: 0, correct: 0, wrong: 0, graded: {}, missed: [], newCount: plan.nNew, practice: plan.practice };
+  showScreen('lesson');
+  renderStep();
+}
+$('startLessonBtn').onclick = function(){ startLesson(null); };
+$('quitBtn').onclick = function(){ L = null; closeSheet(); goHome(); };
+
+function animOf(w) { return ACTION_ANIM[w.en] || (CAT_BY_ID[w.cat] && CAT_BY_ID[w.cat].anim) || 'float'; }
+function visualHTML(w, animate) { return '<span class="visual' + (animate ? ' anim-' + animOf(w) : '') + '">' + w.emoji + '</span>'; }
+function markSentence(w) { return esc(w.sentence).replace(wordRegex(w), function(m){ return '<mark>' + m + '</mark>'; }); }
+function blankSentence(w) { return esc(w.sentence).replace(wordRegex(w), '<span class="blank" aria-label="空欄">____</span>'); }
+function redSheetHTML(w) {
+  return '<button class="redsheet" type="button" aria-label="日本語の意味を表示"><span class="ja">' + esc(w.ja) +
+    '</span><span class="film">タップで日本語</span></button>';
+}
+function sayBtn(text, sm) { return '<button class="speak' + (sm ? ' sm' : '') + '" data-say="' + esc(text) + '" aria-label="発音を聞く">🔊</button>'; }
+
+function renderStep() {
+  closeSheet();
+  var s = L.steps[L.i];
+  var token = ++stepToken;
+  $('lessonFill').style.width = (L.i / L.steps.length * 100) + '%';
+  $('lessonCount').textContent = (L.i + 1) + ' / ' + L.steps.length;
+  var body = $('lessonBody');
+  if (s.type === 'learn') renderLearn(s, body, token);
+  else if (s.type === 'listen') renderListen(s, body);
+  else if (s.type === 'context') renderChoice(s, body, 'context');
+  else if (s.type === 'define') renderChoice(s, body, 'define');
+  else renderRecall(s, body);
+  window.scrollTo(0, 0);
+}
+
+function renderLearn(s, body, token) {
+  var w = s.w;
+  body.innerHTML =
+    '<span class="step-tag new">NEW</span>' +
+    '<div class="learn-card">' +
+      '<div class="visual-wrap" id="visWrap">' + visualHTML(w, true) + '</div>' +
+      '<div class="word-line"><h1 class="word">' + esc(w.en) + '</h1>' + sayBtn(w.en) + '</div>' +
+      '<p class="sentence">' + markSentence(w) + ' ' + sayBtn(w.sentence, true) + '</p>' +
+      (DEFS[w.en] ? '<p class="def">' + esc(DEFS[w.en]) + '</p>' : '') +
+      redSheetHTML(w) +
+    '</div>' +
+    '<button class="cta wide" id="nextBtn">覚えた・次へ</button>';
+  wire(body);
+  $('nextBtn').onclick = advance;
+  speak(w.en);
+  if (getPexelsKey()) {
+    getMedia(w).then(function(m){
+      if (!m || token !== stepToken) return;
+      var inner = m.kind === 'video'
+        ? '<video src="' + esc(m.url) + '" autoplay loop muted playsinline></video>'
+        : '<img src="' + esc(m.url) + '" alt="' + esc(w.en) + '">';
+      $('visWrap').innerHTML = '<div class="media-box">' + inner + '<span class="media-tag">' + (m.kind === 'video' ? '動画' : '写真') + '</span></div>';
+    });
+  }
+}
+
+function renderListen(s, body) {
+  var w = s.w;
+  var opts = shuffle(distractors(w, 'listen').concat([w]));
+  body.innerHTML =
+    '<span class="step-tag">聞き取り</span>' +
+    '<h2 class="prompt">聞こえた単語の絵はどれ？</h2>' +
+    '<button class="big-speak" data-say="' + esc(w.en) + '" data-slow aria-label="もう一度聞く">🔊<span>もう一度</span></button>' +
+    '<button class="text-reveal" id="textReveal">音が出ない？ 文字で表示</button>' +
+    '<div class="pic-grid">' + opts.map(function(o, i){
+      return '<button class="pic-opt" data-i="' + i + '" aria-label="選択肢' + (i + 1) + '">' + visualHTML(o, false) + '</button>';
+    }).join('') + '</div>';
+  wire(body);
+  $('textReveal').onclick = function(){ this.outerHTML = '<div class="word" style="text-align:center;font-size:30px;">' + esc(w.en) + '</div>'; };
+  if (!canSpeak) $('textReveal').click();
+  bindOptions(body, '.pic-opt', opts, s);
+  speak(w.en, 0.85);
+}
+
+function renderChoice(s, body, mode) {
+  var w = s.w;
+  var opts = shuffle(distractors(w, mode).concat([w]));
+  var head = mode === 'context'
+    ? '<span class="step-tag">文脈</span><h2 class="prompt">空欄に入る単語は？</h2><p class="sentence big">' + blankSentence(w) + '</p>'
+    : '<span class="step-tag">英英</span><h2 class="prompt">この説明にあてはまる単語は？</h2><blockquote class="def big" style="margin:0;">' + esc(DEFS[w.en]) + '</blockquote>';
+  body.innerHTML = head +
+    '<div class="word-grid">' + opts.map(function(o, i){
+      return '<button class="word-opt" data-i="' + i + '">' + esc(o.en) + '</button>';
+    }).join('') + '</div>';
+  bindOptions(body, '.word-opt', opts, s);
+}
+
+function bindOptions(body, sel, opts, s) {
+  var buttons = body.querySelectorAll(sel);
+  buttons.forEach(function(b){
+    b.onclick = function(){
+      var chosen = opts[+b.getAttribute('data-i')];
+      var correct = chosen.id === s.w.id;
+      buttons.forEach(function(x){
+        x.disabled = true;
+        if (opts[+x.getAttribute('data-i')].id === s.w.id) x.classList.add('correct');
+      });
+      if (!correct) b.classList.add('wrong');
+      grade(s, correct);
+      showSheet(s, correct);
+    };
+  });
+}
+
+function renderRecall(s, body) {
+  var w = s.w;
+  body.innerHTML =
+    '<span class="step-tag">思い出す</span>' +
+    '<h2 class="prompt">この単語の意味、イメージできる？</h2>' +
+    '<div class="learn-card">' +
+      '<div class="word-line"><h1 class="word">' + esc(w.en) + '</h1>' + sayBtn(w.en) + '</div>' +
+      '<div id="recallAnswer" class="hidden" style="display:flex;flex-direction:column;gap:12px;align-items:center;">' +
+        '<div class="visual-wrap">' + visualHTML(w, true) + '</div>' +
+        '<p class="sentence">' + markSentence(w) + '</p>' + redSheetHTML(w) +
+      '</div>' +
+    '</div>' +
+    '<div class="step-actions" id="recallActions"><button class="cta wide" id="revealBtn">答えを見る</button></div>';
+  wire(body);
+  speak(w.en);
+  $('revealBtn').onclick = function(){
+    $('recallAnswer').classList.remove('hidden');
+    $('recallActions').innerHTML =
+      '<button class="ghost-btn" id="recallNo">わからなかった</button>' +
+      '<button class="cta wide" style="flex:1;" id="recallYes">わかった</button>';
+    $('recallNo').onclick = function(){ grade(s, false); advance(); };
+    $('recallYes').onclick = function(){ grade(s, true); advance(); };
+  };
+}
+
+function grade(s, correct) {
+  var w = s.w;
+  if (!L.graded[w.id]) {
+    L.graded[w.id] = true;
+    record(w, correct);
+    if (correct) L.correct++; else { L.wrong++; L.missed.push(w); }
+    bumpStreak();
+  }
+  // a miss comes back once at the end, asked a different way
+  if (!correct && !s.retry) L.steps.push({ type: pickType(w, s.type), w: w, retry: true });
+}
+
+var autoNext = null;
+function showSheet(s, correct) {
+  var w = s.w;
+  var sheet = $('sheet');
+  sheet.className = 'sheet ' + (correct ? 'good' : 'bad');
+  if (correct) {
+    sheet.innerHTML =
+      '<div class="sheet-head">✓ 正解！</div>' +
+      '<div class="sheet-word">' + visualHTML(w, false) + '<div><div class="word-line"><span class="word">' + esc(w.en) + '</span>' + sayBtn(w.en, true) + '</div></div></div>' +
+      '<button class="cta wide" id="sheetNext">次へ</button>';
+  } else {
+    sheet.innerHTML =
+      '<div class="sheet-head">✗ 正解はこちら</div>' +
+      '<div class="sheet-word">' + visualHTML(w, false) + '<div>' +
+        '<div class="word-line"><span class="word">' + esc(w.en) + '</span>' + sayBtn(w.en, true) + '</div>' +
+        '<p class="sentence">' + markSentence(w) + '</p>' +
+        (DEFS[w.en] ? '<p class="def">' + esc(DEFS[w.en]) + '</p>' : '') +
+        redSheetHTML(w) +
+      '</div></div>' +
+      '<button class="cta wide" id="sheetNext">次へ</button>';
+  }
+  wire(sheet);
+  $('sheetNext').onclick = advance;
+  speak(w.en);
+  clearTimeout(autoNext);
+  // correct answers keep the pace brisk; misses wait for the learner to read
+  if (correct) {
+    var token = stepToken;
+    autoNext = setTimeout(function(){ if (L && token === stepToken) advance(); }, 1300);
+  }
+}
+function closeSheet() { clearTimeout(autoNext); $('sheet').className = 'sheet hidden'; $('sheet').innerHTML = ''; }
+
+function advance() {
+  if (!L) return;
+  clearTimeout(autoNext);
+  L.i++;
+  if (L.i >= L.steps.length) finishLesson(); else renderStep();
+}
+
+function finishLesson() {
+  closeSheet();
+  $('lessonFill').style.width = '100%';
+  var total = L.correct + L.wrong;
+  var pct = total ? Math.round(L.correct / total * 100) : 100;
+  var msg = pct >= 90 ? 'すばらしい！この調子。' : pct >= 70 ? 'いい感じ。間違えた単語は明日また出ます。' : '間違えた単語は、忘れる前にまた出題します。';
+  var missed = L.missed.map(function(w){
+    return '<div class="word-row" style="grid-template-columns:34px 1fr auto;"><span class="em">' + w.emoji + '</span>' +
+      '<span><span class="en">' + esc(w.en) + '</span></span>' + sayBtn(w.en, true) + '</div>';
+  }).join('');
+  $('resultBody').innerHTML =
+    '<div class="result-hero"><div class="score num">' + pct + '<span style="font-size:28px;">%</span></div><p>' + msg + '</p></div>' +
+    '<div class="result-stats">' +
+      '<div class="stat"><b class="num">' + L.newCount + '</b><span>新しく覚えた</span></div>' +
+      '<div class="stat"><b class="num">' + L.correct + '</b><span>正解</span></div>' +
+      '<div class="stat"><b class="num">' + L.wrong + '</b><span>ミス</span></div>' +
+    '</div>' +
+    (missed ? '<div class="section-title">もう一度チェック</div><div class="word-list">' + missed + '</div>' : '') +
+    '<button class="cta wide" id="resultHome">ホームへ</button>';
+  wire($('resultBody'));
+  $('resultHome').onclick = goHome;
+  L = null;
+  showScreen('result');
 }
 
 /* ================= HOME ================= */
 function renderHome() {
-  var streak = loadStreak();
-  document.querySelector('#streakBadge .num').textContent = streak.count || 0;
+  var plan = buildLesson(null, false);
+  $('todayReview').textContent = plan.nReview;
+  $('todayNew').textContent = plan.nNew;
+  var lv = LEVEL_BY_ID[plan.focus];
+  if (plan.steps.length) {
+    $('todaySub').textContent = '約' + Math.max(1, Math.round(plan.steps.length * 9 / 60)) + '分 · 新しい単語は ' + lv.badge + '（' + lv.name + '）から';
+    $('startLessonBtn').textContent = 'はじめる';
+  } else {
+    $('todaySub').textContent = '今日の分は完了。忘れかけた頃にまた出題します。';
+    $('startLessonBtn').textContent = '弱い単語を練習する';
+  }
+  $('startLessonBtn').disabled = !plan.steps.length && !WORDS.some(function(w){ return entryOf(w); });
 
-  var masteredCount = WORDS.filter(function(w){ return isMastered(w.id); }).length;
-  var dueCount = WORDS.filter(function(w){ return isDue(w.id); }).length;
-  document.getElementById('statMastered').textContent = masteredCount;
-  document.getElementById('statTotal').textContent = WORDS.length;
-  document.getElementById('statDue').textContent = dueCount;
+  var seen = WORDS.filter(function(w){ return entryOf(w); });
+  if (!seen.length) {
+    $('memoryBody').innerHTML = '<p class="memory-empty">レッスンを始めると、覚えた単語が「いまどれくらい記憶に残っているか」をここに表示します。</p>';
+  } else {
+    var strong = 0, weak = 0, fading = 0;
+    seen.forEach(function(w){ var r = retention(entryOf(w)); if (r >= 0.8) strong++; else if (r >= 0.5) weak++; else fading++; });
+    var pc = function(n){ return (n / seen.length * 100) + '%'; };
+    $('memoryBody').innerHTML =
+      '<div class="memory-bar"><i class="m-strong" style="width:' + pc(strong) + '"></i><i class="m-weak" style="width:' + pc(weak) + '"></i><i class="m-fading" style="width:' + pc(fading) + '"></i></div>' +
+      '<div class="memory-legend">' +
+        '<div><span class="dot m-strong"></span>しっかり<b class="num">' + strong + '</b></div>' +
+        '<div><span class="dot m-weak"></span>あやうい<b class="num">' + weak + '</b></div>' +
+        '<div><span class="dot m-fading"></span>忘れかけ<b class="num">' + fading + '</b></div>' +
+      '</div>';
+  }
 
-  var list = document.getElementById('levelList');
+  var list = $('levelList');
   list.innerHTML = '';
-  LEVELS.forEach(function(lv) {
+  LEVELS.forEach(function(lv){
     var words = WORDS.filter(function(w){ return w.level === lv.id; });
-    var mastered = words.filter(function(w){ return isMastered(w.id); }).length;
-    var due = words.filter(function(w){ return isDue(w.id); }).length;
-    var pct = words.length ? Math.round(mastered / words.length * 100) : 0;
-    var card = document.createElement('div');
-    card.className = 'level-card';
-    card.innerHTML =
-      '<div class="badge" style="background:' + lv.color + '">' + lv.badge + '</div>' +
-      '<div class="body">' +
-        '<div class="name">' + lv.name + ' <span style="color:var(--ink-soft);font-weight:500;">（' + lv.sub + '）</span></div>' +
-        '<div class="prog-bar"><div class="prog-fill" style="width:' + pct + '%"></div></div>' +
-        '<div class="count">' + mastered + ' / ' + words.length + ' 語 覚えた' + (due ? '　·　復習待ち ' + due : '') + '</div>' +
-      '</div>' +
-      '<div class="go">›</div>';
-    card.onclick = function(){ startStudy(lv.id); };
-    list.appendChild(card);
-  });
-
-  document.getElementById('quizEntry').onclick = startQuiz;
-  document.getElementById('startTodayBtn').onclick = function(){ startStudy(null); };
-}
-
-/* ================= STUDY ================= */
-var studyQueue = [];
-var studyIdx = 0;
-var studyResults = { good: 0, bad: 0 };
-var studyLevelId = null;
-
-function buildQueue(levelId) {
-  var pool = WORDS.filter(function(w){ return !levelId || w.level === levelId; });
-  var due = pool.filter(function(w){ return isDue(w.id); });
-  // 重要度優先: box(習熟度)が低い単語をまず、その中では重要度が高い(rankが小さい)単語を先に
-  due.sort(function(a,b){
-    var boxDiff = getEntry(a.id).box - getEntry(b.id).box;
-    return boxDiff !== 0 ? boxDiff : a.rank - b.rank;
-  });
-  return due.slice(0, 20);
-}
-
-function startStudy(levelId) {
-  studyLevelId = levelId;
-  studyQueue = buildQueue(levelId);
-  studyIdx = 0;
-  studyResults = { good: 0, bad: 0 };
-  if (studyQueue.length === 0) {
-    showEmptyResult();
-    return;
-  }
-  showScreen('study');
-  renderStudyProgress();
-  renderCard();
-}
-
-function renderStudyProgress() {
-  var wrap = document.getElementById('studyProgress');
-  wrap.innerHTML = '';
-  studyQueue.forEach(function(_, i){
-    var el = document.createElement('i');
-    if (i < studyIdx) el.className = 'done';
-    else if (i === studyIdx) el.className = 'now';
-    wrap.appendChild(el);
+    var seenN = words.filter(function(w){ return entryOf(w); }).length;
+    var master = words.filter(function(w){ var e = entryOf(w); return e && e.box >= MASTER_BOX; }).length;
+    var b = document.createElement('button');
+    b.className = 'level-card';
+    b.innerHTML =
+      '<div class="lv-badge" style="background:' + lv.color + '">' + lv.badge + '</div>' +
+      '<div class="lv-body">' +
+        '<div class="lv-name">' + esc(lv.name) + '<small>' + esc(lv.sub) + '</small></div>' +
+        '<div class="lv-bar"><i class="seen" style="width:' + (seenN / words.length * 100) + '%"></i><i class="master" style="width:' + (master / words.length * 100) + '%"></i></div>' +
+        '<div class="lv-count num">学習済み ' + seenN + ' / ' + words.length + '　·　定着 ' + master + '</div>' +
+      '</div><span class="chev">›</span>';
+    b.onclick = function(){ openLevel(lv.id); };
+    list.appendChild(b);
   });
 }
 
-var dragState = null;
-
-var mediaToken = 0;
-
-function renderCard() {
-  document.getElementById('gradeRow').classList.remove('hidden');
-  var stage = document.getElementById('cardStage');
-  var w = studyQueue[studyIdx];
-  var cat = CAT_BY_ID[w.cat];
-  var anim = ACTION_ANIM[w.en] || cat.anim;
-  var myToken = ++mediaToken;
-
-  var lv = LEVEL_BY_ID[w.level];
-
-  var card = document.createElement('div');
-  card.className = 'wcard';
-  card.innerHTML =
-    '<div class="card-badges">' +
-      '<span class="pill" style="background:' + lv.color + ';color:#fff;">' + lv.badge + ' ' + lv.name + '</span>' +
-      '<span class="pill">重要度順 ' + w.rank + ' / ' + LEVEL_TOTAL[w.level] + '</span>' +
-      '<span class="pill stars">' + freqStars(w.freq) + '</span>' +
-    '</div>' +
-    '<div class="visual-wrap"><span class="visual anim-' + anim + '">' + w.emoji + '</span></div>' +
-    '<div class="word">' + w.en + '</div>' +
-    '<button class="speak-btn">🔊</button>' +
-    '<div class="sentence hidden"></div>' +
-    '<button class="peek-btn hidden">日本語を見る（？）</button>' +
-    '<div class="ja-reveal"></div>';
-
-  card.querySelector('.speak-btn').onclick = function(e){ e.stopPropagation(); speak(w.en); };
-
-  var revealed = false;
-  card.onclick = function(){
-    if (revealed) return;
-    revealed = true;
-    var sentEl = card.querySelector('.sentence');
-    var re = new RegExp('\\b' + w.en + '\\b', 'i');
-    sentEl.innerHTML = w.sentence.replace(re, '<b>' + w.en + '</b>');
-    sentEl.classList.remove('hidden');
-    card.querySelector('.peek-btn').classList.remove('hidden');
+/* ================= LEVEL DETAIL ================= */
+function openLevel(id) {
+  var lv = LEVEL_BY_ID[id];
+  var words = WORDS.filter(function(w){ return w.level === id; });
+  $('levelHead').innerHTML =
+    '<div class="lv-badge" style="background:' + lv.color + '">' + lv.badge + '</div>' +
+    '<div><h2>' + esc(lv.name) + '</h2><p>' + esc(lv.sub) + ' · ' + words.length + '語（重要度順）</p></div>';
+  $('wordList').innerHTML = words.map(function(w){
+    var e = entryOf(w);
+    var st = !e ? ['未学習', 's-new'] : e.box >= MASTER_BOX ? ['定着', 's-master'] : ['学習中', 's-learn'];
+    var r = retention(e);
+    return '<button class="word-row" data-say="' + esc(w.en) + '">' +
+      '<span class="rk num">' + w.rank + '</span><span class="em">' + w.emoji + '</span>' +
+      '<span><span class="en">' + esc(w.en) + '</span>' +
+        (r === null ? '' : '<span class="ret"><i style="width:' + Math.round(r * 100) + '%;background:' + retColor(r) + '"></i></span>') +
+      '</span>' +
+      '<span class="chip ' + st[1] + '">' + st[0] + '</span></button>';
+  }).join('');
+  wire($('wordList'));
+  $('levelStartBtn').onclick = function(){
+    settings.focus = id;
+    saveJSON(LS_SETTINGS, settings);
+    startLesson(id);
   };
-  card.querySelector('.peek-btn').onclick = function(e){
-    e.stopPropagation();
-    card.querySelector('.ja-reveal').textContent = w.ja;
+  showScreen('level');
+}
+
+/* ================= SETTINGS ================= */
+$('settingsBtn').onclick = function(){
+  document.querySelectorAll('#newPerSeg button').forEach(function(b){
+    b.classList.toggle('on', +b.getAttribute('data-n') === settings.newPer);
+  });
+  $('pexelsKeyInput').value = getPexelsKey();
+  $('keyStatus').textContent = getPexelsKey() ? 'キー登録済み：写真・動画を表示します。' : 'キー未登録：絵文字で表示します。';
+  $('resetConfirm').classList.add('hidden');
+  $('resetBtn').classList.remove('hidden');
+  showScreen('settings');
+};
+document.querySelectorAll('#newPerSeg button').forEach(function(b){
+  b.onclick = function(){
+    settings.newPer = +b.getAttribute('data-n');
+    saveJSON(LS_SETTINGS, settings);
+    document.querySelectorAll('#newPerSeg button').forEach(function(x){ x.classList.toggle('on', x === b); });
   };
+});
+$('saveKeyBtn').onclick = function(){
+  var v = $('pexelsKeyInput').value.trim();
+  try { localStorage.setItem(LS_PEXELS_KEY, v); } catch (e) {}
+  mediaCache = {};
+  removeKey(LS_MEDIA_CACHE);
+  $('keyStatus').textContent = v ? '保存しました。次に新しい単語を覚えるときから表示します。' : 'キーを削除しました。絵文字で表示します。';
+};
+$('resetBtn').onclick = function(){ $('resetBtn').classList.add('hidden'); $('resetConfirm').classList.remove('hidden'); };
+$('resetNo').onclick = function(){ $('resetConfirm').classList.add('hidden'); $('resetBtn').classList.remove('hidden'); };
+$('resetYes').onclick = function(){
+  progress = {};
+  settings = { newPer: settings.newPer, focus: null };
+  removeKey(LS_PROGRESS);
+  removeKey(LS_STREAK);
+  saveJSON(LS_SETTINGS, settings);
+  goHome();
+};
 
-  // swipe gesture
-  card.addEventListener('pointerdown', function(e){
-    dragState = { x: e.clientX, dx: 0 };
-    card.style.transition = 'none';
-  });
-  card.addEventListener('pointermove', function(e){
-    if (!dragState) return;
-    dragState.dx = e.clientX - dragState.x;
-    card.style.transform = 'translateX(' + dragState.dx + 'px) rotate(' + (dragState.dx / 18) + 'deg)';
-  });
-  function endDrag() {
-    if (!dragState) return;
-    card.style.transition = '';
-    var dx = dragState.dx;
-    dragState = null;
-    if (dx > 90) { grade('good'); }
-    else if (dx < -90) { grade('bad'); }
-    else { card.style.transform = ''; }
-  }
-  card.addEventListener('pointerup', endDrag);
-  card.addEventListener('pointercancel', endDrag);
-
-  stage.innerHTML = '';
-  stage.appendChild(card);
-  window._currentCard = card;
-  speak(w.en);
-
-  if (getPexelsKey()) {
-    var visualWrap = card.querySelector('.visual-wrap');
-    getMedia(w).then(function(media){
-      if (myToken !== mediaToken) return; // user already moved to another card
-      if (!media) return; // no key result / fetch failed — keep emoji
-      var tag = media.kind === 'video' ? '動画' : '写真';
-      var inner = media.kind === 'video'
-        ? '<video src="' + media.url + '" autoplay loop muted playsinline></video>'
-        : '<img src="' + media.url + '" alt="' + w.en + '">';
-      visualWrap.innerHTML = '<div class="media-box">' + inner + '<span class="media-tag">' + tag + '</span></div>';
-    });
-  }
-}
-
-function grade(result) {
-  var w = studyQueue[studyIdx];
-  var e = getEntry(w.id);
-  var newBox = result === 'good' ? Math.min(e.box + 1, MASTER_BOX) : 0;
-  setEntry(w.id, newBox);
-  studyResults[result]++;
-  bumpStreak();
-
-  var card = window._currentCard;
-  if (card) card.className = 'wcard ' + (result === 'good' ? 'fly-good' : 'fly-bad');
-
-  setTimeout(function(){
-    studyIdx++;
-    renderStudyProgress();
-    if (studyIdx >= studyQueue.length) {
-      showStudyResult();
-    } else {
-      renderCard();
-    }
-  }, 220);
-}
-document.getElementById('gradeGood').onclick = function(){ grade('good'); };
-document.getElementById('gradeBad').onclick = function(){ grade('bad'); };
-
-function showStudyResult() {
-  document.getElementById('resultEmo').textContent = studyResults.bad === 0 ? '🎉' : '👍';
-  document.getElementById('resultTitle').textContent = 'お疲れさま！';
-  document.getElementById('resultDesc').textContent = '今日のカードは全部終わったよ';
-  document.getElementById('resGood').textContent = studyResults.good;
-  document.getElementById('resBad').textContent = studyResults.bad;
-  showScreen('result');
-}
-function showEmptyResult() {
-  document.getElementById('resultEmo').textContent = '✨';
-  document.getElementById('resultTitle').textContent = '復習待ちの単語はないよ';
-  document.getElementById('resultDesc').textContent = 'クイズで練習するか、また後で来てね';
-  document.getElementById('resGood').textContent = 0;
-  document.getElementById('resBad').textContent = 0;
-  showScreen('result');
-}
-document.getElementById('resultHomeBtn').onclick = function(){ renderHome(); showScreen('home'); };
-
-/* ================= QUIZ ================= */
-var quizWord = null;
-function startQuiz() {
-  showScreen('quiz');
-  nextQuiz();
-}
-function nextQuiz() {
-  var target = WORDS[Math.floor(Math.random() * WORDS.length)];
-  quizWord = target;
-  var sameCat = WORDS.filter(function(w){ return w.cat === target.cat && w.id !== target.id; });
-  var distractors = [];
-  var poolCopy = sameCat.slice();
-  while (distractors.length < 3 && poolCopy.length) {
-    var idx = Math.floor(Math.random() * poolCopy.length);
-    distractors.push(poolCopy.splice(idx, 1)[0]);
-  }
-  while (distractors.length < 3) {
-    var r = WORDS[Math.floor(Math.random() * WORDS.length)];
-    if (r.id !== target.id && !distractors.find(function(d){ return d.id === r.id; })) distractors.push(r);
-  }
-  var options = distractors.concat([target]).sort(function(){ return Math.random() - 0.5; });
-
-  document.getElementById('quizWord').textContent = target.en;
-  document.getElementById('quizSpeakBtn').onclick = function(){ speak(target.en); };
-  var optsWrap = document.getElementById('quizOpts');
-  optsWrap.innerHTML = '';
-  options.forEach(function(opt){
-    var el = document.createElement('div');
-    el.className = 'quiz-opt';
-    el.textContent = opt.emoji;
-    el.onclick = function(){ answerQuiz(opt, target, el, optsWrap); };
-    optsWrap.appendChild(el);
-  });
-  speak(target.en);
-}
-function answerQuiz(opt, target, el, optsWrap) {
-  if (optsWrap.dataset.locked) return;
-  optsWrap.dataset.locked = '1';
-  var correct = opt.id === target.id;
-  el.classList.add(correct ? 'correct' : 'wrong');
-  var e = getEntry(target.id);
-  setEntry(target.id, correct ? Math.min(e.box + 1, MASTER_BOX) : 0);
-  if (!correct) {
-    Array.prototype.forEach.call(optsWrap.children, function(c){
-      if (c.textContent === target.emoji) c.classList.add('correct');
-    });
-  }
-  setTimeout(function(){
-    optsWrap.dataset.locked = '';
-    nextQuiz();
-  }, 900);
-}
-
-/* ================= INIT ================= */
-renderHome();
+goHome();
 </script>
