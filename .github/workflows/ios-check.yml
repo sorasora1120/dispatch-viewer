@@ -1,4 +1,5 @@
-# Builds the VisuWord iOS app on a cloud Mac (no signing) to prove the Xcode project compiles.
+# Builds the VisuWord iOS app on a cloud Mac (no signing) and saves it as VisuWord.ipa,
+# which can be installed on an iPhone from Windows with Sideloadly (see vocab-app/IPHONE.md).
 name: iOS build check
 
 on:
@@ -34,14 +35,27 @@ jobs:
           node build.js
           npx cap sync ios
 
-      - name: Compile for the iOS Simulator (unsigned)
+      - name: Compile for iPhone (unsigned)
         run: |
           xcodebuild -version
           xcodebuild \
             -project ios/App/App.xcodeproj \
             -scheme App \
             -configuration Release \
-            -sdk iphonesimulator \
-            -destination 'generic/platform=iOS Simulator' \
+            -destination 'generic/platform=iOS' \
+            -derivedDataPath "$RUNNER_TEMP/dd" \
             CODE_SIGNING_ALLOWED=NO \
             build
+
+      - name: Package VisuWord.ipa
+        run: |
+          mkdir -p "$RUNNER_TEMP/ipa/Payload"
+          cp -R "$RUNNER_TEMP/dd/Build/Products/Release-iphoneos/App.app" "$RUNNER_TEMP/ipa/Payload/"
+          cd "$RUNNER_TEMP/ipa" && zip -qry VisuWord.ipa Payload
+          ls -lh VisuWord.ipa
+
+      - uses: actions/upload-artifact@v5
+        with:
+          name: VisuWord-ipa
+          path: ${{ runner.temp }}/ipa/VisuWord.ipa
+          retention-days: 30

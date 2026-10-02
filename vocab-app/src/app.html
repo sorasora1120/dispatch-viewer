@@ -70,6 +70,9 @@
   --shadow-up: 0 -10px 30px rgba(0,0,0,0.45);
 }
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+/* the native app should feel like an app, not a web page: no text selection or long-press menus outside inputs */
+body.native { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+body.native input { -webkit-user-select: text; user-select: text; }
 html, body { margin: 0; background: var(--ground); color: var(--ink); }
 body { font-family: var(--body); font-size: 15px; line-height: 1.55; -webkit-font-smoothing: antialiased; overflow-x: hidden; -webkit-text-size-adjust: 100%; }
 button { font-family: inherit; color: inherit; cursor: pointer; }
@@ -1047,6 +1050,7 @@ var LS_DAYS = 'vw_days_v1';
 var LS_ONBOARDED = 'vw_onboarded_v1';
 var LS_INSTALL_HINT = 'vw_install_hint_closed_v1';
 var inNativeApp = !!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform());
+if (inNativeApp) document.body.classList.add('native');
 var WORD_BY_ID = {};
 WORDS.forEach(function(w){ WORD_BY_ID[w.id] = w; });
 
@@ -1098,7 +1102,14 @@ function tone(notes) {
 function sfxCorrect() { tone([{ f: 880, at: 0, d: 0.12 }, { f: 1318.5, at: 0.08, d: 0.24 }]); }
 function sfxWrong() { tone([{ f: 196, at: 0, d: 0.22, type: 'triangle', v: 0.22 }, { f: 165, at: 0.1, d: 0.26, type: 'triangle', v: 0.18 }]); }
 function sfxDone() { tone([{ f: 659, at: 0, d: 0.14 }, { f: 880, at: 0.11, d: 0.14 }, { f: 1175, at: 0.22, d: 0.34 }]); }
-function buzz(p) { try { if (navigator.vibrate) navigator.vibrate(p); } catch (e) {} }
+// iPhone has no navigator.vibrate; the native app uses the Taptic Engine through the Capacitor Haptics plugin
+function buzz(kind) {
+  try {
+    var haptics = inNativeApp && window.Capacitor.Plugins && window.Capacitor.Plugins.Haptics;
+    if (haptics) { haptics.notification({ type: kind === 'good' ? 'SUCCESS' : 'ERROR' }).catch(function(){}); return; }
+    if (navigator.vibrate) navigator.vibrate(kind === 'good' ? 12 : [30, 40, 30]);
+  } catch (e) {}
+}
 
 /* ================= NAV ================= */
 var SCREENS = ['onboarding', 'home', 'words', 'level', 'settings', 'lesson', 'result'];
@@ -1343,8 +1354,8 @@ function bindOptions(body, sel, opts, s) {
         x.disabled = true;
         if (opts[+x.getAttribute('data-i')].id === s.w.id) x.classList.add('correct');
       });
-      if (correct) { b.classList.add('pop'); sfxCorrect(); buzz(12); }
-      else { b.classList.add('wrong', 'shake'); sfxWrong(); buzz([30, 40, 30]); }
+      if (correct) { b.classList.add('pop'); sfxCorrect(); buzz('good'); }
+      else { b.classList.add('wrong', 'shake'); sfxWrong(); buzz('bad'); }
       grade(s, correct);
       showSheet(s, correct);
     };
