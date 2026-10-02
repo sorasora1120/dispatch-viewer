@@ -1,0 +1,20 @@
+{
+  "name": "visuword",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Learn English words through pictures, sound and English context instead of Japanese translation.",
+  "scripts": {
+    "build": "node build.js",
+    "ios": "node build.js && npx cap sync ios && npx cap open ios"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^8.5.2",
+    "@iconify-json/fluent-emoji": "^1.2.7",
+    "@iconify-json/fluent-emoji-flat": "^1.2.6",
+    "unicode-emoji-json": "^0.9.0"
+  },
+  "dependencies": {
+    "@capacitor/core": "^8.5.2",
+    "@capacitor/ios": "^8.5.2"
+  }
+}

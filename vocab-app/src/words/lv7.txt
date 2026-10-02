@@ -1,0 +1,131 @@
+# en|category|emoji|日本語|example sentence|simple English definition (optional)
+# emoji starting with ~ is decoration only (never used as a picture answer)
+# ---- C1 vocabulary (英検1級相当) ----
+alleviate|thinking|~💊|和らげる|This medicine will alleviate the pain.|to make pain or a problem less severe
+ameliorate|thinking|~📈|改善する|Steps were taken to ameliorate conditions in prisons.|to make a bad situation better
+ascertain|thinking|~🔎|確かめる|We need to ascertain the facts first.|to find out for certain
+augment|thinking|~➕|増大させる|He works part-time to augment his income.|to increase something by adding to it
+circumvent|thinking|~↪️|回避する|They tried to circumvent the law.|to find a way around a rule or problem
+coerce|thinking|~✊|強制する|He was coerced into signing the contract.|to force someone to do something
+concede|thinking|~🤷|(しぶしぶ)認める|She conceded that she was wrong.|to admit that something is true, often unwillingly
+condone|thinking|~🙈|容認する|We cannot condone violence.|to accept behavior that is morally wrong
+corroborate|thinking|~🧾|裏付ける|The evidence corroborates his story.|to support a statement with evidence
+curtail|thinking|~✂️|削減する|The government curtailed spending.|to reduce or limit something
+deplete|thinking|~🪫|枯渇させる|Overfishing has depleted fish stocks.|to reduce the amount of something until little is left
+deter|thinking|~🚫|思いとどまらせる|High fines deter people from speeding.|to discourage someone from doing something
+disseminate|thinking|~📡|広める|The group disseminates information about health.|to spread information widely
+elicit|thinking|~🎣|引き出す|The question elicited a strong response.|to get a reaction or information from someone
+embody|thinking|~🗽|体現する|The statue is meant to embody freedom.|to express or represent an idea
+endorse|thinking|~✍️|支持する・推薦する|The actor endorsed the new product.|to publicly support someone or something
+exacerbate|thinking|~🔥|悪化させる|Stress can exacerbate health problems.|to make a bad situation worse
+exploit|thinking|~⛏️|搾取する・活用する|The company exploited its workers.|to use unfairly for your own advantage; or to use fully
+fluctuate|thinking|~〰️|変動する|Prices fluctuate from day to day.|to change often and irregularly
+forfeit|thinking|~💸|失う・没収される|If you leave early, you forfeit your deposit.|to lose something as a punishment
+galvanize|thinking|~⚡|奮い立たせる|The speech galvanized the crowd into action.|to make people suddenly take action
+hamper|thinking|~❄️|妨げる|Heavy snow hampered the rescue.|to make it hard for something to happen
+hinder|thinking|~🧱|妨げる|Lack of money hindered the project.|to delay or stop progress
+incorporate|thinking|~🧩|組み込む|We will incorporate your ideas into the plan.|to include as part of something
+infringe|thinking|~⛔|侵害する|The law must not infringe on personal freedom.|to break a law or limit someone's rights
+instigate|thinking|~🧨|扇動する・始める|The police arrested the man who instigated the riot.|to cause something to start, often something bad
+mitigate|thinking|~🌳|軽減する|Trees help mitigate the effects of heat.|to make something less harmful
+navigate|thinking|~🧭|進路を決める・切り抜ける|She learned to navigate the complex system.|to find your way through something
+nurture|thinking|~🌱|育む|Parents nurture their children's talents.|to care for and help something grow
+perpetuate|thinking|~♾️|永続させる|Such stories perpetuate stereotypes.|to make something continue for a long time
+precipitate|thinking|~⏩|引き起こす・早める|The crisis precipitated a change in policy.|to make something bad happen suddenly
+reconcile|thinking|~🕊️|和解させる・両立させる|It is hard to reconcile work and family life.|to make two ideas or people agree
+refute|thinking|~❌|論破する|She refuted his argument with clear evidence.|to prove that a statement is wrong
+reiterate|thinking|~🔁|繰り返し述べる|Let me reiterate the main point.|to say something again
+relinquish|thinking|~👋👑|放棄する|He relinquished control of the company.|to give up power or a right
+scrutinize|thinking|~🔬|精査する|The committee will scrutinize the budget.|to examine very carefully
+stipulate|thinking|~📄|規定する|The contract stipulates the payment date.|to state clearly as a rule or condition
+substantiate|thinking|~📑|立証する|He could not substantiate his claims.|to show that something is true
+supersede|thinking|~🆕|取って代わる|New technology will supersede the old system.|to replace something older
+undermine|thinking|~⛏️|弱体化させる|Lies undermine trust.|to make something weaker gradually
+vindicate|thinking|~⚖️|正当性を証明する|The new evidence vindicated him.|to prove that someone was right or innocent
+adversity|society|~⛈️|逆境|She showed courage in the face of adversity.|a difficult or unlucky situation
+aftermath|society|~🏚️|余波|Many people lost their homes in the aftermath of the earthquake.|the period after a bad event
+affluence|society|~💰|裕福|The town's affluence is clear from its large houses.|wealth
+allegation|society|~🗯️|(証拠のない)申し立て|He denied the allegation of fraud.|a claim that someone did something wrong, without proof
+anomaly|society|~🦓|異常・例外|The scientist noticed an anomaly in the data.|something that is different from what is normal
+autonomy|society|~🕊️|自治・自主性|The region wants more autonomy.|the right to govern or control yourself
+bias|society|~⚖️|偏り・偏見|The article shows a clear political bias.|an unfair preference for one side
+catastrophe|society|~🌊|大惨事|The flood was a catastrophe for the village.|a sudden event causing great damage
+coalition|society|~🤝|連立|The two parties formed a coalition government.|a group formed by people or parties working together
+complacency|society|~😌|自己満足・油断|Complacency is dangerous in business.|being too satisfied, so you stop trying
+contingency|society|~☂️|不測の事態|We have a plan for every contingency.|an event that might happen in the future
+deficit|society|~📉|赤字・不足|The country has a large budget deficit.|the amount by which money spent is more than money received
+discrepancy|society|~🔀|食い違い|There is a discrepancy between the two reports.|a difference between things that should be the same
+disparity|society|~📊|格差|The disparity between rich and poor is growing.|a large difference, often an unfair one
+drawback|society|~👎|欠点|The main drawback is the high cost.|a disadvantage
+enigma|society|~❓|謎|Her true feelings remained an enigma.|something mysterious and hard to understand
+epidemic|society|~🦠|流行病|The flu epidemic spread quickly.|a disease that spreads to many people
+fallacy|society|~🎭|誤った考え|It is a fallacy that money brings happiness.|a false idea that many people believe
+friction|society|~⚡|摩擦・不和|There was friction between the two departments.|disagreement between people; or rubbing between surfaces
+hierarchy|society|~🔺|階層・序列|The company has a strict hierarchy.|a system where people are ranked by importance
+ideology|society|~🚩|イデオロギー|The party changed its ideology.|a set of political or social beliefs
+impetus|society|~🚀|推進力・勢い|The discovery gave new impetus to the research.|something that makes a process happen faster
+implication|society|~🔗|影響・含意|The new law has serious implications.|a possible effect or hidden meaning
+inflation|society|~🎈|インフレ|Inflation makes daily goods more expensive.|a general rise in prices
+jurisdiction|society|~🏛️|管轄権|This case is outside the court's jurisdiction.|the official power to make legal decisions
+leverage|society|~🏋️|てこ・影響力|Good data gives us leverage in negotiations.|power to influence people or events
+nuance|society|~🎨|微妙な違い|Learners often miss the nuances of a language.|a very small difference in meaning
+paradigm|society|~🧱|模範・考え方の枠組み|The discovery caused a paradigm shift in science.|a typical model or way of thinking
+paradox|society|~♾️|逆説|It is a paradox that more choice can make us less happy.|a statement that seems impossible but may be true
+predicament|society|~🕳️|苦境|He was in a difficult predicament.|a difficult situation
+prerequisite|society|~🔑|前提条件|A degree is a prerequisite for this job.|something needed before something else can happen
+proliferation|society|~📱📱|急増・拡散|The proliferation of smartphones changed society.|a rapid increase in number
+recession|society|~📉|景気後退|Many people lost their jobs during the recession.|a period when the economy does badly
+repercussion|society|~💥|(悪い)影響|The decision had serious repercussions.|an unexpected bad effect of an action
+resilience|society|~🌱|回復力|Children often show great resilience.|the ability to recover quickly from difficulties
+rhetoric|society|~🎤|美辞麗句・修辞|His speech was full of empty rhetoric.|language used to persuade, often without real meaning
+sanction|society|~🚫|制裁・認可|The UN imposed sanctions on the country.|an official punishment; or official permission
+scrutiny|society|~🔎|精査|The plan is under close scrutiny.|careful examination
+skepticism|society|~🤨|懐疑|The news was met with skepticism.|doubt about whether something is true
+stagnation|society|~🐌|停滞|The economy suffered years of stagnation.|a state of not growing or developing
+subsidy|society|~💴|補助金|Farmers receive a government subsidy.|money given by a government to help
+surveillance|society|~📹|監視|The city uses cameras for surveillance.|careful watching of people, often by the police
+turmoil|society|~🌪️|混乱|The country was in political turmoil.|a state of confusion and disorder
+arbitrary|qualities|~🎲|恣意的な|The decision seemed arbitrary.|based on chance or personal wishes, not reason
+benevolent|qualities|~😇|慈悲深い|The king was a benevolent ruler.|kind and wanting to help others
+candid|qualities|~🗨️|率直な|She gave a candid answer.|honest and direct
+coherent|qualities|~🧶|首尾一貫した|He gave a coherent explanation.|clear and logical
+conspicuous|qualities|~🚨|目立つ|He wore a conspicuous red hat.|very easy to notice
+detrimental|qualities|~☠️|有害な|Smoking is detrimental to health.|causing harm
+diligent|qualities|~🐜|勤勉な|She is a diligent student.|working hard and carefully
+eloquent|qualities|~🎙️|雄弁な|He gave an eloquent speech.|able to speak well and persuasively
+feasible|qualities|~✅|実現可能な|Is the plan feasible?|possible to do
+frugal|qualities|~🐖|倹約的な|My grandmother lives a frugal life.|careful not to spend much money
+imminent|qualities|~⏰|差し迫った|The storm is imminent.|about to happen very soon
+impartial|qualities|~⚖️|公平な|A judge must be impartial.|not supporting any side
+indispensable|qualities|~🔑|不可欠な|A smartphone has become indispensable.|too important to be without
+ingenious|qualities|~💡|独創的な・巧妙な|It was an ingenious solution.|clever and original
+innate|qualities|~🧬|生まれつきの|She has an innate talent for music.|present from birth
+intricate|qualities|~🕸️|複雑な|The watch has an intricate design.|having many small parts or details
+lucrative|qualities|~🤑|もうかる|He has a lucrative business.|producing a lot of money
+meticulous|qualities|~🔍|細心の|She is meticulous about details.|very careful about small details
+obsolete|qualities|~📼|時代遅れの|This technology is now obsolete.|no longer used because something newer exists
+pervasive|qualities|~🌫️|広がった・行き渡った|Smartphones have a pervasive influence on daily life.|spreading everywhere
+pragmatic|qualities|~🛠️|実利的な|We need a pragmatic solution.|dealing with things in a practical way
+prevalent|qualities|~🦠|広く行き渡った|This disease is prevalent in hot countries.|common in a particular place or time
+profound|qualities|~🌊|深い・重大な|The book had a profound effect on me.|very great or deep
+prudent|qualities|~🦉|慎重な・賢明な|It is prudent to save money.|careful and sensible
+redundant|qualities|~✂️|余分な|This word is redundant in the sentence.|not needed because it repeats something
+resilient|qualities|~🎋|回復力のある|Bamboo is resilient in strong winds.|able to recover quickly from problems
+scrupulous|qualities|~🧾|良心的な・綿密な|He is scrupulous about paying his debts.|very careful to be honest and correct
+spontaneous|qualities|~👏|自発的な|The audience broke into spontaneous applause.|happening naturally, without planning
+superficial|qualities|~🧊|表面的な|He has only a superficial knowledge of the subject.|not deep; only on the surface
+tangible|qualities|~🧱|具体的な・触れられる|We need tangible results.|real and able to be seen or touched
+tedious|qualities|~🥱|退屈な・うんざりする|Filling in forms is tedious.|long and boring
+tenacious|qualities|~🦀|粘り強い|She is tenacious in pursuing her goals.|not giving up easily
+transparent|qualities|~🪟|透明な・透明性のある|The process should be transparent.|clear; easy to see through or understand
+ubiquitous|qualities|~🏪|至る所にある|Convenience stores are ubiquitous in Japan.|found everywhere
+unprecedented|qualities|~🆕|前例のない|The pandemic caused unprecedented changes.|never having happened before
+versatile|qualities|~🔧|多才な・用途の広い|She is a versatile actress.|able to do many different things
+viable|qualities|~🌱|実行可能な|This is not a viable option.|able to work successfully
+volatile|qualities|~🎢|不安定な|The stock market is volatile.|likely to change suddenly
+albeit|adverbs|~↔️|〜ではあるが|He agreed, albeit reluctantly.|although
+inadvertently|adverbs|~😅|うっかり|I inadvertently deleted the file.|without meaning to
+notwithstanding|adverbs|~☔|〜にもかかわらず|Notwithstanding the rain, the event was a success.|in spite of
+predominantly|adverbs|~📊|主に|The population is predominantly young.|mostly; mainly
+subsequently|adverbs|~⏭️|その後|He subsequently moved to London.|after that; later
+ostensibly|adverbs|~🎭|表向きは|He left early, ostensibly to catch a train.|apparently, but perhaps not really

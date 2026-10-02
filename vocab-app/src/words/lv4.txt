@@ -1,0 +1,186 @@
+# en|category|emoji|日本語|example sentence|simple English definition (optional)
+# emoji starting with ~ is decoration only (never used as a picture answer)
+improve|thinking|📈💪|良くなる・改善する|I want to improve my English skills.|to become better
+describe|thinking|🖼️🗣️|(様子を)説明する|Please describe your dog to me.|to say what something or someone is like
+consider|thinking|🤔📝|よく考える|I will consider your idea.|to think carefully about something
+encourage|thinking|📣💪|励ます|My teacher always encourages me.|to give someone hope or confidence to do something
+communicate|thinking|💬🔄|伝え合う|We communicate in English at school.|to share ideas or feelings with other people
+protect|thinking|🛡️|守る|We must protect the environment.|to keep someone or something safe from harm
+believe|thinking|🙏💭|信じる|I believe you can do it.|to feel sure that something is true
+realize|thinking|💡|気づく|I realized my mistake.|to suddenly understand or notice something
+achieve|thinking|🏆|達成する|She achieved her dream.|to succeed in doing something after trying hard
+solve|thinking|🧩✅|解決する|Can you solve this problem?|to find the answer to a problem
+suggest|thinking|💡🗣️|提案する|She suggested a good idea.|to give an idea for someone to think about
+waste|thinking|🗑️💸|無駄にする|Don't waste your money.|to use something badly so that it is lost
+imagine|thinking|💭✨|想像する|Imagine a world without cars.|to make a picture of something in your mind
+discover|thinking|🔭✨|発見する|Scientists discovered a new star.|to find something for the first time
+various|qualities|🎨🔀|様々な|There are various kinds of food.|of many different kinds
+polite|qualities|🙏😊|礼儀正しい|She is very polite.|speaking and acting in a kind and correct way
+active|qualities|⚡🏃|活発な|My little brother is very active.|moving around and doing many things
+proud|qualities|🏆😌|誇りに思う|I am proud of my sister.|happy about something that you or others did
+environment|society|🌍🌳|環境|Cars are bad for the environment.|the air, water, and land around us
+information|society|📰💡|情報|I found information on the internet.|facts about something
+experience|society|🎒🗺️|経験|Travel gives you good experience.|something that happens to you and teaches you
+opportunity|society|🚪✨|機会|This job is a great opportunity.|a good time or chance to do something
+culture|society|🎭🌏|文化|I want to learn Japanese culture.|the way of life, art, and customs of a group of people
+history|society|📜🏛️|歴史|We study history at school.|the things that happened in the past
+future|society|🔮🚀|未来|What will the future look like?|the time that will come
+problem|society|❗🧩|問題|We need to solve this problem.|something difficult that needs to be fixed
+reason|society|❓💡|理由|Tell me the reason for this.|why something happens
+idea|society|💡|考え・アイデア|That's a great idea!|a thought or plan in your mind
+opinion|society|🗣️💭|意見|What is your opinion about this?|what you think about something
+fact|society|📌✅|事実|That is an important fact.|something that is true
+example|society|📝👉|例|Give me an example, please.|one thing that shows what other things are like
+result|society|🏁📊|結果|The result of the test was good.|what happens because of something
+# ---- added: A2-B1 vocabulary ----
+accept|thinking|~🤲✅|受け入れる|I accepted his invitation.|to agree to take something that is offered
+allow|thinking|~🙆|許す・許可する|My parents allow me to use the computer.|to let someone do something
+appear|thinking|~✨|現れる|A rainbow appeared in the sky.|to come into sight
+attend|thinking|~🪑|出席する|Many people attended the meeting.|to go to an event, class, or school
+avoid|thinking|~↩️|避ける|Try to avoid fast food.|to stay away from something
+belong|thinking|~🏷️|属する・〜のものである|This bag belongs to me.|to be owned by someone; or to be a member of a group
+cause|thinking|~➡️💥|引き起こす・原因|The storm caused a lot of damage.|to make something happen
+celebrate|thinking|~🎉|祝う|We celebrated her birthday.|to do something special for an important day
+complain|thinking|~😤|文句を言う|He always complains about the food.|to say that you are not happy about something
+create|thinking|~🎨|創造する・作り出す|She created a new game.|to make something new
+depend|thinking|~🔗|〜次第である・頼る|It depends on the weather.|to change because of something else; or to need someone's help
+destroy|thinking|~🏚️|破壊する|The fire destroyed the house.|to damage something so badly that it cannot be used
+develop|thinking|~📈|発展する・開発する|The city developed quickly.|to grow, or to make something grow bigger or better
+disappear|thinking|~💨|消える|The sun disappeared behind the clouds.|to go out of sight
+discuss|thinking|~🗣️🗣️|話し合う|We discussed the plan in class.|to talk about something with other people
+earn|thinking|~💴|稼ぐ|He earns money by teaching piano.|to get money by working
+exchange|thinking|~🔁|交換する|Let's exchange email addresses.|to give something and get something else back
+expect|thinking|~🔮|予期する・期待する|I expect it will rain tomorrow.|to think that something will happen
+express|thinking|~💬❤️|表現する|It is hard to express my feelings in English.|to show a feeling or idea with words or actions
+include|thinking|~➕|含む|The price includes breakfast.|to have something as one of its parts
+invent|thinking|~💡🔧|発明する|Who invented the telephone?|to make something new for the first time
+manage|thinking|~📋|経営する・何とかやり遂げる|She manages a small shop.|to control or run something; or to do something difficult
+mention|thinking|~💬|言及する|He mentioned your name.|to talk about something briefly
+offer|thinking|~🫴|申し出る・提供する|He offered me a cup of tea.|to ask if someone wants something
+perform|thinking|~🎭|演じる・演奏する|The band will perform tonight.|to act, sing, or play music for people
+prefer|thinking|~👉❤️|〜の方を好む|I prefer tea to coffee.|to like one thing more than another
+prevent|thinking|~🛡️|防ぐ|Washing your hands prevents colds.|to stop something from happening
+produce|thinking|~🏭|生産する|This farm produces milk.|to make or grow something
+provide|thinking|~📦|提供する|The school provides lunch.|to give something that people need
+receive|thinking|~📬|受け取る|I received a letter from my friend.|to get something that someone gives or sends
+recommend|thinking|~👍|勧める|I recommend this restaurant.|to say that something is good and someone should try it
+reduce|thinking|~📉|減らす|We should reduce plastic waste.|to make something smaller or less
+refuse|thinking|~🙅|断る・拒む|He refused to help me.|to say no to something
+repeat|thinking|~🔁|繰り返す|Please repeat after me.|to say or do something again
+replace|thinking|~🔄|取り替える|We replaced the old windows.|to put something new in place of something old
+report|thinking|~📰|報告する・報道する|The newspaper reported the accident.|to tell people about something that happened
+respect|thinking|~🙇|尊敬する|I respect my teacher.|to think highly of someone
+search|thinking|~🔍|探す|I searched the internet for information.|to look carefully for something
+seem|thinking|~🤔|〜のように見える|She seems happy today.|to look like something is true
+separate|thinking|~✂️|分ける|Please separate the trash.|to divide things or keep them apart
+serve|thinking|~🍽️|(食事を)出す・仕える|They serve breakfast at seven.|to give food or drinks to people
+succeed|thinking|~🏅|成功する|She succeeded in her new job.|to do what you tried to do
+support|thinking|~🤝|支える・支持する|My family always supports me.|to help someone; or to agree with an idea
+survive|thinking|~🌱|生き残る|Only one tree survived the storm.|to continue to live after something dangerous
+trust|thinking|~🤝|信頼する|I trust my best friend.|to believe that someone is honest and good
+warn|thinking|~⚠️|警告する|The teacher warned us about the ice.|to tell someone about a danger
+ability|society|~💪🧠|能力|She has the ability to speak three languages.|the power or skill to do something
+activity|society|~🏃|活動|Swimming is a good activity for children.|something that you do, often for fun
+advantage|society|~⬆️|利点・有利|Speaking English is a big advantage.|something that helps you succeed
+amount|society|~⚖️|量|Drink a large amount of water.|how much there is of something
+area|society|~🗺️|地域・区域|This area is quiet at night.|a part of a place
+attention|society|~👀|注意|Please pay attention to the teacher.|the act of watching or listening carefully
+audience|society|~👏|観客・聴衆|The audience clapped loudly.|the people who watch or listen to a show
+behavior|society|~🙋|ふるまい・行動|His behavior in class is good.|the way someone acts
+century|society|~💯📅|世紀|This temple was built in the 12th century.|one hundred years
+community|society|~🏘️|地域社会|Our community has a big park.|a group of people who live in the same area
+condition|society|~🩺|状態・条件|The car is in good condition.|the state that something is in
+conversation|society|~💬💬|会話|We had a long conversation.|a talk between two or more people
+custom|society|~🎎|習慣・慣習|Taking off shoes at home is a Japanese custom.|something that people usually do in a place
+damage|society|~🏚️|損害|The earthquake did great damage to the city.|harm done to something
+decision|society|~⚖️|決定・決断|It was a hard decision.|a choice that you make
+difference|society|~🔀|違い|What is the difference between these two words?|the way two things are not the same
+direction|society|~🧭|方向|Which direction is the station?|the way you go or look
+distance|society|~📏|距離|The distance from here to the station is two kilometers.|how far it is from one place to another
+education|society|~🎓|教育|Education is important for children.|learning and teaching
+electricity|society|~⚡|電気|This car runs on electricity.|energy that gives power to lights and machines
+emergency|society|~🚨|緊急事態|Call 119 in an emergency.|a sudden, dangerous situation
+energy|society|~🔋⚡|エネルギー|Solar energy is clean.|power that makes things work; or strength
+entrance|society|~🚪|入口|Meet me at the entrance of the park.|a door or place where you go in
+goal|society|~🎯|目標・ゴール|My goal is to pass the test.|something you want to achieve
+habit|society|~🔁|習慣・癖|Reading every day is a good habit.|something you do often without thinking
+health|society|~❤️‍🩹|健康|Sleep is important for your health.|the condition of your body
+knowledge|society|~📚🧠|知識|He has a lot of knowledge about history.|things that you know and understand
+material|society|~🪵|材料・素材|Wood is a common building material.|something used to make other things
+mind|society|~🧠|心・精神|I changed my mind.|the part of you that thinks and feels
+mistake|society|~❌|間違い|Don't be afraid of making mistakes.|something that is wrong
+pollution|society|~🏭💨|汚染|Air pollution is a big problem.|dirt and harmful things in the air, water, or land
+product|society|~📦|製品|This company makes new products.|something that is made to be sold
+project|society|~📋|計画・研究課題|We are working on a class project.|a planned piece of work
+quality|society|~💎|質|This shop sells high quality clothes.|how good or bad something is
+relationship|society|~🤝|関係|I have a good relationship with my parents.|the way people or things are connected
+research|society|~🔬|研究・調査|She does research on the ocean.|careful study to find new facts
+resource|society|~🛢️|資源|Water is an important resource.|something useful, like water or oil
+role|society|~🎭|役割|Teachers play an important role in society.|the part someone plays
+safety|society|~🦺|安全|Wear a helmet for your safety.|being safe from danger
+situation|society|~🧩|状況|The situation is getting better.|what is happening at a time and place
+skill|society|~🛠️|技術・腕前|Cooking is a useful skill.|the ability to do something well
+solution|society|~🔑|解決策|We need to find a solution.|an answer to a problem
+speech|society|~🎤|演説・スピーチ|She made a speech at the ceremony.|a talk given to a group of people
+success|society|~🏆|成功|Hard work is the key to success.|getting what you worked for
+temperature|society|~🌡️|温度・気温|The temperature is 30 degrees today.|how hot or cold something is
+tradition|society|~🎍|伝統|Making mochi at New Year is a family tradition.|a custom passed from older people to younger people
+trouble|society|~😣|困難・トラブル|I have trouble sleeping.|problems or difficulties
+value|society|~💰|価値|The value of this old coin is high.|how much something is worth, or how important it is
+view|society|~🏔️|眺め・見方|The view from this hill is beautiful.|what you can see from a place; or an opinion
+generation|society|~👴👨👦|世代|My parents' generation did not have smartphones.|people born around the same time
+ceremony|society|~🎎🎓|式・儀式|The graduation ceremony was moving.|a formal event for a special day
+disaster|society|~🌪️|災害|Earthquakes are natural disasters.|a sudden event that causes great damage
+passenger|people|~🧳|乗客|The passengers got off the train.|a person who travels in a car, bus, train, or plane
+customer|people|~🛍️|客|The store was full of customers.|a person who buys things
+citizen|people|~🪪|市民・国民|Every citizen has the right to vote.|a person who lives in a city or country
+tourist|people|~📸🧳|観光客|Many tourists visit Kyoto every year.|a person who travels for fun
+engineer|people|🧑‍🔧|技術者|My sister is an engineer.|a person who designs or builds machines, roads, or bridges
+author|people|~✍️📚|作家・著者|Who is the author of this book?|a person who writes books
+president|people|~🎤🏛️|大統領・社長|The president gave a speech on TV.|the leader of a country or company
+earthquake|nature|~🏚️|地震|We had a big earthquake last night.|a sudden shaking of the ground
+typhoon|nature|🌀|台風|A typhoon is coming this weekend.
+volcano|nature|🌋|火山|Mt. Fuji is a volcano.
+desert|nature|🏜️|砂漠|It is very hot in the desert.
+ocean|nature|~🌊🐋|海洋|The Pacific Ocean is very big.
+plastic|objects|~🧴|プラスチック・ビニール|Don't use too many plastic bags.|a light material made from oil
+battery|objects|🔋|電池|My phone battery is low.
+smartphone|objects|~📱✨|スマートフォン|Many students have a smartphone.
+internet|objects|~🌐💻|インターネット|I use the internet every day.
+available|qualities|~🟢|利用できる・手に入る|Tickets are available online.|able to be used or bought
+comfortable|qualities|~🛋️|快適な|This chair is very comfortable.|making you feel relaxed
+convenient|qualities|~👌|便利な|This store is very convenient.|easy to use; saving time
+correct|qualities|~✅|正しい|Your answer is correct.|right; without mistakes
+enough|qualities|~🆗|十分な|We have enough food for everyone.|as much as you need
+equal|qualities|~🟰|等しい・平等な|All people are equal.|the same in size, number, or value
+excellent|qualities|~💯|優れた|Your English is excellent.|very, very good
+fresh|qualities|~🥬|新鮮な|These vegetables are fresh.|new and not old; or clean and cool
+global|qualities|~🌐|地球規模の|Global warming is a serious problem.|about the whole world
+international|qualities|~🌍🤝|国際的な|This is an international school.|between many countries
+local|qualities|~📍|地元の|I buy vegetables at a local market.|of the area near you
+modern|qualities|~🏙️|現代的な|This is a modern building.|new; of the present time
+natural|qualities|~🌿|自然の|This park has a lot of natural beauty.|made by nature, not by people
+negative|qualities|~➖|否定的な・悪い|Don't be so negative.|bad or harmful; or saying no
+normal|qualities|~😐|普通の|It is normal to feel nervous before a test.|usual; ordinary
+positive|qualities|~➕|前向きな・よい|She always has a positive attitude.|good or helpful; or hopeful
+private|qualities|~🔒|個人的な・私立の|This is a private beach.|for one person or group only
+public|qualities|~🏞️|公共の|This is a public park.|open to everyone
+serious|qualities|~😐❗|深刻な・まじめな|This is a serious problem.|important and not funny; or very bad
+simple|qualities|~🔹|簡単な・単純な|The rules of the game are simple.|easy to understand or do
+strange|qualities|~🤨|奇妙な|I heard a strange sound.|unusual; not normal
+traditional|qualities|~🏯|伝統的な|Sushi is a traditional Japanese food.|following old customs
+unique|qualities|~🦄|独特の・唯一の|Each person has a unique voice.|the only one of its kind
+usual|qualities|~🔁|いつもの|I got up at the usual time.|done or happening most of the time
+nervous|qualities|~😬|緊張した|I was nervous before the speech.|worried and a little afraid
+patient|qualities|~⏳🙂|我慢強い|Please be patient.|able to wait calmly
+calm|qualities|~😌|落ち着いた|Stay calm in an emergency.|quiet and not worried
+abroad|adverbs|~✈️🌍|外国へ・外国で|I want to study abroad.|in or to another country
+actually|adverbs|~💬|実は|Actually, I don't like coffee.|in fact; really
+especially|adverbs|~⭐|特に|I like fruit, especially apples.|more than usual; particularly
+finally|adverbs|~🏁|ついに・最後に|We finally arrived at the hotel.|at last; after a long time
+however|adverbs|~↔️|しかしながら|It was cold. However, we went out.|but
+instead|adverbs|~🔄|代わりに|Let's walk instead of taking the bus.|in place of something else
+probably|adverbs|~🤔|たぶん|It will probably be sunny tomorrow.|very likely
+recently|adverbs|~🆕|最近|I recently started yoga.|not long ago
+suddenly|adverbs|~⚡|突然|Suddenly, it started to rain.|quickly and without warning
+almost|adverbs|~🤏|ほとんど|I almost missed the bus.|nearly
