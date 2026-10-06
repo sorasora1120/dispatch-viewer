@@ -652,8 +652,12 @@ function figuresHtml(item) {
   if (!marginKnown) {
     return `<div class="quote-badge">💬 見積り要相談（金額は交渉次第）</div>`;
   }
+  const quoteHtml = item.quote
+    ? `<span><span class="f-label">提示額</span><span class="f-main num">¥${esc(String(item.quote))}</span></span>`
+    : "";
   return `<div class="figures">
     <span><span class="f-label">予算</span><span class="f-main num">${esc(fmtBudgetAmount(item))}</span></span>
+    ${quoteHtml}
     <span><span class="f-label">利益目安</span><span class="f-main num margin-pos">+¥${esc(String(item.margin))}</span></span>
   </div>`;
 }
