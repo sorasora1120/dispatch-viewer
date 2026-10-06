@@ -679,13 +679,21 @@ function figuresHtml(item) {
   if (!marginKnown) {
     return `<div class="quote-badge">💬 見積り要相談（金額は交渉次第）</div>`;
   }
+  // 2026-10-06、「見積り要相談の案件に金額の目安が一つも無くて提案が書けない」との
+  // 指摘を受け、クライアント予算が未確定の案件も、最低予算ラインを基準にした
+  // 「目安」の提示額・利益を出すようにした（worker_matcher.pyのis_estimate）。
+  // 実際の予算と混同されないよう、ラベルに「目安」と明記して区別する。
+  const isEstimate = !fmtBudgetAmount(item) || fmtBudgetAmount(item) === "予算不明";
+  const budgetHtml = isEstimate
+    ? `<span><span class="f-label">予算</span><span class="f-main num">見積り要相談</span></span>`
+    : `<span><span class="f-label">予算</span><span class="f-main num">${esc(fmtBudgetAmount(item))}</span></span>`;
   const quoteHtml = item.quote
-    ? `<span><span class="f-label">提示額</span><span class="f-main num">¥${esc(String(item.quote))}</span></span>`
+    ? `<span><span class="f-label">${isEstimate ? "目安提示額" : "提示額"}</span><span class="f-main num">¥${esc(String(item.quote))}</span></span>`
     : "";
   return `<div class="figures">
-    <span><span class="f-label">予算</span><span class="f-main num">${esc(fmtBudgetAmount(item))}</span></span>
+    ${budgetHtml}
     ${quoteHtml}
-    <span><span class="f-label">利益目安</span><span class="f-main num margin-pos">+¥${esc(String(item.margin))}</span></span>
+    <span><span class="f-label">${isEstimate ? "目安利益" : "利益目安"}</span><span class="f-main num margin-pos">+¥${esc(String(item.margin))}</span></span>
   </div>`;
 }
 
