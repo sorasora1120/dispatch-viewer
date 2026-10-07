@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>hair salon Lumière｜制作サンプル</title>
+<meta name="description" content="美容室サイトの制作サンプル（架空の店舗です）">
+<style>
+  :root {
+    --bg: #faf7f3; --ink: #2b2522; --muted: #7a6f68; --accent: #b98b6a; --accent-dark: #8f6648;
+    --card: #ffffff; --line: #e8e0d8;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: "Hiragino Mincho ProN", "Yu Mincho", serif; line-height: 1.9; }
+  a { color: inherit; }
+  .sans { font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; }
+  .sample-bar { background: #2b2522; color: #fff; text-align: center; font-size: 12px; padding: 6px 16px; font-family: sans-serif; }
+  header { position: sticky; top: 0; z-index: 10; background: rgba(250,247,243,.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+  .nav { max-width: 1080px; margin: 0 auto; padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .logo { font-size: 22px; letter-spacing: .12em; text-decoration: none; }
+  .logo small { display: block; font-size: 10px; letter-spacing: .3em; color: var(--muted); line-height: 1; }
+  .nav ul { list-style: none; display: flex; gap: 24px; margin: 0; padding: 0; font-size: 13px; letter-spacing: .1em; }
+  .nav ul a { text-decoration: none; }
+  .btn { display: inline-block; background: var(--accent); color: #fff; text-decoration: none; padding: 12px 28px; border-radius: 999px; font-size: 14px; letter-spacing: .1em; transition: background .2s; }
+  .btn:hover { background: var(--accent-dark); }
+  .hero { min-height: 78vh; display: grid; place-items: center; text-align: center; padding: 80px 20px;
+    background: radial-gradient(circle at 20% 30%, #f1e3d6 0, transparent 45%), radial-gradient(circle at 80% 70%, #e9d5c5 0, transparent 50%), linear-gradient(160deg, #f7efe7, #efe2d6); }
+  .hero p.en { letter-spacing: .4em; color: var(--accent-dark); font-size: 12px; margin: 0 0 18px; }
+  .hero h1 { font-size: clamp(30px, 6vw, 54px); font-weight: 500; line-height: 1.5; margin: 0 0 22px; letter-spacing: .08em; }
+  .hero .lead { color: var(--muted); margin: 0 0 36px; }
+  section { padding: 96px 20px; }
+  .wrap { max-width: 1080px; margin: 0 auto; }
+  .ttl { text-align: center; margin-bottom: 52px; }
+  .ttl span { display: block; font-size: 12px; letter-spacing: .4em; color: var(--accent); }
+  .ttl h2 { margin: 6px 0 0; font-weight: 500; font-size: 28px; letter-spacing: .12em; }
+  .concept { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+  .ph { aspect-ratio: 4/5; border-radius: 4px; background: linear-gradient(135deg, #d9bfa9, #b98b6a 60%, #8f6648); position: relative; overflow: hidden; }
+  .ph::after { content: ""; position: absolute; inset: 18px; border: 1px solid rgba(255,255,255,.5); }
+  .ph.alt { background: linear-gradient(135deg, #e6d6c8, #c9a98f); }
+  .menu-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0 56px; }
+  .menu-item { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 18px 0; border-bottom: 1px dotted var(--line); }
+  .menu-item b { font-weight: 500; }
+  .menu-item em { font-style: normal; color: var(--muted); font-size: 13px; display: block; }
+  .price { white-space: nowrap; color: var(--accent-dark); }
+  .note { text-align: center; color: var(--muted); font-size: 13px; margin-top: 28px; }
+  .bg-white { background: #fff; }
+  .staff { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+  .staff .ph { aspect-ratio: 1/1; border-radius: 50%; margin: 0 auto 18px; max-width: 200px; }
+  .staff .ph::after { display: none; }
+  .staff div { text-align: center; }
+  .staff h3 { margin: 0; font-weight: 500; letter-spacing: .1em; }
+  .staff p { margin: 4px 0 0; font-size: 13px; color: var(--muted); }
+  .voice { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .voice blockquote { margin: 0; background: var(--card); border: 1px solid var(--line); padding: 28px; font-size: 14px; }
+  .voice cite { display: block; margin-top: 14px; font-style: normal; color: var(--muted); font-size: 12px; }
+  .info { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+  .info dl { margin: 0; display: grid; grid-template-columns: 7em 1fr; row-gap: 14px; font-size: 15px; }
+  .info dt { color: var(--muted); }
+  .info dd { margin: 0; }
+  .map { min-height: 280px; border-radius: 4px; background: repeating-linear-gradient(45deg, #efe6dd 0 12px, #f6efe8 12px 24px); display: grid; place-items: center; color: var(--muted); font-size: 13px; }
+  .reserve { text-align: center; background: linear-gradient(160deg, #3a302b, #2b2522); color: #fff; }
+  .reserve h2 { font-weight: 500; letter-spacing: .12em; margin: 0 0 12px; }
+  .reserve p { color: #d8cdc5; margin: 0 0 32px; }
+  .reserve .tel { display: block; font-size: 28px; letter-spacing: .1em; margin-top: 24px; text-decoration: none; }
+  footer { text-align: center; padding: 32px 20px 48px; font-size: 12px; color: var(--muted); }
+  footer .sample { display: inline-block; margin-top: 10px; border: 1px solid var(--line); padding: 6px 14px; border-radius: 999px; }
+  .fade { opacity: 0; transform: translateY(24px); transition: opacity .8s, transform .8s; }
+  .fade.show { opacity: 1; transform: none; }
+  @media (max-width: 760px) {
+    .nav ul { display: none; }
+    section { padding: 72px 16px; }
+    .concept, .info, .menu-grid { grid-template-columns: 1fr; gap: 32px; }
+    .menu-grid { gap: 0; }
+    .staff, .voice { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="sample-bar">これは制作サンプルです（架空の店舗です）。実在の店舗・人物とは関係ありません。</div>
+<header>
+  <nav class="nav sans">
+    <a class="logo" href="#">Lumière<small>HAIR SALON</small></a>
+    <ul>
+      <li><a href="#concept">コンセプト</a></li>
+      <li><a href="#menu">メニュー</a></li>
+      <li><a href="#staff">スタッフ</a></li>
+      <li><a href="#access">アクセス</a></li>
+    </ul>
+    <a class="btn" href="#reserve">ご予約</a>
+  </nav>
+</header>
+
+<div class="hero">
+  <div>
+    <p class="en sans">HAIR SALON LUMIÈRE</p>
+    <h1>毎朝の鏡が、<br>少し楽しみになる髪へ。</h1>
+    <p class="lead">一人ひとりの髪質と暮らしに合わせた、<br>扱いやすく、もちのいいスタイルをご提案します。</p>
+    <a class="btn sans" href="#reserve">ご予約はこちら</a>
+  </div>
+</div>
+
+<section id="concept">
+  <div class="wrap concept">
+    <div class="ph fade"></div>
+    <div class="fade">
+      <div class="ttl" style="text-align:left;margin-bottom:28px"><span class="sans">CONCEPT</span><h2>席数4つの、静かなサロン</h2></div>
+      <p>カウンセリングから仕上げまで、同じスタイリストが一貫して担当します。ご自宅での乾かし方やスタイリングのコツまでお伝えするので、サロン帰りの仕上がりが長く続きます。</p>
+      <p>髪と頭皮へのやさしさを考え、薬剤は低刺激のものを中心に使用しています。お子様連れのお客様も、お気軽にご相談ください。</p>
+    </div>
+  </div>
+</section>
+
+<section id="menu" class="bg-white">
+  <div class="wrap">
+    <div class="ttl"><span class="sans">MENU</span><h2>メニュー・料金</h2></div>
+    <div class="menu-grid sans fade">
+      <div class="menu-item"><div><b>カット</b><em>シャンプー・ブロー込み</em></div><span class="price">¥5,500</span></div>
+      <div class="menu-item"><div><b>カット＋カラー</b><em>リタッチは¥1,100引き</em></div><span class="price">¥11,000</span></div>
+      <div class="menu-item"><div><b>カット＋パーマ</b><em>デジタルパーマ +¥2,200</em></div><span class="price">¥12,100</span></div>
+      <div class="menu-item"><div><b>髪質改善トリートメント</b><em>カット同時で¥1,100引き</em></div><span class="price">¥8,800</span></div>
+      <div class="menu-item"><div><b>ヘッドスパ（30分）</b><em>頭皮の状態に合わせて施術</em></div><span class="price">¥4,400</span></div>
+      <div class="menu-item"><div><b>キッズカット</b><em>小学生まで</em></div><span class="price">¥3,300</span></div>
+    </div>
+    <p class="note sans">表示価格はすべて税込です。ロングヘアは別途料金がかかる場合があります。</p>
+  </div>
+</section>
+
+<section id="staff">
+  <div class="wrap">
+    <div class="ttl"><span class="sans">STAFF</span><h2>スタッフ紹介</h2></div>
+    <div class="staff sans">
+      <div class="fade"><div class="ph"></div><h3>佐藤 ひかり</h3><p>店長 / 歴15年<br>ショートスタイルとカラーが得意</p></div>
+      <div class="fade"><div class="ph alt"></div><h3>高橋 ゆう</h3><p>スタイリスト / 歴8年<br>くせ毛を活かすカットが得意</p></div>
+      <div class="fade"><div class="ph"></div><h3>中村 さき</h3><p>スタイリスト / 歴5年<br>ヘッドスパ・トリートメント担当</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="bg-white">
+  <div class="wrap">
+    <div class="ttl"><span class="sans">VOICE</span><h2>お客様の声</h2></div>
+    <div class="voice sans">
+      <blockquote class="fade">くせ毛で毎朝悩んでいましたが、乾かすだけでまとまるようになりました。<cite>30代・会社員（サンプル）</cite></blockquote>
+      <blockquote class="fade">静かで落ち着いた空間なので、毎回リラックスして過ごせます。<cite>40代・主婦（サンプル）</cite></blockquote>
+      <blockquote class="fade">子どもと一緒に通えるのが本当に助かっています。<cite>30代・パート（サンプル）</cite></blockquote>
+    </div>
+  </div>
+</section>
+
+<section id="access">
+  <div class="wrap info sans">
+    <div class="fade">
+      <div class="ttl" style="text-align:left;margin-bottom:28px"><span>ACCESS</span><h2 style="font-family:serif">店舗情報</h2></div>
+      <dl>
+        <dt>住所</dt><dd>〒000-0000 東京都○○区○○ 1-2-3 ルミエールビル2F</dd>
+        <dt>営業時間</dt><dd>10:00〜19:00（最終受付 18:00）</dd>
+        <dt>定休日</dt><dd>毎週火曜日・第3水曜日</dd>
+        <dt>アクセス</dt><dd>○○駅 東口より徒歩3分</dd>
+        <dt>駐車場</dt><dd>提携駐車場あり（2時間無料）</dd>
+      </dl>
+    </div>
+    <div class="map fade">ここに Google マップを埋め込みます</div>
+  </div>
+</section>
+
+<section id="reserve" class="reserve sans">
+  <div class="wrap fade">
+    <h2 style="font-family:serif">ご予約・お問い合わせ</h2>
+    <p>24時間受付のWeb予約が便利です。お電話でも承ります。</p>
+    <a class="btn" href="#reserve">Web予約する</a>
+    <a class="tel" href="#reserve">TEL 00-0000-0000</a>
+  </div>
+</section>
+
+<footer class="sans">
+  © hair salon Lumière<br>
+  <span class="sample">制作サンプル（架空の店舗です）／ Web制作：ソラ</span>
+</footer>
+
+<script>
+  var io = "IntersectionObserver" in window ? new IntersectionObserver(function (es) {
+    es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("show"); io.unobserve(e.target); } });
+  }, { threshold: 0.15 }) : null;
+  document.querySelectorAll(".fade").forEach(function (el) { io ? io.observe(el) : el.classList.add("show"); });
+</script>
+</body>
+</html>
