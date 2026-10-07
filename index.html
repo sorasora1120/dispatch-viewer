@@ -385,6 +385,12 @@ footer {
       <option value="all">全プラットフォーム</option>
       <option value="CrowdWorks">CrowdWorksのみ</option>
       <option value="ココナラ">ココナラのみ</option>
+      <option value="ランサーズ">ランサーズのみ</option>
+    </select>
+    <select id="qualitySelect">
+      <option value="all">すべての案件</option>
+      <option value="good">良い依頼者のみ（評価4.5以上・実績あり）</option>
+      <option value="big">予算5万円以上のみ</option>
     </select>
   </div>
 </div>
@@ -394,6 +400,7 @@ footer {
   <div class="toolbar-row">
     <div class="count-line" id="countLine"></div>
     <select class="sort-select" id="sortSelect">
+      <option value="score">おすすめ順</option>
       <option value="new">新着順</option>
       <option value="margin">利益順</option>
     </select>
@@ -574,7 +581,7 @@ async function loadData(isManualRefresh) {
 // ============================================================
 // 以下は表示ロジック（Claude Artifact版と共通）
 // ============================================================
-let state = { tab: "proposed", plat: "all", q: "", sort: "new" };
+let state = { tab: "proposed", plat: "all", q: "", sort: "score", quality: "all" };
 
 const SKIP_KEY = "dispatch_skip_urls";
 function loadSet(key) {
@@ -695,6 +702,49 @@ function figuresHtml(item) {
     ${quoteHtml}
     <span><span class="f-label">${isEstimate ? "目安利益" : "利益目安"}</span><span class="f-main num margin-pos">+¥${esc(String(item.margin))}</span></span>
   </div>`;
+}
+
+// 依頼者の評価・発注実績と予算から案件の良さを数値化する（2026-10-07、
+// 「数が少ないし質もよくない」との指摘を受けて、良い案件を上に出すために追加）。
+// 評価欄は「4.9 （17）」のように評価と件数がまとめて入っていることがある。
+function clientRating(item) {
+  const m = String(item.rating || "").match(/\d(?:\.\d+)?/);
+  return m ? parseFloat(m[0]) : null;
+}
+function clientOrderCount(item) {
+  const fromRating = String(item.rating || "").match(/[（(]\s*(\d+)\s*[)）]/);
+  if (fromRating) return parseInt(fromRating[1], 10);
+  const n = parseInt(String(item.orderCount || "").replace(/[^0-9]/g, ""), 10);
+  return isNaN(n) ? 0 : n;
+}
+// 実際のクライアント予算（範囲なら上限）。不明ならnull。
+function budgetYen(item) {
+  const parts = String(item.budget || "").split(/[〜~]/).map(parseYenAmount).filter(v => v !== null);
+  return parts.length ? parts[parts.length - 1] : null;
+}
+function qualityScore(item) {
+  let budget = budgetYen(item);
+  if (budget === null) {
+    // 予算未提示は目安額（提示額＋利益）で見るが、確定額ではないので割り引く
+    const est = (Number(item.quote) || 0) + (Number(item.margin) || 0);
+    budget = est ? est * 0.6 : 10000;
+  }
+  const rating = clientRating(item);
+  const count = clientOrderCount(item);
+  return Math.log10(Math.max(budget, 1000)) * 2
+    + (rating === null ? -1 : (rating - 4) * 2)
+    + Math.min(Math.log10(count + 1), 2);
+}
+function passesQuality(item) {
+  if (state.quality === "good") {
+    const r = clientRating(item);
+    return r !== null && r >= 4.5 && clientOrderCount(item) > 0;
+  }
+  if (state.quality === "big") {
+    const b = budgetYen(item);
+    return b !== null && b >= 50000;
+  }
+  return true;
 }
 
 function clientHtml(item) {
@@ -914,6 +964,7 @@ function render() {
   const q = state.q.trim().toLowerCase();
   const filtered = items.filter(it => {
     if (state.plat !== "all" && it.platform !== state.plat) return false;
+    if (!passesQuality(it)) return false;
     if (state.tab === "pending") {
       if (skipSet.has(it.url)) return false;
     } else {
@@ -935,6 +986,8 @@ function render() {
   const sorted = filtered.slice();
   if (state.sort === "margin") {
     sorted.sort((a, b) => marginYen(b) - marginYen(a));
+  } else if (state.sort === "score") {
+    sorted.sort((a, b) => qualityScore(b) - qualityScore(a));
   }
 
   const list = document.getElementById("list");
@@ -945,7 +998,7 @@ function render() {
     return;
   }
 
-  if (state.sort === "margin") {
+  if (state.sort !== "new") {
     list.innerHTML = sorted.map((it, i) => cardHtml(it, i)).join("");
   } else {
     let html = "";
@@ -1047,6 +1100,11 @@ document.getElementById("q").addEventListener("input", (e) => {
 
 document.getElementById("platSelect").addEventListener("change", (e) => {
   state.plat = e.target.value;
+  render();
+});
+
+document.getElementById("qualitySelect").addEventListener("change", (e) => {
+  state.quality = e.target.value;
   render();
 });
 
