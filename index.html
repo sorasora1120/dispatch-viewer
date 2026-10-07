@@ -20,6 +20,8 @@
   --cw-soft: #DEE6F5;
   --co: #B15A2E;
   --co-soft: #F5E2D3;
+  --la: #6B4FA0;
+  --la-soft: #E8E0F3;
   --shadow: 0 1px 2px rgba(33,30,25,0.06), 0 2px 10px rgba(33,30,25,0.05);
 }
 @media (prefers-color-scheme: dark) {
@@ -40,6 +42,8 @@
     --cw-soft: #202A42;
     --co: #E0A472;
     --co-soft: #3A2A1B;
+    --la: #B9A2E6;
+    --la-soft: #2C2340;
     --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 4px 16px rgba(0,0,0,0.35);
   }
 }
@@ -60,6 +64,8 @@
   --cw-soft: #202A42;
   --co: #E0A472;
   --co-soft: #3A2A1B;
+  --la: #B9A2E6;
+  --la-soft: #2C2340;
   --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 4px 16px rgba(0,0,0,0.35);
 }
 * { box-sizing: border-box; }
@@ -211,6 +217,7 @@ main { padding: 12px 12px 48px; max-width: 640px; margin: 0 auto; }
 }
 .card[data-platform="CrowdWorks"]::before { background: var(--cw); }
 .card[data-platform="ココナラ"]::before { background: var(--co); }
+.card[data-platform="ランサーズ"]::before { background: var(--la); }
 .card.is-done { opacity: 0.55; }
 .card.is-done::before { background: var(--ink-soft) !important; }
 .card.is-done .title a { text-decoration: line-through; text-decoration-color: var(--ink-soft); }
@@ -226,6 +233,7 @@ main { padding: 12px 12px 48px; max-width: 640px; margin: 0 auto; }
 }
 .badge.cw { background: var(--cw-soft); color: var(--cw); }
 .badge.co { background: var(--co-soft); color: var(--co); }
+.badge.la { background: var(--la-soft); color: var(--la); }
 .badge.cat { background: var(--paper); color: var(--ink-soft); border: 1px solid var(--line); font-weight: 600; text-transform: none; letter-spacing: 0; }
 .badge.status-pending { background: var(--amber-soft); color: var(--amber); }
 .badge.status-applied { background: var(--amber-soft); color: var(--amber); }
@@ -781,7 +789,7 @@ function deadlineBadge(item) {
 }
 
 function cardHtml(item, idx) {
-  const platClass = item.platform === "CrowdWorks" ? "cw" : "co";
+  const platClass = item.platform === "CrowdWorks" ? "cw" : item.platform === "ランサーズ" ? "la" : "co";
   const isPending = item.status === "pending";
   const stage = isPending ? null : getStage(item.url);
   const isHigh = marginYen(item) >= HIGH_MARGIN_THRESHOLD;
@@ -891,9 +899,9 @@ function renderStats(items, tab) {
     const readyToOrder = items.filter(it => getStage(it.url) === "hired").length;
     thirdValue = `採用待ち ${waiting} / 発注準備中 ${readyToOrder}`;
   } else {
-    const platCounts = { CrowdWorks: 0, "ココナラ": 0 };
+    const platCounts = { CrowdWorks: 0, "ココナラ": 0, "ランサーズ": 0 };
     items.forEach(it => { if (platCounts[it.platform] !== undefined) platCounts[it.platform]++; });
-    thirdValue = `CW ${platCounts["CrowdWorks"]} / ココ ${platCounts["ココナラ"]}`;
+    thirdValue = `CW ${platCounts["CrowdWorks"]} / ココ ${platCounts["ココナラ"]} / ラン ${platCounts["ランサーズ"]}`;
   }
 
   document.getElementById("stats").innerHTML = `
