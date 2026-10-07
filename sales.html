@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>案件の仕入れ先</title>
+<style>
+:root {
+  --ink: #211E19; --ink-soft: #55504A; --paper: #EEEBE2; --paper-raised: #FBF9F3; --line: #D8D3C6;
+  --accent: #2F6E63; --accent-soft: #DCEAE6; --accent-ink: #16403A; --amber: #9C6B1E; --amber-soft: #F1E4C9;
+  --shadow: 0 1px 2px rgba(33,30,25,0.06), 0 2px 10px rgba(33,30,25,0.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ink: #EBE7DD; --ink-soft: #A9A296; --paper: #17181A; --paper-raised: #202225; --line: #34363A;
+    --accent: #5FB3A3; --accent-soft: #1B322E; --accent-ink: #B7E8DC; --amber: #D9AE63; --amber-soft: #362A15;
+    --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 4px 16px rgba(0,0,0,0.35);
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: -apple-system, "Hiragino Sans", "Noto Sans JP", sans-serif; line-height: 1.7; -webkit-text-size-adjust: 100%; }
+main { max-width: 640px; margin: 0 auto; padding: 16px 16px 48px; }
+.top { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
+h1 { font-size: 18px; margin: 0; }
+.back { font-size: 13px; color: var(--accent); text-decoration: none; font-weight: 700; }
+.lead { color: var(--ink-soft); font-size: 13px; margin: 0 0 16px; }
+.tabs { display: flex; gap: 6px; margin-bottom: 14px; overflow-x: auto; }
+.tabs button { flex: 1; white-space: nowrap; font: inherit; font-size: 13px; font-weight: 700; padding: 9px 10px; border-radius: 10px; border: 1px solid var(--line); background: var(--paper-raised); color: var(--ink-soft); cursor: pointer; }
+.tabs button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+section { display: none; }
+section.on { display: block; }
+.card { background: var(--paper-raised); border: 1px solid var(--line); border-radius: 14px; padding: 14px; margin-bottom: 12px; box-shadow: var(--shadow); }
+.card h2 { font-size: 15px; margin: 0 0 6px; }
+.card p { margin: 0 0 10px; font-size: 13px; color: var(--ink-soft); }
+.links { display: grid; gap: 8px; }
+.links a { display: block; text-decoration: none; color: var(--accent-ink); background: var(--accent-soft); border-radius: 10px; padding: 10px 12px; font-size: 14px; font-weight: 700; }
+.links a small { display: block; font-weight: 400; color: var(--ink-soft); font-size: 11px; word-break: break-all; }
+.tpl { white-space: pre-wrap; font-family: inherit; font-size: 13px; background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 12px; margin: 0 0 8px; max-height: 260px; overflow: auto; }
+.copy { font: inherit; font-size: 13px; font-weight: 700; border: none; border-radius: 10px; padding: 9px 14px; background: var(--accent); color: #fff; cursor: pointer; }
+.copy.done { background: var(--amber); }
+.rule { background: var(--amber-soft); color: var(--ink); border-radius: 12px; padding: 10px 12px; font-size: 12px; margin-bottom: 12px; }
+.rule b { color: var(--amber); }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th, td { border-bottom: 1px solid var(--line); padding: 8px 4px; text-align: left; vertical-align: top; }
+td.p { text-align: right; white-space: nowrap; font-weight: 700; }
+.log-form { display: flex; gap: 6px; margin-bottom: 8px; }
+.log-form input { flex: 1; min-width: 0; font: inherit; font-size: 14px; padding: 9px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); color: var(--ink); }
+.log-list { list-style: none; margin: 0; padding: 0; font-size: 13px; }
+.log-list li { display: flex; justify-content: space-between; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--line); }
+.log-list button { font: inherit; font-size: 11px; border: 1px solid var(--line); background: transparent; color: var(--ink-soft); border-radius: 8px; padding: 2px 8px; cursor: pointer; }
+.count { font-size: 12px; color: var(--ink-soft); margin: 0 0 6px; }
+</style>
+</head>
+<body>
+<main>
+  <div class="top">
+    <h1>案件の仕入れ先</h1>
+    <a class="back" href="index.html">← 案件リードへ</a>
+  </div>
+  <p class="lead">CrowdWorks以外から案件を取るための道具です。送るのは必ず自分の手で（自動送信はアカウント停止の原因になります）。</p>
+
+  <div class="tabs" id="tabs">
+    <button data-sec="x" aria-pressed="true">X直募集</button>
+    <button data-sec="partner" aria-pressed="false">制作会社</button>
+    <button data-sec="hoshu" aria-pressed="false">月額保守</button>
+  </div>
+
+  <!-- X（旧Twitter） -->
+  <section id="x" class="on">
+    <div class="rule"><b>ルール：</b>「作ってほしい」と投稿している人にだけ送る。1日10件まで。同じ文面の連投はXのスパム判定に引っかかるので、相手の投稿内容に合わせて1行目を変える。</div>
+    <div class="card">
+      <h2>① 依頼したい人を探す（最新順）</h2>
+      <p>「承ります」「受付中」など、制作者側の宣伝投稿は除外済みです。</p>
+      <div class="links" id="xLinks"></div>
+    </div>
+    <div class="card">
+      <h2>② 返信・DMの文面</h2>
+      <p>［ ］の部分を相手の投稿に合わせて書き換えてから送ってください。</p>
+      <pre class="tpl" id="tplX">はじめまして、Web制作をしているソラと申します。
+［LP制作］のご依頼先を探されているとの投稿を拝見し、ご連絡しました。
+
+これまでの制作サンプルです（スマホでも見られます）。
+https://sorasora1120.github.io/dispatch-viewer/works/
+
+デザインから公開まで一式対応できます。ご予算やイメージを伺えれば、無料でお見積りをお出しします。
+もしよければ、お気軽にお返事ください。</pre>
+      <button class="copy" data-copy="tplX">文面をコピー</button>
+    </div>
+  </section>
+
+  <!-- 制作会社・代理店 -->
+  <section id="partner">
+    <div class="rule"><b>狙い：</b>「協力会社募集」「パートナー募集」のページを出している制作会社は、外注先を探している会社です。問い合わせフォームから送ります。1日5〜10社が目安。</div>
+    <div class="card">
+      <h2>① 外注先を探している会社を探す</h2>
+      <div class="links" id="partnerLinks"></div>
+    </div>
+    <div class="card">
+      <h2>② 問い合わせフォームの文面</h2>
+      <p>［会社名］を書き換えて送ってください。</p>
+      <pre class="tpl" id="tplPartner">［会社名］ご担当者様
+
+突然のご連絡失礼いたします。Web制作を行っております、ソラと申します。
+貴社の協力会社・パートナー募集を拝見し、ご連絡いたしました。
+
+デザイナー・エンジニアと連携したチームで、以下の制作に対応しております。
+・コーポレートサイト／LP／採用サイトの制作
+・WordPress構築、Shopify・STUDIOでの制作
+・デザインカンプからのコーディング（レスポンシブ対応）
+
+制作サンプル：
+https://sorasora1120.github.io/dispatch-viewer/works/
+
+繁忙期のスポット対応や、急ぎの案件の受け皿としてもご活用いただけます。
+単価・納期の条件もご相談に応じますので、まずは小さな案件1件からでもお試しいただけましたら幸いです。
+
+ご検討のほど、よろしくお願いいたします。
+
+ソラ</pre>
+      <button class="copy" data-copy="tplPartner">文面をコピー</button>
+    </div>
+    <div class="card">
+      <h2>③ 送った会社の記録</h2>
+      <p>同じ会社に二重に送らないためのメモ（このiPadの中にだけ保存されます）。</p>
+      <div class="log-form">
+        <input id="logInput" placeholder="会社名を入れて追加">
+        <button class="copy" id="logAdd">追加</button>
+      </div>
+      <p class="count" id="logCount"></p>
+      <ul class="log-list" id="logList"></ul>
+    </div>
+  </section>
+
+  <!-- 月額保守 -->
+  <section id="hoshu">
+    <div class="rule"><b>狙い：</b>制作は1回きりの売上ですが、保守は毎月入ります。納品のタイミングで必ず提案します。作業はワーカーに依頼し、差額が毎月の利益になります。</div>
+    <div class="card">
+      <h2>保守プラン（目安）</h2>
+      <table>
+        <tr><th>プラン</th><th>内容</th><th>月額</th></tr>
+        <tr><td>ライト</td><td>サーバー・ドメイン管理、バックアップ、月1回の軽い修正</td><td class="p">¥5,500</td></tr>
+        <tr><td>スタンダード</td><td>ライト＋月3回までの修正、WordPress・プラグイン更新</td><td class="p">¥16,500</td></tr>
+        <tr><td>集客サポート</td><td>スタンダード＋月1ページ追加、アクセス解析レポート、改善提案</td><td class="p">¥33,000〜</td></tr>
+      </table>
+      <p style="margin-top:10px">小さなお店・個人のお客様にいきなり月3〜5万円を出すと断られやすいので、安いプランから選べるようにしています。会社のお客様には「集客サポート」を勧めます。</p>
+    </div>
+    <div class="card">
+      <h2>納品時に送る文面</h2>
+      <pre class="tpl" id="tplHoshu">この度はご依頼いただき、誠にありがとうございました。
+サイトは本日より公開となっております。
+
+公開後の運用について、ご希望の方には月額の保守プランもご用意しております。
+・ライト（月5,500円）：サーバー・ドメイン管理、バックアップ、月1回の軽微な修正
+・スタンダード（月16,500円）：月3回までの修正、WordPress等の更新対応
+・集客サポート（月33,000円〜）：ページ追加、アクセス解析レポート、改善のご提案
+
+「文章や写真を少し変えたい」「表示がおかしい」といった時に、すぐご相談いただける窓口としてご利用ください。
+初月は無料でお試しいただけます。ご興味がございましたら、お気軽にお申し付けください。
+
+今後ともよろしくお願いいたします。
+ソラ</pre>
+      <button class="copy" data-copy="tplHoshu">文面をコピー</button>
+    </div>
+  </section>
+</main>
+
+<script>
+(function () {
+  "use strict";
+  // Xの検索は「依頼したい側」の言い回しで探し、制作者側の宣伝投稿を除外する
+  var X_EXCLUDE = ' -承ります -受付中 -募集中 -モニター -ポートフォリオ -filter:retweets';
+  var X_QUERIES = [
+    ["LP制作を頼みたい人", '(LP OR ランディングページ) (作ってくれる OR 依頼したい OR お願いできる OR 探してます)'],
+    ["ホームページを作りたい人", '(ホームページ OR HP) (作ってくれる OR 依頼したい OR お願いできる人 OR 探してます)'],
+    ["WordPressで困っている人", 'WordPress (依頼したい OR お願いできる OR 詳しい方 OR 助けて) (サイト OR 修正)'],
+    ["ネットショップを作りたい人", '(Shopify OR ネットショップ OR ECサイト) (作ってくれる OR 依頼したい OR お願いできる)'],
+    ["Web制作者を募集している投稿", '(Web制作 OR サイト制作 OR コーダー) (募集 OR 外注先) (案件 OR 依頼)'],
+  ];
+  var xLinks = document.getElementById("xLinks");
+  X_QUERIES.forEach(function (q) {
+    var a = document.createElement("a");
+    a.href = "https://x.com/search?f=live&q=" + encodeURIComponent(q[1] + X_EXCLUDE);
+    a.target = "_blank"; a.rel = "noopener";
+    a.innerHTML = q[0] + "<small></small>";
+    a.querySelector("small").textContent = q[1];
+    xLinks.appendChild(a);
+  });
+
+  var PARTNER_QUERIES = [
+    ["協力会社を募集している制作会社", '"協力会社募集" Web制作'],
+    ["パートナーを募集している制作会社", '"パートナー募集" ホームページ制作 会社'],
+    ["外注コーダーを募集している会社", '"外注" "コーダー" 募集 制作会社'],
+    ["WordPressの協力会社募集", '"協力会社" WordPress 募集 制作'],
+    ["広告代理店のパートナー募集", '広告代理店 "パートナー募集" LP制作'],
+  ];
+  var pLinks = document.getElementById("partnerLinks");
+  PARTNER_QUERIES.forEach(function (q) {
+    var a = document.createElement("a");
+    a.href = "https://www.google.com/search?q=" + encodeURIComponent(q[1]);
+    a.target = "_blank"; a.rel = "noopener";
+    a.innerHTML = q[0] + "<small></small>";
+    a.querySelector("small").textContent = q[1];
+    pLinks.appendChild(a);
+  });
+
+  document.getElementById("tabs").addEventListener("click", function (e) {
+    var btn = e.target.closest("button");
+    if (!btn) return;
+    document.querySelectorAll("#tabs button").forEach(function (b) { b.setAttribute("aria-pressed", b === btn ? "true" : "false"); });
+    document.querySelectorAll("section").forEach(function (s) { s.classList.toggle("on", s.id === btn.dataset.sec); });
+  });
+
+  document.querySelectorAll("[data-copy]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var text = document.getElementById(btn.dataset.copy).textContent;
+      function done() { btn.textContent = "コピーしました"; btn.classList.add("done"); setTimeout(function () { btn.textContent = "文面をコピー"; btn.classList.remove("done"); }, 1500); }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, function () { window.prompt("コピーしてください", text); });
+      } else {
+        window.prompt("コピーしてください", text);
+      }
+    });
+  });
+
+  // 送った会社の記録（この端末のブラウザにだけ保存）
+  var KEY = "partner-log-v1";
+  function load() { try { return JSON.parse(localStorage.getItem(KEY) || "[]"); } catch (e) { return []; } }
+  function save(list) { try { localStorage.setItem(KEY, JSON.stringify(list)); } catch (e) {} }
+  function draw() {
+    var list = load();
+    var ul = document.getElementById("logList");
+    ul.innerHTML = "";
+    document.getElementById("logCount").textContent = list.length ? "送った会社：" + list.length + "社" : "まだ記録はありません";
+    list.slice().reverse().forEach(function (item) {
+      var li = document.createElement("li");
+      var span = document.createElement("span");
+      span.textContent = item.date + "　" + item.name;
+      var del = document.createElement("button");
+      del.textContent = "削除";
+      del.addEventListener("click", function () { save(load().filter(function (x) { return x.id !== item.id; })); draw(); });
+      li.appendChild(span); li.appendChild(del); ul.appendChild(li);
+    });
+  }
+  document.getElementById("logAdd").addEventListener("click", function () {
+    var input = document.getElementById("logInput");
+    var name = input.value.trim();
+    if (!name) return;
+    var list = load();
+    if (list.some(function (x) { return x.name === name; })) { alert("「" + name + "」には既に送っています。"); return; }
+    var d = new Date();
+    list.push({ id: Date.now(), name: name, date: (d.getMonth() + 1) + "/" + d.getDate() });
+    save(list); input.value = ""; draw();
+  });
+  draw();
+})();
+</script>
+</body>
+</html>
