@@ -391,7 +391,7 @@ footer {
   <div class="filter-row">
     <select id="platSelect">
       <option value="all">全プラットフォーム</option>
-      <option value="CrowdWorks">CrowdWorksのみ</option>
+      <option value="CrowdWorks" selected>CrowdWorksのみ</option>
       <option value="ココナラ">ココナラのみ</option>
       <option value="ランサーズ">ランサーズのみ</option>
     </select>
@@ -589,7 +589,7 @@ async function loadData(isManualRefresh) {
 // ============================================================
 // 以下は表示ロジック（Claude Artifact版と共通）
 // ============================================================
-let state = { tab: "proposed", plat: "all", q: "", sort: "score", quality: "all" };
+let state = { tab: "proposed", plat: "CrowdWorks", q: "", sort: "score", quality: "all" };
 
 const SKIP_KEY = "dispatch_skip_urls";
 function loadSet(key) {
@@ -686,6 +686,11 @@ function marginYen(item) {
   return v ? parseInt(v, 10) : -1;
 }
 
+// シートの数値は表示形式によって「18,000」のような文字列で来ることがある
+function yenNum(v) {
+  const n = Number(String(v || "").replace(/[^0-9.-]/g, ""));
+  return isNaN(n) ? 0 : n;
+}
 function figuresHtml(item) {
   if (item.status === "pending") {
     return `<div class="figures"><span class="f-label">予算</span><span class="f-main num">${esc(fmtBudget(item))}</span></div>`;
@@ -705,8 +710,16 @@ function figuresHtml(item) {
   const quoteHtml = item.quote
     ? `<span><span class="f-label">${isEstimate ? "目安提示額" : "提示額"}</span><span class="f-main num">¥${esc(String(item.quote))}</span></span>`
     : "";
+  // 受注者側の手数料（予算 − 提示額 − 利益）。2026-10-07から利益は手数料を
+  // 引いた後の額で計算しているので、手取りの内訳が分かるように表示する。
+  const budget = budgetYen(item);
+  const fee = !isEstimate && budget !== null ? budget - yenNum(item.quote) - yenNum(item.margin) : 0;
+  const feeHtml = fee > 0
+    ? `<span><span class="f-label">手数料</span><span class="f-main num">−¥${esc(fee.toLocaleString())}</span></span>`
+    : "";
   return `<div class="figures">
     ${budgetHtml}
+    ${feeHtml}
     ${quoteHtml}
     <span><span class="f-label">${isEstimate ? "目安利益" : "利益目安"}</span><span class="f-main num margin-pos">+¥${esc(String(item.margin))}</span></span>
   </div>`;
