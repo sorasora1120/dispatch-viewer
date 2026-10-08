@@ -810,6 +810,22 @@ function rivalBadge(item) {
   const label = n <= 5 ? `👥 応募${n}人・狙い目` : `👥 応募${n}人`;
   return `<span class="badge ${cls}">${esc(label)}</span>`;
 }
+// 「おすすめ順」の点数。2026-10-08、最初の評価を取るまで（0→1の間）は「選ばれやすさ」を優先する形に変えた。
+// それまでは予算が大きいほど上に来ていて、評価0件では通りにくい10万円以上の案件に応募が集中していた
+// （実測：応募58件のうち3万円以上が39件・1〜3万円は1件、返信0件）。評価が数件ついたら、予算の重みを戻してよい。
+function budgetFitScore(budget) {
+  if (budget < 5000) return -2;
+  if (budget <= 30000) return 2.5;   // 小さな修正・LPなど、新人でも任されやすい
+  if (budget <= 80000) return 1.5;
+  if (budget <= 150000) return 0;
+  return -1.5;                       // 大きい案件は実績のある人が選ばれやすい
+}
+function daysSince(str) {
+  const m = String(str || "").match(/(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})/);
+  if (!m) return null;
+  const d = daysUntil(`${m[1]}-${m[2].padStart(2, "0")}-${m[3].padStart(2, "0")}`);
+  return d === null ? null : -d;
+}
 function qualityScore(item) {
   let budget = budgetYen(item);
   if (budget === null) {
@@ -820,12 +836,16 @@ function qualityScore(item) {
   const rating = clientRating(item);
   const count = clientOrderCount(item);
   const applicants = applicantCount(item);
-  // 評価0件のうちは「選ばれやすさ」が一番大事なので、応募者数の影響を大きくする
-  const rivalScore = applicants === null ? 0 : applicants <= 5 ? 3 : applicants <= 15 ? 1 : -2;
-  return Math.log10(Math.max(budget, 1000)) * 2
-    + (rating === null ? -1 : (rating - 4) * 2)
+  // 応募者が少ないほど、自分の提案が読まれる
+  const rivalScore = applicants === null ? 0 : applicants <= 3 ? 4 : applicants <= 5 ? 3 : applicants <= 15 ? 1 : -2;
+  // 出たばかりの案件ほど、まだ誰にも決まっていない
+  const age = daysSince(item.detectedAt);
+  const freshScore = age === null ? 0 : age <= 0 ? 2 : age <= 2 ? 1 : 0;
+  return budgetFitScore(budget)
+    + (rating === null ? -0.5 : (rating - 4) * 1.5)
     + Math.min(Math.log10(count + 1), 2)
-    + rivalScore;
+    + rivalScore
+    + freshScore;
 }
 function passesQuality(item) {
   if (state.quality === "good") {
