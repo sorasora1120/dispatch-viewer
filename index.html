@@ -185,7 +185,8 @@ main { padding: 12px 12px 48px; max-width: 640px; margin: 0 auto; }
   background: var(--paper-raised); border: 1px solid var(--line); border-radius: 12px;
   padding: 12px 14px; margin: 4px 0 12px;
 }
-.results-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.results-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+@media (max-width: 520px) { .results-row { grid-template-columns: repeat(2, 1fr); row-gap: 10px; } }
 .results .r-label { font-size: 10px; color: var(--ink-soft); letter-spacing: .04em; }
 .results .r-value { font-size: 18px; font-weight: 800; line-height: 1.2; }
 .results .r-value small { font-size: 11px; font-weight: 700; color: var(--ink-soft); margin-left: 3px; }
@@ -317,6 +318,12 @@ main { padding: 12px 12px 48px; max-width: 640px; margin: 0 auto; }
   background: var(--accent); border: 1px solid var(--accent); border-radius: 6px;
   padding: 7px 11px; cursor: pointer; -webkit-tap-highlight-color: transparent;
 }
+.reply-btn {
+  font-size: 12px; font-weight: 700; color: var(--amber);
+  background: var(--amber-soft); border: 1px solid var(--amber); border-radius: 6px;
+  padding: 7px 11px; cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+.badge.status-replied { background: var(--amber-soft); color: var(--amber); font-weight: 800; }
 .reject-btn {
   font-size: 12px; font-weight: 600; color: var(--red);
   background: var(--red-soft); border: none; border-radius: 6px;
@@ -566,7 +573,7 @@ function slim(row, statusHint) {
 // 古い方にあった応募済み・採用待ちの案件が丸ごと表示対象から切り捨てられ、
 // 「採用待ちが0件になった」ように見えるバグがあった。表示上限は「まだ何も
 // していない新着」だけにかける）。
-const ACTIVE_STAGES = new Set(["applied", "hired", "ordered"]);
+const ACTIVE_STAGES = new Set(["applied", "replied", "hired", "ordered"]);
 
 function buildData(rows) {
   let allProposed = rows.filter(r => r[COL.status] === "提案済み" && r[COL.workerMsg]);
@@ -632,8 +639,9 @@ let skipSet = loadSet(SKIP_KEY);
 
 // 実際の業務フローは「①クライアントに応募→②採用される→③ワーカーに発注」の順で、
 // 採用される前にワーカーへ発注してしまうと無駄足になる。案件ごとの進行段階（ステージ）
-// で管理する。new(未着手) → applied(応募済み・採用待ち) → hired(採用された・発注準備)
-// → ordered(発注済み・完了) / rejected(不採用・見送り)
+// で管理する。new(未着手) → applied(応募済み・採用待ち) → replied(返信あり・やり取り中)
+// → hired(採用された・発注準備) → ordered(発注済み・完了) / rejected(不採用・見送り)
+// replied は2026-10-08追加（どんな案件に返信が来やすいかを数えるため）
 const STAGE_KEY = "dispatch_stage_map";
 function loadStageMap() {
   try { return JSON.parse(localStorage.getItem(STAGE_KEY) || "{}"); }
@@ -859,6 +867,7 @@ function cardHtml(item, idx) {
 
   let stageBadge = "";
   if (stage === "applied") stageBadge = '<span class="badge status-applied">📮 採用待ち</span>';
+  else if (stage === "replied") stageBadge = '<span class="badge status-replied">💬 返信あり・やり取り中</span>';
   else if (stage === "hired") stageBadge = '<span class="badge status-hired">🎯 採用済み・発注待ち</span>';
   else if (stage === "ordered") stageBadge = '<span class="badge status-ordered">✓ 発注済み</span>';
 
@@ -868,10 +877,12 @@ function cardHtml(item, idx) {
     <div class="actions">
       <button class="done-btn" data-skip-toggle="${idx}">見送る（非表示にする）</button>
     </div>`;
-  } else if (stage === "applied") {
+  } else if (stage === "applied" || stage === "replied") {
+    const replyBtn = stage === "applied" ? `<button class="reply-btn" data-replied-toggle="${idx}">💬 返信が来た</button>` : "";
     panels = `
     <div class="actions">
       <button class="expand-btn" data-toggle="${idx}" data-label="応募文">応募文を見る ▾</button>
+      ${replyBtn}
       <button class="hire-btn" data-hired-toggle="${idx}">② 採用された</button>
       <button class="reject-btn" data-reject-toggle="${idx}">不採用だった</button>
     </div>
@@ -952,19 +963,20 @@ function cardHtml(item, idx) {
   </article>`;
 }
 
-// 応募数・採用数・採用率と、今年の利益（発注済みの利益目安の合計）。
-// 応募 = 応募済み・採用・発注済み・不採用、採用 = 採用・発注済み。
+// 応募数・返信数・採用数と、今年の利益（発注済みの利益目安の合計）。
+// 応募 = 応募済み・返信あり・採用・発注済み・不採用、返信 = 返信あり・採用・発注済み、採用 = 採用・発注済み。
 // 利益は親の確定申告ライン（会社員の副業は年20万円）と比べて残りを出す。
 const TAX_LINE_YEN = 200000;
 function renderResults() {
   const year = String(new Date().getFullYear());
-  let applied = 0, hired = 0, profit = 0, ordered = 0;
+  let applied = 0, replied = 0, hired = 0, profit = 0, ordered = 0;
   const seen = new Set();
   (DATA.tracked || []).forEach(t => {
     if (!t.url || seen.has(t.url)) return;
     seen.add(t.url);
     const stage = stageMap[t.url] || t.stage || "new";
-    if (["applied", "hired", "ordered", "rejected"].includes(stage)) applied++;
+    if (["applied", "replied", "hired", "ordered", "rejected"].includes(stage)) applied++;
+    if (["replied", "hired", "ordered"].includes(stage)) replied++;
     if (stage === "hired" || stage === "ordered") hired++;
     if (stage === "ordered") {
       ordered++;
@@ -972,6 +984,7 @@ function renderResults() {
     }
   });
   const rate = applied ? Math.round((hired / applied) * 1000) / 10 : 0;
+  const replyRate = applied ? Math.round((replied / applied) * 1000) / 10 : 0;
   const pct = Math.min(100, Math.round((profit / TAX_LINE_YEN) * 100));
   const left = Math.max(TAX_LINE_YEN - profit, 0);
   const goalText = profit >= TAX_LINE_YEN
@@ -980,6 +993,7 @@ function renderResults() {
   document.getElementById("results").innerHTML = `
     <div class="results-row">
       <div><div class="r-label">応募した</div><div class="r-value num">${applied}<small>件</small></div></div>
+      <div><div class="r-label">返信が来た</div><div class="r-value num">${replied}<small>件・${replyRate}%</small></div></div>
       <div><div class="r-label">採用された</div><div class="r-value num">${hired}<small>件・${rate}%</small></div></div>
       <div><div class="r-label">${year}年の利益（発注済み）</div><div class="r-value accent num">¥${profit.toLocaleString()}</div></div>
     </div>
@@ -997,8 +1011,9 @@ function renderStats(items, tab) {
   let thirdValue;
   if (tab === "applied") {
     const waiting = items.filter(it => getStage(it.url) === "applied").length;
+    const replied = items.filter(it => getStage(it.url) === "replied").length;
     const readyToOrder = items.filter(it => getStage(it.url) === "hired").length;
-    thirdValue = `採用待ち ${waiting} / 発注準備中 ${readyToOrder}`;
+    thirdValue = `採用待ち ${waiting} / 返信あり ${replied} / 発注準備中 ${readyToOrder}`;
   } else {
     const platCounts = { CrowdWorks: 0, "ココナラ": 0, "ランサーズ": 0 };
     items.forEach(it => { if (platCounts[it.platform] !== undefined) platCounts[it.platform]++; });
@@ -1032,7 +1047,7 @@ const HOWTO_TEXT = {
     <span class="arrow">→</span>
     <span>クラウドワークス/ココナラに貼って応募</span>`,
   applied: `
-    <span><b>採用されたら</b>「② 採用された」を押す</span>
+    <span><b>返信が来たら</b>「💬 返信が来た」、<b>採用されたら</b>「② 採用された」を押す</span>
     <span class="arrow">→</span>
     <span>緑ボタンでコピー＆発注済みにする</span>
     <span class="arrow">→</span>
@@ -1046,7 +1061,7 @@ function updateTabCounts() {
     if (stage === "new") {
       const days = daysUntil(it.deadline);
       if (!(days !== null && days < 0)) proposedN++;
-    } else if (stage === "applied" || stage === "hired") {
+    } else if (stage === "applied" || stage === "replied" || stage === "hired") {
       appliedN++;
     } else if (stage === "ordered") {
       doneN++;
@@ -1079,7 +1094,7 @@ function render() {
     } else {
       const stage = getStage(it.url);
       if (state.tab === "proposed" && stage !== "new") return false;
-      if (state.tab === "applied" && stage !== "applied" && stage !== "hired") return false;
+      if (state.tab === "applied" && stage !== "applied" && stage !== "replied" && stage !== "hired") return false;
       if (state.tab === "done" && stage !== "ordered") return false;
     }
     if (state.tab === "proposed" || state.tab === "pending") {
@@ -1157,6 +1172,13 @@ function render() {
       try { await navigator.clipboard.writeText(el.textContent); } catch (e) {}
       const url = btn.closest(".card").getAttribute("data-url");
       setStage(url, "applied");
+      render();
+    });
+  });
+  list.querySelectorAll("[data-replied-toggle]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const url = btn.closest(".card").getAttribute("data-url");
+      setStage(url, "replied");
       render();
     });
   });
