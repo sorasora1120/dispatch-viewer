@@ -518,7 +518,8 @@ const WORKER_MATCH_EXCLUDE_KEYWORDS = [
   // （HIPHOP用ビート制作依頼、ぬいぐるみ制作依頼）が紛れていたのを実際に発見
   "ビート制作","ぬいぐるみ",
   // 2026-10-08追加（タダ働き・怪しい勧誘）
-  "成果報酬","無報酬","無償","ボランティア","高収入","誰でも簡単",
+  "成果報酬","無報酬","無償","ボランティア","高収入","誰でも簡単",  // 2026-10-08追加（制作ではない募集：出演者・記事ライター等）
+  "出演","女性の方","女性限定","モデル募集","キャスト募集","ライバー","チャットレディ","インフルエンサー","体験談","アンケート","声優","顔出し","記事作成","記事執筆","ブログ記事",
 ];
 
 function cellValue(cell) {
@@ -762,7 +763,7 @@ function figuresHtml(item) {
     ? `<span><span class="f-label">予算</span><span class="f-main num">見積り要相談</span></span>`
     : `<span><span class="f-label">予算</span><span class="f-main num">${esc(fmtBudgetAmount(item))}</span></span>`;
   const quoteHtml = item.quote
-    ? `<span><span class="f-label">${isEstimate ? "目安提示額" : "提示額"}</span><span class="f-main num">¥${esc(String(item.quote))}</span></span>`
+    ? `<span><span class="f-label">${isEstimate ? "目安提示額" : "提示額"}</span><span class="f-main num">¥${esc(yenNum(item.quote).toLocaleString())}</span></span>`
     : "";
   // 受注者側の手数料（予算 − 提示額 − 利益）。2026-10-07から利益は手数料を
   // 引いた後の額で計算しているので、手取りの内訳が分かるように表示する。
@@ -775,7 +776,7 @@ function figuresHtml(item) {
     ${budgetHtml}
     ${feeHtml}
     ${quoteHtml}
-    <span><span class="f-label">${isEstimate ? "目安利益" : "利益目安"}</span><span class="f-main num margin-pos">+¥${esc(String(item.margin))}</span></span>
+    <span><span class="f-label">${isEstimate ? "目安利益" : "利益目安"}</span><span class="f-main num margin-pos">+¥${esc(yenNum(item.margin).toLocaleString())}</span></span>
   </div>`;
 }
 
