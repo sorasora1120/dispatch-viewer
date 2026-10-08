@@ -64,6 +64,7 @@ td.p { text-align: right; white-space: nowrap; font-weight: 700; }
 
   <div class="tabs" id="tabs">
     <button data-sec="profile" aria-pressed="true">まず最初に</button>
+    <button data-sec="reply" aria-pressed="false">返信が来たら</button>
     <button data-sec="x" aria-pressed="false">X直募集</button>
     <button data-sec="partner" aria-pressed="false">制作会社</button>
     <button data-sec="hoshu" aria-pressed="false">月額保守</button>
@@ -106,11 +107,89 @@ https://sorasora1120.github.io/
     </div>
     <div class="card">
       <h2>③ 応募のコツ（最初の3件まで）</h2>
-      <p>・案件リードの並び順は「狙い目」（応募が少ない案件）が上に来ます。<b>応募5人以下の案件</b>から順に送る<br>
-      ・掲載から24時間以内の新しい案件ほど通りやすい<br>
-      ・提案文の【ご提案のポイント】に、募集文を読んで分かったことを<b>1行だけ</b>足す<br>
-      ・1〜3万円の小さな修正・LP案件で、まず評価を1件取る<br>
-      ・1日10件を目安に、毎日送る（間を空けない）</p>
+      <p>・Discordに<b>🔥「今すぐ応募したい新着」</b>が来たら、なるべくすぐ出す（応募が少ないうちが勝負）<br>
+      ・案件リードは「おすすめ順」のまま上から。<b>応募5人以下の案件</b>を優先<br>
+      ・送る前に、提案文の「構成案」と「3つのご提案」を募集文と見比べて、ズレていたら1か所だけ直す<br>
+      ・小さな修正・LP案件で、まず評価を1件取る（評価が1件つくと、返信が来やすくなる）<br>
+      ・1日30件を目安に、毎日送る。返信が来たら案件リードで「💬 返信が来た」を押す</p>
+    </div>
+  </section>
+
+  <!-- 返信が来たら：採用につなげる返し方（2026-10-08追加） -->
+  <section id="reply">
+    <div class="rule"><b>返信が来たら、できれば1時間以内に返す。</b>早く・具体的に返す人が選ばれます。迷ったら、相手のメッセージをそのままClaudeに貼って相談してOK。<br>
+    <b>守ること：</b>仮払い（エスクロー）の前に作業を始めない／LINEやメールなど、クラウドワークスの外でのやり取りに誘われても断る（規約違反・トラブルの元）／できない約束（納期・金額）はワーカーに確認してから答える。</div>
+
+    <div class="card">
+      <h2>① 「詳しく聞きたい」と言われた（最初の返信）</h2>
+      <pre class="tpl" id="tplReply1">ご連絡ありがとうございます！ソラです。
+ぜひ詳しくお聞かせください。お手数ですが、分かる範囲で下の5つを教えていただけますか。
+
+1. サイトの一番の目的（集客・問い合わせ・採用など）
+2. 入れたいページ（トップ・サービス・料金・会社概要・お問い合わせなど）
+3. 参考にしたいサイトがあればURL
+4. 公開したい時期
+5. 写真・ロゴ・文章のご用意状況
+
+いただいた内容をもとに、トップページの構成図（ラフ）と、正式なお見積り・スケジュールをお送りします。
+どうぞよろしくお願いいたします。</pre>
+      <button class="copy" data-copy="tplReply1">文面をコピー</button>
+    </div>
+
+    <div class="card">
+      <h2>② 「もう少し安くならない？」と言われた</h2>
+      <p>すぐに値下げせず、まず「何を優先したいか」を聞く。値下げする場合は、ワーカーに渡す額が残るか先に確認する。</p>
+      <pre class="tpl" id="tplReply2">ご相談ありがとうございます。
+ご予算の中で一番効果が出る形にしたいので、特に優先したいことを教えていただけますか。
+
+例えば、最初はページ数をしぼって公開し、効果を見ながらページを足していく形にすると、最初の費用を抑えられます。
+ご希望に合わせて、内容と金額のプランをいくつかご提案します。</pre>
+      <button class="copy" data-copy="tplReply2">文面をコピー</button>
+    </div>
+
+    <div class="card">
+      <h2>③ 「いつまでにできる？」と聞かれた</h2>
+      <p>〇〇の所は、ワーカーに確認してから埋める。分からないまま日付を約束しない。</p>
+      <pre class="tpl" id="tplReply3">ありがとうございます。
+ページ数と素材のご用意状況で前後しますが、目安として、構成が決まってから〇〇週間ほどで公開できる見込みです。
+途中でデザイン案をお見せして、ご確認いただきながら進めます。
+公開したい日が決まっていれば教えてください。それに合わせてスケジュールを組みます。</pre>
+      <button class="copy" data-copy="tplReply3">文面をコピー</button>
+    </div>
+
+    <div class="card">
+      <h2>④ 実績やチームのことを聞かれた</h2>
+      <pre class="tpl" id="tplReply4">ありがとうございます。チームで制作したサイトと、業種別のデザインサンプルはこちらにまとめています。
+https://sorasora1120.github.io/
+
+デザインと構築は、連携している海外のデザイナー・エンジニアが担当しています。
+ご要望の整理・進行管理・公開前の品質チェック、お客様とのやり取りは、すべて私（ソラ）が日本語で行いますので、ご安心ください。</pre>
+      <button class="copy" data-copy="tplReply4">文面をコピー</button>
+    </div>
+
+    <div class="card">
+      <h2>⑤ 採用された（契約した直後）</h2>
+      <pre class="tpl" id="tplReply5">このたびはご依頼いただき、本当にありがとうございます！
+仮払いのお手続きが確認でき次第、作業を始めます。
+
+まずは進め方の確認です。
+1. ヒアリング（ご要望・素材の確認）
+2. 構成とデザイン案のご確認
+3. 制作
+4. 確認・修正
+5. 納品
+
+最初に、ご用意いただける素材（ロゴ・写真・文章など）があれば、こちらのメッセージで送っていただけますか。
+公開まで責任を持って進めます。どうぞよろしくお願いいたします。</pre>
+      <button class="copy" data-copy="tplReply5">文面をコピー</button>
+    </div>
+
+    <div class="card">
+      <h2>⑥ 返事が止まった（2〜3日たっても返信がない時に1回だけ）</h2>
+      <pre class="tpl" id="tplReply6">お世話になっております。ソラです。
+その後、ご検討状況はいかがでしょうか。
+気になる点や、決めきれていないことがあれば、何でもお気軽にお聞きください。</pre>
+      <button class="copy" data-copy="tplReply6">文面をコピー</button>
     </div>
   </section>
 
@@ -250,6 +329,13 @@ https://sorasora1120.github.io/
     a.querySelector("small").textContent = q[1];
     pLinks.appendChild(a);
   });
+
+  // sales.html#reply のようにタブ名付きで開かれたら、そのタブを最初から開く（案件リードの「返し方」リンク用）
+  var hashBtn = location.hash && document.querySelector('#tabs button[data-sec="' + location.hash.slice(1) + '"]');
+  if (hashBtn) {
+    document.querySelectorAll("#tabs button").forEach(function (b) { b.setAttribute("aria-pressed", b === hashBtn ? "true" : "false"); });
+    document.querySelectorAll("section").forEach(function (s) { s.classList.toggle("on", s.id === hashBtn.dataset.sec); });
+  }
 
   document.getElementById("tabs").addEventListener("click", function (e) {
     var btn = e.target.closest("button");

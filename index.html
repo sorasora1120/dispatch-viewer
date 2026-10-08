@@ -895,7 +895,9 @@ function cardHtml(item, idx) {
       <button class="done-btn" data-skip-toggle="${idx}">見送る（非表示にする）</button>
     </div>`;
   } else if (stage === "applied" || stage === "replied") {
-    const replyBtn = stage === "applied" ? `<button class="reply-btn" data-replied-toggle="${idx}">💬 返信が来た</button>` : "";
+    const replyBtn = stage === "applied"
+      ? `<button class="reply-btn" data-replied-toggle="${idx}">💬 返信が来た</button>`
+      : `<a class="reply-btn" href="sales.html#reply" style="text-decoration:none">💬 返し方のテンプレ</a>`;
     panels = `
     <div class="actions">
       <button class="expand-btn" data-toggle="${idx}" data-label="応募文">応募文を見る ▾</button>
