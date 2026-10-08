@@ -236,6 +236,9 @@ main { padding: 12px 12px 48px; max-width: 640px; margin: 0 auto; }
 .badge.la { background: var(--la-soft); color: var(--la); }
 .badge.cat { background: var(--paper); color: var(--ink-soft); border: 1px solid var(--line); font-weight: 600; text-transform: none; letter-spacing: 0; }
 .badge.status-pending { background: var(--amber-soft); color: var(--amber); }
+.badge.rival-low { background: var(--accent-soft); color: var(--accent-ink); text-transform: none; }
+.badge.rival-mid { background: var(--amber-soft); color: var(--amber); text-transform: none; }
+.badge.rival-high { background: var(--red-soft); color: var(--red); text-transform: none; }
 .badge.status-applied { background: var(--amber-soft); color: var(--amber); }
 .badge.status-hired { background: var(--accent-soft); color: var(--accent-ink); }
 .badge.status-ordered { background: var(--ink-soft); color: var(--paper-raised); }
@@ -398,6 +401,7 @@ footer {
     </select>
     <select id="qualitySelect">
       <option value="all">すべての案件</option>
+      <option value="rival">ライバル少なめ（応募10人以下）</option>
       <option value="good">良い依頼者のみ（評価4.5以上・実績あり）</option>
       <option value="big">予算5万円以上のみ</option>
     </select>
@@ -437,7 +441,7 @@ const COL = {
   status: 0, platform: 1, title: 2, category: 3, budget: 4, deadline: 5,
   url: 6, detectedAt: 7, proposalDraft: 8, clientName: 9, rating: 10,
   orderCount: 11, margin: 12, quote: 13, workerMsg: 14, proposal: 15, detectedDate: 16,
-  stage: 17,
+  stage: 17, applicants: 18,
 };
 
 // 進行状況（②採用待ち等）をスプレッドシートの「進捗ステージ」列に書き込むための
@@ -536,6 +540,7 @@ function slim(row, statusHint) {
     proposal: row[COL.proposal],
     status: statusHint,
     stage: row[COL.stage] || "",
+    applicants: row[COL.applicants],
   };
 }
 
@@ -744,6 +749,19 @@ function budgetYen(item) {
   const parts = String(item.budget || "").split(/[〜~]/).map(parseYenAmount).filter(v => v !== null);
   return parts.length ? parts[parts.length - 1] : null;
 }
+// 収集時点の応募者数（CrowdWorksのみ、不明ならnull）。2026-10-08、応募しても
+// 採用されない（評価0件）状態を抜けるため、ライバルが少ない案件を上に出す。
+function applicantCount(item) {
+  const n = parseInt(String(item.applicants ?? "").replace(/[^0-9]/g, ""), 10);
+  return isNaN(n) ? null : n;
+}
+function rivalBadge(item) {
+  const n = applicantCount(item);
+  if (n === null) return "";
+  const cls = n <= 5 ? "rival-low" : n <= 15 ? "rival-mid" : "rival-high";
+  const label = n <= 5 ? `👥 応募${n}人・狙い目` : `👥 応募${n}人`;
+  return `<span class="badge ${cls}">${esc(label)}</span>`;
+}
 function qualityScore(item) {
   let budget = budgetYen(item);
   if (budget === null) {
@@ -753,14 +771,22 @@ function qualityScore(item) {
   }
   const rating = clientRating(item);
   const count = clientOrderCount(item);
+  const applicants = applicantCount(item);
+  // 評価0件のうちは「選ばれやすさ」が一番大事なので、応募者数の影響を大きくする
+  const rivalScore = applicants === null ? 0 : applicants <= 5 ? 3 : applicants <= 15 ? 1 : -2;
   return Math.log10(Math.max(budget, 1000)) * 2
     + (rating === null ? -1 : (rating - 4) * 2)
-    + Math.min(Math.log10(count + 1), 2);
+    + Math.min(Math.log10(count + 1), 2)
+    + rivalScore;
 }
 function passesQuality(item) {
   if (state.quality === "good") {
     const r = clientRating(item);
     return r !== null && r >= 4.5 && clientOrderCount(item) > 0;
+  }
+  if (state.quality === "rival") {
+    const n = applicantCount(item);
+    return n !== null && n <= 10;
   }
   if (state.quality === "big") {
     const b = budgetYen(item);
@@ -891,6 +917,7 @@ function cardHtml(item, idx) {
         ${isPending ? '<span class="badge status-pending">未チェック</span>' : ''}
         ${stageBadge}
         ${isHigh ? '<span class="hi-badge">⭐ 高額</span>' : ''}
+        ${rivalBadge(item)}
         ${deadlineBadge(item)}
         <span class="meta-time num">${esc(item.detectedAt)}</span>
       </div>

@@ -49,6 +49,9 @@ td.p { text-align: right; white-space: nowrap; font-weight: 700; }
 .log-list li { display: flex; justify-content: space-between; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--line); }
 .log-list button { font: inherit; font-size: 11px; border: 1px solid var(--line); background: transparent; color: var(--ink-soft); border-radius: 8px; padding: 2px 8px; cursor: pointer; }
 .count { font-size: 12px; color: var(--ink-soft); margin: 0 0 6px; }
+.check { display: flex; gap: 10px; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 14px; cursor: pointer; }
+.check input { width: 20px; height: 20px; margin: 1px 0 0; flex: none; accent-color: var(--accent); }
+.card p b { color: var(--ink); }
 </style>
 </head>
 <body>
@@ -57,16 +60,61 @@ td.p { text-align: right; white-space: nowrap; font-weight: 700; }
     <h1>案件の仕入れ先</h1>
     <a class="back" href="index.html">← 案件リードへ</a>
   </div>
-  <p class="lead">CrowdWorks以外から案件を取るための道具です。送るのは必ず自分の手で（自動送信はアカウント停止の原因になります）。</p>
+  <p class="lead">最初の1件を取るための準備と、CrowdWorks以外から案件を取る道具です。送るのは必ず自分の手で（自動送信はアカウント停止の原因になります）。</p>
 
   <div class="tabs" id="tabs">
-    <button data-sec="x" aria-pressed="true">X直募集</button>
+    <button data-sec="profile" aria-pressed="true">まず最初に</button>
+    <button data-sec="x" aria-pressed="false">X直募集</button>
     <button data-sec="partner" aria-pressed="false">制作会社</button>
     <button data-sec="hoshu" aria-pressed="false">月額保守</button>
   </div>
 
   <!-- X（旧Twitter） -->
-  <section id="x" class="on">
+  <!-- 0→1：最初の1件を取るための準備 -->
+  <section id="profile" class="on">
+    <div class="rule"><b>最初の1件が取れない一番の理由は「プロフィールが空っぽ」です。</b>評価0件の人は、依頼者がプロフィールを見て判断します。下を上から順に終わらせてから応募してください。</div>
+    <div class="card">
+      <h2>① CrowdWorksでやること（チェック）</h2>
+      <p>終わったらチェック。この端末に保存されます。</p>
+      <div id="checklist"></div>
+      <p class="count" id="checkCount"></p>
+    </div>
+    <div class="card">
+      <h2>② 自己紹介文（プロフィールに貼る）</h2>
+      <pre class="tpl" id="tplProfile">はじめまして、ソラと申します。
+Webサイト制作（ホームページ・LP・ネットショップ）を中心に活動しています。
+デザイナー・エンジニアと連携し、構成づくりから公開まで一式対応いたします。
+
+■ 対応できること
+・ホームページ／コーポレートサイト制作
+・LP（ランディングページ）制作
+・WordPress構築、Shopify・STUDIO・Wixでの制作
+・既存サイトの修正・リニューアル
+・公開後の更新・保守
+
+■ 制作サンプル
+https://sorasora1120.github.io/dispatch-viewer/works/
+
+■ 大切にしていること
+・ご返信は原則24時間以内
+・着手前のヒアリングで、イメージのズレを防ぎます
+・進捗はこまめにご報告します
+
+クラウドワークスでの活動を始めたばかりですが、1件1件丁寧に対応いたします。
+小さな修正からでもお気軽にご相談ください。</pre>
+      <button class="copy" data-copy="tplProfile">文面をコピー</button>
+    </div>
+    <div class="card">
+      <h2>③ 応募のコツ（最初の3件まで）</h2>
+      <p>・案件リードの並び順は「狙い目」（応募が少ない案件）が上に来ます。<b>応募5人以下の案件</b>から順に送る<br>
+      ・掲載から24時間以内の新しい案件ほど通りやすい<br>
+      ・提案文の【ご提案のポイント】に、募集文を読んで分かったことを<b>1行だけ</b>足す<br>
+      ・1〜3万円の小さな修正・LP案件で、まず評価を1件取る<br>
+      ・1日10件を目安に、毎日送る（間を空けない）</p>
+    </div>
+  </section>
+
+  <section id="x">
     <div class="rule"><b>ルール：</b>「作ってほしい」と投稿している人にだけ送る。1日10件まで。同じ文面の連投はXのスパム判定に引っかかるので、相手の投稿内容に合わせて1行目を変える。</div>
     <div class="card">
       <h2>① 依頼したい人を探す（最新順）</h2>
@@ -221,6 +269,45 @@ https://sorasora1120.github.io/dispatch-viewer/works/
       }
     });
   });
+
+  // 最初にやることのチェックリスト（この端末のブラウザにだけ保存）
+  var CHECKS = [
+    "本人確認を提出する（「本人確認済み」バッジが付く）",
+    "機密保持確認（NDA）を提出する",
+    "プロフィール写真を設定する（顔写真かシンプルなロゴ）",
+    "キャッチコピーを「ホームページ・LP制作｜24時間以内に返信」にする",
+    "自己紹介文を②の文面に差し替える",
+    "ポートフォリオに制作サンプル3件を登録する（URLを貼るだけ）",
+    "スキルに WordPress / HTML・CSS / Shopify / LP制作 を登録する",
+    "稼働時間・連絡のつく時間帯を書く",
+  ];
+  var CKEY = "profile-check-v1";
+  function loadChecks() { try { return JSON.parse(localStorage.getItem(CKEY) || "{}"); } catch (e) { return {}; } }
+  function drawChecks() {
+    var done = loadChecks();
+    var box = document.getElementById("checklist");
+    box.innerHTML = "";
+    var n = 0;
+    CHECKS.forEach(function (label, i) {
+      var row = document.createElement("label");
+      row.className = "check";
+      var cb = document.createElement("input");
+      cb.type = "checkbox"; cb.checked = !!done[i];
+      if (cb.checked) n++;
+      cb.addEventListener("change", function () {
+        var d = loadChecks(); d[i] = cb.checked;
+        try { localStorage.setItem(CKEY, JSON.stringify(d)); } catch (e) {}
+        drawChecks();
+      });
+      var span = document.createElement("span");
+      span.textContent = label;
+      row.appendChild(cb); row.appendChild(span); box.appendChild(row);
+    });
+    document.getElementById("checkCount").textContent = n === CHECKS.length
+      ? "全部できました。案件リードから応募しましょう！"
+      : n + " / " + CHECKS.length + " 完了";
+  }
+  drawChecks();
 
   // 送った会社の記録（この端末のブラウザにだけ保存）
   var KEY = "partner-log-v1";
