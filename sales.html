@@ -271,17 +271,20 @@ https://sorasora1120.github.io/dispatch-viewer/works/
   });
 
   // 最初にやることのチェックリスト（この端末のブラウザにだけ保存）
+  // 2026-10-08、18歳未満のため親の名義で登録・受注することになった
   var CHECKS = [
-    "本人確認を提出する（「本人確認済み」バッジが付く）",
+    "親が自分でクラウドワークスに会員登録する（親の名前・メールで）",
+    "親の名義で本人確認を提出する（「本人確認済み」バッジが付く）",
+    "振込口座を親の名義の口座で登録する",
     "機密保持確認（NDA）を提出する",
-    "プロフィール写真を設定する（顔写真かシンプルなロゴ）",
+    "プロフィール写真を設定する（アイコン案のCかD）",
     "キャッチコピーを「ホームページ・LP制作｜24時間以内に返信」にする",
-    "自己紹介文を②の文面に差し替える",
+    "表示名を「ソラ」にして、自己紹介文を②の文面に差し替える",
     "ポートフォリオに制作サンプル3件を登録する（URLを貼るだけ）",
     "スキルに WordPress / HTML・CSS / Shopify / LP制作 を登録する",
     "稼働時間・連絡のつく時間帯を書く",
   ];
-  var CKEY = "profile-check-v1";
+  var CKEY = "profile-check-v2";
   function loadChecks() { try { return JSON.parse(localStorage.getItem(CKEY) || "{}"); } catch (e) { return {}; } }
   function drawChecks() {
     var done = loadChecks();
