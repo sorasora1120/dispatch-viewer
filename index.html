@@ -461,11 +461,16 @@ footer {
 const SHEET_ID = "1i2BtQulkchFt2dXxt9o6qLhdC7CXlBpv91EziyCp3o0";
 const SHEET_NAME = "案件一覧";
 
+// 2026-10-08、開くたびにシート全部（約7,800行・約8.7MB、9割以上は対象外の古い案件）を
+// 読んでいて、スマホの通信量が多かった。使う行（提案済み・未チェック・進捗ステージ付き）と
+// 使う列（I列の古い下書き・T列の募集文を除く）だけを読む。実測で約340KB・件数も一致。
+// I列を抜くので、COLの番号はI列より後ろが元のシートより1つずつ前にずれている。
+const GVIZ_QUERY = "select A,B,C,D,E,F,G,H,J,K,L,M,N,O,P,Q,R,S where A = '提案済み' or A = '未チェック' or R != ''";
 const COL = {
   status: 0, platform: 1, title: 2, category: 3, budget: 4, deadline: 5,
-  url: 6, detectedAt: 7, proposalDraft: 8, clientName: 9, rating: 10,
-  orderCount: 11, margin: 12, quote: 13, workerMsg: 14, proposal: 15, detectedDate: 16,
-  stage: 17, applicants: 18,
+  url: 6, detectedAt: 7, clientName: 8, rating: 9,
+  orderCount: 10, margin: 11, quote: 12, workerMsg: 13, proposal: 14, detectedDate: 15,
+  stage: 16, applicants: 17,
 };
 
 // 進行状況（②採用待ち等）をスプレッドシートの「進捗ステージ」列に書き込むための
@@ -523,9 +528,10 @@ function cellValue(cell) {
   return cell.v;
 }
 
-function loadGvizJsonp() {
+function loadGvizJsonp(tq) {
   return new Promise((resolve, reject) => {
-    const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}&_=${Date.now()}`;
+    const query = tq ? `&tq=${encodeURIComponent(tq)}` : "";
+    const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}${query}&_=${Date.now()}`;
     window.google = window.google || {};
     window.google.visualization = window.google.visualization || {};
     window.google.visualization.Query = window.google.visualization.Query || {};
@@ -609,8 +615,15 @@ async function loadData(isManualRefresh) {
   const genAtEl = document.getElementById("genAt");
   if (isManualRefresh) genAtEl.textContent = "更新中…";
   try {
-    const resp = await loadGvizJsonp();
-    const rows = (resp.table.rows || []).map(r => (r.c || []).map(cellValue));
+    const resp = await loadGvizJsonp(GVIZ_QUERY).catch(() => null);
+    let rows;
+    if (resp && resp.status !== "error" && resp.table) {
+      rows = (resp.table.rows || []).map(r => (r.c || []).map(cellValue));
+    } else {
+      // 絞り込みが使えなかった時だけ、今までどおり全部読んで同じ並び（I列とT列以降を除く）にそろえる
+      const full = await loadGvizJsonp();
+      rows = (full.table.rows || []).map(r => (r.c || []).map(cellValue)).map(r => r.slice(0, 8).concat(r.slice(9, 19)));
+    }
     DATA = buildData(rows);
     mergeServerStages();
     const now = new Date().toLocaleString("ja-JP", { hour12: false });

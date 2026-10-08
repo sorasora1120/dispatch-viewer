@@ -19,7 +19,11 @@
 
 ## コードのルール
 - **`index.html` は CRLF 改行**。編集後も CRLF のままにする（`file index.html` で確認）
-- スプレッドシートの列は `COL`（例：S列=応募者数 `COL.applicants=18`、T列=募集文）。列を足すときは affiliate-pipeline 側と揃える
+- スプレッドシートは `GVIZ_QUERY` で**使う行と列だけ**読む（全部読むと約8.7MB、絞ると約340KB。2026-10-08）
+  - 読む列は A〜H と J〜S（I列の古い下書きとT列の募集文は読まない）。なので `COL` の番号は I列より後ろが1つずつ前にずれている
+    （例：S列=応募者数は `COL.applicants=17`）
+  - 読む行は「提案済み」「未チェック」「進捗ステージ（R列）が入っている行」だけ
+  - 列や使う行を足すときは `GVIZ_QUERY`・`COL`・絞り込み失敗時のフォールバック（`r.slice(0, 8).concat(r.slice(9, 19))`）の3つを直す
 - `WORKER_MATCH_CATEGORIES` / `WORKER_MATCH_EXCLUDE_KEYWORDS` は affiliate-pipeline の
   `job_scraper/config.py` と `.github/workflows/*.yml` と同じ内容に揃える
 - 利益は手数料込みで計算（手数料 = 予算 − 見積 − マージン）。CrowdWorks の手数料は 10万円以下 20%・10〜20万円 10%・20万円超 5%
