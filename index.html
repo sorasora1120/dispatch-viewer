@@ -180,6 +180,22 @@ main { padding: 12px 12px 48px; max-width: 640px; margin: 0 auto; }
 .stat .stat-value { font-size: 18px; font-weight: 800; line-height: 1.1; }
 .stat .stat-value.accent { color: var(--accent-ink); }
 
+/* 成果（応募数・採用率・今年の利益）。2026-10-08追加 */
+.results {
+  background: var(--paper-raised); border: 1px solid var(--line); border-radius: 12px;
+  padding: 12px 14px; margin: 4px 0 12px;
+}
+.results-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.results .r-label { font-size: 10px; color: var(--ink-soft); letter-spacing: .04em; }
+.results .r-value { font-size: 18px; font-weight: 800; line-height: 1.2; }
+.results .r-value small { font-size: 11px; font-weight: 700; color: var(--ink-soft); margin-left: 3px; }
+.results .r-value.accent { color: var(--accent-ink); }
+.goal { margin-top: 10px; }
+.goal-bar { height: 8px; border-radius: 99px; background: var(--paper); border: 1px solid var(--line); overflow: hidden; }
+.goal-bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--accent), var(--amber)); border-radius: 99px; transition: width .6s; }
+.goal-text { font-size: 11px; color: var(--ink-soft); margin-top: 5px; line-height: 1.5; }
+.goal-text b { color: var(--ink); }
+
 .toolbar-row {
   display: flex; align-items: center; justify-content: space-between;
   padding: 0 4px 10px; gap: 8px;
@@ -409,6 +425,7 @@ footer {
 </div>
 
 <main>
+  <div class="results" id="results"></div>
   <div class="stats" id="stats"></div>
   <div class="toolbar-row">
     <div class="count-line" id="countLine"></div>
@@ -566,10 +583,16 @@ function buildData(rows) {
   pending.reverse();
   pending = pending.slice(0, 60).map(r => slim(r, "pending"));
 
-  return { proposed, pending };
+  // 成果の集計用：シート全体から、進捗ステージが付いた行と提案済みの行を軽く持っておく
+  // （表示上限150件や、募集終了で「対象外」になった行も数えるため）
+  const tracked = rows
+    .filter(r => r[COL.stage] || r[COL.status] === "提案済み")
+    .map(r => ({ url: r[COL.url], stage: r[COL.stage] || "", margin: r[COL.margin], date: String(r[COL.detectedDate] || "") }));
+
+  return { proposed, pending, tracked };
 }
 
-let DATA = { proposed: [], pending: [] };
+let DATA = { proposed: [], pending: [], tracked: [] };
 
 async function loadData(isManualRefresh) {
   const genAtEl = document.getElementById("genAt");
@@ -929,6 +952,43 @@ function cardHtml(item, idx) {
   </article>`;
 }
 
+// 応募数・採用数・採用率と、今年の利益（発注済みの利益目安の合計）。
+// 応募 = 応募済み・採用・発注済み・不採用、採用 = 採用・発注済み。
+// 利益は親の確定申告ライン（会社員の副業は年20万円）と比べて残りを出す。
+const TAX_LINE_YEN = 200000;
+function renderResults() {
+  const year = String(new Date().getFullYear());
+  let applied = 0, hired = 0, profit = 0, ordered = 0;
+  const seen = new Set();
+  (DATA.tracked || []).forEach(t => {
+    if (!t.url || seen.has(t.url)) return;
+    seen.add(t.url);
+    const stage = stageMap[t.url] || t.stage || "new";
+    if (["applied", "hired", "ordered", "rejected"].includes(stage)) applied++;
+    if (stage === "hired" || stage === "ordered") hired++;
+    if (stage === "ordered") {
+      ordered++;
+      if (!t.date || t.date.startsWith(year)) profit += Math.max(marginYen(t), 0);
+    }
+  });
+  const rate = applied ? Math.round((hired / applied) * 1000) / 10 : 0;
+  const pct = Math.min(100, Math.round((profit / TAX_LINE_YEN) * 100));
+  const left = Math.max(TAX_LINE_YEN - profit, 0);
+  const goalText = profit >= TAX_LINE_YEN
+    ? `<b>年20万円を超えました。</b>親の確定申告が必要です（親が会社員の場合）。`
+    : `確定申告ライン（親が会社員なら年20万円）まで <b>あと¥${left.toLocaleString()}</b>`;
+  document.getElementById("results").innerHTML = `
+    <div class="results-row">
+      <div><div class="r-label">応募した</div><div class="r-value num">${applied}<small>件</small></div></div>
+      <div><div class="r-label">採用された</div><div class="r-value num">${hired}<small>件・${rate}%</small></div></div>
+      <div><div class="r-label">${year}年の利益（発注済み）</div><div class="r-value accent num">¥${profit.toLocaleString()}</div></div>
+    </div>
+    <div class="goal">
+      <div class="goal-bar"><i style="width:${pct}%"></i></div>
+      <div class="goal-text">${goalText}${ordered ? "" : "　※「発注済み」にした案件の利益目安を足しています"}</div>
+    </div>`;
+}
+
 function renderStats(items, tab) {
   const total = items.length;
   const withMargin = items.filter(it => it.margin && it.margin !== "見積り要相談");
@@ -1031,6 +1091,7 @@ function render() {
   });
 
   renderStats(filtered, state.tab);
+  renderResults();
 
   const sorted = filtered.slice();
   if (state.sort === "margin") {
