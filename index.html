@@ -535,14 +535,14 @@ function cellValue(cell) {
   return cell.v;
 }
 
-function loadGvizJsonp(tq) {
+function loadGvizJsonp(tq, sheetName = SHEET_NAME, extra = "", timeoutMs = 20000) {
   return new Promise((resolve, reject) => {
     const query = tq ? `&tq=${encodeURIComponent(tq)}` : "";
-    const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}${query}&_=${Date.now()}`;
+    const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetName)}${query}${extra}&_=${Date.now()}`;
     window.google = window.google || {};
     window.google.visualization = window.google.visualization || {};
     window.google.visualization.Query = window.google.visualization.Query || {};
-    const timeoutId = setTimeout(() => reject(new Error("timeout")), 20000);
+    const timeoutId = setTimeout(() => reject(new Error("timeout")), timeoutMs);
     window.google.visualization.Query.setResponse = (data) => {
       clearTimeout(timeoutId);
       resolve(data);
@@ -554,6 +554,27 @@ function loadGvizJsonp(tq) {
     script.onerror = () => { clearTimeout(timeoutId); reject(new Error("script load failed")); };
     document.body.appendChild(script);
   });
+}
+
+// 開いたリンクより新しい版があれば、自動でそちらへ移る（2026-10-09）。
+// 学校で github.io が開けないのでコミット固定の rawcdn.githack.com で開いていて、直すたびに新しいリンクを
+// 渡していた（「毎回新しいリンクを開くのがめんどくさい」）。最新版のSHAは affiliate-pipeline の
+// viewer_version.py がスプレッドシートの「設定」タブ B1 に書く。読めなければ今の版のまま開く。
+async function goToLatestVersion() {
+  const m = location.pathname.match(/^\/sorasora1120\/dispatch-viewer\/([0-9a-f]{40})\//);
+  if (location.hostname !== "rawcdn.githack.com" || !m) return false;
+  try {
+    // 「設定」タブが無い時に一覧の全部を読まないよう、1行目だけにする
+    const resp = await loadGvizJsonp("", "設定", "&range=A1:C1&headers=0", 5000);
+    const found = JSON.stringify(resp || {}).match(/\b[0-9a-f]{40}\b/);
+    if (found && found[0] !== m[1]) {
+      location.replace(location.href.replace(m[1], found[0]));
+      return true;
+    }
+  } catch (e) {
+    console.warn("最新版の確認に失敗（今の版で開きます）", e);
+  }
+  return false;
 }
 
 function isExcluded(title) {
@@ -1300,7 +1321,10 @@ document.getElementById("sortSelect").addEventListener("change", (e) => {
   render();
 });
 
-document.getElementById("refreshBtn").addEventListener("click", () => loadData(true));
+// 開きっぱなしのページでも「更新」で新しい版に移れるよう、データの前に版を確かめる
+document.getElementById("refreshBtn").addEventListener("click", async () => {
+  if (!(await goToLatestVersion())) loadData(true);
+});
 
-loadData(false);
+goToLatestVersion().then(moved => { if (!moved) loadData(false); });
 </script>

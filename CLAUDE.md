@@ -8,6 +8,10 @@
 - 学校のネットワークは github.com / github.io がブロックされる。ページを渡すときは
   `https://rawcdn.githack.com/sorasora1120/dispatch-viewer/<コミットSHA>/index.html` の形（コミット固定）で渡す
   （raw.githack.com は 429 になったので使わない）
+- **ビューアは開くと最新版へ自動で移る**（2026-10-09〜。「毎回新しいリンクを開くのがめんどくさい」とのこと）。
+  ユーザーは同じリンクを使い続けるので、ビューアを直すたびに新しいリンクを渡さない。直したら push のあと
+  affiliate-pipeline の `viewer_version.yml` を手動実行して、スプレッドシートの「設定」タブ B1 に最新SHAを書く
+  （収集のたびに worker_match.yml の最後でも書く）。`goToLatestVersion()` は消さないこと
 
 ## このリポジトリ
 - `index.html`：案件ビューア。Googleスプレッドシート（シート「案件一覧」）を gviz で読んで表示するだけの静的ページ。
