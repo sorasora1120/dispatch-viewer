@@ -854,7 +854,8 @@ function rivalBadge(item) {
 // それまでは予算が大きいほど上に来ていて、評価0件では通りにくい10万円以上の案件に応募が集中していた
 // （実測：応募58件のうち3万円以上が39件・1〜3万円は1件、返信0件）。評価が数件ついたら、予算の重みを戻してよい。
 function budgetFitScore(budget) {
-  if (budget < 5000) return -2;
+  // 2026-10-09、最低予算を1万円に上げた（ユーザー「1万円以上じゃなきゃダメ」。パイプラインも同じ）
+  if (budget < 10000) return -2;
   if (budget <= 30000) return 2.5;   // 小さな修正・LPなど、新人でも任されやすい
   if (budget <= 80000) return 1.5;
   if (budget <= 150000) return 0;
