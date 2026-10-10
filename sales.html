@@ -243,8 +243,10 @@ https://sorasora1120.github.io/
       <p>毎日1つ（無理なら週3）。お客さんはリプライを見るとプロフィールを開くので、最近の投稿が並んでいると信用されます。日本の人がよく見るのは<b>昼（12時ごろ）と夜（20〜22時）</b>。案は日付で毎日かわります。サンプルの投稿には「架空の店舗」と書いてあります。</p>
       <p class="count" id="xTodayLabel"></p>
       <pre class="tpl" id="tplXToday"></pre>
+      <a class="copy" id="xTodayPost" href="https://x.com/" target="_blank" rel="noopener" style="display:inline-block;text-decoration:none">Xで投稿する</a>
       <button class="copy" data-copy="tplXToday">投稿をコピー</button>
       <button class="copy" id="xTodayNext" style="background:var(--paper);color:var(--accent-ink);border:1px solid var(--line)">別の案にする</button>
+      <p style="margin:8px 0 0">「Xで投稿する」を押すと、Xの投稿画面が文面入りで開きます。「ポストする」は自分で押してください。毎日お昼ごろ、同じものがDiscordにも届きます。</p>
     </div>
     <div class="card">
       <h2>⑥ 送った相手の記録</h2>
@@ -393,6 +395,8 @@ https://sorasora1120.github.io/
   var xToday = Math.floor((Date.now() + 9 * 3600 * 1000) / 86400000) % X_DAILY.length;
   function drawToday() {
     document.getElementById("tplXToday").textContent = X_DAILY[xToday];
+    // Xの投稿画面を文面入りで開く（自動では投稿しない。ポストは本人が押す）
+    document.getElementById("xTodayPost").href = "https://x.com/intent/tweet?text=" + encodeURIComponent(X_DAILY[xToday]);
     document.getElementById("xTodayLabel").textContent = "今日の案（" + (xToday + 1) + " / " + X_DAILY.length + "）";
   }
   document.getElementById("xTodayNext").addEventListener("click", function () { xToday = (xToday + 1) % X_DAILY.length; drawToday(); });
