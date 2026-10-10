@@ -16,7 +16,9 @@
 ## このリポジトリ
 - `index.html`：案件ビューア。Googleスプレッドシート（シート「案件一覧」）を gviz で読んで表示するだけの静的ページ。
   データを作るのは `affiliate-pipeline`（CrowdWorks 収集・マッチング・提案文生成）
-- `sales.html`：営業ページ（まず最初に / X直募集 / 制作会社 / 月額保守）。チェックリストは localStorage
+- `sales.html`：営業ページ（まず最初に / 返信が来たら / 受注したら / X直募集 / 制作会社 / 月額保守）。チェックリストは localStorage
+- `x_posts.js`：Xの「今日の投稿」の文面（30案）。sales.html・index.html・affiliate-pipeline の x_daily_post.py が読む。
+  Xへの自動投稿はしない（投稿画面を文面入りで開くだけ。ポストは本人が押す）
 - `works/`：古い制作サンプル。今のポートフォリオは `sorasora1120.github.io`
 - `vocab-app/`：別プロジェクト（単語アプリ VisuWord）。触るときは `.github/workflows/ios-*.yml` が動く
 - `icon-options/` は `.git/info/exclude` で除外しているローカルのみのファイル

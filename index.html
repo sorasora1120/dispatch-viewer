@@ -186,6 +186,15 @@ main { padding: 12px 12px 48px; max-width: 640px; margin: 0 auto; }
   padding: 12px 14px; margin: 4px 0 12px;
 }
 .results-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+/* 今日のXの投稿（2026-10-10） */
+.xpost { background: var(--paper-raised); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; margin: 0 0 12px; }
+.xpost-head { display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
+.xpost-head span { font-size: 11px; color: var(--ink-soft); }
+.xpost-text { font-size: 12px; color: var(--ink-soft); white-space: pre-line; margin: 6px 0 8px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; cursor: pointer; }
+.xpost-text.open { display: block; }
+.xpost-actions { display: flex; gap: 8px; }
+.xpost-btn { font-size: 12px; font-weight: 700; color: #fff; background: var(--accent); border-radius: 6px; padding: 7px 12px; text-decoration: none; }
+.xpost-next { font-size: 12px; font-weight: 600; color: var(--ink-soft); background: transparent; border: 1px solid var(--line); border-radius: 6px; padding: 7px 11px; cursor: pointer; }
 @media (max-width: 520px) { .results-row { grid-template-columns: repeat(2, 1fr); row-gap: 10px; } }
 .results .r-label { font-size: 10px; color: var(--ink-soft); letter-spacing: .04em; }
 .results .r-value { font-size: 18px; font-weight: 800; line-height: 1.2; }
@@ -433,6 +442,7 @@ footer {
 
 <main>
   <div class="results" id="results"></div>
+  <div class="xpost" id="xPost" hidden></div>
   <div class="stats" id="stats"></div>
   <div class="toolbar-row">
     <div class="count-line" id="countLine"></div>
@@ -447,6 +457,7 @@ footer {
 
 <footer id="footerNote">読み込み中です…</footer>
 
+<script src="x_posts.js"></script>
 <script>
 // ============================================================
 // スプレッドシートからのライブデータ取得
@@ -1332,6 +1343,27 @@ document.getElementById("sortSelect").addEventListener("change", (e) => {
 document.getElementById("refreshBtn").addEventListener("click", async () => {
   if (!(await goToLatestVersion())) loadData(true);
 });
+
+// 今日のXの投稿（2026-10-10、「ディスパッチビューワーにも載せて」とのこと）。文面は x_posts.js（営業ページ・Discordと共通）。
+// 「Xで投稿する」はXの投稿画面を文面入りで開くだけ（自動では投稿しない）。文面を押すと全部見える
+function renderXPost() {
+  const box = document.getElementById("xPost");
+  if (!box || typeof X_DAILY === "undefined" || !X_DAILY.length) return;
+  let i = xTodayIndex();
+  function draw() {
+    box.innerHTML = `<div class="xpost-head"><b>📣 今日のXの投稿</b><span>${i + 1} / ${X_DAILY.length}</span></div>
+      <div class="xpost-text">${esc(X_DAILY[i])}</div>
+      <div class="xpost-actions">
+        <a class="xpost-btn" href="${esc(xIntentUrl(X_DAILY[i]))}" target="_blank" rel="noopener">Xで投稿する</a>
+        <button class="xpost-next" type="button">別の案</button>
+      </div>`;
+    box.querySelector(".xpost-text").addEventListener("click", e => e.currentTarget.classList.toggle("open"));
+    box.querySelector(".xpost-next").addEventListener("click", () => { i = (i + 1) % X_DAILY.length; draw(); });
+  }
+  box.hidden = false;
+  draw();
+}
+renderXPost();
 
 goToLatestVersion().then(moved => { if (!moved) loadData(false); });
 </script>
