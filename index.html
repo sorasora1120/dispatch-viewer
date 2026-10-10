@@ -193,6 +193,8 @@ main { padding: 12px 12px 48px; max-width: 640px; margin: 0 auto; }
 .xpost-text { font-size: 12px; color: var(--ink-soft); white-space: pre-line; margin: 6px 0 8px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; cursor: pointer; }
 .xpost-text.open { display: block; }
 .xpost-actions { display: flex; gap: 8px; }
+.xpost-img { width: 100%; border-radius: 8px; display: block; margin: 0 0 4px; }
+.xpost-hint { font-size: 11px; color: var(--ink-soft); margin: 0 0 8px; }
 .xpost-btn { font-size: 12px; font-weight: 700; color: #fff; background: var(--accent); border-radius: 6px; padding: 7px 12px; text-decoration: none; }
 .xpost-next { font-size: 12px; font-weight: 600; color: var(--ink-soft); background: transparent; border: 1px solid var(--line); border-radius: 6px; padding: 7px 11px; cursor: pointer; }
 @media (max-width: 520px) { .results-row { grid-template-columns: repeat(2, 1fr); row-gap: 10px; } }
@@ -1353,6 +1355,8 @@ function renderXPost() {
   function draw() {
     box.innerHTML = `<div class="xpost-head"><b>📣 今日のXの投稿</b><span>${i + 1} / ${X_DAILY.length}</span></div>
       <div class="xpost-text">${esc(X_DAILY[i])}</div>
+      ${xImageFor(X_DAILY[i]) ? `<img class="xpost-img" src="${esc(xImageFor(X_DAILY[i]))}" alt="投稿に付ける画像">
+      <div class="xpost-hint">画像を長押しして保存し、投稿に付けてください（画像付きの方が見てもらえます）</div>` : ""}
       <div class="xpost-actions">
         <a class="xpost-btn" href="${esc(xIntentUrl(X_DAILY[i]))}" target="_blank" rel="noopener">Xで投稿する</a>
         <button class="xpost-next" type="button">別の案</button>

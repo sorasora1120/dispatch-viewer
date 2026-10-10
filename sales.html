@@ -316,9 +316,17 @@ https://sorasora1120.github.io/
     </div>
     <div class="card">
       <h2>⑤ 今日の投稿（毎日1つ）</h2>
+      <div class="rule" style="margin:6px 0 10px"><b>どんな投稿がいい？</b>インプ（表示回数）だけを狙わない。見てほしいのは<b>お店や会社の人</b>です。<br>
+      ・保存したくなる（チェックリスト）・答えたくなる（質問）・相談したくなる（無料で改善点を1つ）投稿が、結果的に一番伸びる<br>
+      ・サンプルの紹介は<b>画像付き</b>で（下に出る画像を長押しで保存して付ける）<br>
+      ・だいたい「役に立つ話7・サンプル2・宣伝1」<br>
+      ・やらない：数字を盛る、煽る、関係ない話題で目立つ、他の制作者の悪口<br>
+      ・「無料で改善点を1つ」の申し込みが来たら：そのサイトをスマホで開いてスクショ → Claudeに貼る → 一緒に考えて返す</div>
       <p>毎日1つ（無理なら週3）。お客さんはリプライを見るとプロフィールを開くので、最近の投稿が並んでいると信用されます。日本の人がよく見るのは<b>昼（12時ごろ）と夜（20〜22時）</b>。案は日付で毎日かわります。サンプルの投稿には「架空の店舗」と書いてあります。</p>
       <p class="count" id="xTodayLabel"></p>
       <pre class="tpl" id="tplXToday"></pre>
+      <img id="xTodayImg" alt="投稿に付ける画像" style="width:100%;border-radius:10px;display:none;margin:0 0 4px">
+      <p id="xTodayImgHint" style="display:none;margin:0 0 8px">画像を長押しして保存し、投稿に付けてください（画像付きの方が見てもらえます）。</p>
       <a class="copy" id="xTodayPost" href="https://x.com/" target="_blank" rel="noopener" style="display:inline-block;text-decoration:none">Xで投稿する</a>
       <button class="copy" data-copy="tplXToday">投稿をコピー</button>
       <button class="copy" id="xTodayNext" style="background:var(--paper);color:var(--accent-ink);border:1px solid var(--line)">別の案にする</button>
@@ -440,6 +448,10 @@ https://sorasora1120.github.io/
   function drawToday() {
     document.getElementById("tplXToday").textContent = X_DAILY[xToday];
     document.getElementById("xTodayPost").href = xIntentUrl(X_DAILY[xToday]);
+    var img = xImageFor(X_DAILY[xToday]);
+    document.getElementById("xTodayImg").style.display = img ? "block" : "none";
+    document.getElementById("xTodayImgHint").style.display = img ? "block" : "none";
+    if (img) document.getElementById("xTodayImg").src = img;
     document.getElementById("xTodayLabel").textContent = "今日の案（" + (xToday + 1) + " / " + X_DAILY.length + "）";
   }
   document.getElementById("xTodayNext").addEventListener("click", function () { xToday = (xToday + 1) % X_DAILY.length; drawToday(); });
