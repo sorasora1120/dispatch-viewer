@@ -65,6 +65,7 @@ td.p { text-align: right; white-space: nowrap; font-weight: 700; }
   <div class="tabs" id="tabs">
     <button data-sec="profile" aria-pressed="true">まず最初に</button>
     <button data-sec="reply" aria-pressed="false">返信が来たら</button>
+    <button data-sec="order" aria-pressed="false">受注したら</button>
     <button data-sec="x" aria-pressed="false">X直募集</button>
     <button data-sec="partner" aria-pressed="false">制作会社</button>
     <button data-sec="hoshu" aria-pressed="false">月額保守</button>
@@ -190,6 +191,81 @@ https://sorasora1120.github.io/
 その後、ご検討状況はいかがでしょうか。
 気になる点や、決めきれていないことがあれば、何でもお気軽にお聞きください。</pre>
       <button class="copy" data-copy="tplReply6">文面をコピー</button>
+    </div>
+  </section>
+
+  <!-- 受注したら：納品して、評価と実績を残すまで（2026-10-10、「ちゃんと実績残したいし、いっぱいこなしたい」とのことで追加） -->
+  <section id="order">
+    <div class="rule"><b>実績になるのは「評価」と「見せられるサイト」。</b>1件ごとに、最後の⑤評価のお願いと⑥実績に載せていいかを必ず送る。<br>
+    <b>仮払いが済むまで、ワーカーに作業を始めてもらわない。</b>たくさんこなすには、1件ずつこの流れをそのまま回すのが一番早いです。</div>
+    <div class="card">
+      <h2>① 仮払いを確認したら、ワーカーに依頼（英語）</h2>
+      <p>案件リードの「ワーカーへ（発注メッセージ）」をそのまま使ってもOK。［ ］を書き換えて送る。<b>同時に何件まで受けられるか・1件何日かかるか</b>を、ワーカーに一度聞いておくと、受けすぎを防げます。</p>
+      <pre class="tpl" id="tplOrder1">Hi! We got a new project 🎉
+Project: [LP for a beauty salon]
+What to make: [1-page LP, mobile friendly]
+Client's wishes: [paste the key points]
+Materials: [text and photos provided / please use stock photos]
+Schedule: first draft by [date], finish by [date]
+Budget for you: [¥X]
+Can you take it? Please tell me your schedule. Thank you!</pre>
+      <button class="copy" data-copy="tplOrder1">文面をコピー</button>
+    </div>
+    <div class="card">
+      <h2>② 依頼者に、進め方と日程を伝える</h2>
+      <p>ワーカーから日程の返事をもらってから送る。［ ］を書き換える。</p>
+      <pre class="tpl" id="tplOrder2">仮払いのご対応ありがとうございます。さっそく制作を始めます。
+進め方は次のとおりです。
+
+1. ［○月○日］までに、ページの構成図（ラフ）をお送りします
+2. 構成が決まったら、デザインを作ります（［○月○日］ごろ）
+3. ご確認・修正のあと、公開・納品します（［○月○日］ごろ）
+
+途中でも、気になることがあればいつでもご連絡ください。</pre>
+      <button class="copy" data-copy="tplOrder2">文面をコピー</button>
+    </div>
+    <div class="card">
+      <h2>③ 途中報告（ラフやデザイン案ができたら）</h2>
+      <pre class="tpl" id="tplOrder3">お世話になっております。ソラです。
+［デザイン案］ができましたので、お送りします。
+［URL または 画像］
+
+気になるところ・変えたいところがあれば、遠慮なくお知らせください。
+特に問題なければ、このまま［次の作業］に進めます。</pre>
+      <button class="copy" data-copy="tplOrder3">文面をコピー</button>
+    </div>
+    <div class="card">
+      <h2>④ 納品</h2>
+      <p>送る前に、<b>自分でもスマホとパソコン（またはiPad）で開いて</b>、崩れていないか・リンクが動くかを確かめる。</p>
+      <pre class="tpl" id="tplOrder4">お世話になっております。ソラです。
+［サイト名］が完成しましたので、納品いたします。
+［URL］
+
+スマホとパソコンの両方で、表示を確認しています。
+修正したいところがあれば、お気軽にお知らせください。
+問題なければ、検収（完了のご操作）をお願いいたします。</pre>
+      <button class="copy" data-copy="tplOrder4">文面をコピー</button>
+    </div>
+    <div class="card">
+      <h2>⑤ 評価のお願い（検収のあと）</h2>
+      <p>「星5でお願いします」とは書かない（CrowdWorksのルール違反になりうる）。率直な感想をお願いするだけ。こちらからも依頼者を丁寧に評価する。</p>
+      <pre class="tpl" id="tplOrder5">このたびは検収いただき、ありがとうございました！
+もしよろしければ、評価で率直なご感想をいただけますと、今後の励みになります。
+公開後の更新や修正が必要になった時も、お気軽にご相談ください。</pre>
+      <button class="copy" data-copy="tplOrder5">文面をコピー</button>
+    </div>
+    <div class="card">
+      <h2>⑥ 実績に載せていいか聞く</h2>
+      <p>⑤と一緒に送ってもOK。断られたら載せない。</p>
+      <pre class="tpl" id="tplOrder6">もう一つだけご相談です。
+今回のサイトを、制作実績としてポートフォリオに載せてもよろしいでしょうか？
+（お名前やお客様の情報は載せず、サイトの画面とURLだけです）
+ご都合が悪ければ載せませんので、遠慮なくお知らせください。</pre>
+      <button class="copy" data-copy="tplOrder6">文面をコピー</button>
+    </div>
+    <div class="card">
+      <h2>⑦ 終わったらClaudeに送るもの</h2>
+      <p>「作ったサイトのURL」と「載せてOKだったか」をここに貼ってください。ポートフォリオの一番上に「クラウドワークスでの制作実績」として足します（チームの実績とは分けて載せます）。</p>
     </div>
   </section>
 

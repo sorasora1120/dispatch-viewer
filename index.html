@@ -984,12 +984,15 @@ function cardHtml(item, idx) {
         </div>
         <pre class="panel-text worker-msg" id="worker-${idx}">${esc(item.workerMsg)}</pre>
         <button class="copy-apply-btn" data-copy-and-order="${idx}">③ コピーして発注済みにする</button>
+        <a class="reply-btn" href="sales.html#order" style="text-decoration:none;display:inline-block;margin-top:8px">📦 受注してからの流れ（テンプレ）</a>
       </div>
     </div>`;
   } else if (stage === "ordered") {
     panels = `
     <div class="actions">
       <button class="expand-btn" data-toggle="${idx}" data-label="コピペ文">コピペ文を見る ▾</button>
+      <!-- 2026-10-10、納品して評価と実績を残すまでのテンプレ（sales.html の「受注したら」タブ） -->
+      <a class="reply-btn" href="sales.html#order" style="text-decoration:none">📦 納品・評価のテンプレ</a>
     </div>
     <div class="panels" id="panels-${idx}">
       <div class="panel">
