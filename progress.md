@@ -24,6 +24,7 @@
     `(!isExcluded(title) || isDesignJob(title))`。`isDesignJob` と `DESIGN_KIND_RE`・`DESIGN_STRONG_RE`・`DESIGN_WORK_RE`・`DESIGN_BLOCK_RE`・
     `DESIGN_EXCLUDE_EXEMPT` はパイプラインの `worker_matcher.design_kind / is_design_job` と同じ（実際の題名267件で一致を確認）。
     カテゴリに「ロゴ・バナー」「チラシ・印刷物」を足した
+    同じ日、バナーだけの大量募集（絵文字・「紹介する」「継続」など）を外す `BANNER_BLOCK_RE` と、種類の順番を決める `designKind`・`DESIGN_KINDS` を足した
 - 実績バーの下に「📣 今日のXの投稿」（2026-10-10、「ディスパッチビューワーにも載せて」）。`x_posts.js` の今日の案（39案）と、
   「Xで投稿する」（文面入りで投稿画面を開くだけ）・「別の案」。文面を押すと全部見える
   - サンプルの投稿には画像（`x-images/salon|accounting|cafe.jpg`、16:9、スマホ画面と「架空の店舗」の表示入り）を出す（`xImageFor`）。
