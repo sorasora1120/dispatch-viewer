@@ -20,9 +20,9 @@
     パイプラインの `worker_matcher.SOFT_EXCLUDE_KEYWORDS` と同じ。「画像加工＆コーディング」「LPデザイン＆広告バナー制作」を落としていた）
   - 2026-10-12：「LP＆広告バナーデザイン」「LP・バナーデザイン」も外さない（パイプラインの `_CLEAR_WORK_RE` と同じ）。
     「LP・バナー制作」のデザイナー募集は外れたまま
-  - 2026-10-12夜（「もっと仕事のはばふやして」）：**イラスト**と、取扱説明書・封筒・年賀状・のぼり・タペストリーなどの**印刷物**も拾う
-    （`isDesignJob` の illust・flyer の言葉。パイプラインの worker_matcher.py と同じ。集めた題名463件で一致）。営業ページの「受注したら」に、
-    イラストの作品例の送り方（⓪の下）・ワーカーへの英文（①）・進め方（②）を足した
+  - 2026-10-12夜（「もっと仕事のはばふやして」）：取扱説明書・封筒・年賀状・のぼり・タペストリーなどの**印刷物**も拾う
+    （`isDesignJob` の flyer の言葉。パイプラインの worker_matcher.py と同じ。集めた題名463件で一致）。
+    イラストも一度足したが、ユーザー「イラストは無理かも」で外した（営業ページのイラストの手順も消した）
   - 2026-10-12（「じゃあ仕事増やそう」）：**チラシ・名刺・ロゴ・バナー・パッケージのデザインの仕事も拾う**。確認前タブの絞り込みは
     `(!isExcluded(title) || isDesignJob(title))`。`isDesignJob` と `DESIGN_KIND_RE`・`DESIGN_STRONG_RE`・`DESIGN_WORK_RE`・`DESIGN_BLOCK_RE`・
     `DESIGN_EXCLUDE_EXEMPT` はパイプラインの `worker_matcher.design_kind / is_design_job` と同じ（実際の題名267件で一致を確認）。
