@@ -107,7 +107,9 @@
   （ないときは「Your Name」）。印刷するとレター1枚に収まる（@media print。確かめ済み）。フォントは Instrument Serif ＋ Jost
 - 料金（カナダドル）：見本は無料 / 1ページ400（最初の3軒は250、実績として見せていいか聞く）/ ページ追加100 / 更新は月25（月4回まで）か1回20 /
   ドメインは年20くらいでお店の名前・お店が払う / 半分前払い・残りは公開時に e-Transfer で友達へ。相場は個人でも1,500〜5,000
-- 最初の3軒が終わったら「Launch offer」の行（local.html の料金表・台本③、local-en.html）を消す
+- `local-guide-en.html`（同じ日、「英語用も作って」）：local.html の英語版。友達（英語）が読む用で、友達を「You」、ユーザーを
+  「Your teammate」と書いた（ユーザーのビザの話は書いていない）。local.html の上に「English（友達用）」とリンクのコピーボタン
+- 最初の3軒が終わったら「Launch offer」の行（local.html と local-guide-en.html の料金表・台本③、local-en.html）を消す
 
 ## 毎日の流れ（ユーザー側）
 1. ビューアを開く → 狙い目の案件を選ぶ

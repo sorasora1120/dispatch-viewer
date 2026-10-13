@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Local Shop Websites: Team Guide</title>
+<style>
+:root {
+  --ink: #211E19; --ink-soft: #55504A; --paper: #EEEBE2; --paper-raised: #FBF9F3; --line: #D8D3C6;
+  --accent: #2F6E63; --accent-soft: #DCEAE6; --accent-ink: #16403A; --amber: #9C6B1E; --amber-soft: #F1E4C9;
+  --shadow: 0 1px 2px rgba(33,30,25,0.06), 0 2px 10px rgba(33,30,25,0.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ink: #EBE7DD; --ink-soft: #A9A296; --paper: #17181A; --paper-raised: #202225; --line: #34363A;
+    --accent: #5FB3A3; --accent-soft: #1B322E; --accent-ink: #B7E8DC; --amber: #D9AE63; --amber-soft: #362A15;
+    --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 4px 16px rgba(0,0,0,0.35);
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: -apple-system, "Helvetica Neue", Arial, sans-serif; line-height: 1.6; -webkit-text-size-adjust: 100%; }
+main { max-width: 640px; margin: 0 auto; padding: 16px 16px 48px; }
+.top { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
+h1 { font-size: 19px; margin: 0; }
+.back { font-size: 13px; color: var(--accent); text-decoration: none; font-weight: 700; white-space: nowrap; }
+.lead { color: var(--ink-soft); font-size: 14px; margin: 0 0 16px; }
+.tabs { display: flex; gap: 6px; margin-bottom: 14px; overflow-x: auto; }
+.tabs button { flex: 1; white-space: nowrap; font: inherit; font-size: 13px; font-weight: 700; padding: 9px 10px; border-radius: 10px; border: 1px solid var(--line); background: var(--paper-raised); color: var(--ink-soft); cursor: pointer; }
+.tabs button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+section { display: none; }
+section.on { display: block; }
+.card { background: var(--paper-raised); border: 1px solid var(--line); border-radius: 14px; padding: 14px; margin-bottom: 12px; box-shadow: var(--shadow); }
+.card h2 { font-size: 16px; margin: 0 0 6px; }
+.card p { margin: 0 0 10px; font-size: 14px; color: var(--ink-soft); }
+.card p b, .card li b { color: var(--ink); }
+.card ul, .card ol { margin: 0 0 10px; padding-left: 1.3em; font-size: 14px; color: var(--ink-soft); }
+.card li { margin: 3px 0; }
+.tpl { white-space: pre-wrap; font-family: inherit; font-size: 14px; background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 12px; margin: 0 0 8px; max-height: 300px; overflow: auto; }
+.copy { font: inherit; font-size: 13px; font-weight: 700; border: none; border-radius: 10px; padding: 9px 14px; background: var(--accent); color: #fff; cursor: pointer; }
+.copy.done { background: var(--amber); }
+.rule { background: var(--amber-soft); color: var(--ink); border-radius: 12px; padding: 10px 12px; font-size: 13px; margin-bottom: 12px; }
+.rule b { color: var(--amber); }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th, td { border-bottom: 1px solid var(--line); padding: 8px 4px; text-align: left; vertical-align: top; }
+td.p { text-align: right; white-space: nowrap; font-weight: 700; }
+td small { display: block; color: var(--ink-soft); font-size: 12px; font-weight: 400; }
+.steps { list-style: none; padding: 0; margin: 0; counter-reset: s; }
+.steps > li { counter-increment: s; position: relative; padding: 0 0 0 34px; margin-bottom: 14px; }
+.steps > li::before { content: counter(s); position: absolute; left: 0; top: 0; width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.steps h3 { font-size: 15px; margin: 0 0 2px; }
+.steps p { margin: 0; }
+.steps ul { margin: 4px 0 0; }
+.who { display: inline-block; font-size: 12px; font-weight: 700; border-radius: 6px; padding: 0 6px; margin-right: 4px; background: var(--accent-soft); color: var(--accent-ink); }
+.who.me { background: var(--amber-soft); color: var(--amber); }
+.form { display: grid; gap: 8px; margin-bottom: 10px; }
+.form label { font-size: 13px; color: var(--ink-soft); display: grid; gap: 3px; }
+.form input { font: inherit; font-size: 15px; padding: 9px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); color: var(--ink); }
+.row { display: flex; gap: 8px; flex-wrap: wrap; }
+.btn2 { display: inline-block; font-size: 13px; font-weight: 700; border-radius: 10px; padding: 9px 14px; background: var(--accent-soft); color: var(--accent-ink); text-decoration: none; border: none; cursor: pointer; font-family: inherit; }
+</style>
+</head>
+<body>
+<main>
+  <div class="top">
+    <h1>Local Shop Websites: Team Guide</h1>
+    <a class="back" href="local.html">日本語</a>
+  </div>
+  <p class="lead">How we find shops in Windsor that don't have a website, show them a free preview, and build their site. Prices, steps, what to say, and the sheet to show customers.</p>
+
+  <div class="rule"><b>Your role:</b> you're the face of the business. You visit the shops, talk with the owners, and receive the payments. If anyone asks whether we use AI, tell them yes.</div>
+
+  <div class="tabs" id="tabs">
+    <button data-sec="price" aria-pressed="true">Prices</button>
+    <button data-sec="steps" aria-pressed="false">Steps</button>
+    <button data-sec="talk" aria-pressed="false">What to say</button>
+    <button data-sec="sheet" aria-pressed="false">Customer sheet</button>
+  </div>
+
+  <!-- Prices -->
+  <section id="price" class="on">
+    <div class="card">
+      <h2>Price list (Canadian dollars)</h2>
+      <table>
+        <tr><th>Item</th><th style="text-align:right">Price</th></tr>
+        <tr><td>Preview<small>Made for that shop, to show the owner</small></td><td class="p">Free</td></tr>
+        <tr><td>Website, one page<small>Everything in "What's included" below</small></td><td class="p">$400</td></tr>
+        <tr><td>Launch price, first 3 shops only<small>In return, ask if we can show their site as an example</small></td><td class="p">$250</td></tr>
+        <tr><td>Extra page<small>A full menu page, a booking page, etc.</small></td><td class="p">$100 / page</td></tr>
+        <tr><td>Update plan (optional)<small>Menu, prices, hours and photos. Up to 4 changes a month</small></td><td class="p">$25 / month</td></tr>
+        <tr><td>One-off change, without the plan</td><td class="p">$20</td></tr>
+        <tr><td>Domain (web address)<small>Registered in the shop's name. The shop pays for it</small></td><td class="p">~$20 / year</td></tr>
+      </table>
+      <p style="margin-top:10px">Hiring a freelancer in Canada usually costs $1,500 to $5,000, so this is a low price. The AI does the building, hosting is free, and the shop pays for its own domain, so our costs are close to zero.</p>
+    </div>
+    <div class="card">
+      <h2>What's included for $400</h2>
+      <ul>
+        <li>A one-page website that's easy to use on phones</li>
+        <li>The menu and prices</li>
+        <li>Opening hours, with "Open now" shown automatically</li>
+        <li>A map and a directions button</li>
+        <li>A tap-to-call button</li>
+        <li>The shop's photos</li>
+        <li>Help adding the site to the shop's Google Maps listing</li>
+        <li>A QR code sign for the counter or window</li>
+        <li>Two rounds of changes before launch</li>
+        <li>No hosting fees, no monthly fee</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>Payment and timing</h2>
+      <ul>
+        <li><b>Payment:</b> half when they say yes, the other half when the site is live. By e-Transfer, <b>to you</b></li>
+        <li><b>Preview:</b> 1 to 2 days after we get the shop's name</li>
+        <li><b>Full website:</b> about a week after we get the menu and photos</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Steps -->
+  <section id="steps">
+    <div class="card">
+      <h2>Who does what</h2>
+      <ul>
+        <li><span class="who">You</span>Visit the shops, talk with the owners, take the payments, and stay in touch with the shop</li>
+        <li><span class="who me">Your teammate</span>Sends shop names, menus and photos to the AI, and checks the work</li>
+        <li><span class="who">AI</span>Makes the previews and websites, the customer sheet, and English messages</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>Steps</h2>
+      <ol class="steps">
+        <li><h3>Set up (once)</h3>
+          <p>Put your name and email in the "Customer sheet" tab, so the sheet shows your contact info.</p></li>
+        <li><h3>Pick 5 shops</h3>
+          <p>On Google Maps, look for shops that match all four, and send the names to your teammate.</p>
+          <ul>
+            <li>No "Website" button on their Google Maps listing</li>
+            <li>20 or more reviews (they have regular customers)</li>
+            <li>An Instagram or Facebook page (so we have photos)</li>
+            <li>Not a chain</li>
+          </ul></li>
+        <li><h3>We make previews</h3>
+          <p>The AI makes a preview for each shop that you can show on your phone (1 to 2 days).</p></li>
+        <li><h3>Visit the shops</h3>
+          <ul>
+            <li>For restaurants and cafés, go on a weekday after school, before 5 p.m. Avoid the lunch and dinner rush, and weekends</li>
+            <li>Don't go into shops with a "No Soliciting" sign</li>
+            <li>If the owner isn't there, ask the staff when they're usually in, and come back then</li>
+            <li>Show the preview and the customer sheet on your phone. See "What to say"</li>
+            <li>Even if they don't decide, leave a printed customer sheet</li>
+          </ul></li>
+        <li><h3>When they say yes</h3>
+          <p>The AI writes a short agreement (what we'll do and the price). You collect half the payment, then get the menu, photos, hours, and logo (if they have one). For the menu, a phone photo of the paper menu or board is enough.</p></li>
+        <li><h3>We build it</h3>
+          <p>Your teammate sends everything to the AI. The AI builds the site and sends a link. Show it to the owner and collect changes (two rounds).</p></li>
+        <li><h3>Go live</h3>
+          <p>The shop registers its domain in its own name (we send step-by-step instructions). We put the site online. The owner adds the web address to their Google Maps listing on their own phone. Give them the QR sign and collect the second half.</p></li>
+        <li><h3>After launch</h3>
+          <p>Offer the update plan. If they're happy, ask for a Google review, and whether they know another shop that could use a website.</p></li>
+      </ol>
+    </div>
+    <div class="card">
+      <h2>Things we don't do</h2>
+      <ul>
+        <li>Ask for the owner's passwords. They add the site to Google Maps themselves, on their own phone</li>
+        <li>Show fake reviews, or work we didn't do</li>
+        <li>Keep pushing. If they say no, thank them and leave</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- What to say -->
+  <section id="talk">
+    <div class="rule"><b>Tip:</b> you don't need to memorize these. Showing the preview is what matters most, and your own words are fine. Swap in your name for [Name] and the shop's name for [Shop].</div>
+    <div class="card">
+      <h2>1. Opening</h2>
+      <pre class="tpl" id="t1">Hi! Is the owner around, by any chance?
+
+Hi, I'm [Name]. I'm a student here in Windsor, and I make websites for local shops. I noticed [Shop] doesn't have a website yet, so I made a quick preview of what yours could look like. Do you have a minute? I'd love to show you.</pre>
+      <button class="copy" data-copy="t1">Copy</button>
+    </div>
+    <div class="card">
+      <h2>2. While showing the preview</h2>
+      <pre class="tpl" id="t2">Right now, when people find you on Google Maps, there's no website button. With a site like this, they can see your menu, your hours and your photos, call you with one tap, or get directions, right from their phone.</pre>
+      <button class="copy" data-copy="t2">Copy</button>
+    </div>
+    <div class="card">
+      <h2>3. If they ask about the price</h2>
+      <pre class="tpl" id="t3">It's $400, one time. But we're doing our first three shops for $250. Half when you say yes, and half when it's live. There's no monthly fee. The only other cost is your web address, which is about $20 a year.</pre>
+      <button class="copy" data-copy="t3">Copy</button>
+    </div>
+    <div class="card">
+      <h2>4. If they want to think about it</h2>
+      <pre class="tpl" id="t4">Of course, take your time! I'll leave this sheet with you. My email is on it. Would it be okay if I stopped by again next week?</pre>
+      <button class="copy" data-copy="t4">Copy</button>
+    </div>
+    <div class="card">
+      <h2>5. If they say no</h2>
+      <pre class="tpl" id="t5">No problem at all. Thanks for your time, and have a great day!</pre>
+      <button class="copy" data-copy="t5">Copy</button>
+    </div>
+    <div class="card">
+      <h2>6. Common questions</h2>
+      <pre class="tpl" id="t6">"I already have a Facebook page."
+That's great, keep it! A website shows up better on Google, and it puts your menu and hours in one place. We'll link your Facebook from it, too.
+
+"Who updates it?"
+We do. It's $20 per change, or $25 a month if you change things often.
+
+"How long does it take?"
+About a week, once we have your menu and a few photos.
+
+"Is it really mine?"
+Yes. The web address is registered in your shop's name.
+
+"Do you use AI?"
+Yes. We use AI tools to design and build faster. That's how we keep the price low. We check everything ourselves before it goes live.</pre>
+      <button class="copy" data-copy="t6">Copy</button>
+    </div>
+  </section>
+
+  <!-- Customer sheet -->
+  <section id="sheet">
+    <div class="card">
+      <h2>The customer sheet</h2>
+      <p>One page that explains what we do, what's included, how it works, and the prices. Show it on your phone, or print it and leave it at the shop.</p>
+      <p>Add your name and contact info first. They're only saved on this device. You can leave the phone number blank.</p>
+      <div class="form">
+        <label>Name<input id="fName" autocomplete="off"></label>
+        <label>Email<input id="fEmail" type="email" autocomplete="off"></label>
+        <label>Phone (optional)<input id="fPhone" type="tel" autocomplete="off"></label>
+      </div>
+      <div class="row">
+        <a class="btn2" id="sheetOpen" href="local-en.html" target="_blank" rel="noopener">Open the sheet</a>
+        <button class="copy" id="sheetCopy">Copy link</button>
+      </div>
+      <p style="margin-top:10px">To print: open the sheet, tap Share, then Print. It fits on one letter-size page. You can also save it as a PDF and print it at school or a library.</p>
+    </div>
+  </section>
+</main>
+
+<script>
+(function () {
+  "use strict";
+  document.getElementById("tabs").addEventListener("click", function (e) {
+    var btn = e.target.closest("button");
+    if (!btn) return;
+    document.querySelectorAll("#tabs button").forEach(function (b) { b.setAttribute("aria-pressed", b === btn ? "true" : "false"); });
+    document.querySelectorAll("section").forEach(function (s) { s.classList.toggle("on", s.id === btn.dataset.sec); });
+  });
+
+  function copyText(text, btn, label) {
+    function done() { btn.textContent = "Copied"; btn.classList.add("done"); setTimeout(function () { btn.textContent = label; btn.classList.remove("done"); }, 1500); }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, function () { window.prompt("Copy this:", text); });
+    else window.prompt("Copy this:", text);
+  }
+  document.querySelectorAll("[data-copy]").forEach(function (btn) {
+    btn.addEventListener("click", function () { copyText(document.getElementById(btn.dataset.copy).textContent, btn, "Copy"); });
+  });
+
+  // 見せる紙：名前と連絡先をリンクに入れる（local.html と同じ保存先。この端末のブラウザにだけ保存）
+  var KEY = "local-sheet-contact";
+  var fields = { name: document.getElementById("fName"), email: document.getElementById("fEmail"), phone: document.getElementById("fPhone") };
+  try { var saved = JSON.parse(localStorage.getItem(KEY) || "{}"); Object.keys(fields).forEach(function (k) { fields[k].value = saved[k] || ""; }); } catch (e) {}
+  function sheetUrl() {
+    var q = Object.keys(fields).filter(function (k) { return fields[k].value.trim(); })
+      .map(function (k) { return k + "=" + encodeURIComponent(fields[k].value.trim()); }).join("&");
+    return new URL("local-en.html" + (q ? "?" + q : ""), location.href).href;
+  }
+  function update() {
+    document.getElementById("sheetOpen").href = sheetUrl();
+    try { var v = {}; Object.keys(fields).forEach(function (k) { v[k] = fields[k].value; }); localStorage.setItem(KEY, JSON.stringify(v)); } catch (e) {}
+  }
+  Object.keys(fields).forEach(function (k) { fields[k].addEventListener("input", update); });
+  update();
+  var sc = document.getElementById("sheetCopy");
+  sc.addEventListener("click", function () { copyText(sheetUrl(), sc, "Copy link"); });
+})();
+</script>
+</body>
+</html>
