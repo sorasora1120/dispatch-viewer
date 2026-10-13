@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>現地のお店（Windsor）</title>
+<style>
+:root {
+  --ink: #211E19; --ink-soft: #55504A; --paper: #EEEBE2; --paper-raised: #FBF9F3; --line: #D8D3C6;
+  --accent: #2F6E63; --accent-soft: #DCEAE6; --accent-ink: #16403A; --amber: #9C6B1E; --amber-soft: #F1E4C9;
+  --shadow: 0 1px 2px rgba(33,30,25,0.06), 0 2px 10px rgba(33,30,25,0.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ink: #EBE7DD; --ink-soft: #A9A296; --paper: #17181A; --paper-raised: #202225; --line: #34363A;
+    --accent: #5FB3A3; --accent-soft: #1B322E; --accent-ink: #B7E8DC; --amber: #D9AE63; --amber-soft: #362A15;
+    --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 4px 16px rgba(0,0,0,0.35);
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: -apple-system, "Hiragino Sans", "Noto Sans JP", sans-serif; line-height: 1.7; -webkit-text-size-adjust: 100%; }
+main { max-width: 640px; margin: 0 auto; padding: 16px 16px 48px; }
+.top { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
+h1 { font-size: 18px; margin: 0; }
+.back { font-size: 13px; color: var(--accent); text-decoration: none; font-weight: 700; }
+.lead { color: var(--ink-soft); font-size: 13px; margin: 0 0 16px; }
+.tabs { display: flex; gap: 6px; margin-bottom: 14px; overflow-x: auto; }
+.tabs button { flex: 1; white-space: nowrap; font: inherit; font-size: 13px; font-weight: 700; padding: 9px 10px; border-radius: 10px; border: 1px solid var(--line); background: var(--paper-raised); color: var(--ink-soft); cursor: pointer; }
+.tabs button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+section { display: none; }
+section.on { display: block; }
+.card { background: var(--paper-raised); border: 1px solid var(--line); border-radius: 14px; padding: 14px; margin-bottom: 12px; box-shadow: var(--shadow); }
+.card h2 { font-size: 15px; margin: 0 0 6px; }
+.card p { margin: 0 0 10px; font-size: 13px; color: var(--ink-soft); }
+.card p b, .card li b { color: var(--ink); }
+.card ul, .card ol { margin: 0 0 10px; padding-left: 1.3em; font-size: 13px; color: var(--ink-soft); }
+.card li { margin: 2px 0; }
+.links { display: grid; gap: 8px; }
+.links a { display: block; text-decoration: none; color: var(--accent-ink); background: var(--accent-soft); border-radius: 10px; padding: 10px 12px; font-size: 14px; font-weight: 700; }
+.links a small { display: block; font-weight: 400; color: var(--ink-soft); font-size: 11px; word-break: break-all; }
+.tpl { white-space: pre-wrap; font-family: inherit; font-size: 13px; background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 12px; margin: 0 0 8px; max-height: 260px; overflow: auto; }
+.ja { font-size: 12px; color: var(--ink-soft); margin: 0 0 8px; }
+.copy { font: inherit; font-size: 13px; font-weight: 700; border: none; border-radius: 10px; padding: 9px 14px; background: var(--accent); color: #fff; cursor: pointer; }
+.copy.done { background: var(--amber); }
+.rule { background: var(--amber-soft); color: var(--ink); border-radius: 12px; padding: 10px 12px; font-size: 12px; margin-bottom: 12px; }
+.rule b { color: var(--amber); }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th, td { border-bottom: 1px solid var(--line); padding: 8px 4px; text-align: left; vertical-align: top; }
+td.p { text-align: right; white-space: nowrap; font-weight: 700; }
+td small { display: block; color: var(--ink-soft); font-size: 11px; }
+.steps { list-style: none; padding: 0; margin: 0; counter-reset: s; }
+.steps > li { counter-increment: s; position: relative; padding: 0 0 0 34px; margin-bottom: 14px; }
+.steps > li::before { content: counter(s); position: absolute; left: 0; top: 0; width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.steps h3 { font-size: 14px; margin: 0 0 2px; }
+.steps p { margin: 0; }
+.steps ul { margin: 4px 0 0; }
+.who { display: inline-block; font-size: 11px; font-weight: 700; border-radius: 6px; padding: 0 6px; margin-right: 4px; background: var(--accent-soft); color: var(--accent-ink); }
+.who.me { background: var(--amber-soft); color: var(--amber); }
+.form { display: grid; gap: 8px; margin-bottom: 10px; }
+.form label { font-size: 12px; color: var(--ink-soft); display: grid; gap: 3px; }
+.form input { font: inherit; font-size: 14px; padding: 9px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); color: var(--ink); }
+.row { display: flex; gap: 8px; flex-wrap: wrap; }
+.btn2 { display: inline-block; font-size: 13px; font-weight: 700; border-radius: 10px; padding: 9px 14px; background: var(--accent-soft); color: var(--accent-ink); text-decoration: none; border: none; cursor: pointer; font-family: inherit; }
+</style>
+</head>
+<body>
+<main>
+  <div class="top">
+    <h1>現地のお店（Windsor）</h1>
+    <a class="back" href="sales.html">← 営業ページへ</a>
+  </div>
+  <p class="lead">Windsorのホームページがないお店に、友達がお店に行って見本を見せ、Claudeがサイトを作るやり方です。料金・進め方・お店で話すこと・お客さんに見せる紙をまとめています。</p>
+
+  <div class="rule"><b>大事なこと：</b>お店とのやり取りと、お金の受け取りは友達がやります。留学中の高校生は学校の外で働けないことが多いので、あなたが分け前をもらう前に、学校の留学担当に一度確認してください。AIで作っていることを聞かれたら、正直に答えます。</div>
+
+  <div class="tabs" id="tabs">
+    <button data-sec="price" aria-pressed="true">料金表</button>
+    <button data-sec="steps" aria-pressed="false">進め方</button>
+    <button data-sec="talk" aria-pressed="false">お店で話すこと</button>
+    <button data-sec="sheet" aria-pressed="false">見せる紙</button>
+  </div>
+
+  <!-- 料金表 -->
+  <section id="price" class="on">
+    <div class="card">
+      <h2>料金表（カナダドル）</h2>
+      <table>
+        <tr><th>内容</th><th style="text-align:right">料金</th></tr>
+        <tr><td>見本（そのお店用に作って見せる）</td><td class="p">無料</td></tr>
+        <tr><td>ホームページ（1ページ）<small>下の「入っているもの」全部</small></td><td class="p">400ドル<small>約4万円</small></td></tr>
+        <tr><td>最初の3軒だけの値段<small>そのかわり「実績として見せていいか」をお願いする</small></td><td class="p">250ドル</td></tr>
+        <tr><td>ページを足す<small>メニューだけのページ、予約のページなど</small></td><td class="p">1ページ100ドル</td></tr>
+        <tr><td>更新プラン（入らなくてもいい）<small>メニュー・値段・営業時間・写真の変更。月4回まで</small></td><td class="p">月25ドル</td></tr>
+        <tr><td>更新プランなしで直す</td><td class="p">1回20ドル</td></tr>
+        <tr><td>ドメイン代（サイトのアドレス）<small>お店の名前で取って、お店が払う</small></td><td class="p">年20ドルくらい</td></tr>
+      </table>
+      <p style="margin-top:10px">カナダで個人に頼むと1,500〜5,000ドルくらいかかることが多いので、かなり安めです。作るのはAI、サーバーは無料、ドメイン代はお店が払うので、こちらにかかるお金はほぼありません。</p>
+    </div>
+    <div class="card">
+      <h2>400ドルに入っているもの</h2>
+      <ul>
+        <li>スマホで見やすい1ページのサイト（英語）</li>
+        <li>メニューと値段</li>
+        <li>営業時間（「今開いています」が自動で出る）</li>
+        <li>地図と、道順を開くボタン</li>
+        <li>押すと電話がかかるボタン</li>
+        <li>お店の写真</li>
+        <li>Googleマップのお店のページにサイトをのせる手伝い</li>
+        <li>レジや窓に貼るQRコードの紙</li>
+        <li>公開する前の直し2回まで</li>
+        <li>サーバー代は0円（毎月の料金なし）</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>お金のもらい方と日にち</h2>
+      <ul>
+        <li><b>お金：</b>決まった時に半分、公開した時に残りの半分。e-Transferで<b>友達の口座</b>に送ってもらう</li>
+        <li><b>見本：</b>店名をもらってから1〜2日</li>
+        <li><b>本物のサイト：</b>メニューと写真がそろってから1週間くらい</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 進め方 -->
+  <section id="steps">
+    <div class="card">
+      <h2>だれが何をするか</h2>
+      <ul>
+        <li><span class="who">友達</span>お店に行って話す・お金を受け取る・お店の人とのやり取り</li>
+        <li><span class="who me">あなた</span>お店の名前や写真をこのチャットに送る・できたものを確かめる</li>
+        <li><span class="who">Claude</span>見本と本物のサイト・お店に見せる紙・英語の文面を作る</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>進め方</h2>
+      <ol class="steps">
+        <li><h3>準備（1回だけ）</h3>
+          <p>友達の名前（英語）とメールアドレスを決めて、「見せる紙」のタブに入れる。分け前をもらうなら、先に学校に確認する。</p></li>
+        <li><h3>お店を5軒選ぶ</h3>
+          <p>Googleマップで、次の4つに当てはまるお店を選んで、店名をこのチャットに送る。</p>
+          <ul>
+            <li>「ウェブサイト」のボタンがない</li>
+            <li>口コミが20件以上ある（ちゃんとお客さんが来ている）</li>
+            <li>InstagramかFacebookがある（写真が使える）</li>
+            <li>チェーン店ではない</li>
+          </ul></li>
+        <li><h3>見本を作る</h3>
+          <p>Claudeがお店ごとに、スマホで見せる見本を作る（1〜2日）。</p></li>
+        <li><h3>友達がお店に行く</h3>
+          <ul>
+            <li>飲食店なら、平日の放課後から17時前くらい。お昼と夜の忙しい時間と、週末はさける</li>
+            <li>「No Soliciting（営業おことわり）」の貼り紙があるお店には入らない</li>
+            <li>オーナーがいなければ、店員さんに来る時間を聞いて出直す</li>
+            <li>見本と「見せる紙」をスマホで見せる。話すことは「お店で話すこと」のタブ</li>
+            <li>決まらなくても、見せる紙（印刷したもの）を置いてくる</li>
+          </ul></li>
+        <li><h3>決まったら</h3>
+          <p>何をやるかと値段を書いた紙（英語）をClaudeが作る → 友達が半分を受け取る → メニュー・写真・営業時間・ロゴ（あれば）をもらう。メニューは紙や黒板をスマホで撮るだけでいい。</p></li>
+        <li><h3>作る</h3>
+          <p>もらったものをこのチャットに送る → Claudeが作ってリンクを渡す → お店に見てもらって直す（2回まで）。</p></li>
+        <li><h3>公開する</h3>
+          <p>お店の名前でドメインを取ってもらう（手順はClaudeが書く）→ 公開 → オーナーのスマホで、Googleマップのお店のページにサイトのアドレスを入れてもらう → QRコードの紙を渡す → 残りの半分を受け取る。</p></li>
+        <li><h3>そのあと</h3>
+          <p>更新プランをすすめる。喜んでもらえたら、Googleの口コミと、知り合いのお店の紹介をお願いする。</p></li>
+      </ol>
+    </div>
+    <div class="card">
+      <h2>やらないこと</h2>
+      <ul>
+        <li>お店の人のパスワードを聞く（Googleマップの登録は、オーナーが自分のスマホで操作する）</li>
+        <li>作っていない実績や、ない口コミを見せる</li>
+        <li>何度も行って、しつこく営業する（断られたらお礼を言って終わり）</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- お店で話すこと -->
+  <section id="talk">
+    <div class="rule"><b>コツ：</b>台本を全部覚えなくて大丈夫です。見本を見せるのが一番大事で、あとは自分の言葉でいいです。［Name］と［Shop］は自分の名前とお店の名前に変えて話します。</div>
+    <div class="card">
+      <h2>① 最初のひとこと</h2>
+      <pre class="tpl" id="t1">Hi! Is the owner around, by any chance?
+
+Hi, I'm [Name]. I'm a student here in Windsor, and I make websites for local shops. I noticed [Shop] doesn't have a website yet, so I made a quick preview of what yours could look like. Do you have a minute? I'd love to show you.</pre>
+      <p class="ja">こんにちは、オーナーさんはいますか？／〇〇です。Windsorの学生で、地元のお店のサイトを作っています。〇〇さんにはまだサイトがないみたいなので、どんな感じになるか見本を作ってきました。1分だけ見てもらえますか？</p>
+      <button class="copy" data-copy="t1">文面をコピー</button>
+    </div>
+    <div class="card">
+      <h2>② 見本を見せながら</h2>
+      <pre class="tpl" id="t2">Right now, when people find you on Google Maps, there's no website button. With a site like this, they can see your menu, your hours and your photos, call you with one tap, or get directions, right from their phone.</pre>
+      <p class="ja">今はGoogleマップでお店を見つけても、ウェブサイトのボタンがありません。こういうサイトがあれば、メニューや営業時間や写真を見たり、ワンタップで電話したり、道順を見たりがスマホでできます。</p>
+      <button class="copy" data-copy="t2">文面をコピー</button>
+    </div>
+    <div class="card">
+      <h2>③ 値段を聞かれたら</h2>
+      <pre class="tpl" id="t3">It's $400, one time. But we're doing our first three shops for $250. Half when you say yes, and half when it's live. There's no monthly fee. The only other cost is your web address, which is about $20 a year.</pre>
+      <p class="ja">1回だけ400ドルです。でも最初の3軒は250ドルでやっています。決まった時に半分、公開した時に半分です。毎月の料金はありません。ほかにかかるのは、サイトのアドレス代の年20ドルくらいだけです。</p>
+      <button class="copy" data-copy="t3">文面をコピー</button>
+    </div>
+    <div class="card">
+      <h2>④ 「考えておく」と言われたら</h2>
+      <pre class="tpl" id="t4">Of course, take your time! I'll leave this sheet with you. My email is on it. Would it be okay if I stopped by again next week?</pre>
+      <p class="ja">もちろんです、ゆっくり考えてください！この紙を置いていきます。メールアドレスも書いてあります。来週もう一度寄ってもいいですか？</p>
+      <button class="copy" data-copy="t4">文面をコピー</button>
+    </div>
+    <div class="card">
+      <h2>⑤ 断られたら</h2>
+      <pre class="tpl" id="t5">No problem at all. Thanks for your time, and have a great day!</pre>
+      <p class="ja">全然大丈夫です。時間をとってくれてありがとうございました！</p>
+      <button class="copy" data-copy="t5">文面をコピー</button>
+    </div>
+    <div class="card">
+      <h2>⑥ よく聞かれること</h2>
+      <pre class="tpl" id="t6">"I already have a Facebook page."
+That's great, keep it! A website shows up better on Google, and it puts your menu and hours in one place. We'll link your Facebook from it, too.
+
+"Who updates it?"
+We do. It's $20 per change, or $25 a month if you change things often.
+
+"How long does it take?"
+About a week, once we have your menu and a few photos.
+
+"Is it really mine?"
+Yes. The web address is registered in your shop's name.
+
+"Do you use AI?"
+Yes. We use AI tools to design and build faster. That's how we keep the price low. We check everything ourselves before it goes live.</pre>
+      <p class="ja">「Facebookがあるからいい」→ そのままでOK。サイトの方がGoogleで見つけてもらいやすく、メニューと営業時間がまとまる。Facebookへのリンクも付ける／「だれが更新するの？」→ こちらでやる。1回20ドルか月25ドル／「どれくらいかかる？」→ メニューと写真をもらってから1週間くらい／「本当に自分のもの？」→ アドレスはお店の名前で取る／「AIを使ってる？」→ 使っている。だから安くできる。公開前に自分たちで全部確かめる</p>
+      <button class="copy" data-copy="t6">文面をコピー</button>
+    </div>
+  </section>
+
+  <!-- お客さんに見せる紙 -->
+  <section id="sheet">
+    <div class="card">
+      <h2>お客さんに見せる紙（英語）</h2>
+      <p>何をするのか・入っているもの・進め方・値段を1枚にまとめたページです。友達がスマホで見せるか、印刷してお店に置いてきます。</p>
+      <p>友達の名前と連絡先を入れてから開いてください（この端末にだけ保存されます）。電話番号は載せなくても大丈夫です。</p>
+      <div class="form">
+        <label>名前（英語。例：Alex Kim）<input id="fName" autocomplete="off"></label>
+        <label>メールアドレス<input id="fEmail" type="email" autocomplete="off"></label>
+        <label>電話番号（なくてもいい）<input id="fPhone" type="tel" autocomplete="off"></label>
+      </div>
+      <div class="row">
+        <a class="btn2" id="sheetOpen" href="local-en.html" target="_blank" rel="noopener">紙を開く</a>
+        <button class="copy" id="sheetCopy">リンクをコピー（友達に送る用）</button>
+      </div>
+      <p style="margin-top:10px">印刷するとき：紙を開いて、共有ボタン →「プリント」。学校で印刷するなら、プリントの画面でPDFにして送ります。</p>
+    </div>
+  </section>
+</main>
+
+<script>
+(function () {
+  "use strict";
+  document.getElementById("tabs").addEventListener("click", function (e) {
+    var btn = e.target.closest("button");
+    if (!btn) return;
+    document.querySelectorAll("#tabs button").forEach(function (b) { b.setAttribute("aria-pressed", b === btn ? "true" : "false"); });
+    document.querySelectorAll("section").forEach(function (s) { s.classList.toggle("on", s.id === btn.dataset.sec); });
+  });
+
+  function copyText(text, btn, label) {
+    function done() { btn.textContent = "コピーしました"; btn.classList.add("done"); setTimeout(function () { btn.textContent = label; btn.classList.remove("done"); }, 1500); }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, function () { window.prompt("コピーしてください", text); });
+    else window.prompt("コピーしてください", text);
+  }
+  document.querySelectorAll("[data-copy]").forEach(function (btn) {
+    btn.addEventListener("click", function () { copyText(document.getElementById(btn.dataset.copy).textContent, btn, "文面をコピー"); });
+  });
+
+  // 見せる紙：友達の名前と連絡先をリンクに入れる（この端末のブラウザにだけ保存）
+  var KEY = "local-sheet-contact";
+  var fields = { name: document.getElementById("fName"), email: document.getElementById("fEmail"), phone: document.getElementById("fPhone") };
+  try { var saved = JSON.parse(localStorage.getItem(KEY) || "{}"); Object.keys(fields).forEach(function (k) { fields[k].value = saved[k] || ""; }); } catch (e) {}
+  function sheetUrl() {
+    var q = Object.keys(fields).filter(function (k) { return fields[k].value.trim(); })
+      .map(function (k) { return k + "=" + encodeURIComponent(fields[k].value.trim()); }).join("&");
+    return new URL("local-en.html" + (q ? "?" + q : ""), location.href).href;
+  }
+  function update() {
+    document.getElementById("sheetOpen").href = sheetUrl();
+    try { var v = {}; Object.keys(fields).forEach(function (k) { v[k] = fields[k].value; }); localStorage.setItem(KEY, JSON.stringify(v)); } catch (e) {}
+  }
+  Object.keys(fields).forEach(function (k) { fields[k].addEventListener("input", update); });
+  update();
+  var sc = document.getElementById("sheetCopy");
+  sc.addEventListener("click", function () { copyText(sheetUrl(), sc, "リンクをコピー（友達に送る用）"); });
+})();
+</script>
+</body>
+</html>

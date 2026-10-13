@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Websites for Local Shops</title>
+<meta name="description" content="Simple websites for local shops in Windsor, Ontario: menu, hours, photos, a map and a call button, ready in about a week.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f4efe6; --card: #fbf8f2; --ink: #241915; --ink2: #6a564b; --rust: #b4502b; --line: rgba(36, 25, 21, .15);
+    --serif: 'Instrument Serif', 'Times New Roman', serif; --sans: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 400 16px/1.6 var(--sans); }
+  .sheet { max-width: 780px; margin: 0 auto; padding: 34px 20px 40px; }
+  .label { font: 500 11px/1.4 var(--sans); letter-spacing: .22em; text-transform: uppercase; color: var(--ink2); }
+  .top { display: flex; justify-content: space-between; gap: 12px; border-bottom: 1px solid var(--line); padding-bottom: 12px; }
+  h1 { font: 400 clamp(44px, 11.5vw, 76px)/.98 var(--serif); letter-spacing: -.02em; margin: 26px 0 16px; }
+  h1 em { font-style: italic; color: var(--rust); }
+  .sub { font-size: 17.5px; color: var(--ink2); margin: 0 0 24px; max-width: 34em; }
+  .free { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: center; background: var(--ink); color: var(--paper); padding: 16px 18px; margin: 0 0 40px; }
+  .free b { font: 400 26px/1 var(--serif); font-style: italic; color: #e9a17c; white-space: nowrap; }
+  .free span { font-size: 15px; line-height: 1.5; }
+  h2 { font: 400 34px/1.05 var(--serif); margin: 0 0 14px; }
+  h2 em { font-style: italic; }
+  .block { margin-bottom: 40px; }
+  .incl { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr; border-top: 1px solid var(--line); }
+  .incl li { padding: 10px 0 10px 22px; border-bottom: 1px solid var(--line); position: relative; font-size: 15.5px; }
+  .incl li::before { content: ""; position: absolute; left: 2px; top: 19px; width: 8px; height: 1px; background: var(--rust); }
+  .how { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; border-top: 1px solid var(--line); }
+  .how li { display: grid; grid-template-columns: 44px 1fr; gap: 6px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+  .how b { font: 400 22px/1.2 var(--serif); font-style: italic; color: var(--rust); }
+  .how h3 { font: 500 16px/1.4 var(--sans); margin: 0 0 2px; }
+  .how p { margin: 0; color: var(--ink2); font-size: 15px; }
+  .price { width: 100%; border-collapse: collapse; }
+  .price th, .price td { text-align: left; padding: 12px 0; border-bottom: 1px solid var(--line); vertical-align: baseline; font-weight: 400; }
+  .price th { font-size: 16px; padding-right: 12px; }
+  .price th small { display: block; color: var(--ink2); font-size: 13.5px; }
+  .price td { text-align: right; font: 400 24px/1.1 var(--serif); white-space: nowrap; }
+  .price td small { display: block; font: 400 12.5px/1.4 var(--sans); color: var(--ink2); }
+  .price tr.main th, .price tr.main td { border-top: 1px solid var(--ink); }
+  .offer { display: inline-block; margin-top: 4px; font: 500 12px/1.4 var(--sans); letter-spacing: .04em; color: var(--rust); }
+  .note { color: var(--ink2); font-size: 13px; margin: 10px 0 0; }
+  .contact { border: 1px solid var(--ink); padding: 20px; display: grid; gap: 4px; }
+  .contact .name { font: 400 32px/1.1 var(--serif); }
+  .contact a { color: inherit; text-decoration: none; font-size: 16.5px; }
+  .contact .empty { color: var(--ink2); font-style: italic; }
+  .actions { display: flex; gap: 10px; justify-content: center; margin: 28px 0 0; }
+  .actions button { font: 500 12px/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; background: transparent; color: var(--ink); border: 1px solid var(--ink); padding: 14px 22px; cursor: pointer; }
+  @media (min-width: 640px) {
+    .sheet { padding: 48px 40px 48px; }
+    .incl { grid-template-columns: 1fr 1fr; column-gap: 28px; }
+    .how { grid-template-columns: 1fr 1fr; column-gap: 28px; }
+    .two { display: grid; grid-template-columns: 1.15fr .85fr; gap: 36px; align-items: start; }
+  }
+  /* 印刷：レター1枚に収める */
+  @page { size: letter; margin: 12mm; }
+  @media print {
+    body { background: #fff; font-size: 12px; }
+    .sheet { max-width: none; padding: 0; }
+    h1 { font-size: 44px; margin: 12px 0 8px; }
+    .sub { font-size: 13.5px; margin-bottom: 12px; }
+    .free { margin-bottom: 18px; padding: 10px 14px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .free b { font-size: 20px; }
+    .free span { font-size: 12.5px; }
+    h2 { font-size: 24px; margin-bottom: 6px; }
+    .block { margin-bottom: 16px; break-inside: avoid; }
+    .incl { grid-template-columns: 1fr 1fr; column-gap: 20px; }
+    .incl li { padding: 5px 0 5px 18px; font-size: 12px; }
+    .incl li::before { top: 12px; }
+    .how { grid-template-columns: 1fr 1fr; column-gap: 20px; }
+    .how li { padding: 7px 0; grid-template-columns: 30px 1fr; }
+    .how h3 { font-size: 12.5px; }
+    .how p { font-size: 11.5px; }
+    .two { display: grid; grid-template-columns: 1.15fr .85fr; gap: 22px; align-items: start; }
+    .price th, .price td { padding: 6px 0; }
+    .price th { font-size: 12.5px; }
+    .price th small, .price td small { font-size: 10.5px; }
+    .price td { font-size: 17px; }
+    .contact { padding: 12px; }
+    .contact .name { font-size: 22px; }
+    .contact a { font-size: 12.5px; }
+    .actions { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+  <div class="top label"><span>Websites for local shops</span><span>Windsor, ON</span></div>
+
+  <h1>A website for your shop, <em>ready in a week.</em></h1>
+  <p class="sub">Your menu, hours, photos, a map and a call button. Easy to use on any phone, and linked from your Google Maps listing.</p>
+
+  <div class="free"><b>Free preview</b><span>We make a preview for your shop and show it to you before you pay anything.</span></div>
+
+  <div class="block">
+    <h2>What's <em>included</em></h2>
+    <ul class="incl">
+      <li>A one-page site that looks great on phones</li>
+      <li>Your menu and prices</li>
+      <li>Your hours, with "Open now" shown live</li>
+      <li>A map and a directions button</li>
+      <li>A tap-to-call button</li>
+      <li>Your photos</li>
+      <li>Help adding it to your Google Maps listing</li>
+      <li>A QR code sign for your counter or window</li>
+      <li>Two rounds of changes before launch</li>
+      <li>No monthly hosting fees</li>
+    </ul>
+  </div>
+
+  <div class="block">
+    <h2>How it <em>works</em></h2>
+    <ol class="how">
+      <li><b>01</b><span><h3>Free preview</h3><p>We make a preview for your shop and show it to you.</p></span></li>
+      <li><b>02</b><span><h3>Say yes</h3><p>Pay half to start. Send us your menu and a few photos.</p></span></li>
+      <li><b>03</b><span><h3>We build it</h3><p>In about a week. You get two rounds of changes.</p></span></li>
+      <li><b>04</b><span><h3>You're live</h3><p>On your own web address and on Google Maps. Then pay the other half.</p></span></li>
+    </ol>
+  </div>
+
+  <div class="two">
+    <div class="block">
+      <h2><em>Pricing</em></h2>
+      <table class="price">
+        <tr class="main"><th>Website, one page<span class="offer">Launch offer: $250 for our first three shops</span></th><td>$400<small>one time</small></td></tr>
+        <tr><th>Extra page<small>Like a full menu or a booking page</small></th><td>$100</td></tr>
+        <tr><th>Web address (domain)<small>Registered in your shop's name</small></th><td>~$20<small>per year</small></td></tr>
+        <tr><th>Updates (optional)<small>Menu, prices, hours and photos</small></th><td>$25<small>per month, or $20 per change</small></td></tr>
+      </table>
+      <p class="note">Prices in Canadian dollars.</p>
+    </div>
+    <div class="block">
+      <h2>Let's <em>talk</em></h2>
+      <div class="contact" id="contact">
+        <span class="name" data-f="name">Your Name</span>
+        <a data-f="email" href="#">you@example.com</a>
+        <a data-f="phone" href="#"></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions"><button type="button" onclick="window.print()">Print this page</button></div>
+</div>
+<script>
+  // 名前と連絡先は ?name=&email=&phone= で入れる（local.html の「見せる紙」から開く）
+  (function () {
+    var q = new URLSearchParams(location.search);
+    var name = q.get('name'), email = q.get('email'), phone = q.get('phone');
+    var n = document.querySelector('[data-f="name"]'), e = document.querySelector('[data-f="email"]'), p = document.querySelector('[data-f="phone"]');
+    if (name) n.textContent = name; else n.classList.add('empty');
+    if (email) { e.textContent = email; e.href = 'mailto:' + email; } else e.classList.add('empty');
+    if (phone) { p.textContent = phone; p.href = 'tel:' + phone.replace(/[^\d+]/g, ''); } else p.remove();
+  })();
+</script>
+</body>
+</html>
