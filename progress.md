@@ -123,3 +123,11 @@
   どれもノートパソコンで作業中、いらすとやの絵は使っていない）を `icon-options/kawaii/`（ローカルのみ。`draw.js` で SVG→PNG）に作って送った。
   おすすめは A 雲（名前の「ソラ」と合う・年齢や性別が出ない）。選ばれたら sales.html の「アイコン案のCかD」と X の説明を直す
 - 収集・マッチング側の状態は `affiliate-pipeline/progress.md` を見る
+
+## 2026-10-15 お店に見せるページ（previews/）
+- Balkan Style Bakery & coffee（4781 Wyandotte St E）のプレビュー `previews/balkan-style-bakery.html`。情報がほぼないのでメニュー・時間は仮（ページに明記）
+- `previews/showcase.html`：いろんなお店に見せる英語のページ。背景に見本サイトの動画、スマホの枠の中で見本が動く。料金は local-en.html と同じ
+- 見本（架空）：Golden Hour（カフェ）・Maple Studio（美容室）・Hollis（床屋）・Ferro（ピザ）。写真は WordPress Photo Directory（CC0、
+  API: wordpress.org/photos/wp-json/wp/v2/photos?search=…&_embed=1）と sorasora1120.github.io の Unsplash 写真。Openverse は1日の上限ですぐ止まる
+- 注意：clip-path で隠した要素は IntersectionObserver で見えない扱いになる → 親を見る
+- 一時ブランチ tmp-bak-out / tmp-vid-out が残っている（コンテナから消せない）

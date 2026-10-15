@@ -20,6 +20,9 @@
 - `local.html`（日本語）と `local-guide-en.html`（その英語版・友達用）と `local-en.html`（英語・お客さんに見せる1枚）：
   Windsor のサイトがないお店に、友達が見本を見せて売るやり方（料金表・進め方・台本）。お店とのやり取りとお金の受け取りは友達
   （ユーザーのビザのため。詳しくは progress.md）。料金や手順を変えるときは日本語版と英語版の両方を直す
+- `previews/`：お店に見せるページ。`showcase.html`（英語・動画つき。架空のお店の見本4つ `demo-*.html` を並べる。連絡先は local-en.html と同じ `?name=&email=&phone=`）と、
+  実在のお店のプレビュー（`balkan-style-bakery.html`）。`src/` を直して `python3 previews/gen_demos.py && python3 previews/build.py`（写真は `img/*.json` の data URI）。
+  動画 `video/*.mp4` は `tools/record-demos.js` で見本を録画して Actions の ffmpeg で mp4 にした（料金を変えたら showcase.html も直す）
 - `x_posts.js`：Xの「今日の投稿」の文面 `X_DAILY`（40案）と、付ける画像 `X_IMAGES`（同じ順番・同じ数、"" は画像なし）。
   2026-10-11に「つまんない・怪しい」、2026-10-12に「痛くね？」「絶対バズらなそう」→「競合の投稿をリサーチして同じようなものを書いて」と言われて書き直した。
   競合（Web制作・デザインの人気アカウント）は、いいね50以上の57件中55件が画像付きで「短い一言＋図解1枚」だったので、29案に図解画像を付けた。
