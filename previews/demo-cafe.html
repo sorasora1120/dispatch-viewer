@@ -197,8 +197,10 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 </div></footer>
 <script>
 const nav=document.getElementById('nav');
-const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}}),{threshold:.18});
-document.querySelectorAll('.rv,.mask').forEach(el=>io.observe(el));
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');e.target.querySelectorAll('.mask').forEach(m=>m.classList.add('on'));io.unobserve(e.target)}}),{threshold:.18});
+// clip-path で隠した写真は IntersectionObserver で見えないことになるので、親を見る
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+document.querySelectorAll('.mask').forEach(m=>io.observe(m.parentElement));
 const par=[...document.querySelectorAll('[data-par]')];
 const still=matchMedia('(prefers-reduced-motion: reduce)').matches;
 let tick=false;
