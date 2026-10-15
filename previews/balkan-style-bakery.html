@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Balkan Style Bakery &amp; Coffee — Windsor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Jost:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fbf6ee;--ink:#2b1d14;--mute:#6f5b4b;--crust:#b5652a;--red:#a8322d;--card:#fff;--line:#eadfce}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--ink);font:17px/1.6 Jost,system-ui,sans-serif}
+a{color:inherit}
+.preview{background:var(--ink);color:#f3e7d6;font-size:13px;text-align:center;padding:8px 16px}
+.wrap{max-width:960px;margin:0 auto;padding:0 20px}
+header{padding:18px 0;display:flex;justify-content:space-between;align-items:center}
+.logo{font:700 20px Fraunces,serif;letter-spacing:.2px}
+.logo span{color:var(--red)}
+nav a{margin-left:18px;text-decoration:none;color:var(--mute);font-size:15px}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:32px;align-items:center;padding:40px 0 56px}
+h1{font:700 clamp(40px,7vw,68px)/1.02 Fraunces,serif;letter-spacing:-.5px}
+h1 em{font-style:normal;color:var(--crust)}
+.lead{color:var(--mute);margin:18px 0 26px;max-width:30em}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;padding:13px 22px;border-radius:999px;text-decoration:none;font-weight:500}
+.btn.main{background:var(--red);color:#fff}
+.btn.sub{border:1.5px solid var(--ink)}
+.art{aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 50% 55%,#e9b06a 0 30%,#d08a43 31% 44%,#f4dfbf 45% 100%);position:relative;box-shadow:inset 0 0 0 14px #fff}
+.art::before,.art::after{content:"";position:absolute;border-radius:50%;border:3px dashed rgba(120,60,20,.35)}
+.art::before{inset:24%}.art::after{inset:33%}
+.tag{position:absolute;right:4%;bottom:10%;background:#fff;border-radius:14px;padding:10px 14px;font-size:14px;box-shadow:0 6px 20px rgba(60,30,10,.12)}
+.tag b{display:block;font:700 18px Fraunces,serif;color:var(--red)}
+section{padding:56px 0;border-top:1px solid var(--line)}
+h2{font:700 34px/1.1 Fraunces,serif;margin-bottom:8px}
+.note{color:var(--mute);font-size:14px;margin-bottom:26px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.item{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px}
+.item h3{font:700 20px Fraunces,serif}
+.item p{color:var(--mute);font-size:15px;margin-top:4px}
+.dot{width:44px;height:44px;border-radius:50%;margin-bottom:12px}
+.visit{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.box{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px}
+.box h3{font:700 22px Fraunces,serif;margin-bottom:10px}
+table{width:100%;border-collapse:collapse;font-size:15px}
+td{padding:6px 0;border-bottom:1px dashed var(--line)}
+td:last-child{text-align:right;color:var(--mute)}
+footer{padding:32px 0 48px;color:var(--mute);font-size:14px;border-top:1px solid var(--line)}
+@media (max-width:720px){
+  .hero,.visit{grid-template-columns:1fr}
+  .art{max-width:300px;margin:0 auto;width:100%}
+  .grid{grid-template-columns:1fr 1fr}
+  nav{display:none}
+}
+@media (max-width:440px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="preview">Free preview made for Balkan Style Bakery &amp; Coffee. Not live yet. Menu, hours and photos are placeholders until the owner confirms them.</div>
+
+<div class="wrap">
+  <header>
+    <div class="logo">Balkan Style <span>Bakery</span></div>
+    <nav><a href="#menu">Menu</a><a href="#visit">Visit</a></nav>
+  </header>
+
+  <div class="hero">
+    <div>
+      <h1>Fresh from the oven, <em>Balkan style.</em></h1>
+      <p class="lead">Burek, pastries, fresh bread and good coffee on Wyandotte Street East in Windsor. Stop in for breakfast, or grab a tray to take home.</p>
+      <div class="btns">
+        <a class="btn main" href="https://maps.google.com/maps?q=Balkan+Style+Bakery+%26+coffee,+4781+Wyandotte+St+E,+Windsor,+ON+N8Y+3Z6">Get directions</a>
+        <a class="btn sub" href="#menu">See the menu</a>
+      </div>
+    </div>
+    <div class="art" aria-hidden="true"><div class="tag"><b>Baked daily</b>4781 Wyandotte St E</div></div>
+  </div>
+
+  <section id="menu">
+    <h2>From the bakery</h2>
+    <p class="note">Sample menu. We'll swap in your real items, prices and photos.</p>
+    <div class="grid">
+      <div class="item"><div class="dot" style="background:#d9964d"></div><h3>Burek</h3><p>Flaky pastry with meat, cheese or spinach.</p></div>
+      <div class="item"><div class="dot" style="background:#e8c58e"></div><h3>Pita</h3><p>Rolled pies, cut fresh, by the slice or the tray.</p></div>
+      <div class="item"><div class="dot" style="background:#c97b3c"></div><h3>Fresh bread</h3><p>Loaves and somun, baked every morning.</p></div>
+      <div class="item"><div class="dot" style="background:#f0d7a8"></div><h3>Kifle</h3><p>Soft little rolls, plain or filled.</p></div>
+      <div class="item"><div class="dot" style="background:#a8322d"></div><h3>Sweets</h3><p>Krofne, baklava and cakes.</p></div>
+      <div class="item"><div class="dot" style="background:#5a3a26"></div><h3>Coffee</h3><p>Espresso, lattes and Balkan coffee.</p></div>
+    </div>
+  </section>
+
+  <section id="visit">
+    <h2>Come by</h2>
+    <p class="note">Hours are placeholders until confirmed.</p>
+    <div class="visit">
+      <div class="box">
+        <h3>Find us</h3>
+        <p>4781 Wyandotte St E<br>Windsor, ON N8Y 3Z6</p>
+        <p style="margin-top:16px"><a class="btn main" href="https://maps.google.com/maps?q=Balkan+Style+Bakery+%26+coffee,+4781+Wyandotte+St+E,+Windsor,+ON+N8Y+3Z6">Open in Google Maps</a></p>
+      </div>
+      <div class="box">
+        <h3>Hours</h3>
+        <table>
+          <tr><td>Monday – Friday</td><td>— : —</td></tr>
+          <tr><td>Saturday</td><td>— : —</td></tr>
+          <tr><td>Sunday</td><td>— : —</td></tr>
+        </table>
+        <p class="note" style="margin:14px 0 0">Phone number and catering or tray orders can go here too.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>Balkan Style Bakery &amp; Coffee · 4781 Wyandotte St E, Windsor, ON</footer>
+</div>
+</body>
+</html>
