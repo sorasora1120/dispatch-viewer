@@ -84,6 +84,28 @@ section{position:relative;z-index:2;padding:130px 0}
 .phone:hover .open::after{margin-left:6px}
 .fict{margin-top:30px;font-size:13px;color:var(--mute)}
 
+/* 3D ring */
+.spin{padding-bottom:40px;overflow:hidden}
+.stage{position:relative;height:clamp(420px,62vw,640px);perspective:1500px;perspective-origin:50% 30%;cursor:grab;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.stage:active{cursor:grabbing}
+.ring{position:absolute;left:50%;top:44%;width:0;height:0;transform-style:preserve-3d}
+.face{position:absolute;width:var(--w);height:calc(var(--w)*2.16);left:calc(var(--w)/-2);top:calc(var(--w)*-1.08);border-radius:calc(var(--w)*.12);overflow:hidden;background:#1a1816;
+  box-shadow:0 30px 60px -20px rgba(0,0,0,.8),inset 0 0 0 1px rgba(255,255,255,.1);backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.face.ph3{padding:calc(var(--w)*.03);background:linear-gradient(145deg,#3a3633,#151312)}
+.face video,.face img{width:100%;height:100%;object-fit:cover;object-position:top;display:block;border-radius:calc(var(--w)*.1)}
+.face.pic img{border-radius:0}
+.face.pic::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(0,0,0,.75))}
+.face.pic span{position:absolute;left:16px;right:16px;bottom:16px;z-index:2;font:400 calc(var(--w)*.13)/1 var(--serif)}
+.face.pic small{display:block;margin-top:6px;font:400 11px Jost,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:var(--acc)}
+.floor{position:absolute;left:50%;top:76%;width:140%;height:300px;margin-left:-70%;transform:rotateX(78deg);
+  background:radial-gradient(ellipse at center,rgba(232,135,91,.22),transparent 60%),repeating-linear-gradient(90deg,rgba(243,236,226,.07) 0 1px,transparent 1px 60px),repeating-linear-gradient(0deg,rgba(243,236,226,.07) 0 1px,transparent 1px 60px);
+  -webkit-mask-image:radial-gradient(ellipse at center,#000 20%,transparent 65%);mask-image:radial-gradient(ellipse at center,#000 20%,transparent 65%);pointer-events:none}
+.stage{--w:clamp(130px,17vw,210px)}
+
+/* hero 3D tilt */
+.hero h1{transform-style:preserve-3d;transition:transform .5s cubic-bezier(.2,.7,.1,1)}
+.hero .in{perspective:900px}
+
 /* features */
 .feats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line)}
 .feat{padding:34px 28px 38px 0;border-bottom:1px solid var(--line)}
@@ -182,6 +204,25 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   <span>Cafés<b>●</b></span><span>Bakeries<b>●</b></span><span>Barbers<b>●</b></span><span>Hair salons<b>●</b></span><span>Pizzerias<b>●</b></span><span>Restaurants<b>●</b></span><span>Auto shops<b>●</b></span><span>Nail studios<b>●</b></span>
 </div></div>
 
+<section class="spin" id="spin">
+  <div class="wrap">
+    <div class="head rv"><h2>Spin <em>it.</em></h2><p>Drag to turn. Every shop gets its own look, its own colours, its own feel.</p></div>
+  </div>
+  <div class="stage" id="stage">
+    <div class="ring" id="ring">
+      <div class="face ph3"><video muted loop playsinline autoplay preload="none" data-src="video/cafe.mp4" poster="{{cafe_hero}}"></video></div>
+      <div class="face pic"><img src="{{cafe_a}}" alt=""><span>Golden Hour<small>Café</small></span></div>
+      <div class="face ph3"><video muted loop playsinline autoplay preload="none" data-src="video/salon.mp4" poster="{{salon_hero}}"></video></div>
+      <div class="face pic"><img src="{{salon_a}}" alt=""><span>Maple Studio<small>Hair salon</small></span></div>
+      <div class="face ph3"><video muted loop playsinline autoplay preload="none" data-src="video/barber.mp4" poster="{{barber_hero}}"></video></div>
+      <div class="face pic"><img src="{{barber_a}}" alt=""><span>Hollis<small>Barbershop</small></span></div>
+      <div class="face ph3"><video muted loop playsinline autoplay preload="none" data-src="video/pizza.mp4" poster="{{pizza_hero}}"></video></div>
+      <div class="face pic"><img src="{{pizza_b}}" alt=""><span>Ferro<small>Pizza bar</small></span></div>
+    </div>
+    <div class="floor"></div>
+  </div>
+</section>
+
 <section id="work">
   <div class="wrap">
     <div class="head rv">
@@ -277,6 +318,28 @@ const g=document.getElementById('glow');addEventListener('pointermove',e=>{g.sty
 if(matchMedia('(hover:hover)').matches)document.querySelectorAll('.phone').forEach(p=>{
   p.addEventListener('pointermove',e=>{const r=p.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;p.style.transform=`rotateY(${x*14}deg) rotateX(${-y*10}deg) translateY(-6px)`});
   p.addEventListener('pointerleave',()=>p.style.transform='')});
+// 3Dの輪：自動で回り、指やマウスで回せる（はなすと少し惰性で回る）
+(function(){
+  const stage=document.getElementById('stage'),ring=document.getElementById('ring'),faces=[...ring.children];
+  const still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let rot=0,vel=still?0:.12,drag=false,lastX=0,lastT=0,visible=false;
+  function layout(){const w=faces[0].offsetWidth,r=Math.round(w*1.25/(2*Math.tan(Math.PI/faces.length)));
+    faces.forEach((f,i)=>f.style.transform=`rotateY(${i*360/faces.length}deg) translateZ(${r}px)`);ring.dataset.r=r}
+  layout();addEventListener('resize',layout);
+  function tick(){
+    if(!drag){vel+=((still?0:.12)-vel)*.02;rot+=vel}
+    ring.style.transform=`translateZ(${-ring.dataset.r}px) rotateX(-8deg) rotateY(${rot}deg)`;
+    if(visible)requestAnimationFrame(tick)}
+  new IntersectionObserver(es=>{const v=es[0].isIntersecting;
+    ring.querySelectorAll('video').forEach(el=>{if(v){if(!el.src)el.src=el.dataset.src;el.play().catch(()=>{})}else el.pause()});
+    if(v&&!visible){visible=true;requestAnimationFrame(tick)}else if(!v)visible=false}).observe(stage);
+  stage.addEventListener('pointerdown',e=>{drag=true;lastX=e.clientX;lastT=performance.now();vel=0;stage.setPointerCapture(e.pointerId)});
+  stage.addEventListener('pointermove',e=>{if(!drag)return;const dx=e.clientX-lastX,now=performance.now();rot+=dx*.35;vel=dx*.35/Math.max(16,now-lastT)*16;lastX=e.clientX;lastT=now});
+  const up=()=>{drag=false};stage.addEventListener('pointerup',up);stage.addEventListener('pointercancel',up);
+})();
+// 表紙の大きな文字がマウスに合わせて少し傾く
+if(matchMedia('(hover:hover)').matches){const h=document.querySelector('.hero h1');
+  addEventListener('pointermove',e=>{if(scrollY>innerHeight)return;const x=e.clientX/innerWidth-.5,y=e.clientY/innerHeight-.5;h.style.transform=`rotateY(${x*12}deg) rotateX(${-y*8}deg)`},{passive:true})}
 // 連絡先は ?name=&email=&phone=（local.html の「見せる紙」と同じ）
 (function(){const q=new URLSearchParams(location.search);
   const n=document.querySelector('[data-f="name"]'),e=document.querySelector('[data-f="email"]'),p=document.querySelector('[data-f="phone"]');
