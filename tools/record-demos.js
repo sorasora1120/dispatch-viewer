@@ -11,6 +11,8 @@ async function rec(name, vw, vh, ms, scale) {
   const p = await ctx.newPage();
   await p.goto(base + 'demo-' + name.replace(/-(m|d)$/, '') + '.html');
   await p.waitForLoadState('networkidle');
+  // 速くスクロールするので、写真が出る動きを短くする
+  await p.addStyleTag({ content: '.rv,.mask{transition-duration:.45s!important;transition-delay:0s!important}' });
   await p.waitForTimeout(2600); // 表紙の動きを見せる
   await p.evaluate(async (ms) => {
     const max = document.documentElement.scrollHeight - innerHeight;
@@ -33,7 +35,7 @@ async function rec(name, vw, vh, ms, scale) {
 
 (async () => {
   for (const n of ['cafe', 'salon', 'barber', 'pizza']) {
-    await rec(n + '-m', 390, 844, 13000, 1);
+    await rec(n + '-m', 390, 844, 16000, 1);
     await rec(n + '-d', 1280, 720, 4500, 1);
   }
 })();
