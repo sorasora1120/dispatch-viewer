@@ -1,0 +1,12 @@
+barbershop n=1 first={'url': 'https://pd.w.org/2024/05/27966437d76455679.49525659.jpg', 'source': 'wordpress', 'title': 'Photo detail', 'link': 'https://wordpress.org/photos/photo/27966437d7/'}
+barber n=8 first={'url': 'https://pd.w.org/2025/09/55568b7225ad4a0a2.57491579.jpeg', 'source': 'wordpress', 'title': 'Photo detail', 'link': 'https://wordpress.org/photos/photo/55568b7225/'}
+haircut n=0 first=None
+car repair n=0 first=None
+mechanic n=8 first={'url': 'https://pd.w.org/2026/09/9776a9aac6081e6b5.85828656.jpg', 'source': 'wordpress', 'title': 'Photo detail', 'link': 'https://wordpress.org/photos/photo/9776a9aac6/'}
+garage n=8 first={'url': 'https://pd.w.org/2026/09/4536aaaf0ff4d5b89.26535966.jpeg', 'source': 'wordpress', 'title': 'Photo detail', 'link': 'https://wordpress.org/photos/photo/4536aaaf0f/'}
+tires n=8 first={'url': 'https://pd.w.org/2026/08/1536a73818d9734a8.65610712.jpeg', 'source': 'wordpress', 'title': 'Photo detail', 'link': 'https://wordpress.org/photos/photo/1536a73818/'}
+pizza n=8 first={'url': 'https://pd.w.org/2026/10/4526ac74e74675a65.09215671.jpeg', 'source': 'wordpress', 'title': 'Photo detail', 'link': 'https://wordpress.org/photos/photo/4526ac74e7/'}
+pizza oven n=2 first={'url': 'https://pd.w.org/2026/01/33769766874eeba12.57734723-rotated.jpeg', 'source': 'wordpress', 'title': 'Photo detail', 'link': 'https://wordpress.org/photos/photo/3376976687/'}
+restaurant n=8 first={'url': 'https://pd.w.org/2026/10/9836ac78c3421bcd1.59556451.jpeg', 'source': 'wordpress', 'title': 'Photo detail', 'link': 'https://wordpress.org/photos/photo/9836ac78c3/'}
+pasta n=8 first={'url': 'https://pd.w.org/2026/08/2096a899798b948b0.55197780.jpeg', 'source': 'wordpress', 'title': 'Photo detail', 'link': 'https://wordpress.org/photos/photo/2096a89979/'}
+chef n=3 first={'url': 'https://pd.w.org/2026/04/13169d862dad03644.32959413.jpg', 'source': 'wordpress', 'title': 'Photo detail', 'link': 'https://wordpress.org/photos/photo/13169d862d/'}
