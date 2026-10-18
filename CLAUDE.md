@@ -26,6 +26,10 @@
 - `previews/`：お店に見せるページ。`showcase.html`（2026-10-18〜 sorasora1120.github.io/en.html に移る転送ページ。前にお店へ送ったリンクのために残す）、架空のお店の見本4つ `demo-*.html`、
   実在のお店のプレビュー（`balkan-style-bakery.html`、`dar-scarlett.html`＝ドレスのブティック。お店に送るのは sorasora1120.github.io/p/ にコピーした方）。`src/` を直して `python3 previews/gen_demos.py && python3 previews/build.py`（写真は `img/*.json` の data URI）。
   動画 `video/*.mp4` は `tools/record-demos.js` で見本を録画して Actions の ffmpeg で mp4 にした（料金を変えたら showcase.html も直す）
+- **ページを重くしない（2026-10-18「めっちゃラグい」）**：data URI の画像を CSS 変数（`--img: url(data…)`）に入れて `var()` で使わない
+  （要素のスタイルが変わるたびに数百KBの文字列を読み直して、iPhone でカクつく）。画像は `<img>` か、クラス（`.bg-x{background-image:url(…)}`）で付ける。
+  スクロール中は transform と opacity だけを変え、filter・mix-blend-mode・backdrop-filter・border-radius のアニメーション・background-position のアニメーションは使わない。
+  位置は読み込み時と resize の時だけ測る
 - `x_posts.js`：Xの「今日の投稿」の文面 `X_DAILY`（40案）と、付ける画像 `X_IMAGES`（同じ順番・同じ数、"" は画像なし）。
   2026-10-11に「つまんない・怪しい」、2026-10-12に「痛くね？」「絶対バズらなそう」→「競合の投稿をリサーチして同じようなものを書いて」と言われて書き直した。
   競合（Web制作・デザインの人気アカウント）は、いいね50以上の57件中55件が画像付きで「短い一言＋図解1枚」だったので、29案に図解画像を付けた。

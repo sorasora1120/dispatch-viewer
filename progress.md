@@ -149,3 +149,7 @@
   金曜の「And can I take photo with you on Monday after school!」は既読のまま → 決める前に写真の話をしたうえ、意味が「一緒に写真を撮る」に読める
 - 「ページダサいからカッコよく」→ dar-scarlett を黒×スカーレットの雑誌風に作り直し（表紙は店名が左右に割れてアーチの写真が全画面に広がる・
   文が読むと光る・3Dのカバーフロー・仮の写真は赤のデュオトーンで統一）。古い showcase.html は en.html への転送にした（Marsleno が持っているリンク）
+- 同日深夜：「めっちゃラグい、あんまだし高級感ない」→ dar-scarlett をもう一度作り直し。アイボリー×黒の上品な雑誌風、写真は Unsplash（Unsplash License、
+  images.unsplash.com から ID で取得。赤いドレス・パーティー・小物・ブティックの棚）。重かった原因：data URI を CSS 変数に入れて var() で使い、
+  スクロール中に CSS 変数・filter・mix-blend-mode・border-radius を毎フレーム変えていた → <img> に直接・transform/opacity だけ・位置はキャッシュ
+- sorasora1120.github.io/en.html も同じ原因があったので直した（画像はクラスで付ける・床のアニメーションを止める・ヘッダーのぼかしをやめる・位置はキャッシュ）
