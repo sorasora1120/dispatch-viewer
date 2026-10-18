@@ -131,3 +131,10 @@
   API: wordpress.org/photos/wp-json/wp/v2/photos?search=…&_embed=1）と sorasora1120.github.io の Unsplash 写真。Openverse は1日の上限ですぐ止まる
 - 注意：clip-path で隠した要素は IntersectionObserver で見えない扱いになる → 親を見る
 - 一時ブランチ tmp-bak-out / tmp-vid-out が残っている（コンテナから消せない）
+
+## 2026-10-18 営業マニュアル（manual.html）
+- 「ちゃんと行動経済学に通してマニュアル考えて、カッコよくして」→ `manual.html`（黒・明朝＋Instrument Serif、表紙はスクロールで開くカードの山）
+- 中身：お店での90秒の流れ／STEP 00 準備〜10 納品（英語のセリフはCOPYボタン、日本語の意味、なぜ効くか）／切り返し8つ（タップで裏返る3Dのカード）／
+  フォローの3通（Day 1・5・14で終わり）／やらないこと（ウソの期限・残り枠・作った数字・2回断られたら引く・学生を隠さない）／今日の記録（入った・話せた・見せた・YES。localStorage、日付が変わると0）／12のしくみ
+- 注意：表示用の `.on` と、カードを裏返す印がぶつかって全部裏返っていた → 裏返す方は `.flipped`
+- local.html と sales.html からリンク。英語版（友達用）はまだない
