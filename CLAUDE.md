@@ -24,7 +24,7 @@
   行動経済学のしくみ（返報性・保有効果・損失回避・アンカリング・ゼロリスクなど）は「決めやすくする」ためだけに使い、ウソの期限・残り枠・数字は書かない。
   料金は local.html・local-en.html・sorasora1120.github.io/en.html と同じ。「最初の3店は$250」は3店が埋まったら全部から消す
 - `previews/`：お店に見せるページ。`showcase.html`（英語・動画つき。架空のお店の見本4つ `demo-*.html` を並べる。連絡先は local-en.html と同じ `?name=&email=&phone=`）と、
-  実在のお店のプレビュー（`balkan-style-bakery.html`）。`src/` を直して `python3 previews/gen_demos.py && python3 previews/build.py`（写真は `img/*.json` の data URI）。
+  実在のお店のプレビュー（`balkan-style-bakery.html`、`dar-scarlett.html`＝ドレスのブティック。お店に送るのは sorasora1120.github.io/p/ にコピーした方）。`src/` を直して `python3 previews/gen_demos.py && python3 previews/build.py`（写真は `img/*.json` の data URI）。
   動画 `video/*.mp4` は `tools/record-demos.js` で見本を録画して Actions の ffmpeg で mp4 にした（料金を変えたら showcase.html も直す）
 - `x_posts.js`：Xの「今日の投稿」の文面 `X_DAILY`（40案）と、付ける画像 `X_IMAGES`（同じ順番・同じ数、"" は画像なし）。
   2026-10-11に「つまんない・怪しい」、2026-10-12に「痛くね？」「絶対バズらなそう」→「競合の投稿をリサーチして同じようなものを書いて」と言われて書き直した。
