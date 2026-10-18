@@ -144,3 +144,8 @@
   → 先にプレビューを作って、YES/NOで答えられる一言で送り直す（返報性・保有効果）。返事がなければ5日後に1回、それでもなければ店に行く
 - `previews/src/dar-scarlett.html`（ドレスのブティック。住所・時間・電話・Instagramは仮、写真は CC0 の仮）。お店に送るURLは
   https://sorasora1120.github.io/p/dar-scarlett.html （ビルドしたものをコピー）
+
+- 同日夜：Marsleno の返事は「Ok let me run that with my partner」（まだ決まっていない）。こちらが送った最初のリンクは末尾が「showcase.htm」で切れて404だった。
+  金曜の「And can I take photo with you on Monday after school!」は既読のまま → 決める前に写真の話をしたうえ、意味が「一緒に写真を撮る」に読める
+- 「ページダサいからカッコよく」→ dar-scarlett を黒×スカーレットの雑誌風に作り直し（表紙は店名が左右に割れてアーチの写真が全画面に広がる・
+  文が読むと光る・3Dのカバーフロー・仮の写真は赤のデュオトーンで統一）。古い showcase.html は en.html への転送にした（Marsleno が持っているリンク）
