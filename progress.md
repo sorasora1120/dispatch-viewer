@@ -153,3 +153,8 @@
   images.unsplash.com から ID で取得。赤いドレス・パーティー・小物・ブティックの棚）。重かった原因：data URI を CSS 変数に入れて var() で使い、
   スクロール中に CSS 変数・filter・mix-blend-mode・border-radius を毎フレーム変えていた → <img> に直接・transform/opacity だけ・位置はキャッシュ
 - sorasora1120.github.io/en.html も同じ原因があったので直した（画像はクラスで付ける・床のアニメーションを止める・ヘッダーのぼかしをやめる・位置はキャッシュ）
+- 2026-10-19「もっと高級感と3dほしい」→ dar-scarlett を黒×金×スカーレットで作り直し。名前が出て黒い幕が上下に開く → イブニングドレス10枚が3Dの輪で回る
+  （指で回せる・床に映る）→ スクロールで奥へ歩いていくコレクション（Evening / Party / Prom / Day dresses、金の粒が流れる）→ 小物は3Dの扇形のカード（タップ・スワイプ）
+  → 試着室は赤いベルベットのカーテンがスクロールで開く → タップで裏返るショップカード（裏は営業時間の仮）。写真は Pexels（ドレス）と Unsplash（小物・店内）、
+  カーテンは `previews/velvet.py` で描いた絵。動きは transform と opacity だけ、画面の外ではアニメーションを止める。
+  Playwright の WebKit（Linux）では3Dの奥行きが出ない（`perspective` プロパティが効かない。小さいテストで確認）ので、見た目の確認は Chromium で
