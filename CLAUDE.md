@@ -56,6 +56,8 @@
   `job_scraper/src/worker_matcher.py` の `design_kind` / `is_design_job` と揃える（2026-10-12〜、チラシ・名刺・ロゴ・バナー・パッケージも拾う。同じ日の夜から取扱説明書・封筒・年賀状・のぼりなどの印刷物も。イラストは「無理かも」とのことで拾わない）。`SOFT_EXCLUDE_KEYWORDS`（題名に「コーディング」
   「LPデザイン」があれば外さない除外語）と `isExcluded` は `job_scraper/src/worker_matcher.py` と揃える
 - 利益は手数料込みで計算（手数料 = 予算 − 見積 − マージン）。CrowdWorks の手数料は 10万円以下 20%・10〜20万円 10%・20万円超 5%
+- 2026-10-20〜 最初の1件が決まるまでは作るのが Claude（affiliate-pipeline の `config.FIRST_JOB_MODE`）。その行はワーカー提示額が0で、
+  ワーカー向けメッセージが「作るのは Claude」で始まる（`isSelfBuild`）。見積は利益から `grossFromNet` で戻して出す
 
 ## 守ること（変えない）
 - 提案の自動送信・X の DM 自動送信はしない（人間がコピペで送る）

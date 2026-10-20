@@ -405,7 +405,7 @@ footer {
     </button>
     <button class="main-tab" data-tab="applied" aria-pressed="false">
       <div class="mt-title">② 採用待ち</div>
-      <div class="mt-sub">採用されたらワーカーへ</div>
+      <div class="mt-sub">採用されたら作る人へ</div>
       <div class="mt-count" id="count-applied">0</div>
     </button>
     <button class="main-tab" data-tab="done" aria-pressed="false">
@@ -844,6 +844,16 @@ function yenNum(v) {
   const n = Number(String(v || "").replace(/[^0-9.-]/g, ""));
   return isNaN(n) ? 0 : n;
 }
+// 2026-10-20〜、最初の1件が決まるまでは作るのが Claude（ワーカー代0）。affiliate-pipeline の config.FIRST_JOB_MODE
+function isSelfBuild(item) {
+  return yenNum(item.quote) === 0 && String(item.workerMsg || "").startsWith("作るのは Claude");
+}
+// 利益（＝見積−手数料）から見積を戻す。CrowdWorks の手数料は10万円まで20%・20万円まで10%・それより上5%
+function grossFromNet(net) {
+  if (net <= 80000) return Math.round(net / 0.8);
+  if (net <= 170000) return Math.round(100000 + (net - 80000) / 0.9);
+  return Math.round(200000 + (net - 170000) / 0.95);
+}
 function figuresHtml(item) {
   if (item.status === "pending") {
     return `<div class="figures"><span class="f-label">予算</span><span class="f-main num">${esc(fmtBudget(item))}</span></div>`;
@@ -866,6 +876,16 @@ function figuresHtml(item) {
   // 受注者側の手数料（予算 − 提示額 − 利益）。2026-10-07から利益は手数料を
   // 引いた後の額で計算しているので、手取りの内訳が分かるように表示する。
   const budget = budgetYen(item);
+  if (isSelfBuild(item)) {
+    const net = yenNum(item.margin), gross = grossFromNet(net);
+    return `<div class="figures">
+    ${budgetHtml}
+    <span><span class="f-label">${isEstimate ? "目安の見積" : "見積"}</span><span class="f-main num">¥${esc(gross.toLocaleString())}</span></span>
+    <span><span class="f-label">手数料</span><span class="f-main num">−¥${esc((gross - net).toLocaleString())}</span></span>
+    <span><span class="f-label">作る</span><span class="f-main">Claude</span></span>
+    <span><span class="f-label">${isEstimate ? "目安利益" : "利益目安"}</span><span class="f-main num margin-pos">+¥${esc(net.toLocaleString())}</span></span>
+  </div>`;
+  }
   const fee = !isEstimate && budget !== null ? budget - yenNum(item.quote) - yenNum(item.margin) : 0;
   const feeHtml = fee > 0
     ? `<span><span class="f-label">手数料</span><span class="f-main num">−¥${esc(fee.toLocaleString())}</span></span>`
@@ -1006,7 +1026,7 @@ function cardHtml(item, idx) {
   if (stage === "applied") stageBadge = '<span class="badge status-applied">📮 採用待ち</span>';
   else if (stage === "replied") stageBadge = '<span class="badge status-replied">💬 返信あり・やり取り中</span>';
   else if (stage === "hired") stageBadge = '<span class="badge status-hired">🎯 採用済み・発注待ち</span>';
-  else if (stage === "ordered") stageBadge = '<span class="badge status-ordered">✓ 発注済み</span>';
+  else if (stage === "ordered") stageBadge = isSelfBuild(item) ? '<span class="badge status-ordered">✓ 制作中（Claude）</span>' : '<span class="badge status-ordered">✓ 発注済み</span>';
 
   let panels;
   if (isPending) {
@@ -1039,10 +1059,10 @@ function cardHtml(item, idx) {
     <div class="panels open" id="panels-${idx}">
       <div class="panel">
         <div class="panel-head">
-          <span class="panel-label">ワーカーへ（発注メッセージ）</span>
+          <span class="panel-label">${isSelfBuild(item) ? "作るのは Claude（採用されたらやること）" : "ワーカーへ（発注メッセージ）"}</span>
         </div>
         <pre class="panel-text worker-msg" id="worker-${idx}">${esc(item.workerMsg)}</pre>
-        <button class="copy-apply-btn" data-copy-and-order="${idx}">③ コピーして発注済みにする</button>
+        <button class="copy-apply-btn" data-copy-and-order="${idx}">${isSelfBuild(item) ? "③ Claude に送ったら押す（制作中にする）" : "③ コピーして発注済みにする"}</button>
         <a class="reply-btn" href="sales.html#order" style="text-decoration:none;display:inline-block;margin-top:8px">📦 受注してからの流れ（テンプレ）</a>
       </div>
     </div>`;
@@ -1056,7 +1076,7 @@ function cardHtml(item, idx) {
     <div class="panels" id="panels-${idx}">
       <div class="panel">
         <div class="panel-head">
-          <span class="panel-label">ワーカーへ送った内容</span>
+          <span class="panel-label">${isSelfBuild(item) ? "メモ（作るのは Claude）" : "ワーカーへ送った内容"}</span>
           <button class="copy-btn" data-copy="worker-${idx}">コピー</button>
         </div>
         <pre class="panel-text worker-msg" id="worker-${idx}">${esc(item.workerMsg)}</pre>
