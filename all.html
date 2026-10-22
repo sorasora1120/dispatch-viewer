@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#14110f">
+<title>作ったもの一覧</title>
+<style>
+/* 作ったWebとアプリの一覧（2026-10-22、「作ったWEBとかアプリ系全部見せて」）。写真は all/*.jpg（スマホの大きさで撮った画面）。
+   実在のお店に送ったプレビュー（sorasora1120.github.io/p/ など）は、お店のOKなしに一覧に載せない決まりなので入れていない */
+:root{--bg:#f4efe8;--card:#fffdf9;--ink:#191512;--mute:#6f675f;--line:rgba(25,21,18,.1);--acc:#b3122d}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.6 -apple-system,"Hiragino Sans","Noto Sans JP",system-ui,sans-serif;-webkit-text-size-adjust:100%}
+a{color:inherit;text-decoration:none}
+header{background:#14110f;color:#f4efe8;padding:26px 18px 22px;padding-top:calc(26px + env(safe-area-inset-top))}
+header h1{font-size:24px;letter-spacing:.02em}
+header p{color:#bdb3a8;font-size:13px;margin-top:4px}
+.jump{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}
+.jump a{font-size:12.5px;padding:5px 10px;border-radius:999px;border:1px solid rgba(244,239,232,.25)}
+main{max-width:980px;margin:0 auto;padding:6px 14px 60px}
+h2{font-size:17px;margin:26px 2px 4px;display:flex;align-items:baseline;gap:8px}
+h2 small{font-size:12.5px;font-weight:400;color:var(--mute)}
+.lead{color:var(--mute);font-size:13px;margin:0 2px 12px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media (min-width:700px){.grid{grid-template-columns:repeat(4,1fr)}}
+.card{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.shot{display:block;aspect-ratio:9/13;background:#ddd5ca;overflow:hidden;border-bottom:1px solid var(--line)}
+.shot img{display:block;width:100%;height:100%;object-fit:cover;object-position:top}
+.body{padding:9px 10px 11px;display:flex;flex-direction:column;gap:3px;flex:1}
+.body h3{font-size:14.5px;line-height:1.35}
+.body p{font-size:12.5px;color:var(--mute);line-height:1.45;flex:1}
+.links{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.links a{font-size:12px;padding:4px 9px;border-radius:8px;border:1px solid var(--line);background:#fff}
+.links a.open{background:#14110f;color:#fff;border-color:#14110f;font-weight:600}
+.note{font-size:12.5px;color:var(--mute);margin:26px 2px 0}
+</style>
+</head>
+<body>
+<header>
+  <h1>作ったもの一覧</h1>
+  <p>Webサイト・見本・道具・アプリ。写真を押すと開きます（学校のWi-Fiでも開けるリンク）</p>
+  <div class="jump"><a href="#show">お客さんに見せる</a><a href="#tools">自分用の道具</a><a href="#apps">アプリ</a><a href="#old">前に作ったもの</a></div>
+</header>
+<main id="main"></main>
+
+<script>
+// 開いたリンクより新しい版があれば、自動でそちらへ移る（index.html の goToLatestVersion と同じ。最新のSHAはスプレッドシートの「設定」タブ B1）
+(function () {
+  const m = location.pathname.match(/^\/sorasora1120\/dispatch-viewer\/([0-9a-f]{40})\//);
+  if (location.hostname !== "rawcdn.githack.com" || !m) return;
+  window.google = { visualization: { Query: { setResponse: data => {
+    const f = JSON.stringify(data || {}).match(/\b[0-9a-f]{40}\b/);
+    if (f && f[0] !== m[1]) location.replace(location.href.replace(m[1], f[0]));
+  } } } };
+  const sc = document.createElement("script");
+  sc.src = "https://docs.google.com/spreadsheets/d/1i2BtQulkchFt2dXxt9o6qLhdC7CXlBpv91EziyCp3o0/gviz/tq?tqx=out:json&sheet=" +
+    encodeURIComponent("設定") + "&range=A1:C1&headers=0&_=" + Date.now();
+  document.head.appendChild(sc);
+})();
+
+// ポートフォリオ（sorasora1120.github.io）は学校でも開ける rawcdn のリンクにする。直したら SO_SHA を新しいコミットにする
+const SO_SHA = "1af26418de25eb1f0a8bc79b67c2f53ea6c0031f";
+const so = path => `https://rawcdn.githack.com/sorasora1120/sorasora1120.github.io/${SO_SHA}/${path}`;
+const io = path => `https://sorasora1120.github.io/${path}`;
+// [写真, 名前, ひと言, 開くリンク, 外で開く・お客さんに送るリンク]
+const SECTIONS = [
+  ["show", "お客さんに見せる", "お店の人・依頼者に見せるサイトと見本（見本はすべて架空のお店）", [
+    ["en", "英語の営業サイト（3D）", "Windsor のお店に見せる。3Dのスマホ・見本・料金・問い合わせ", so("en.html"), io("en.html")],
+    ["portfolio", "ポートフォリオ（日本語）", "クラウドワークスの提案文からリンクしているページ", so("index.html"), io("")],
+    ["design", "デザインの見本", "チラシ・名刺・ロゴ・バナー・パッケージ", so("design.html"), io("design.html")],
+    ["salon", "美容室の見本サイト", "日本語・架空のお店", so("salon.html"), io("salon.html")],
+    ["cafe", "カフェの見本サイト（英語）", "Windsor Urban Café・架空のお店", so("cafe.html"), io("cafe.html")],
+    ["accounting", "会計事務所の見本サイト", "日本語・架空の事務所", so("accounting.html"), io("accounting.html")],
+    ["demo-cafe", "英語の見本：カフェ", "Windsor のお店に見せる見本", "previews/demo-cafe.html", io("samples/cafe.html")],
+    ["demo-salon", "英語の見本：美容室", "Windsor のお店に見せる見本", "previews/demo-salon.html", io("samples/salon.html")],
+    ["demo-barber", "英語の見本：床屋", "Windsor のお店に見せる見本", "previews/demo-barber.html", io("samples/barber.html")],
+    ["demo-pizza", "英語の見本：ピザ屋", "Windsor のお店に見せる見本", "previews/demo-pizza.html", io("samples/pizza.html")],
+    ["local-en", "お客さんに見せる1枚（英語）", "料金と進め方。印刷もできる", "local-en.html", ""],
+  ]],
+  ["tools", "自分用の道具", "応募・営業・お店まわりに使うページ", [
+    ["viewer", "案件ビューア", "クラウドワークスの送れる案件と提案文。開くと最新版へ", "index.html", ""],
+    ["sales", "営業ページ", "プロフィール・返信のテンプレ・受注したら", "sales.html", ""],
+    ["shops", "Windsor お店マップ", "サイトがない個人のお店544件。近い順・印つけ", "shops.html", ""],
+    ["local", "現地のお店の売り方", "料金表・進め方・お店で話すこと", "local.html", ""],
+    ["guide", "友達用の英語ガイド", "現地のお店の売り方（英語版）", "local-guide-en.html", ""],
+    ["manual", "営業マニュアル", "お店での90秒の流れ・切り返し（日本語＋英語）", "manual.html", ""],
+  ]],
+  ["apps", "アプリ", "", [
+    ["vocab", "VisuWord（英単語アプリ）", "イラストで覚える英単語1,332語・7レベル。オフラインでも使える。App Store に出す準備まで", "vocab-app/index.html", ""],
+  ]],
+  ["old", "前に作ったもの", "", [
+    ["works", "最初の制作実績ページ", "最初のころのサンプル（今のポートフォリオの前）", "works/index.html", ""],
+  ]],
+];
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+document.getElementById("main").innerHTML = SECTIONS.map(([id, title, lead, items]) =>
+  `<h2 id="${id}">${esc(title)} <small>${items.length}</small></h2>` + (lead ? `<p class="lead">${esc(lead)}</p>` : "") +
+  `<div class="grid">` + items.map(([img, name, desc, href, out]) => {
+    const ext = /^https?:/.test(href) ? ' target="_blank" rel="noopener"' : "";
+    return `<div class="card"><a class="shot" href="${esc(href)}"${ext}><img src="all/${img}.jpg" alt="" loading="lazy"></a>` +
+      `<div class="body"><h3>${esc(name)}</h3><p>${esc(desc)}</p><div class="links"><a class="open" href="${esc(href)}"${ext}>開く</a>` +
+      (out ? `<a href="${esc(out)}" target="_blank" rel="noopener">お客さんに送るリンク</a>` : "") + `</div></div></div>`;
+  }).join("") + `</div>`
+).join("") + `<p class="note">「お客さんに送るリンク」は github.io のリンクです（学校では開けませんが、お店の人には普通に開けます）。` +
+  `実在のお店のプレビュー（Dar Scarlett など）は、お店のOKをもらうまで一覧には載せていません。</p>`;
+</script>
+</body>
+</html>
