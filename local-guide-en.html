@@ -27,6 +27,7 @@ h1 { font-size: 19px; margin: 0; }
 .lead { color: var(--ink-soft); font-size: 14px; margin: 0 0 16px; }
 .tabs { display: flex; gap: 6px; margin-bottom: 14px; overflow-x: auto; }
 .tabs button { flex: 1; white-space: nowrap; font: inherit; font-size: 13px; font-weight: 700; padding: 9px 10px; border-radius: 10px; border: 1px solid var(--line); background: var(--paper-raised); color: var(--ink-soft); cursor: pointer; }
+.card code { word-break: break-all; font-size: 12px; }
 .tabs button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
 section { display: none; }
 section.on { display: block; }
@@ -74,6 +75,7 @@ td small { display: block; color: var(--ink-soft); font-size: 12px; font-weight:
     <button data-sec="price" aria-pressed="true">Prices</button>
     <button data-sec="steps" aria-pressed="false">Steps</button>
     <button data-sec="talk" aria-pressed="false">What to say</button>
+    <button data-sec="card" aria-pressed="false">Review cards</button>
     <button data-sec="sheet" aria-pressed="false">Customer sheet</button>
   </div>
 
@@ -89,6 +91,8 @@ td small { display: block; color: var(--ink-soft); font-size: 12px; font-weight:
         <tr><td>Extra page<small>A full menu page, a booking page, etc.</small></td><td class="p">$100 / page</td></tr>
         <tr><td>Update plan (optional)<small>Menu, prices, hours and photos. Up to 4 changes a month</small></td><td class="p">$25 / month</td></tr>
         <tr><td>One-off change, without the plan</td><td class="p">$20</td></tr>
+        <tr><td>Google review cards, 2<small>Tap a phone on it and the shop's Google review page opens. Free with a website</small></td><td class="p">$39</td></tr>
+        <tr><td>Extra review card</td><td class="p">$15</td></tr>
         <tr><td>Domain (web address)<small>Registered in the shop's name. The shop pays for it</small></td><td class="p">~$20 / year</td></tr>
       </table>
       <p style="margin-top:10px">Hiring a freelancer in Canada usually costs $1,500 to $5,000, so this is a low price. The AI does the building, hosting is free, and the shop pays for its own domain, so our costs are close to zero.</p>
@@ -104,6 +108,7 @@ td small { display: block; color: var(--ink-soft); font-size: 12px; font-weight:
         <li>The shop's photos</li>
         <li>Help adding the site to the shop's Google Maps listing</li>
         <li>A QR code sign for the counter or window</li>
+        <li>Two Google review cards</li>
         <li>Two rounds of changes before launch</li>
         <li>No hosting fees, no monthly fee</li>
       </ul>
@@ -222,6 +227,87 @@ Yes. We use AI tools to design and build faster. That's how we keep the price lo
   </section>
 
   <!-- Customer sheet -->
+  <!-- Review cards (2026-10-26) -->
+  <section id="card">
+    <div class="rule"><b>Sell this before the website:</b> it's only $39, so shops find it easy to say "let's try it". If they like it, talk about a website after that.</div>
+    <div class="card">
+      <h2>What is a review card?</h2>
+      <ul>
+        <li>A card that opens the shop's <b>Google review page</b> when a customer taps their phone on it. No searching, so it's easier to ask for reviews</li>
+        <li>Price: <b>2 cards for $39</b> (one for the counter, one for the tables), extra cards $15 each, two free with a website. No monthly fee</li>
+        <li>Payment: all of it when they say yes. By e-Transfer, <b>to you</b></li>
+        <li>Buying cards: search AliExpress for "NFC Google review card NTAG215 blank", 10 cards (about $2 each, 2 to 4 weeks to arrive). The chip should be NTAG213 or 215, and blank</li>
+        <li>For shops with a website, the card can open the website instead (we add Google review, Instagram and Facebook buttons and news to the site)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>The day before you visit</h2>
+      <ol class="steps">
+        <li><h3>Pick a shop</h3>
+          <p>On the <a href="shops.html">shop map</a>, look for shops with few Google reviews (under about 50) that still seem to get customers.</p></li>
+        <li><h3>Make the shop's review link</h3>
+          <p>Open Google's "Place ID Finder" (a map page on developers.google.com), type the shop's name and copy the Place ID. Paste it after
+          <code>https://search.google.com/local/writereview?placeid=</code></p></li>
+        <li><h3>Write it to a card</h3>
+          <p>Free app "NFC Tools" → Write → Add a record → URL → paste the link → Write → hold the card to the top edge of the iPhone.</p></li>
+        <li><h3>Check it</h3>
+          <p>Tap your own iPhone on it. If the shop's review page opens, you're done. <b>Don't lock it yet</b> (if they don't buy, you can rewrite it for another shop).</p></li>
+      </ol>
+    </div>
+    <div class="card">
+      <h2>1. Opening</h2>
+      <pre class="tpl" id="c1">Hi! Is the owner around, by any chance?
+
+Hi, I'm [Name], a student here in Windsor. I made something for [Shop]. Can I show you? It takes ten seconds.</pre>
+      <button class="copy" data-copy="c1">Copy</button>
+    </div>
+    <div class="card">
+      <h2>2. Have them tap it</h2>
+      <pre class="tpl" id="c2">Hold your phone here, near the top. ... That's your Google review page. Your customers just tap, and they can leave a review. No searching.
+
+More reviews help you show up on Google Maps, and new customers read them before they visit.</pre>
+      <button class="copy" data-copy="c2">Copy</button>
+    </div>
+    <div class="card">
+      <h2>3. The price</h2>
+      <pre class="tpl" id="c3">It's $39 for two cards, one for the counter and one for the tables. Extra cards are $15. No monthly fee.</pre>
+      <button class="copy" data-copy="c3">Copy</button>
+    </div>
+    <div class="card">
+      <h2>4. If they're not sure (leave one card)</h2>
+      <pre class="tpl" id="c4">Keep this one and try it for a week. I'll stop by next week. If it's working, it's $39 for this one and one more. If not, just give it back. No problem at all.</pre>
+      <button class="copy" data-copy="c4">Copy</button>
+    </div>
+    <div class="card">
+      <h2>5. Show them how to ask customers</h2>
+      <pre class="tpl" id="c5">Just say: "If you enjoyed it, we'd love a review. You can tap here."
+Please ask everyone, not only the happy customers. And don't offer a discount for a review. Google doesn't allow that.</pre>
+      <button class="copy" data-copy="c5">Copy</button>
+    </div>
+    <div class="card">
+      <h2>6. One or two weeks later (the website)</h2>
+      <pre class="tpl" id="c6">How are the cards working? ... By the way, when people find you on Google Maps, there's no website button yet. We make simple websites for local shops, too. Want me to make a free preview for you?</pre>
+      <button class="copy" data-copy="c6">Copy</button>
+    </div>
+    <div class="card">
+      <h2>When they say yes</h2>
+      <ul>
+        <li>Get the $39 (e-Transfer, to you)</li>
+        <li>Write the shop's link to the card you left and a second one, then <b>lock them</b> (NFC Tools → Other → Lock tag. It can't be rewritten after that, so nobody can change it as a prank)</li>
+        <li>Some phones can't use NFC, so we can also make a QR code sign if they want one</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>Things we don't do</h2>
+      <ul>
+        <li>"Leave a review and get a discount or a gift" (against Google's rules. The shop's reviews can be removed, or it can get a warning)</li>
+        <li>Tell them to hand the card only to happy customers (also against Google's rules)</li>
+        <li>Write reviews ourselves, or ask friends to</li>
+        <li>Ask for the shop's Google password</li>
+      </ul>
+    </div>
+  </section>
+
   <section id="sheet">
     <div class="card">
       <h2>The customer sheet</h2>

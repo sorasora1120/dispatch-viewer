@@ -27,6 +27,7 @@ h1 { font-size: 18px; margin: 0; }
 .lead { color: var(--ink-soft); font-size: 13px; margin: 0 0 16px; }
 .tabs { display: flex; gap: 6px; margin-bottom: 14px; overflow-x: auto; }
 .tabs button { flex: 1; white-space: nowrap; font: inherit; font-size: 13px; font-weight: 700; padding: 9px 10px; border-radius: 10px; border: 1px solid var(--line); background: var(--paper-raised); color: var(--ink-soft); cursor: pointer; }
+.card code { word-break: break-all; font-size: 12px; }
 .tabs button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
 section { display: none; }
 section.on { display: block; }
@@ -85,6 +86,7 @@ td small { display: block; color: var(--ink-soft); font-size: 11px; }
     <button data-sec="price" aria-pressed="true">料金表</button>
     <button data-sec="steps" aria-pressed="false">進め方</button>
     <button data-sec="talk" aria-pressed="false">お店で話すこと</button>
+    <button data-sec="card" aria-pressed="false">レビューカード</button>
     <button data-sec="sheet" aria-pressed="false">見せる紙</button>
   </div>
 
@@ -100,6 +102,8 @@ td small { display: block; color: var(--ink-soft); font-size: 11px; }
         <tr><td>ページを足す<small>メニューだけのページ、予約のページなど</small></td><td class="p">1ページ100ドル</td></tr>
         <tr><td>更新プラン（入らなくてもいい）<small>メニュー・値段・営業時間・写真の変更。月4回まで</small></td><td class="p">月25ドル</td></tr>
         <tr><td>更新プランなしで直す</td><td class="p">1回20ドル</td></tr>
+        <tr><td>Googleレビューカード 2枚<small>かざすとお店のGoogleレビューの画面が開くカード。サイトを買ったお店は無料</small></td><td class="p">39ドル</td></tr>
+        <tr><td>レビューカードの追加</td><td class="p">1枚15ドル</td></tr>
         <tr><td>ドメイン代（サイトのアドレス）<small>お店の名前で取って、お店が払う</small></td><td class="p">年20ドルくらい</td></tr>
       </table>
       <p style="margin-top:10px">カナダで個人に頼むと1,500〜5,000ドルくらいかかることが多いので、かなり安めです。作るのはAI、サーバーは無料、ドメイン代はお店が払うので、こちらにかかるお金はほぼありません。</p>
@@ -115,6 +119,7 @@ td small { display: block; color: var(--ink-soft); font-size: 11px; }
         <li>お店の写真</li>
         <li>Googleマップのお店のページにサイトをのせる手伝い</li>
         <li>レジや窓に貼るQRコードの紙</li>
+        <li>Googleレビューカード 2枚</li>
         <li>公開する前の直し2回まで</li>
         <li>サーバー代は0円（毎月の料金なし）</li>
       </ul>
@@ -235,6 +240,93 @@ Yes. The web address is registered in your shop's name.
 Yes. We use AI tools to design and build faster. That's how we keep the price low. We check everything ourselves before it goes live.</pre>
       <p class="ja">「Facebookがあるからいい」→ そのままでOK。サイトの方がGoogleで見つけてもらいやすく、メニューと営業時間がまとまる。Facebookへのリンクも付ける／「だれが更新するの？」→ こちらでやる。1回20ドルか月25ドル／「どれくらいかかる？」→ メニューと写真をもらってから1週間くらい／「本当に自分のもの？」→ アドレスはお店の名前で取る／「AIを使ってる？」→ 使っている。だから安くできる。公開前に自分たちで全部確かめる</p>
       <button class="copy" data-copy="t6">文面をコピー</button>
+    </div>
+  </section>
+
+  <!-- レビューカード（2026-10-26〜） -->
+  <section id="card">
+    <div class="rule"><b>サイトより先に売るもの：</b>39ドルと安いので、お店が「試してみる」と言いやすいです。気に入ってもらえたら、そのあとサイトの話をします。</div>
+    <div class="card">
+      <h2>レビューカードって？</h2>
+      <ul>
+        <li>お客さんがスマホをかざすと、そのお店の<b>Googleレビューを書く画面</b>が開くカード。検索しなくていいので、レビューを頼みやすくなる</li>
+        <li>料金：<b>2枚39ドル</b>（レジ用とテーブル用）・追加1枚15ドル・サイトを買ったお店は2枚無料。毎月の料金なし</li>
+        <li>お金：決まった時に全部。e-Transferで<b>友達の口座</b>に送ってもらう</li>
+        <li>仕入れ：AliExpressで「NFC Google review card NTAG215 blank」を10枚（1枚2ドルくらい・届くまで2〜4週間）。チップはNTAG213か215、書き込み前（blank）のもの</li>
+        <li>サイトのお店には、カードの行き先をサイトにもできる（サイトにGoogleレビュー・Instagram・Facebookのボタンとお知らせを付ける）</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>行く前の日にやること</h2>
+      <ol class="steps">
+        <li><h3>お店を選ぶ</h3>
+          <p><a href="shops.html">お店マップ</a>で、Googleの口コミが少なめ（50件以下くらい）だけど、お客さんは来ていそうなお店。</p></li>
+        <li><h3>そのお店のレビューのリンクを作る</h3>
+          <p>Googleの「Place ID Finder」（developers.google.com の地図のページ）でお店の名前を入れて、Place ID をコピー →
+          <code>https://search.google.com/local/writereview?placeid=</code> のうしろに貼る。わからなければ、店名をこのチャットに送る。</p></li>
+        <li><h3>カードに書き込む</h3>
+          <p>無料アプリ「NFC Tools」→ 書く → レコードを追加 → URL → リンクを貼る → 書く → カードをiPhoneの上のふちに当てる。</p></li>
+        <li><h3>開くか確かめる</h3>
+          <p>自分のiPhoneを当てて、そのお店のレビュー画面が開けばOK。<b>まだロックしない</b>（買ってもらえなかったら、別のお店用に書き直せる）。</p></li>
+      </ol>
+    </div>
+    <div class="card">
+      <h2>① 最初のひとこと</h2>
+      <pre class="tpl" id="c1">Hi! Is the owner around, by any chance?
+
+Hi, I'm [Name], a student here in Windsor. I made something for [Shop]. Can I show you? It takes ten seconds.</pre>
+      <p class="ja">こんにちは、オーナーさんはいますか？／Windsorの学生の〇〇です。〇〇さん用に作ったものがあります。見てもらえますか？10秒で終わります。</p>
+      <button class="copy" data-copy="c1">文面をコピー</button>
+    </div>
+    <div class="card">
+      <h2>② かざしてもらう</h2>
+      <pre class="tpl" id="c2">Hold your phone here, near the top. ... That's your Google review page. Your customers just tap, and they can leave a review. No searching.
+
+More reviews help you show up on Google Maps, and new customers read them before they visit.</pre>
+      <p class="ja">スマホの上の方をここに当ててください。……これがお店のGoogleレビューの画面です。お客さんはタップするだけでレビューを書けます。検索しなくていいです。／レビューが増えるとGoogleマップで見つけてもらいやすくなるし、初めてのお客さんは来る前にレビューを読みます。</p>
+      <button class="copy" data-copy="c2">文面をコピー</button>
+    </div>
+    <div class="card">
+      <h2>③ 値段</h2>
+      <pre class="tpl" id="c3">It's $39 for two cards, one for the counter and one for the tables. Extra cards are $15. No monthly fee.</pre>
+      <p class="ja">2枚で39ドルです。レジに1枚、テーブルに1枚。追加は1枚15ドル。毎月の料金はありません。</p>
+      <button class="copy" data-copy="c3">文面をコピー</button>
+    </div>
+    <div class="card">
+      <h2>④ 迷っていたら（1枚置いていく）</h2>
+      <pre class="tpl" id="c4">Keep this one and try it for a week. I'll stop by next week. If it's working, it's $39 for this one and one more. If not, just give it back. No problem at all.</pre>
+      <p class="ja">これは置いていくので、1週間使ってみてください。来週また寄ります。よかったら、これともう1枚で39ドルです。いらなければ返してもらえばOKです。</p>
+      <button class="copy" data-copy="c4">文面をコピー</button>
+    </div>
+    <div class="card">
+      <h2>⑤ お客さんへの頼み方を教える</h2>
+      <pre class="tpl" id="c5">Just say: "If you enjoyed it, we'd love a review. You can tap here."
+Please ask everyone, not only the happy customers. And don't offer a discount for a review. Google doesn't allow that.</pre>
+      <p class="ja">「よかったらレビューをお願いします。ここをタップするだけです」と言うだけ。満足してそうな人だけじゃなく、みんなに頼んでください。レビューと引きかえの割引はダメです。Googleのルールで禁止されています。</p>
+      <button class="copy" data-copy="c5">文面をコピー</button>
+    </div>
+    <div class="card">
+      <h2>⑥ 1〜2週間後（サイトの話）</h2>
+      <pre class="tpl" id="c6">How are the cards working? ... By the way, when people find you on Google Maps, there's no website button yet. We make simple websites for local shops, too. Want me to make a free preview for you?</pre>
+      <p class="ja">カードどうですか？……ところで、Googleマップでお店を見つけても、まだウェブサイトのボタンがないんです。地元のお店のサイトも作っています。無料で見本を作りましょうか？</p>
+      <button class="copy" data-copy="c6">文面をコピー</button>
+    </div>
+    <div class="card">
+      <h2>決まったら</h2>
+      <ul>
+        <li>39ドルを受け取る（e-Transfer、友達の口座）</li>
+        <li>置いてきたカードと2枚目にお店のリンクを書いて、<b>ロックする</b>（NFC Tools → その他 → タグをロック。もう書き直せない。だれかにいたずらで書き換えられないように）</li>
+        <li>NFCが使えないスマホもあるので、ほしければQRコードの紙もClaudeが作る</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>やらないこと</h2>
+      <ul>
+        <li>「レビューを書いたら割引・プレゼント」（Googleのルール違反。お店のレビューが消されたり、警告が出たりする）</li>
+        <li>満足した人にだけカードを出すように言う（これもGoogleのルール違反）</li>
+        <li>自分や友達でレビューを書く</li>
+        <li>お店のGoogleのパスワードを聞く</li>
+      </ul>
     </div>
   </section>
 
