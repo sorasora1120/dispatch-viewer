@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#1d1512">
+<title>Review Cards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* お店で見せるプレゼン（2026-10-26、「緊張しちゃうからプレゼン作って」）。
+   スライドが説明するので、見せる人はめくって短く話すだけ。「練習」で開くと下に台本（英語＋日本語）が出る。
+   料金は local.html・local-en.html・sorasora1120.github.io/en.html と同じ（変えたらここも直す。「最初の3店は$250」は3店が埋まったら消す）。
+   数字は料金だけ。レビューが何％増える、のような作った数字は書かない。動きは transform と opacity だけ */
+:root{--bg:#1d1512;--ink:#f6efe4;--sub:#c7b7a6;--dim:#8f7f71;--rust:#e08a5f;--gold:#d9b77a;--line:rgba(246,239,228,.14);
+  --paper:#f4efe6;--pink:#241915;--serif:'Instrument Serif','Times New Roman',serif;--sans:'Jost','Helvetica Neue',Arial,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.55 var(--sans);-webkit-text-size-adjust:100%;overflow:hidden;
+  -webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+em{font-style:italic;color:var(--rust)}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+
+/* ---------- 準備の画面（日本語＋英語） ---------- */
+#setup{position:fixed;inset:0;overflow-y:auto;background:var(--paper);color:var(--pink);-webkit-user-select:text;user-select:text;z-index:5}
+#setup .in{max-width:620px;margin:0 auto;padding:calc(26px + env(safe-area-inset-top)) 16px 50px}
+#setup .back{font-size:13px;color:#8a5a3f;text-decoration:none}
+#setup h1{font:400 34px/1.1 var(--serif);margin:12px 0 6px}
+#setup h1 em{color:#b4502b}
+#setup .lead{color:#6a564b;font-size:14.5px;margin-bottom:18px}
+#setup .box{background:#fbf8f2;border:1px solid rgba(36,25,21,.13);border-radius:16px;padding:16px;margin-bottom:14px}
+#setup h2{font:600 15px/1.4 var(--sans);margin-bottom:10px}
+#setup label{display:block;font-size:13px;color:#6a564b;margin:10px 0 4px}
+#setup label small{color:#9b8677}
+#setup input[type=text],#setup input[type=email],#setup input[type=tel]{width:100%;font:inherit;font-size:16px;padding:10px 12px;border-radius:10px;border:1px solid rgba(36,25,21,.2);background:#fff;color:var(--pink)}
+#setup .chk{display:flex;gap:10px;align-items:center;margin-top:12px;font-size:14px;color:var(--pink)}
+#setup .chk input{width:20px;height:20px}
+#setup .go{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:4px 0 14px}
+#setup .go button{padding:15px 10px;border-radius:14px;font-weight:600;font-size:15.5px;line-height:1.3}
+#setup .go small{display:block;font-weight:400;font-size:12px;opacity:.75}
+#setup .go .show{background:#241915;color:#f6efe4}
+#setup .go .prac{background:#fff;border:1.5px solid #241915}
+#setup ul{list-style:none}
+#setup li{position:relative;padding:7px 0 7px 22px;font-size:14px;border-top:1px solid rgba(36,25,21,.08)}
+#setup li:first-child{border-top:0}
+#setup li::before{content:"";position:absolute;left:3px;top:16px;width:8px;height:8px;border-radius:50%;background:#b4502b}
+#setup li b{color:#241915}
+#setup li small{display:block;color:#7b685c;font-size:12.5px}
+#setup .note{font-size:12.5px;color:#7b685c}
+
+/* ---------- スライド ---------- */
+#deck{position:fixed;inset:0;display:none}
+#deck.on{display:block}
+.slide{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  padding:calc(56px + env(safe-area-inset-top)) 22px calc(70px + env(safe-area-inset-bottom));
+  opacity:0;transform:translate3d(40px,0,0);transition:opacity .45s ease,transform .55s cubic-bezier(.2,.7,.2,1);pointer-events:none}
+.slide.on{opacity:1;transform:none;pointer-events:auto}
+.slide.prev{transform:translate3d(-40px,0,0)}
+.prac .slide{padding-bottom:calc(178px + env(safe-area-inset-bottom))}
+@media (max-width:759px),(max-aspect-ratio:1/1){.wide-only{display:none}}
+.wrap{width:100%;max-width:980px}
+.two{display:grid;grid-template-columns:1fr;gap:clamp(18px,4vh,40px);align-items:center}
+@media (min-width:760px) and (min-aspect-ratio:1/1){.two{grid-template-columns:1.05fr .95fr}}
+.kick{font:500 12px/1.4 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+h1,h2{font-family:var(--serif);font-weight:400;letter-spacing:-.015em}
+h1{font-size:clamp(44px,min(11vw,8.6vh),96px);line-height:.98}
+h2{font-size:clamp(36px,min(8.6vw,7vh),74px);line-height:1.02}
+.sub{font-size:clamp(17px,min(4.4vw,2.8vh),23px);color:var(--sub);margin-top:16px;max-width:30em;line-height:1.45}
+.small{font-size:13.5px;color:var(--dim);margin-top:14px}
+.rise>*{opacity:0;transform:translate3d(0,14px,0);transition:opacity .6s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+.on .rise>*{opacity:1;transform:none}
+.on .rise>*:nth-child(2){transition-delay:.12s}.on .rise>*:nth-child(3){transition-delay:.24s}
+.on .rise>*:nth-child(4){transition-delay:.36s}.on .rise>*:nth-child(5){transition-delay:.48s}
+
+/* 表紙 */
+.cover{text-align:center}
+.cover .sub{margin-left:auto;margin-right:auto}
+.cover .by{margin-top:28px;font-size:14px;color:var(--dim);letter-spacing:.06em}
+
+/* 星とレビュー（架空） */
+.stars{display:flex;gap:6px;color:var(--gold);font-size:clamp(30px,6vh,52px);line-height:1}
+.stars span{display:inline-block;opacity:0;transform:scale(.4)}
+.on .stars span{opacity:1;transform:none;transition:opacity .4s ease,transform .5s cubic-bezier(.3,1.6,.5,1)}
+.on .stars span:nth-child(2){transition-delay:.1s}.on .stars span:nth-child(3){transition-delay:.2s}
+.on .stars span:nth-child(4){transition-delay:.3s}.on .stars span:nth-child(5){transition-delay:.4s}
+.bubble{background:rgba(246,239,228,.06);border:1px solid var(--line);border-radius:18px;padding:16px 18px;margin-top:14px;max-width:420px}
+.bubble p{font:400 clamp(18px,2.8vh,22px)/1.35 var(--serif);font-style:italic}
+.bubble small{display:block;color:var(--dim);font-size:12.5px;margin-top:6px}
+
+/* 手順の比較 */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.col{border:1px solid var(--line);border-radius:18px;padding:16px 14px}
+.col h3{font:500 12px/1.3 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin-bottom:10px}
+.col ol{list-style:none;counter-reset:s}
+.col li{counter-increment:s;position:relative;padding:6px 0 6px 28px;font-size:clamp(14px,2.2vh,17px);color:var(--sub);border-top:1px solid var(--line)}
+.col li:first-child{border-top:0}
+.col li::before{content:counter(s);position:absolute;left:0;top:7px;width:20px;height:20px;border-radius:50%;border:1px solid var(--dim);font-size:11px;line-height:18px;text-align:center}
+.col.card1{border-color:var(--rust);background:rgba(224,138,95,.08)}
+.col.card1 h3{color:var(--rust)}
+.col.card1 .one{font:400 clamp(40px,7vh,64px)/1 var(--serif);color:var(--ink);margin:8px 0 4px}
+.col.card1 p{color:var(--sub);font-size:14.5px}
+
+/* カード（3D） */
+.stage{perspective:1000px;display:flex;justify-content:center;align-items:center;min-height:clamp(200px,34vh,340px)}
+.rc{width:min(78vw,360px,48vh);aspect-ratio:85.6/54;border-radius:16px;position:relative;transform-style:preserve-3d;
+  background:linear-gradient(140deg,#2c211c 0%,#120c0a 70%);border:1px solid rgba(217,183,122,.45);
+  box-shadow:0 30px 60px -20px rgba(0,0,0,.7);padding:7% 8%;display:flex;flex-direction:column;justify-content:space-between}
+.on .rc.float{animation:float 6s ease-in-out infinite}
+@keyframes float{0%,100%{transform:rotateX(14deg) rotateY(-18deg) translate3d(0,0,0)}50%{transform:rotateX(8deg) rotateY(14deg) translate3d(0,-8px,0)}}
+.rc .t1{font:400 clamp(20px,3.4vh,30px)/1.05 var(--serif);color:var(--ink)}
+.rc .t1 em{color:var(--gold)}
+.rc .row{display:flex;justify-content:space-between;align-items:flex-end}
+.rc .t2{font-size:clamp(11px,1.6vh,13px);letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.rc .st{color:var(--gold);letter-spacing:3px;font-size:clamp(13px,2vh,16px)}
+.rc svg{width:clamp(30px,5vh,44px);height:auto;color:var(--gold)}
+/* かざす動き */
+.tapdemo{position:relative}
+.phone{position:absolute;width:clamp(62px,10vh,92px);aspect-ratio:9/18;border-radius:16px;border:2px solid var(--ink);background:#0d0907;
+  right:2%;top:-4%;transform:translate3d(60px,-40px,0) rotate(14deg);opacity:.95}
+.phone::after{content:"";position:absolute;left:50%;top:6px;width:30%;height:5px;margin-left:-15%;border-radius:4px;background:#333}
+.on .phone{animation:tap 3.2s ease-in-out .5s infinite}
+@keyframes tap{0%,12%{transform:translate3d(60px,-40px,0) rotate(14deg)}38%,70%{transform:translate3d(-70px,18px,0) rotate(-6deg)}100%{transform:translate3d(60px,-40px,0) rotate(14deg)}}
+.ping{position:absolute;left:46%;top:30%;width:70px;height:70px;margin:-35px;border-radius:50%;border:2px solid var(--gold);opacity:0;transform:scale(.3)}
+.on .ping{animation:ping 3.2s ease-out .5s infinite}
+@keyframes ping{0%,38%{opacity:0;transform:scale(.3)}44%{opacity:.9}70%{opacity:0;transform:scale(1.7)}100%{opacity:0}}
+
+/* 置く場所 */
+.places{display:grid;gap:12px}
+.place{display:grid;grid-template-columns:52px 1fr;gap:12px;align-items:center;border:1px solid var(--line);border-radius:18px;padding:14px}
+.place svg{width:44px;height:44px;color:var(--gold)}
+.place b{display:block;font-weight:500;font-size:clamp(16px,2.4vh,19px)}
+.place span{color:var(--sub);font-size:clamp(14px,2.1vh,16px)}
+.rule{margin-top:14px;font-size:14px;color:var(--sub);border-left:2px solid var(--rust);padding:2px 0 2px 12px}
+
+/* 値段 */
+.price{text-align:center}
+.big{font:400 clamp(96px,min(30vw,22vh),190px)/.9 var(--serif);color:var(--ink);margin:6px 0 2px}
+.big small{font-size:.32em;color:var(--sub);vertical-align:top;margin-right:4px}
+.for{font-size:clamp(18px,2.8vh,24px);color:var(--sub)}
+.lines{display:inline-grid;grid-template-columns:auto auto;gap:0;margin-top:22px;text-align:left;border-top:1px solid var(--line)}
+.lines div{padding:10px 0;border-bottom:1px solid var(--line);font-size:clamp(15px,2.3vh,18px)}
+.lines div:nth-child(odd){padding-right:26px}
+.lines div:nth-child(even){text-align:right;color:var(--gold)}
+
+/* サイト */
+.site .offer{display:inline-flex;align-items:baseline;gap:12px;margin-top:18px;border:1px solid var(--line);border-radius:16px;padding:12px 16px}
+.site .offer s{color:var(--dim);font-size:20px}
+.site .offer b{font:400 46px/1 var(--serif)}
+.site .offer span{color:var(--sub);font-size:14px}
+.mini{width:min(60vw,240px,34vh);aspect-ratio:9/16;border-radius:22px;border:2px solid rgba(246,239,228,.5);background:#f4efe6;color:#241915;
+  margin:0 auto;padding:14px 12px;display:flex;flex-direction:column;gap:7px;transform:rotate(-4deg);box-shadow:0 30px 60px -20px rgba(0,0,0,.7)}
+.mini .h{font:400 22px/1 var(--serif)}
+.mini .open{font-size:10px;color:#2f7a4f;font-weight:600}
+.mini .ph{flex:1;border-radius:10px;background:linear-gradient(135deg,#c98b62,#7d4a32)}
+.mini .bt{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.mini .bt i{font-style:normal;font-size:10px;text-align:center;padding:6px 0;border-radius:8px;background:#241915;color:#f4efe6}
+.mini .bt i+i{background:#e7ddd0;color:#241915}
+.mini .ln{height:6px;border-radius:3px;background:#ddd2c4}
+.mini .ln.s{width:60%}
+
+/* 最後 */
+.opts{display:grid;grid-template-columns:1fr;gap:12px;margin-top:22px}
+@media (min-width:700px){.opts{grid-template-columns:1fr 1fr}}
+.opt{border:1px solid var(--line);border-radius:18px;padding:16px 18px}
+.opt.a{border-color:var(--gold);background:rgba(217,183,122,.08)}
+.opt b{display:block;font:400 clamp(24px,3.6vh,30px)/1.1 var(--serif);margin-bottom:4px}
+.opt span{color:var(--sub);font-size:clamp(14px,2.1vh,16px)}
+.contact{margin-top:20px;font-size:15px;color:var(--sub);display:flex;flex-wrap:wrap;gap:6px 18px}
+.contact b{color:var(--ink);font-weight:500}
+
+/* 上のバーと下のボタン */
+.bar{position:fixed;left:0;right:0;top:0;height:3px;background:var(--line);z-index:3}
+.bar i{display:block;height:100%;background:var(--gold);transform-origin:0 50%;transform:scaleX(0);transition:transform .45s ease}
+.top{position:fixed;left:0;right:0;top:calc(10px + env(safe-area-inset-top));display:flex;justify-content:space-between;align-items:center;padding:0 14px;z-index:3;pointer-events:none}
+.top .x{pointer-events:auto;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);color:var(--dim);font-size:16px;line-height:32px;text-align:center}
+.top .n{font-size:12px;letter-spacing:.14em;color:var(--dim)}
+.nav{position:fixed;left:0;right:0;bottom:calc(14px + env(safe-area-inset-bottom));display:flex;justify-content:center;gap:10px;z-index:3}
+.prac .nav{bottom:calc(140px + env(safe-area-inset-bottom))}
+.nav button{width:52px;height:44px;border-radius:999px;border:1px solid var(--line);color:var(--sub);font-size:20px;background:rgba(29,21,18,.6)}
+.nav button.next{width:120px;background:var(--ink);color:var(--bg);font-size:15px;font-weight:600;letter-spacing:.06em;border-color:var(--ink)}
+/* 台本（練習のときだけ） */
+.script{position:fixed;left:0;right:0;bottom:0;z-index:4;display:none;background:#f4efe6;color:#241915;
+  padding:12px 16px calc(12px + env(safe-area-inset-bottom));border-top:3px solid #b4502b;max-height:132px;overflow-y:auto}
+.prac .script{display:block}
+.script small{font:600 10.5px/1.3 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:#b4502b}
+.script p{font-size:15px;line-height:1.4;margin-top:2px}
+.script .ja{font-size:12.5px;color:#6a564b;margin-top:3px}
+@media (prefers-reduced-motion:reduce){.slide,.rise>*,.stars span{transition:none!important}.rc.float,.phone,.ping{animation:none!important}}
+</style>
+</head>
+<body>
+
+<!-- 準備 -->
+<div id="setup"><div class="in">
+  <a class="back" href="local.html">← 現地のお店の売り方</a>
+  <h1>お店で見せる<em>プレゼン</em></h1>
+  <p class="lead">レビューカードの説明を、スライドがしてくれます。iPad かスマホをお店の人に向けて、めくりながら短く話すだけ。<br>
+    <small>The slides do the explaining. Turn the screen to the owner, tap to go on, and say a few words.</small></p>
+
+  <div class="box">
+    <h2>最初に入れる <small style="font-weight:400;color:#9b8677">Before you go</small></h2>
+    <label for="fShop">お店の名前 <small>Shop name（表紙に出る）</small></label>
+    <input id="fShop" type="text" autocomplete="off" placeholder="例：Mario's Pizza">
+    <label for="fName">見せる人の名前（英語） <small>Your name</small></label>
+    <input id="fName" type="text" autocomplete="off" placeholder="例：Alex">
+    <label for="fEmail">メール <small>Email（最後のスライドに出る）</small></label>
+    <input id="fEmail" type="email" autocomplete="off" placeholder="you@example.com">
+    <label for="fPhone">電話（なくてもいい） <small>Phone, optional</small></label>
+    <input id="fPhone" type="tel" autocomplete="off">
+    <label class="chk"><input id="fSite" type="checkbox" checked> サイトのスライドも入れる <small style="color:#9b8677">Include the website slide</small></label>
+  </div>
+
+  <div class="go">
+    <button class="prac" id="goPrac" type="button">練習する<small>台本つき・Practice with the script</small></button>
+    <button class="show" id="goShow" type="button">お店で見せる<small>台本なし・Show the owner</small></button>
+  </div>
+
+  <div class="box">
+    <h2>緊張したときは <small style="font-weight:400;color:#9b8677">If you're nervous</small></h2>
+    <ul>
+      <li><b>説明はスライドの仕事。</b>あなたは「めくる人」でいい。書いてあることを指さすだけでも伝わる<small>The slides explain it. You just turn the pages.</small></li>
+      <li><b>覚えるのは最初のひとことだけ。</b>「Hi! Is the owner around?」→ 「I made something for your shop. Can I show you? It takes one minute.」<small>Only remember the first line.</small></li>
+      <li><b>家で2回、声に出して練習する。</b>「練習する」で、下に台本が出る。1回1分くらい<small>Practice out loud twice at home.</small></li>
+      <li><b>ゆっくりでいい。</b>緊張すると早口になるのが普通。スライドを見せて、相手が読み終わるのを待ってからめくる<small>Slow is fine. Wait for them to read.</small></li>
+      <li><b>断られても成功。</b>「No problem, thanks for your time!」で笑って終わり。行ったこと自体が練習になる<small>A "no" is fine. Smile and say thanks.</small></li>
+      <li><b>本物のカードを1枚持っていく。</b>⑤のスライドで渡して、オーナーのスマホでかざしてもらう<small>Bring one card with the shop's link on it.</small></li>
+    </ul>
+  </div>
+  <p class="note">名前とメールはこの端末のブラウザにだけ保存します（「現地のお店の売り方」の見せる紙と同じ）。めくるのは画面の右をタップ（戻るのは左）か、スワイプ。</p>
+</div></div>
+
+<!-- スライド -->
+<div id="deck">
+  <div class="bar"><i id="barI"></i></div>
+  <div class="top"><button class="x" id="exit" type="button" aria-label="Close">✕</button><span class="n" id="count"></span><span style="width:34px"></span></div>
+
+  <section class="slide cover" data-say="Hi! I'm {name}, a student here in Windsor. I made something for {shop}. Can I show you? It takes one minute."
+    data-ja="こんにちは、Windsorの学生の〇〇です。〇〇さん用に作ったものがあります。見てもらえますか？1分で終わります。">
+    <div class="wrap rise">
+      <div class="kick" data-shop-kick>For your shop</div>
+      <h1>More Google reviews,<br><em>one tap</em> away.</h1>
+      <p class="sub">A one-minute idea for <span data-shop>your shop</span>.</p>
+      <p class="by" data-by></p>
+    </div>
+  </section>
+
+  <section class="slide" data-say="Before people visit a new place, they check the reviews on Google Maps."
+    data-ja="初めてのお店に行く前に、みんなGoogleマップでレビューを見ます。">
+    <div class="wrap two">
+      <div class="rise">
+        <div class="kick">01 · Reviews</div>
+        <h2>New customers read your <em>reviews</em> first.</h2>
+        <p class="sub">Before they visit, people check Google Maps: the stars, the photos, and what others said.</p>
+      </div>
+      <div class="rise">
+        <div class="stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <div class="bubble"><p>"Friendly staff and great food. We'll be back!"</p><small>Example review</small></div>
+        <div class="bubble" style="margin-left:24px"><p>"Best spot in the neighbourhood."</p><small>Example review</small></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" data-say="Lots of happy customers never write a review. Not because they don't want to. It just takes too many steps."
+    data-ja="満足したお客さんでも、レビューを書かない人が多いです。書きたくないからじゃなくて、手順が多すぎるからです。">
+    <div class="wrap two">
+      <div class="rise">
+        <div class="kick">02 · The problem</div>
+        <h2>Happy customers often <em>forget</em> to write one.</h2>
+        <p class="sub">Not because they don't want to. It just takes too many steps.</p>
+      </div>
+      <div class="cmp rise">
+        <div class="col"><h3>Today</h3><ol><li>Open Google Maps</li><li>Search for the shop</li><li>Find the reviews</li><li>Tap "Write a review"</li></ol></div>
+        <div class="col card1"><h3>With a card</h3><div class="one">1 tap</div><p>Their phone opens your review page.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" data-say="This is a review card. Customers tap their phone on it, and your Google review page opens."
+    data-ja="これがレビューカードです。お客さんがスマホをかざすと、お店のGoogleレビューの画面が開きます。">
+    <div class="wrap two">
+      <div class="rise">
+        <div class="kick">03 · The card</div>
+        <h2>Meet the <em>review card.</em></h2>
+        <p class="sub">Customers tap their phone. Your review page opens. That's it. No app, no searching.</p>
+      </div>
+      <div class="stage"><div class="rc float">
+        <div class="t1">Enjoyed your visit?<br><em>Tap for a review.</em></div>
+        <div class="row"><span class="st">★★★★★</span>
+          <svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 30a12 12 0 0 1 0-16"/><path d="M18 26a6 6 0 0 1 0-8"/><path d="M26 18a6 6 0 0 1 0 8"/><path d="M32 14a12 12 0 0 1 0 16"/></svg></div>
+      </div></div>
+    </div>
+  </section>
+
+  <section class="slide" data-say="Here, try it. Hold the top of your phone on the card."
+    data-ja="どうぞ、やってみてください。スマホの上のふちをカードに当ててください。（カードを渡す）">
+    <div class="wrap two">
+      <div class="rise">
+        <div class="kick">04 · Try it</div>
+        <h2>Try it <em>now.</em></h2>
+        <p class="sub">Hold the top edge of your phone on the card.</p>
+        <p class="small">iPhone: just hold it close. Android: NFC needs to be on.</p>
+      </div>
+      <div class="stage tapdemo"><div class="rc" style="transform:rotateX(18deg)">
+        <div class="t1">Enjoyed your visit?<br><em>Tap for a review.</em></div>
+        <div class="row"><span class="st">★★★★★</span>
+          <svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 30a12 12 0 0 1 0-16"/><path d="M18 26a6 6 0 0 1 0-8"/><path d="M26 18a6 6 0 0 1 0 8"/><path d="M32 14a12 12 0 0 1 0 16"/></svg></div>
+        <span class="ping"></span>
+      </div><div class="phone"></div></div>
+    </div>
+  </section>
+
+  <section class="slide" data-say="Put one by the counter and one on the tables. When people pay, just say: if you enjoyed it, we'd love a review."
+    data-ja="レジに1枚、テーブルに1枚置きます。お会計の時に「よかったらレビューお願いします」と言うだけです。">
+    <div class="wrap two">
+      <div class="rise">
+        <div class="kick">05 · How to use it</div>
+        <h2>One by the <em>counter.</em> One on the <em>tables.</em></h2>
+      </div>
+      <div class="places rise">
+        <div class="place"><svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="20" width="32" height="16" rx="2"/><path d="M12 20v-8h20v8"/><path d="M18 28h8"/></svg>
+          <div><b>At the counter</b><span>"If you enjoyed it, we'd love a review. Just tap here."</span></div></div>
+        <div class="place"><svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 18h32"/><path d="M10 18v16M34 18v16"/><path d="M16 18l2-8h8l2 8"/></svg>
+          <div><b>On the tables or by the door</b><span>People tap it while they wait.</span></div></div>
+        <p class="rule">Ask everyone, not only the happy customers. And no discounts for reviews. Google doesn't allow that.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide price" data-say="It's 39 dollars for two cards. Extra cards are 15. No monthly fee. We put your review link on them for you."
+    data-ja="2枚で39ドルです。追加は1枚15ドル。毎月の料金はありません。お店のレビューのリンクはこちらで入れます。">
+    <div class="wrap rise">
+      <div class="kick">06 · Price</div>
+      <div class="big"><small>$</small>39</div>
+      <div class="for">for two cards · Canadian dollars</div>
+      <div class="lines"><div>Extra cards</div><div>$15 each</div><div>Monthly fee</div><div>None</div><div>Setup</div><div>We add your review link</div></div>
+    </div>
+  </section>
+
+  <section class="slide site" data-site data-say="And if you ever want a website, we make simple ones too. When people find you on Google Maps, there's no website button yet. We can make a free preview first."
+    data-ja="サイトがほしくなったら、それも作っています。今はGoogleマップでお店を見つけても、ウェブサイトのボタンがありません。まず無料で見本を作れます。">
+    <div class="wrap two">
+      <div class="rise">
+        <div class="kick">07 · Also</div>
+        <h2>No website button on Google Maps <em>yet?</em></h2>
+        <p class="sub">We also make simple one-page websites: menu, hours, photos, a map and a call button.</p>
+        <div class="offer"><s>$400</s><b>$250</b><span>for our first three shops<br>Two review cards included</span></div>
+        <p class="small">Free preview first. Pay half to start, the rest when it's live.</p>
+      </div>
+      <div class="rise wide-only"><div class="mini"><div class="h" data-shop-mini>Your Shop</div><div class="open">● Open now</div><div class="ph"></div>
+        <div class="ln"></div><div class="ln s"></div><div class="bt"><i>Call</i><i>Directions</i></div></div></div>
+    </div>
+  </section>
+
+  <section class="slide" data-say="You can keep this card and try it for a week. I'll come back next week. If you like it, it's 39 for this one and one more. If not, just give it back."
+    data-ja="このカードは置いていくので、1週間使ってみてください。来週また来ます。よかったら、これともう1枚で39ドル。いらなければ返してください。（断られたら：No problem, thanks for your time!）">
+    <div class="wrap rise">
+      <div class="kick">Next step</div>
+      <h2>Want to <em>try it?</em></h2>
+      <div class="opts">
+        <div class="opt a"><b>Try one free for a week</b><span>Keep this card. If you like it, it's $39 for this one and one more. If not, just give it back.</span></div>
+        <div class="opt"><b>Get two cards</b><span>$39. We set them up with your review link.</span></div>
+      </div>
+      <div class="contact" data-contact></div>
+    </div>
+  </section>
+
+  <div class="nav"><button class="back" id="prevB" type="button" aria-label="Back">‹</button><button class="next" id="nextB" type="button">NEXT ›</button></div>
+  <div class="script"><small>Say · 言うこと</small><p id="sayEn"></p><p class="ja" id="sayJa"></p></div>
+</div>
+
+<script>
+(function () {
+  var KEY = "local-sheet-contact", SKEY = "pitch-settings";   // KEY は local.html の「見せる紙」と同じ（名前とメールを共有）
+  var f = { shop: fShop, name: fName, email: fEmail, phone: fPhone };
+  var c = {}, st = {};
+  try { c = JSON.parse(localStorage.getItem(KEY) || "{}"); st = JSON.parse(localStorage.getItem(SKEY) || "{}"); } catch (e) {}
+  f.name.value = c.name || ""; f.email.value = c.email || ""; f.phone.value = c.phone || "";
+  f.shop.value = st.shop || ""; fSite.checked = st.site !== false;
+  function save() {
+    try {
+      var cc = {}; try { cc = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) {}
+      cc.name = f.name.value; cc.email = f.email.value; cc.phone = f.phone.value;
+      localStorage.setItem(KEY, JSON.stringify(cc));
+      localStorage.setItem(SKEY, JSON.stringify({ shop: f.shop.value, site: fSite.checked }));
+    } catch (e) {}
+  }
+  ["shop", "name", "email", "phone"].forEach(function (k) { f[k].addEventListener("input", save); });
+  fSite.addEventListener("change", save);
+
+  var deck = document.getElementById("deck"), slides = [], i = 0;
+  var esc = function (s) { return String(s).replace(/[&<>"']/g, function (ch) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch]; }); };
+
+  function fill() {
+    var shop = f.shop.value.trim(), name = f.name.value.trim(), email = f.email.value.trim(), phone = f.phone.value.trim();
+    document.querySelectorAll("[data-shop]").forEach(function (e) { e.textContent = shop || "your shop"; });
+    document.querySelector("[data-shop-kick]").textContent = shop ? "For " + shop : "For your shop";
+    document.querySelector("[data-shop-mini]").textContent = shop || "Your Shop";
+    document.querySelector("[data-by]").textContent = name ? name + " · Windsor" : "Windsor";
+    var h = "";
+    if (name) h += "<b>" + esc(name) + "</b>";
+    if (email) h += "<span>" + esc(email) + "</span>";
+    if (phone) h += "<span>" + esc(phone) + "</span>";
+    document.querySelector("[data-contact]").innerHTML = h;
+    slides = Array.prototype.filter.call(deck.querySelectorAll(".slide"), function (s) {
+      var off = s.hasAttribute("data-site") && !fSite.checked;
+      s.style.display = off ? "none" : "";
+      return !off;
+    });
+    slides.forEach(function (s) {
+      s._say = (s.dataset.say || "").replace("{name}", name || "[Name]").replace("{shop}", shop || "your shop");
+    });
+  }
+  function go(n) {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach(function (s, k) { s.classList.toggle("on", k === i); s.classList.toggle("prev", k < i); });
+    barI.style.transform = "scaleX(" + ((i + 1) / slides.length) + ")";
+    count.textContent = (i + 1) + " / " + slides.length;
+    sayEn.textContent = slides[i]._say; sayJa.textContent = slides[i].dataset.ja || "";
+    nextB.textContent = i === slides.length - 1 ? "DONE" : "NEXT ›";
+    prevB.style.visibility = i === 0 ? "hidden" : "visible";
+  }
+  function start(prac) {
+    save(); fill();
+    document.body.classList.toggle("prac", prac);
+    setup.style.display = "none"; deck.classList.add("on");
+    go(0);
+    if (!prac && document.documentElement.requestFullscreen) document.documentElement.requestFullscreen().catch(function () {});
+  }
+  function stop() {
+    deck.classList.remove("on"); setup.style.display = "";
+    if (document.fullscreenElement && document.exitFullscreen) document.exitFullscreen().catch(function () {});
+  }
+  goPrac.addEventListener("click", function () { start(true); });
+  goShow.addEventListener("click", function () { start(false); });
+  exit.addEventListener("click", stop);
+  nextB.addEventListener("click", function (e) { e.stopPropagation(); if (i === slides.length - 1) stop(); else go(i + 1); });
+  prevB.addEventListener("click", function (e) { e.stopPropagation(); go(i - 1); });
+
+  // 画面の右をタップで次、左で戻る。スワイプでも
+  var sx = null, sy = 0, moved = false;
+  deck.addEventListener("touchstart", function (e) { sx = e.touches[0].clientX; sy = e.touches[0].clientY; moved = false; }, { passive: true });
+  deck.addEventListener("touchmove", function (e) { if (sx !== null && Math.abs(e.touches[0].clientX - sx) > 12) moved = true; }, { passive: true });
+  deck.addEventListener("touchend", function (e) {
+    if (sx === null) return;
+    var dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy; sx = null;
+    if (moved && Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) { go(i + (dx < 0 ? 1 : -1)); deck._swiped = Date.now(); }
+  });
+  deck.addEventListener("click", function (e) {
+    if (deck._swiped && Date.now() - deck._swiped < 400) return;
+    if (e.target.closest("button,.script")) return;
+    if (e.clientX > innerWidth * 0.33) go(i + 1); else go(i - 1);
+  });
+  document.addEventListener("keydown", function (e) {
+    if (!deck.classList.contains("on")) return;
+    if (e.key === "ArrowRight" || e.key === " ") go(i + 1);
+    else if (e.key === "ArrowLeft") go(i - 1);
+    else if (e.key === "Escape") stop();
+  });
+})();
+</script>
+</body>
+</html>
