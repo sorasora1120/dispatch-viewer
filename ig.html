@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#14110f">
+<title>Instagram の準備</title>
+<style>
+/* お店に DM を送る用の Instagram ビジネスアカウントの準備（2026-11-02、「SNS」）。
+   画像は sns/ig/*.jpg（tools/ig-shoot.js と tools/ig-posts.js で作る）。見本はすべて架空のお店。
+   料金は local.html・en.html と同じ（変えたら sns/ig の 08-pricing と 09-cards も作り直す）。学校名・住所はここに書かない */
+:root{--bg:#f4efe8;--card:#fffdf9;--ink:#191512;--mute:#6f675f;--line:rgba(25,21,18,.1);--acc:#b4502b}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.6 -apple-system,"Hiragino Sans","Noto Sans JP",system-ui,sans-serif;-webkit-text-size-adjust:100%}
+header{background:#14110f;color:#f4efe8;padding:22px 16px 18px;padding-top:calc(22px + env(safe-area-inset-top))}
+header h1{font-size:22px}
+header p{color:#bdb3a8;font-size:13px;margin-top:4px}
+header a{color:#e3a57c}
+main{max-width:760px;margin:0 auto;padding:6px 14px 60px}
+h2{font-size:17px;margin:24px 2px 8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+.card ol,.card ul{padding-left:20px}
+.card li{margin:4px 0}
+.note{font-size:12.5px;color:var(--mute);margin-top:6px}
+pre{white-space:pre-wrap;font:14px/1.55 -apple-system,system-ui,sans-serif;background:#f3ede4;border-radius:10px;padding:10px 12px;margin-top:8px}
+button.cp{margin-top:8px;padding:8px 14px;border-radius:9px;border:0;background:#14110f;color:#fff;font:inherit;font-size:13.5px;font-weight:600}
+.post{display:grid;grid-template-columns:120px 1fr;gap:12px;align-items:start}
+.post img{width:120px;border-radius:8px;display:block;border:1px solid var(--line)}
+.post b{font-size:14px}
+.big{display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:10;align-items:center;justify-content:center;flex-direction:column;padding:20px}
+.big.on{display:flex}
+.big img{max-width:100%;max-height:82vh}
+.big p{color:#ddd;font-size:13px;margin-top:10px;text-align:center}
+.icon img{width:110px;border-radius:50%}
+</style>
+</head>
+<body>
+<header>
+  <h1>Instagram の準備</h1>
+  <p>お店に DM を送る用のビジネスアカウント。画像をタップ → 長押しで「写真に保存」。<a href="shops.html#send">📨 お店に送る</a> の前にやっておくと返事が来やすくなります</p>
+</header>
+<main>
+  <h2>① アカウントを作る</h2>
+  <div class="card">
+    <ol>
+      <li>Instagram で新しいアカウントを追加（いまのアカウントとは別に。設定 → アカウントを追加）</li>
+      <li>ユーザーネームの例：<b>sora.webdesign</b>（使われていたら sora.web.windsor など）</li>
+      <li>設定 → アカウントの種類 → <b>ビジネスアカウント</b>にして、カテゴリは「Web Designer」</li>
+      <li>名前・自己紹介・アイコンを下から入れる</li>
+    </ol>
+    <p class="note">プロフィールには学校名・住所・年齢を書かない（だれでも見られるので）。学校名は DM の文の中だけ。</p>
+  </div>
+
+  <h2>② 名前・自己紹介・アイコン</h2>
+  <div class="card">
+    <b>名前</b>
+    <pre id="pName">Sora Web Design</pre>
+    <button class="cp" data-cp="pName">コピー</button>
+    <div style="margin-top:14px"><b>自己紹介</b></div>
+    <pre id="pBio">Simple websites for local shops in Windsor 🇨🇦
+Menu · hours · photos · map · call button
+Free preview for your shop. DM me 👇</pre>
+    <button class="cp" data-cp="pBio">コピー</button>
+    <div style="margin-top:14px"><b>リンク</b>（プロフィールのウェブサイト欄）</div>
+    <pre id="pLink">https://sorasora1120.github.io/en.html</pre>
+    <button class="cp" data-cp="pLink">コピー</button>
+    <div style="margin-top:14px" class="icon"><b>アイコン</b>（タップして保存）<br><img src="sns/ig/00-icon.jpg" alt="アイコン" data-big></div>
+  </div>
+
+  <h2>③ 投稿（9枚）</h2>
+  <div class="card">
+    <p><b>この順番で1枚ずつ投稿</b>（最後に投稿したものがプロフィールの左上に来るので、表紙は最後）。1日で全部出してOK。</p>
+    <p class="note">画像はタップで大きく → 長押しで保存。文は「コピー」を押して、投稿の文の欄に貼る。</p>
+  </div>
+  <div id="posts"></div>
+  <p class="note">見本のサイトはすべて架空のお店です（画像にも「Sample design · fictional shop」と入っています）。</p>
+</main>
+<div class="big" id="big"><img id="bigImg" alt=""><p>長押しで「写真に保存」・タップで閉じる</p></div>
+<script>
+const TAGS = "\n\n#WindsorOntario #YQG #ShopLocalWindsor";
+// [ファイル, 何の投稿か, 文]（投稿する順番）
+const POSTS = [
+  ["09-cards", "レビューカード", "Google review cards for local shops. Customers tap their phone and your review page opens. No searching, no app.\n\nTwo cards for $39, free with a website."],
+  ["08-pricing", "料金", "Simple pricing for a one-page website.\n\n$250 for our first three shops (normally $400). One time, no monthly hosting fees.\nFree preview first. Pay half to start, the rest when it's live."],
+  ["07-how", "進め方", "How it works:\n1. I make a free preview for your shop\n2. You say yes and send your menu and a few photos\n3. About a week, with two rounds of changes\n4. You're live on your own web address"],
+  ["06-included", "入っているもの", "What's on your site: menu and prices, opening hours with \"Open now\", your photos, a map, directions and a tap-to-call button. All on one page that works great on phones."],
+  ["05-barber", "見本：床屋", "Sample barbershop site. Bold, simple and easy to book.\n(Sample design, fictional shop)"],
+  ["04-salon", "見本：美容室", "Sample hair studio site. Services and prices, clear at a glance.\n(Sample design, fictional shop)"],
+  ["03-pizza", "見本：ピザ屋", "Sample pizza bar site. Order and call buttons right at the top.\n(Sample design, fictional shop)"],
+  ["02-cafe", "見本：カフェ", "Sample café site. Menu with photos, hours and directions.\n(Sample design, fictional shop)"],
+  ["01-cover", "表紙（最後）", "Hi! I'm Sora. I make simple websites for local shops in Windsor, Tecumseh and LaSalle.\n\nNo website yet? Send me a DM and I'll make a free preview for your shop."],
+];
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+document.getElementById("posts").innerHTML = POSTS.map(([f, t, c], i) =>
+  `<div class="card post"><img src="sns/ig/${f}.jpg" alt="" loading="lazy" data-big><div><b>${i + 1}. ${esc(t)}</b>` +
+  `<pre id="c${i}">${esc(c + TAGS)}</pre><button class="cp" data-cp="c${i}">文をコピー</button></div></div>`).join("");
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-cp]");
+  if (b) {
+    const t = document.getElementById(b.dataset.cp).textContent;
+    const done = () => { const o = b.textContent; b.textContent = "コピーしました"; setTimeout(() => b.textContent = o, 1400); };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(done, () => prompt("コピーしてください", t));
+    else prompt("コピーしてください", t);
+    return;
+  }
+  const im = e.target.closest("[data-big]");
+  if (im) { document.getElementById("bigImg").src = im.src; document.getElementById("big").classList.add("on"); return; }
+  if (e.target.closest("#big")) document.getElementById("big").classList.remove("on");
+});
+</script>
+</body>
+</html>
