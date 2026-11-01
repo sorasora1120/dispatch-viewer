@@ -48,6 +48,7 @@
   お店の名前は出さない。サンプルの中身について書く時は、実際のページを見て確かめる。sales.html・index.html・affiliate-pipeline の x_daily_post.py が読む。
   Xへの自動投稿はしない（投稿画面を文面入りで開くだけ。ポストは本人が押す）
 - `x-images/`：投稿に付ける画像。図解は `tools/x-images/ximg.js`（HTMLを Playwright で撮る。使い方はファイルの先頭）で作る。画面はすべてイメージ（架空のお店）
+- `tools/print-data/svg2print.py`：SVG（mm）を入稿用のPDF（＋同じ中身の .ai）にする道具（2026-11-01〜）。文字はアウトライン化、色はCMYK（--color で指定）、塗り足し・TrimBox、箔押しの版は --drop で紙の色を消して K100 に。使い方はファイルの先頭。お客さんのデザイン（SVG・フォント）はこの公開リポジトリに入れない。.ai は PDF 互換なので、最初の納品で Illustrator で開けるか確かめてもらう
 - `works/`：古い制作サンプル。今のポートフォリオは `sorasora1120.github.io`
 - `vocab-app/`：別プロジェクト（単語アプリ VisuWord）。触るときは `.github/workflows/ios-*.yml` が動く
 - `icon-options/` は `.git/info/exclude` で除外しているローカルのみのファイル
