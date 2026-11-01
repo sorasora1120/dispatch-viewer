@@ -65,6 +65,30 @@ body.listmode #list{display:block}
 .leaflet-popup-content h3{font-size:15px;margin-bottom:2px}
 .leaflet-popup-content .acts a.go{color:#fff}
 .me{width:16px;height:16px;border-radius:50%;background:#1a73e8;border:3px solid #fff;box-shadow:0 0 0 6px rgba(26,115,232,.25)}
+/* メッセージ（2026-11-02〜、お店を選んで例文をコピーして送る） */
+.acts .msg{background:#14110f;color:#fff;border-color:#14110f;font-weight:600}
+.chip.send{border-color:#ffd166}
+.dot.s-sent{outline:3px solid #8ecae6}
+.sheet{position:fixed;inset:0;z-index:3000;display:none}
+.sheet.on{display:block}
+.sheet .bg{position:absolute;inset:0;background:rgba(20,17,15,.55)}
+.sheet .box{position:absolute;left:0;right:0;bottom:0;max-height:92%;overflow-y:auto;background:var(--bg);border-radius:16px 16px 0 0;
+  padding:14px 14px calc(18px + env(safe-area-inset-bottom));max-width:760px;margin:0 auto;-webkit-overflow-scrolling:touch}
+.sheet h2{font-size:17px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.sheet h2 button{width:34px;height:34px;border-radius:50%;background:#e9e1d6;font-size:16px}
+.sheet .sub{color:var(--mute);font-size:12.5px;margin-top:2px}
+.sheet label{display:block;font-size:12.5px;color:var(--mute);margin:10px 0 3px}
+.sheet input,.sheet textarea{width:100%;font:inherit;font-size:16px;padding:9px 10px;border-radius:9px;border:1px solid var(--line);background:#fff;color:var(--ink)}
+.sheet textarea{min-height:190px;line-height:1.5;font-size:15px}
+.tabs2{display:flex;gap:0;margin-top:10px;background:#e9e1d6;border-radius:9px;padding:3px}
+.tabs2 button{flex:1;padding:7px;border-radius:7px;font-size:13.5px;color:var(--mute)}
+.tabs2 button[aria-pressed=true]{background:#fff;color:var(--ink);font-weight:700}
+.sheet .acts a,.sheet .acts button{font-size:14px;padding:9px 12px}
+.sheet .acts .main{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:700}
+.sheet .acts .sent{background:#14110f;border-color:#14110f;color:#fff}
+.sheet details{margin-top:12px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:9px 12px}
+.sheet summary{font-weight:700;font-size:14px;cursor:pointer}
+.warn{background:#fff3cd;border-radius:9px;padding:8px 10px;font-size:12.5px;margin-top:8px}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#14110f;color:#fff;padding:9px 14px;border-radius:10px;font-size:13px;z-index:2000;opacity:0;transition:opacity .3s;pointer-events:none}
 .toast.on{opacity:1}
 </style>
@@ -96,6 +120,25 @@ body.listmode #list{display:block}
   <div id="cards"></div>
   <button class="more" id="moreBtn">もっと見る</button>
 </main>
+<div class="sheet" id="sheet"><div class="bg" data-close></div><div class="box">
+  <h2><span id="mTitle">メッセージ</span><button type="button" data-close aria-label="閉じる">✕</button></h2>
+  <p class="sub" id="mSub"></p>
+  <label for="mShop">お店の名前（文に入る名前。変なら直す）</label>
+  <input id="mShop" type="text" autocomplete="off">
+  <div class="tabs2"><button type="button" data-kind="dm" aria-pressed="true">DM</button><button type="button" data-kind="mail" aria-pressed="false">メール</button></div>
+  <div id="mSubjWrap" style="display:none"><label for="mSubj">件名</label><input id="mSubj" type="text"></div>
+  <label for="mText">送る文（ここで直してもOK）</label>
+  <textarea id="mText"></textarea>
+  <div class="warn" id="mWarn" style="display:none"></div>
+  <div class="acts" id="mActs"></div>
+  <details id="mMe"><summary>自分の情報（この端末にだけ保存）</summary>
+    <label for="meName">名前（英語）</label><input id="meName" type="text" autocomplete="off" placeholder="例：Sora">
+    <label for="meSchool">学校（入れると「a student at ○○」になる。空なら「a student」）</label><input id="meSchool" type="text" autocomplete="off">
+    <label for="meEmail">メールアドレス（メールの最後に入る）</label><input id="meEmail" type="email" autocomplete="off">
+    <label for="meAddr">郵便の住所（メールに必要。家の住所は書かない。私書箱など）</label><input id="meAddr" type="text" autocomplete="off">
+  </details>
+  <p class="note">1軒ずつ送る（一斉に同じ文は送らない）・返事がなければ追いかけは1回まで・「いらない」と言われたら✕見送りにして二度と送らない。返事が来たら Claude に貼る。</p>
+</div></div>
 <div class="toast" id="toast"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
@@ -122,7 +165,7 @@ const SHOPS = /*DATA*/[{"n":"Fringe Theory","g":"美容","c":"エステ・美容
 const UPDATED = "2026年9月の版";
 const GROUPS = [["飲食", "var(--g1)"], ["美容", "var(--g2)"], ["お店", "var(--g3)"], ["教室・ジム", "var(--g4)"], ["車", "var(--g5)"], ["サービス", "var(--g6)"]];
 const COLOR = Object.fromEntries(GROUPS.map(([g, c]) => [g, getComputedStyle(document.documentElement).getPropertyValue(c.slice(4, -1)).trim()]));
-const STATES = [["", "未チェック"], ["like", "⭐ 興味あり"], ["done", "✓ 行った"], ["skip", "✕ 見送り"], ["site", "🌐 サイトあった"]];
+const STATES = [["", "未チェック"], ["sent", "📨 送った"], ["like", "⭐ 興味あり"], ["done", "✓ 行った"], ["skip", "✕ 見送り"], ["site", "🌐 サイトあった"]];
 const SKEY = "windsor-shops-v1";
 let marks = {};
 try { marks = JSON.parse(localStorage.getItem(SKEY) || "{}"); } catch (e) { marks = {}; }
@@ -138,13 +181,14 @@ function toast(t) { const el = $("toast"); el.textContent = t; el.classList.add(
 function drawChips() {
   $("groups").innerHTML = [["すべて", ""]].concat(GROUPS).map(([g, c]) =>
     `<button class="chip" data-g="${esc(g)}" aria-pressed="${g === group}">${c ? `<i style="background:${c}"></i>` : ""}${esc(g)}</button>`).join("");
-  const opts = [["all", "全部の印"], ["", "未チェック"], ["like", "⭐ 興味あり"], ["done", "✓ 行った"], ["skip", "✕ 見送り"], ["site", "🌐 サイトあった"]];
-  $("states").innerHTML = opts.map(([k, t]) => `<button class="chip" data-s="${k}" aria-pressed="${k === state}">${esc(t)}</button>`).join("");
+  const opts = [["all", "全部の印"], ["send", "📨 まだ送ってない（SNSあり）"], ["sent", "📨 送った"], ["", "未チェック"], ["like", "⭐ 興味あり"], ["done", "✓ 行った"], ["skip", "✕ 見送り"], ["site", "🌐 サイトあった"]];
+  $("states").innerHTML = opts.map(([k, t]) => `<button class="chip${k === "send" ? " send" : ""}" data-s="${k}" aria-pressed="${k === state}">${esc(t)}</button>`).join("");
 }
 function matches(s) {
   if (group !== "すべて" && s.g !== group) return false;
   const m = marks[keyOf(s)] || "";
-  if (state !== "all" && m !== state) return false;
+  if (state === "send") { if (m || !(s.s || []).length) return false; }
+  else if (state !== "all" && m !== state) return false;
   if (query) {
     const hay = (s.n + " " + s.c + " " + s.g + " " + s.a + " " + s.t).toLowerCase();
     if (!query.toLowerCase().split(/\s+/).every(w => hay.includes(w))) return false;
@@ -168,7 +212,7 @@ function socialLinks(s) {
 function actsHtml(s, i) {
   const m = marks[keyOf(s)] || "";
   const btns = STATES.slice(1).map(([k, t]) => `<button data-mark="${k}" data-i="${i}" aria-pressed="${m === k}">${esc(t)}</button>`).join("");
-  return `<div class="acts"><a class="go" href="${gmaps(s)}" target="_blank" rel="noopener">Google マップで開く</a>` +
+  return `<div class="acts"><button class="msg" data-msg="${i}">📨 メッセージ</button><a class="go" href="${gmaps(s)}" target="_blank" rel="noopener">Google マップで開く</a>` +
     (s.p ? `<a href="tel:${esc(s.p)}">電話</a>` : "") + socialLinks(s) + `</div><div class="acts">${btns}</div>`;
 }
 function infoHtml(s, i, withDist) {
@@ -177,6 +221,119 @@ function infoHtml(s, i, withDist) {
   const d = withDist ? `<span class="dist">${fmtDist(distM(s))}</span>` : "";
   return `${d}<h3>${esc(s.n)}${st}</h3><div class="meta"><span class="tag" style="background:${COLOR[s.g]}">${esc(s.g)}</span><b>${esc(s.c)}</b> ・ ${esc(s.a)}${s.t !== "Windsor" ? "（" + esc(s.t) + "）" : ""}</div>` + actsHtml(s, i);
 }
+
+// ---- メッセージ（2026-11-02〜）：お店を選ぶ → 例文に店名と見本のリンクが入る → コピーして DM かメールで送る → 📨 送った ----
+// 自分の名前・学校・メール・住所はこの端末にだけ保存（公開リポジトリに学校名や住所を入れないため）
+const MEKEY = "outreach-me-v1";
+let meInfo = {};
+try { meInfo = JSON.parse(localStorage.getItem(MEKEY) || "{}"); } catch (e) { meInfo = {}; }
+const IO = "https://sorasora1120.github.io/";
+function sampleFor(s) {
+  const t = (s.n + " " + s.c).toLowerCase();
+  if (/pizz|ピザ/.test(t)) return IO + "samples/pizza.html";
+  if (/barber|床屋/.test(t)) return IO + "samples/barber.html";
+  if (s.g === "美容") return IO + "samples/salon.html";
+  if (s.g === "飲食") return IO + "samples/cafe.html";
+  return IO + "en.html";
+}
+function whoLine() {
+  const school = (meInfo.school || "").trim();
+  return `I'm ${(meInfo.name || "").trim() || "[Name]"}, a student${school ? " at " + school : ""} here in Windsor.`;
+}
+function dmText(shop, link) {
+  return `Hi! ${whoLine()} I run my own small web design business on the side, helping local shops get online. I noticed ${shop} doesn't have a website yet, so here's an example of what one could look like: ${link}
+
+If you like it, I'd love to make a free preview with your own photos and menu. No pressure at all!
+(If you'd rather not get messages like this, just let me know and I won't message again.)`;
+}
+function mailText(shop, link) {
+  const sign = [(meInfo.email || "").trim(), (meInfo.addr || "").trim()].filter(Boolean).join(" · ") || "[Email] · [Mailing address]";
+  return `Hi ${shop} team,
+
+${whoLine()} I run my own small web design business on the side, helping local shops get online. I noticed ${shop} doesn't have a website yet, so here's an example of what one could look like:
+${link}
+
+It shows your menu, hours, photos, a map and a call button, and it works great on phones. If you like the idea, I can make a free preview with your own photos and menu. A one-page site is $250 for our first three shops (normally $400), with no monthly fee.
+
+If you're interested, just reply to this email.
+
+Thanks,
+${(meInfo.name || "").trim() || "[Name]"}
+${sign}
+If you'd rather not hear from me again, just reply "no thanks" and I won't contact you again.`;
+}
+let mIdx = -1, mKind = "dm";
+function copy(text) {
+  if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(text).then(() => true, () => false);
+  return Promise.resolve(false);
+}
+function fillMsg(keepText) {
+  const s = SHOPS[mIdx], shop = $("mShop").value.trim() || s.n, link = sampleFor(s);
+  if (!keepText) $("mText").value = mKind === "dm" ? dmText(shop, link) : mailText(shop, link);
+  $("mSubj").value = `A free website preview for ${shop}`;
+  $("mSubjWrap").style.display = mKind === "mail" ? "" : "none";
+  document.querySelectorAll("[data-kind]").forEach(b => b.setAttribute("aria-pressed", b.dataset.kind === mKind));
+  const warn = [];
+  if (!(meInfo.name || "").trim()) warn.push("下の「自分の情報」に名前を入れてください（いまは [Name] のまま）。");
+  if (mKind === "mail" && !(meInfo.addr || "").trim()) warn.push("メールには郵便の住所が法律で必要です。住所がないうちは DM で送ってください（家の住所は書かない）。");
+  $("mWarn").innerHTML = warn.map(esc).join("<br>");
+  $("mWarn").style.display = warn.length ? "" : "none";
+  const socials = (s.s || []).map(u => {
+    const label = /instagram/i.test(u) ? "Instagram" : /facebook/i.test(u) ? "Facebook" : "SNS";
+    return `<a class="main" href="${esc(u)}" target="_blank" rel="noopener" data-copyopen>コピーして${label}を開く</a>`;
+  }).join("");
+  const sent = (marks[keyOf(s)] || "") === "sent";
+  $("mActs").innerHTML = (mKind === "dm" ? socials : `<a class="main" href="mailto:?subject=${encodeURIComponent($("mSubj").value)}&body=${encodeURIComponent($("mText").value)}" data-copyopen>コピーしてメールを開く</a><button type="button" data-copysubj>件名をコピー</button>`) +
+    `<button type="button" data-copytext>文だけコピー</button>` +
+    `<button type="button" class="sent" data-sent>${sent ? "📨 送った（外す）" : "📨 送ったにする"}</button>`;
+}
+function openMsg(i) {
+  mIdx = i;
+  const s = SHOPS[i];
+  $("mTitle").textContent = s.n;
+  $("mSub").textContent = `${s.c} ・ ${s.a}（${s.t}） ・ 見本: ${sampleFor(s).replace(IO, "")}`;
+  $("mShop").value = s.n;
+  mKind = (s.s || []).length ? "dm" : "mail";
+  ["name", "school", "email", "addr"].forEach(k => { $("me" + k[0].toUpperCase() + k.slice(1)).value = meInfo[k] || ""; });
+  if (!(meInfo.name || "").trim()) $("mMe").open = true;
+  fillMsg(false);
+  map.closePopup();
+  $("sheet").classList.add("on");
+}
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-msg]");
+  if (b) { openMsg(+b.dataset.msg); return; }
+  if (!$("sheet").classList.contains("on")) return;
+  if (e.target.closest("[data-close]")) { $("sheet").classList.remove("on"); return; }
+  const k = e.target.closest("[data-kind]");
+  if (k) { mKind = k.dataset.kind; fillMsg(false); return; }
+  if (e.target.closest("[data-copytext]")) { copy($("mText").value).then(ok => toast(ok ? "文をコピーしました" : "コピーできませんでした。文を長押ししてコピーしてください")); return; }
+  if (e.target.closest("[data-copysubj]")) { copy($("mSubj").value).then(ok => toast(ok ? "件名をコピーしました" : "コピーできませんでした")); return; }
+  const co = e.target.closest("[data-copyopen]");
+  if (co) { copy($("mText").value).then(ok => toast(ok ? "コピーしました。開いた画面に貼り付けて送ってください" : "コピーできませんでした。先に「文だけコピー」を押してください")); return; }
+  if (e.target.closest("[data-sent]")) {
+    const key = keyOf(SHOPS[mIdx]);
+    if (marks[key] === "sent") delete marks[key]; else marks[key] = "sent";
+    saveMarks();
+    toast(marks[key] ? "📨 送った にしました" : "印を外しました");
+    fillMsg(true);
+    redraw();
+  }
+});
+$("mShop").addEventListener("input", () => fillMsg(false));
+$("mText").addEventListener("input", () => {
+  const m = document.querySelector('#mActs a[href^="mailto:"]');
+  if (m) m.href = `mailto:?subject=${encodeURIComponent($("mSubj").value)}&body=${encodeURIComponent($("mText").value)}`;
+});
+["name", "school", "email", "addr"].forEach(k => {
+  $("me" + k[0].toUpperCase() + k.slice(1)).addEventListener("input", e => {
+    meInfo[k] = e.target.value;
+    try { localStorage.setItem(MEKEY, JSON.stringify(meInfo)); } catch (err) {}
+    fillMsg(false);
+  });
+});
+// shops.html#send で開くと「まだ送ってない（SNSあり）」のリストから始まる
+if (location.hash === "#send") { state = "send"; }
 
 // ---- 地図 ----
 const map = L.map("map", { zoomControl: false, preferCanvas: true }).setView([42.29, -82.99], 12);
@@ -300,6 +457,7 @@ redraw();
 fitTop();
 try { map.fitBounds(cluster.getBounds(), { padding: [20, 20] }); } catch (e) {}
 try { if (localStorage.getItem(SKEY + "-view") === "list") setView(true); } catch (e) {}
+if (location.hash === "#send") setView(true);
 </script>
 </body>
 </html>
