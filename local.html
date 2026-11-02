@@ -381,9 +381,24 @@ Please ask everyone, not only the happy customers. And don't offer a discount fo
   }
   function update() {
     document.getElementById("sheetOpen").href = sheetUrl();
-    try { var v = {}; Object.keys(fields).forEach(function (k) { v[k] = fields[k].value; }); localStorage.setItem(KEY, JSON.stringify(v)); } catch (e) {}
+    try { var v = {}; try { v = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e2) {} Object.keys(fields).forEach(function (k) { v[k] = fields[k].value; }); localStorage.setItem(KEY, JSON.stringify(v)); } catch (e) {}
   }
   Object.keys(fields).forEach(function (k) { fields[k].addEventListener("input", update); });
+
+  // 台本の [Name] と「a student here in Windsor」を、保存してある自分の情報（shops.html の「自分の情報」と同じ）で埋める
+  function applyMe() {
+    var me = {}; try { me = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) {}
+    var name = (fields.name.value || me.name || "").trim(), school = (me.school || "").trim();
+    document.querySelectorAll("pre.tpl").forEach(function (pre) {
+      if (pre.dataset.orig == null) pre.dataset.orig = pre.textContent;
+      var t = pre.dataset.orig;
+      if (name) t = t.split("[Name]").join(name);
+      if (school) t = t.split("a student here in Windsor").join("a student at " + school + " here in Windsor");
+      pre.textContent = t;
+    });
+  }
+  Object.keys(fields).forEach(function (k) { fields[k].addEventListener("input", applyMe); });
+  applyMe();
   update();
   var sc = document.getElementById("sheetCopy");
   sc.addEventListener("click", function () { copyText(sheetUrl(), sc, "リンクをコピー（友達に送る用）"); });

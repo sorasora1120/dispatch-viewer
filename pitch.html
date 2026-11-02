@@ -409,7 +409,9 @@ h2{font-size:clamp(36px,min(8.6vw,7vh),74px);line-height:1.02}
       return !off;
     });
     slides.forEach(function (s) {
-      s._say = (s.dataset.say || "").replace("{name}", name || "[Name]").replace("{shop}", shop || "your shop");
+      var school = ""; try { school = (JSON.parse(localStorage.getItem(KEY) || "{}").school || "").trim(); } catch (e) {}
+      s._say = (s.dataset.say || "").replace("{name}", name || "[Name]").replace("{shop}", shop || "your shop")
+        .replace("a student here in Windsor", school ? "a student at " + school + " here in Windsor" : "a student here in Windsor");
     });
   }
   function go(n) {

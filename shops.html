@@ -125,16 +125,17 @@ body.listmode #list{display:block}
   <p class="sub" id="mSub"></p>
   <label for="mShop">お店の名前（文に入る名前。変なら直す）</label>
   <input id="mShop" type="text" autocomplete="off">
-  <div class="tabs2"><button type="button" data-kind="dm" aria-pressed="true">DM</button><button type="button" data-kind="mail" aria-pressed="false">メール</button></div>
+  <div class="tabs2"><button type="button" data-kind="dm" aria-pressed="true">DM</button><button type="button" data-kind="sms" aria-pressed="false">SMS</button><button type="button" data-kind="mail" aria-pressed="false">メール</button></div>
   <div id="mSubjWrap" style="display:none"><label for="mSubj">件名</label><input id="mSubj" type="text"></div>
   <label for="mText">送る文（ここで直してもOK）</label>
   <textarea id="mText"></textarea>
   <div class="warn" id="mWarn" style="display:none"></div>
   <div class="acts" id="mActs"></div>
-  <details id="mMe"><summary>自分の情報（この端末にだけ保存）</summary>
+  <details id="mMe"><summary>自分の情報（この端末にだけ保存・プレゼンや売り方のページにも入る）</summary>
     <label for="meName">名前（英語）</label><input id="meName" type="text" autocomplete="off" placeholder="例：Sora">
     <label for="meSchool">学校（入れると「a student at ○○」になる。空なら「a student」）</label><input id="meSchool" type="text" autocomplete="off">
     <label for="meEmail">メールアドレス（メールの最後に入る）</label><input id="meEmail" type="email" autocomplete="off">
+    <label for="mePhone">電話（なくてもいい。メールの最後に入る）</label><input id="mePhone" type="tel" autocomplete="off">
     <label for="meAddr">郵便の住所（メールに必要。家の住所は書かない。私書箱など）</label><input id="meAddr" type="text" autocomplete="off">
   </details>
   <p class="note">1軒ずつ送る（一斉に同じ文は送らない）・返事がなければ追いかけは1回まで・「いらない」と言われたら✕見送りにして二度と送らない。返事が来たら Claude に貼る。<br>送る前に <a href="ig.html">Instagram の準備</a>（お店用のアカウント・投稿9枚）をしておくと返事が来やすい。</p>
@@ -181,13 +182,13 @@ function toast(t) { const el = $("toast"); el.textContent = t; el.classList.add(
 function drawChips() {
   $("groups").innerHTML = [["すべて", ""]].concat(GROUPS).map(([g, c]) =>
     `<button class="chip" data-g="${esc(g)}" aria-pressed="${g === group}">${c ? `<i style="background:${c}"></i>` : ""}${esc(g)}</button>`).join("");
-  const opts = [["all", "全部の印"], ["send", "📨 まだ送ってない（SNSあり）"], ["sent", "📨 送った"], ["", "未チェック"], ["like", "⭐ 興味あり"], ["done", "✓ 行った"], ["skip", "✕ 見送り"], ["site", "🌐 サイトあった"]];
+  const opts = [["all", "全部の印"], ["send", "📨 まだ送ってない"], ["sent", "📨 送った"], ["", "未チェック"], ["like", "⭐ 興味あり"], ["done", "✓ 行った"], ["skip", "✕ 見送り"], ["site", "🌐 サイトあった"]];
   $("states").innerHTML = opts.map(([k, t]) => `<button class="chip${k === "send" ? " send" : ""}" data-s="${k}" aria-pressed="${k === state}">${esc(t)}</button>`).join("");
 }
 function matches(s) {
   if (group !== "すべて" && s.g !== group) return false;
   const m = marks[keyOf(s)] || "";
-  if (state === "send") { if (m || !(s.s || []).length) return false; }
+  if (state === "send") { if (m || !((s.s || []).length || s.p)) return false; }
   else if (state !== "all" && m !== state) return false;
   if (query) {
     const hay = (s.n + " " + s.c + " " + s.g + " " + s.a + " " + s.t).toLowerCase();
@@ -224,9 +225,14 @@ function infoHtml(s, i, withDist) {
 
 // ---- メッセージ（2026-11-02〜）：お店を選ぶ → 例文に店名と見本のリンクが入る → コピーして DM かメールで送る → 📨 送った ----
 // 自分の名前・学校・メール・住所はこの端末にだけ保存（公開リポジトリに学校名や住所を入れないため）
-const MEKEY = "outreach-me-v1";
+// 名前・学校・メール・電話・住所は local.html・pitch.html と同じ場所（local-sheet-contact）に保存して、どのページでも使う
+const MEKEY = "local-sheet-contact";
 let meInfo = {};
-try { meInfo = JSON.parse(localStorage.getItem(MEKEY) || "{}"); } catch (e) { meInfo = {}; }
+try {
+  meInfo = JSON.parse(localStorage.getItem(MEKEY) || "{}");
+  const old = JSON.parse(localStorage.getItem("outreach-me-v1") || "null");   // 前の保存場所から移す
+  if (old) { Object.keys(old).forEach(k => { if (!meInfo[k] && old[k]) meInfo[k] = old[k]; }); localStorage.setItem(MEKEY, JSON.stringify(meInfo)); localStorage.removeItem("outreach-me-v1"); }
+} catch (e) { meInfo = meInfo || {}; }
 const IO = "https://sorasora1120.github.io/";
 function sampleFor(s) {
   const t = (s.n + " " + s.c).toLowerCase();
@@ -246,8 +252,16 @@ function dmText(shop, link) {
 If you like it, I'd love to make a free preview with your own photos and menu. No pressure at all!
 (If you'd rather not get messages like this, just let me know and I won't message again.)`;
 }
+function smsText(shop, link) {
+  return `Hi ${shop}! ${whoLine()} I make simple websites for local shops. Here's an example of what yours could look like: ${link}
+If you like it, I can make a free preview for you. (Reply STOP and I won't text again.)`;
+}
+function smsHref(num, body) {
+  // iPhone と Android の両方で本文が入る形（sms:番号?&body=）
+  return `sms:${String(num).replace(/[^\d+]/g, "")}?&body=${encodeURIComponent(body)}`;
+}
 function mailText(shop, link) {
-  const sign = [(meInfo.email || "").trim(), (meInfo.addr || "").trim()].filter(Boolean).join(" · ") || "[Email] · [Mailing address]";
+  const sign = [(meInfo.email || "").trim(), (meInfo.phone || "").trim(), (meInfo.addr || "").trim()].filter(Boolean).join(" · ") || "[Email] · [Mailing address]";
   return `Hi ${shop} team,
 
 ${whoLine()} I run my own small web design business on the side, helping local shops get online. I noticed ${shop} doesn't have a website yet, so here's an example of what one could look like:
@@ -269,12 +283,15 @@ function copy(text) {
 }
 function fillMsg(keepText) {
   const s = SHOPS[mIdx], shop = $("mShop").value.trim() || s.n, link = sampleFor(s);
-  if (!keepText) $("mText").value = mKind === "dm" ? dmText(shop, link) : mailText(shop, link);
+  if (!keepText) $("mText").value = mKind === "dm" ? dmText(shop, link) : mKind === "sms" ? smsText(shop, link) : mailText(shop, link);
   $("mSubj").value = `A free website preview for ${shop}`;
   $("mSubjWrap").style.display = mKind === "mail" ? "" : "none";
   document.querySelectorAll("[data-kind]").forEach(b => b.setAttribute("aria-pressed", b.dataset.kind === mKind));
   const warn = [];
   if (!(meInfo.name || "").trim()) warn.push("下の「自分の情報」に名前を入れてください（いまは [Name] のまま）。");
+  if (mKind === "sms" && !s.p) warn.push("このお店は電話番号がありません。DM かメールで送ってください。");
+  if (mKind === "sms" && s.p) warn.push("お店の番号はオーナーの個人の携帯のことも、固定電話（SMSが届かない）のこともあります。1軒に1回だけ。STOP と返ってきたら✕見送りに。");
+  if (mKind === "dm" && !(s.s || []).length) warn.push("このお店は Instagram・Facebook が見つかっていません。SMS かメールで送ってください。");
   if (mKind === "mail" && !(meInfo.addr || "").trim()) warn.push("メールには郵便の住所が法律で必要です。住所がないうちは DM で送ってください（家の住所は書かない）。");
   $("mWarn").innerHTML = warn.map(esc).join("<br>");
   $("mWarn").style.display = warn.length ? "" : "none";
@@ -283,7 +300,8 @@ function fillMsg(keepText) {
     return `<a class="main" href="${esc(u)}" target="_blank" rel="noopener" data-copyopen>コピーして${label}を開く</a>`;
   }).join("");
   const sent = (marks[keyOf(s)] || "") === "sent";
-  $("mActs").innerHTML = (mKind === "dm" ? socials : `<a class="main" href="mailto:?subject=${encodeURIComponent($("mSubj").value)}&body=${encodeURIComponent($("mText").value)}" data-copyopen>コピーしてメールを開く</a><button type="button" data-copysubj>件名をコピー</button>`) +
+  const smsBtn = s.p ? `<a class="main" href="${esc(smsHref(s.p, $("mText").value))}" data-copyopen>メッセージアプリで開く</a>` : "";
+  $("mActs").innerHTML = (mKind === "dm" ? socials : mKind === "sms" ? smsBtn : `<a class="main" href="mailto:?subject=${encodeURIComponent($("mSubj").value)}&body=${encodeURIComponent($("mText").value)}" data-copyopen>コピーしてメールを開く</a><button type="button" data-copysubj>件名をコピー</button>`) +
     `<button type="button" data-copytext>文だけコピー</button>` +
     `<button type="button" class="sent" data-sent>${sent ? "📨 送った（外す）" : "📨 送ったにする"}</button>`;
 }
@@ -293,8 +311,8 @@ function openMsg(i) {
   $("mTitle").textContent = s.n;
   $("mSub").textContent = `${s.c} ・ ${s.a}（${s.t}） ・ 見本: ${sampleFor(s).replace(IO, "")}`;
   $("mShop").value = s.n;
-  mKind = (s.s || []).length ? "dm" : "mail";
-  ["name", "school", "email", "addr"].forEach(k => { $("me" + k[0].toUpperCase() + k.slice(1)).value = meInfo[k] || ""; });
+  mKind = (s.s || []).length ? "dm" : s.p ? "sms" : "mail";
+  ["name", "school", "email", "phone", "addr"].forEach(k => { $("me" + k[0].toUpperCase() + k.slice(1)).value = meInfo[k] || ""; });
   if (!(meInfo.name || "").trim()) $("mMe").open = true;
   fillMsg(false);
   map.closePopup();
@@ -324,9 +342,12 @@ $("mShop").addEventListener("input", () => fillMsg(false));
 $("mText").addEventListener("input", () => {
   const m = document.querySelector('#mActs a[href^="mailto:"]');
   if (m) m.href = `mailto:?subject=${encodeURIComponent($("mSubj").value)}&body=${encodeURIComponent($("mText").value)}`;
+  const t = document.querySelector('#mActs a[href^="sms:"]');
+  if (t) t.href = smsHref(SHOPS[mIdx].p, $("mText").value);
 });
-["name", "school", "email", "addr"].forEach(k => {
+["name", "school", "email", "phone", "addr"].forEach(k => {
   $("me" + k[0].toUpperCase() + k.slice(1)).addEventListener("input", e => {
+    try { meInfo = Object.assign(JSON.parse(localStorage.getItem(MEKEY) || "{}"), meInfo); } catch (err) {}
     meInfo[k] = e.target.value;
     try { localStorage.setItem(MEKEY, JSON.stringify(meInfo)); } catch (err) {}
     fillMsg(false);
