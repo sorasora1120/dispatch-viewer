@@ -31,6 +31,7 @@
     メールには郵便の住所が必要（CASL）なので、住所が空ならDMをすすめる表示
     2026-11-02 SMS のタブも（ユーザーの希望。`sms:番号?&body=` で本文入りでメッセージアプリを開く。STOP の一文入り）。「まだ送ってない」は SNS か電話があるお店。
     2026-11-02 印（📨送った・💬返事あり・⭐など）はスプレッドシート「お店マップ」タブの K列（状態）・L列（更新日時）・M列（メモ）と共有。書くのはビューアと同じ Apps Script（affiliate-pipeline の apps_script_stage_sync.gs の saveShopMark）、読むのは gviz（responseHandler:__shopMarks）。開くとシートの状態が正（初回だけ端末の印をシートへ送る）。Claude は Sheets コネクタでこの列を見て状況をつかむ。「送った」にすると「1週間後にもう一度送る」を Google カレンダーに入れるリンクが出る。メールの返事は Gmail コネクタで Claude が読む（Instagram・Facebook・SMS の返事は読めないので貼ってもらう）
+    2026-11-02 Notion にも管理ページ「Sora Web Design（Windsor の営業）」（page 40c7eea5ccc28151afddfd79993437f6、ユーザーの非公開の下書き）と表「お店とのやり取り」（collection://53b94695-9354-4c32-9b71-0d3da029663e：お店・状態・送り方・種類・売るもの・送った日・次にやること・次の日・金額・Googleマップ・電話・メモ）。ページから Notion へは書けないので、Claude がシートの K〜L 列と返事の内容を見て Notion をそろえる（「Notion 更新して」で）
     自分の情報（名前・学校・メール・電話・住所）は `local-sheet-contact`（local.html・local-guide-en.html・pitch.html と共通）に保存して、台本の [Name] と「a student here in Windsor」も自動で埋める
 - `all.html`：作ったもの一覧（2026-10-22〜、「作ったWEBとかアプリ系全部見せて」）。写真は `all/*.jpg`（スマホの大きさで撮った画面、幅320px）。
   ページを足したら一覧と写真も足す。ポートフォリオのリンクは `SO_SHA` の rawcdn（学校用）と github.io（お客さん用）。実在のお店のプレビューは載せない
