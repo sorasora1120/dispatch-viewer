@@ -256,18 +256,17 @@ function hook(g) {
   }[g] || "People searching on Google often look for a website to check services and prices before they call.";
 }
 function dmText(shop, link) {
-  const s = SHOPS[mIdx];
-  return `Hi ${shop}! 👋 ${whoLine()}
+  return `Hi ${shop}! 👋 ${whoLine()} I'm starting my own small web design business and looking for my first few local shops to work with.
 
-${hook(s.g)} ${shop} doesn't have a website yet, so I made an example of what one could look like: ${link}
+${shop} doesn't have a website yet, so I made an example: ${link}
 
-Would you like a free preview made just for ${shop}, with your own photos? Just reply "yes" and I'll send it in a couple of days. No cost, no pressure.
+Can I make a free preview for ${shop}? Just reply "yes" 🙏
 
 (If you'd rather not get messages like this, just let me know.)`;
 }
 function smsText(shop, link) {
-  return `Hi ${shop}! ${whoLine()} I made an example website for local shops like yours: ${link}
-Want a free preview made just for ${shop}? Just reply YES. (Reply STOP and I won't text again.)`;
+  return `Hi ${shop}! ${whoLine()} I'm starting my own small web design business and looking for my first few local shops. Here's an example site: ${link}
+Can I make a free preview for ${shop}? Just reply YES. (Reply STOP and I won't text again.)`;
 }
 function smsHref(num, body) {
   // iPhone と Android の両方で本文が入る形（sms:番号?&body=）
@@ -278,7 +277,9 @@ function mailText(shop, link) {
   const sign = [(meInfo.email || "").trim(), (meInfo.phone || "").trim(), (meInfo.addr || "").trim()].filter(Boolean).join(" · ") || "[Email] · [Mailing address]";
   return `Hi ${shop} team,
 
-${whoLine()} ${hook(s.g)} ${shop} doesn't have a website yet, so I made an example of what one could look like:
+${whoLine()} I'm starting my own small web design business and looking for my first few local shops to work with.
+
+${hook(s.g)} ${shop} doesn't have a website yet, so I made an example of what one could look like:
 ${link}
 
 Would you like a free preview made just for ${shop}, with your own photos and menu? Just reply "yes" and I'll send it in a couple of days. No cost, no pressure.
