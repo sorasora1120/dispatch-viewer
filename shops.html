@@ -69,6 +69,7 @@ body.listmode #list{display:block}
 .acts .msg{background:#14110f;color:#fff;border-color:#14110f;font-weight:600}
 .chip.send{border-color:#ffd166}
 .dot.s-sent{outline:3px solid #8ecae6}
+.dot.s-reply{outline:3px solid #52b788}
 .sheet{position:fixed;inset:0;z-index:3000;display:none}
 .sheet.on{display:block}
 .sheet .bg{position:absolute;inset:0;background:rgba(20,17,15,.55)}
@@ -166,12 +167,54 @@ const SHOPS = /*DATA*/[{"n":"Fringe Theory","g":"美容","c":"エステ・美容
 const UPDATED = "2026年9月の版";
 const GROUPS = [["飲食", "var(--g1)"], ["美容", "var(--g2)"], ["お店", "var(--g3)"], ["教室・ジム", "var(--g4)"], ["車", "var(--g5)"], ["サービス", "var(--g6)"]];
 const COLOR = Object.fromEntries(GROUPS.map(([g, c]) => [g, getComputedStyle(document.documentElement).getPropertyValue(c.slice(4, -1)).trim()]));
-const STATES = [["", "未チェック"], ["sent", "📨 送った"], ["like", "⭐ 興味あり"], ["done", "✓ 行った"], ["skip", "✕ 見送り"], ["site", "🌐 サイトあった"]];
+const STATES = [["", "未チェック"], ["sent", "📨 送った"], ["reply", "💬 返事あり"], ["like", "⭐ 興味あり"], ["done", "✓ 行った"], ["skip", "✕ 見送り"], ["site", "🌐 サイトあった"]];
 const SKEY = "windsor-shops-v1";
 let marks = {};
 try { marks = JSON.parse(localStorage.getItem(SKEY) || "{}"); } catch (e) { marks = {}; }
 const keyOf = s => s.n + "@" + s.lat.toFixed(4) + "," + s.lon.toFixed(4);
 function saveMarks() { try { localStorage.setItem(SKEY, JSON.stringify(marks)); } catch (e) {} }
+// ---- 印をスプレッドシート（お店マップのタブ K列＝状態・L列＝更新日時）と共有する（2026-11-02〜）----
+// 書くのはビューアと同じ Apps Script（affiliate-pipeline/job_scraper/apps_script_stage_sync.gs の saveShopMark）。
+// 開いたときにシートの状態を読んで、iPhone と iPad で同じ印になる。Claude もシートを見て状況が分かる
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwF0mDtzb1s23EyW6D6cUIpWGGo4f70nEwmLz87jC16kkuNLBGF6m0dmP4EOPGw_vkf4w/exec";
+const SHEET_ID = "1i2BtQulkchFt2dXxt9o6qLhdC7CXlBpv91EziyCp3o0";
+function syncMark(sh, v) {
+  const u = APPS_SCRIPT_URL + "?shop=" + encodeURIComponent(sh.n) + "&lat=" + sh.lat + "&lon=" + sh.lon + "&state=" + encodeURIComponent(v || "");
+  fetch(u, { mode: "no-cors" }).catch(() => {});
+}
+function setMark(sh, v) {
+  const k = keyOf(sh);
+  if (v) marks[k] = v; else delete marks[k];
+  saveMarks();
+  syncMark(sh, v);
+}
+window.__shopMarks = function (res) {
+  try {
+    if (!res || res.status === "error") return;
+    const fromSheet = {};
+    (res.table.rows || []).forEach(r => {
+      const c = r.c || [];
+      const n = c[0] && c[0].v, lat = c[1] && parseFloat(c[1].v), lon = c[2] && parseFloat(c[2].v), st = c[3] && c[3].v;
+      if (n && st && STATES.some(x => x[0] === st)) fromSheet[n + "@" + lat.toFixed(4) + "," + lon.toFixed(4)] = st;
+    });
+    let migrated = false;
+    try { migrated = localStorage.getItem(SKEY + "-synced") === "1"; } catch (e) {}
+    if (!migrated) {
+      // 初めて：この端末の印でシートにないものをシートに送る
+      SHOPS.forEach(sh => { const k = keyOf(sh); if (marks[k] && !fromSheet[k]) { syncMark(sh, marks[k]); fromSheet[k] = marks[k]; } });
+      try { localStorage.setItem(SKEY + "-synced", "1"); } catch (e) {}
+    }
+    marks = fromSheet;
+    saveMarks();
+    redraw();
+  } catch (e) {}
+};
+function loadSheetMarks() {
+  const q = encodeURIComponent("select A,F,G,K where K is not null");
+  const sc = document.createElement("script");
+  sc.src = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json;responseHandler:__shopMarks&sheet=${encodeURIComponent("お店マップ")}&tq=${q}&_=${Date.now()}`;
+  document.head.appendChild(sc);
+}
 
 let group = "すべて", state = "all", query = "", me = null, shown = 60;
 const $ = id => document.getElementById(id);
@@ -182,7 +225,7 @@ function toast(t) { const el = $("toast"); el.textContent = t; el.classList.add(
 function drawChips() {
   $("groups").innerHTML = [["すべて", ""]].concat(GROUPS).map(([g, c]) =>
     `<button class="chip" data-g="${esc(g)}" aria-pressed="${g === group}">${c ? `<i style="background:${c}"></i>` : ""}${esc(g)}</button>`).join("");
-  const opts = [["all", "全部の印"], ["send", "📨 まだ送ってない"], ["sent", "📨 送った"], ["", "未チェック"], ["like", "⭐ 興味あり"], ["done", "✓ 行った"], ["skip", "✕ 見送り"], ["site", "🌐 サイトあった"]];
+  const opts = [["all", "全部の印"], ["send", "📨 まだ送ってない"], ["sent", "📨 送った"], ["reply", "💬 返事あり"], ["", "未チェック"], ["like", "⭐ 興味あり"], ["done", "✓ 行った"], ["skip", "✕ 見送り"], ["site", "🌐 サイトあった"]];
   $("states").innerHTML = opts.map(([k, t]) => `<button class="chip${k === "send" ? " send" : ""}" data-s="${k}" aria-pressed="${k === state}">${esc(t)}</button>`).join("");
 }
 function matches(s) {
@@ -316,7 +359,16 @@ function fillMsg(keepText) {
   const smsBtn = s.p ? `<a class="main" href="${esc(smsHref(s.p, $("mText").value))}" data-copyopen>メッセージアプリで開く</a>` : "";
   $("mActs").innerHTML = (mKind === "dm" ? socials : mKind === "sms" ? smsBtn : `<a class="main" href="mailto:?subject=${encodeURIComponent($("mSubj").value)}&body=${encodeURIComponent($("mText").value)}" data-copyopen>コピーしてメールを開く</a><button type="button" data-copysubj>件名をコピー</button>`) +
     `<button type="button" data-copytext>文だけコピー</button>` +
-    `<button type="button" class="sent" data-sent>${sent ? "📨 送った（外す）" : "📨 送ったにする"}</button>`;
+    `<button type="button" class="sent" data-sent>${sent ? "📨 送った（外す）" : "📨 送ったにする"}</button>` +
+    (sent ? `<a href="${esc(calLink(s))}" target="_blank" rel="noopener">📅 1週間後に「もう一度送る」をカレンダーに</a>` : "");
+}
+// Google カレンダーの「予定を作る」画面を、1週間後・終日・タイトル入りで開く（保存は本人が押す）
+function calLink(s) {
+  const d = new Date(); d.setDate(d.getDate() + 7);
+  const f = x => x.getFullYear() + String(x.getMonth() + 1).padStart(2, "0") + String(x.getDate()).padStart(2, "0");
+  const e = new Date(d); e.setDate(e.getDate() + 1);
+  return "https://calendar.google.com/calendar/render?action=TEMPLATE&text=" + encodeURIComponent("もう一度送る：" + s.n) +
+    "&dates=" + f(d) + "/" + f(e) + "&details=" + encodeURIComponent("返事がなければ、同じ方法で1回だけ短く送る。返事があれば 💬 返事あり にする。\n" + gmaps(s));
 }
 function openMsg(i) {
   mIdx = i;
@@ -344,8 +396,7 @@ document.addEventListener("click", e => {
   if (co) { copy($("mText").value).then(ok => toast(ok ? "コピーしました。開いた画面に貼り付けて送ってください" : "コピーできませんでした。先に「文だけコピー」を押してください")); return; }
   if (e.target.closest("[data-sent]")) {
     const key = keyOf(SHOPS[mIdx]);
-    if (marks[key] === "sent") delete marks[key]; else marks[key] = "sent";
-    saveMarks();
+    setMark(SHOPS[mIdx], marks[key] === "sent" ? "" : "sent");
     toast(marks[key] ? "📨 送った にしました" : "印を外しました");
     fillMsg(true);
     redraw();
@@ -422,8 +473,7 @@ document.addEventListener("click", e => {
   const mk = e.target.closest("[data-mark]");
   if (mk) {
     const s = SHOPS[+mk.dataset.i], k = keyOf(s), v = mk.dataset.mark;
-    if (marks[k] === v) delete marks[k]; else marks[k] = v;
-    saveMarks();
+    setMark(s, marks[k] === v ? "" : v);
     toast(marks[k] ? STATES.find(x => x[0] === v)[1] + " にしました" : "印を外しました");
     map.closePopup();
     redraw();
@@ -488,6 +538,7 @@ addEventListener("resize", fitTop);
 $("srcnote").textContent = `データ: Overture Maps（オープンデータ、${UPDATED}）。チェーン店・病院・役所などを除いた、自分のサイトが登録されていない個人のお店です。` +
   `古いこともあるので、行く前に Google マップで「開いているか」「ウェブサイトのボタンが無いか」を確かめてください。印（⭐・✓など）はこの端末にだけ保存されます。`;
 redraw();
+loadSheetMarks();
 fitTop();
 try { map.fitBounds(cluster.getBounds(), { padding: [20, 20] }); } catch (e) {}
 try { if (localStorage.getItem(SKEY + "-view") === "list") setView(true); } catch (e) {}

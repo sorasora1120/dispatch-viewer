@@ -30,6 +30,7 @@
     `shops.html#send` で開くとそのリストから。ビューアの上に「📨 お店に送る」。名前・学校・メール・住所は「自分の情報」でこの端末にだけ保存（学校名と住所はリポジトリに書かない。ユーザーは学校名を入れる希望）。
     メールには郵便の住所が必要（CASL）なので、住所が空ならDMをすすめる表示
     2026-11-02 SMS のタブも（ユーザーの希望。`sms:番号?&body=` で本文入りでメッセージアプリを開く。STOP の一文入り）。「まだ送ってない」は SNS か電話があるお店。
+    2026-11-02 印（📨送った・💬返事あり・⭐など）はスプレッドシート「お店マップ」タブの K列（状態）・L列（更新日時）・M列（メモ）と共有。書くのはビューアと同じ Apps Script（affiliate-pipeline の apps_script_stage_sync.gs の saveShopMark）、読むのは gviz（responseHandler:__shopMarks）。開くとシートの状態が正（初回だけ端末の印をシートへ送る）。Claude は Sheets コネクタでこの列を見て状況をつかむ。「送った」にすると「1週間後にもう一度送る」を Google カレンダーに入れるリンクが出る。メールの返事は Gmail コネクタで Claude が読む（Instagram・Facebook・SMS の返事は読めないので貼ってもらう）
     自分の情報（名前・学校・メール・電話・住所）は `local-sheet-contact`（local.html・local-guide-en.html・pitch.html と共通）に保存して、台本の [Name] と「a student here in Windsor」も自動で埋める
 - `all.html`：作ったもの一覧（2026-10-22〜、「作ったWEBとかアプリ系全部見せて」）。写真は `all/*.jpg`（スマホの大きさで撮った画面、幅320px）。
   ページを足したら一覧と写真も足す。ポートフォリオのリンクは `SO_SHA` の rawcdn（学校用）と github.io（お客さん用）。実在のお店のプレビューは載せない
