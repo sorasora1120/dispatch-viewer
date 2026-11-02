@@ -246,30 +246,42 @@ function whoLine() {
   const school = (meInfo.school || "").trim();
   return `I'm ${(meInfo.name || "").trim() || "[Name]"}, a student${school ? " at " + school : ""} here in Windsor.`;
 }
+// 文は短く・そのお店の種類に合う一言・最後は「yes と返すだけ」の小さいお願い（2026-11-02 書き直し。値段は最初に書かない）
+function hook(g) {
+  return {
+    "飲食": "When people look for a place to eat nearby, they usually want to see the menu and hours before they go.",
+    "美容": "New clients usually want to see photos and prices before they book.",
+    "教室・ジム": "People usually want to see classes, prices and times before they sign up.",
+    "お店": "Shoppers often check what you carry and your hours online before they visit.",
+  }[g] || "People searching on Google often look for a website to check services and prices before they call.";
+}
 function dmText(shop, link) {
-  return `Hi! ${whoLine()} I run my own small web design business on the side, helping local shops get online. I noticed ${shop} doesn't have a website yet, so here's an example of what one could look like: ${link}
+  const s = SHOPS[mIdx];
+  return `Hi ${shop}! 👋 ${whoLine()}
 
-If you like it, I'd love to make a free preview with your own photos and menu. No pressure at all!
-(If you'd rather not get messages like this, just let me know and I won't message again.)`;
+${hook(s.g)} ${shop} doesn't have a website yet, so I made an example of what one could look like: ${link}
+
+Would you like a free preview made just for ${shop}, with your own photos? Just reply "yes" and I'll send it in a couple of days. No cost, no pressure.
+
+(If you'd rather not get messages like this, just let me know.)`;
 }
 function smsText(shop, link) {
-  return `Hi ${shop}! ${whoLine()} I make simple websites for local shops. Here's an example of what yours could look like: ${link}
-If you like it, I can make a free preview for you. (Reply STOP and I won't text again.)`;
+  return `Hi ${shop}! ${whoLine()} I made an example website for local shops like yours: ${link}
+Want a free preview made just for ${shop}? Just reply YES. (Reply STOP and I won't text again.)`;
 }
 function smsHref(num, body) {
   // iPhone と Android の両方で本文が入る形（sms:番号?&body=）
   return `sms:${String(num).replace(/[^\d+]/g, "")}?&body=${encodeURIComponent(body)}`;
 }
 function mailText(shop, link) {
+  const s = SHOPS[mIdx];
   const sign = [(meInfo.email || "").trim(), (meInfo.phone || "").trim(), (meInfo.addr || "").trim()].filter(Boolean).join(" · ") || "[Email] · [Mailing address]";
   return `Hi ${shop} team,
 
-${whoLine()} I run my own small web design business on the side, helping local shops get online. I noticed ${shop} doesn't have a website yet, so here's an example of what one could look like:
+${whoLine()} ${hook(s.g)} ${shop} doesn't have a website yet, so I made an example of what one could look like:
 ${link}
 
-It shows your menu, hours, photos, a map and a call button, and it works great on phones. If you like the idea, I can make a free preview with your own photos and menu. A one-page site is $250 for our first three shops (normally $400), with no monthly fee.
-
-If you're interested, just reply to this email.
+Would you like a free preview made just for ${shop}, with your own photos and menu? Just reply "yes" and I'll send it in a couple of days. No cost, no pressure.
 
 Thanks,
 ${(meInfo.name || "").trim() || "[Name]"}
@@ -284,7 +296,7 @@ function copy(text) {
 function fillMsg(keepText) {
   const s = SHOPS[mIdx], shop = $("mShop").value.trim() || s.n, link = sampleFor(s);
   if (!keepText) $("mText").value = mKind === "dm" ? dmText(shop, link) : mKind === "sms" ? smsText(shop, link) : mailText(shop, link);
-  $("mSubj").value = `A free website preview for ${shop}`;
+  $("mSubj").value = `Quick idea for ${shop}`;
   $("mSubjWrap").style.display = mKind === "mail" ? "" : "none";
   document.querySelectorAll("[data-kind]").forEach(b => b.setAttribute("aria-pressed", b.dataset.kind === mKind));
   const warn = [];
