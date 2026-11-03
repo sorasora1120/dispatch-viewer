@@ -313,17 +313,9 @@ Can I make a free preview for ${shop}? Just reply YES. (Reply STOP and I won't t
 }
 // 「質問」：返事が来ないとき用。正直に「ビジネスを始めた学生として聞きたい」と書いて、質問は2つだけ。送ったお店には追いかけの文
 function askText(shop) {
-  const s = SHOPS[mIdx];
-  if ((marks[keyOf(s)] || "") === "sent") {
-    return `Hi again! I'm a student starting out, so I'm trying to learn what local shops actually need. Could I ask: how do most new customers find you? Even a short answer would really help. Thanks! 🙏`;
-  }
-  return `Hi ${shop}! 👋 ${whoLine()} I'm starting a small web design business, and I'd love to learn from local shops first.
-
-Could I ask you 2 quick questions?
-1. How do most new customers find you?
-2. Have you ever thought about having a website, or is it not really needed for you?
-
-Even a one-word answer helps a lot. Thank you! 🙏`;
+  const s = SHOPS[mIdx], name = (meInfo.name || "").trim() || "[Name]", school = (meInfo.school || "").trim();
+  if ((marks[keyOf(s)] || "") === "sent") return `Hi again! Quick question from a local student: how do most new customers find you? 🙏`;
+  return `Hi! I'm ${name}, a ${school ? school + " " : ""}student starting a web design business. Quick question: how do most new customers find ${shop}? 🙏`;
 }
 function smsHref(num, body) {
   // iPhone と Android の両方で本文が入る形（sms:番号?&body=）
