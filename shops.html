@@ -126,7 +126,7 @@ body.listmode #list{display:block}
   <p class="sub" id="mSub"></p>
   <label for="mShop">お店の名前（文に入る名前。変なら直す）</label>
   <input id="mShop" type="text" autocomplete="off">
-  <div class="tabs2"><button type="button" data-kind="dm" aria-pressed="true">DM</button><button type="button" data-kind="sms" aria-pressed="false">SMS</button><button type="button" data-kind="mail" aria-pressed="false">メール</button><button type="button" data-kind="ask" aria-pressed="false">質問</button></div>
+  <div class="tabs2"><button type="button" data-kind="dm" aria-pressed="true">DM</button><button type="button" data-kind="sms" aria-pressed="false">SMS</button><button type="button" data-kind="mail" aria-pressed="false">メール</button></div>
   <div id="mSubjWrap" style="display:none"><label for="mSubj">件名</label><input id="mSubj" type="text"></div>
   <label for="mText">送る文（ここで直してもOK）</label>
   <textarea id="mText"></textarea>
@@ -298,20 +298,10 @@ function hook(g) {
     "お店": "Shoppers often check what you carry and your hours online before they visit.",
   }[g] || "People searching on Google often look for a website to check services and prices before they call.";
 }
-function dmText(shop, link) {
-  return `Hi ${shop}! 👋 ${whoLine()} I'm starting my own small web design business and looking for my first few local shops to work with.
-
-${shop} doesn't have a website yet, so I made an example: ${link}
-
-Can I make a free preview for ${shop}? Just reply "yes" 🙏
-
-(If you'd rather not get messages like this, just let me know.)`;
-}
-function smsText(shop, link) {
-  return `Hi ${shop}! ${whoLine()} I'm starting my own small web design business and looking for my first few local shops. Here's an example site: ${link}
-Can I make a free preview for ${shop}? Just reply YES. (Reply STOP and I won't text again.)`;
-}
-// 「質問」：返事が来ないとき用。正直に「ビジネスを始めた学生として聞きたい」と書いて、質問は2つだけ。送ったお店には追いかけの文
+// DM・SMS は同じ短い文（2026-11-03「全部SMSとFacebookも同じ文にして」）。最後の一文は送らないでと言える一言（CASL）
+const OPTOUT = "(Reply STOP to opt out)";
+function dmText(shop) { return askText(shop) + " " + OPTOUT; }
+function smsText(shop) { return askText(shop) + " " + OPTOUT; }
 function askText(shop) {
   const s = SHOPS[mIdx], name = (meInfo.name || "").trim() || "[Name]", school = (meInfo.school || "").trim();
   if ((marks[keyOf(s)] || "") === "sent") return `Hi again! Quick question from a local student: how do most new customers find you? 🙏`;
@@ -321,22 +311,13 @@ function smsHref(num, body) {
   // iPhone と Android の両方で本文が入る形（sms:番号?&body=）
   return `sms:${String(num).replace(/[^\d+]/g, "")}?&body=${encodeURIComponent(body)}`;
 }
-function mailText(shop, link) {
-  const s = SHOPS[mIdx];
+function mailText(shop) {
   const sign = [(meInfo.email || "").trim(), (meInfo.phone || "").trim(), (meInfo.addr || "").trim()].filter(Boolean).join(" · ") || "[Email] · [Mailing address]";
-  return `Hi ${shop} team,
+  return `${askText(shop)}
 
-${whoLine()} I'm starting my own small web design business and looking for my first few local shops to work with.
-
-${hook(s.g)} ${shop} doesn't have a website yet, so I made an example of what one could look like:
-${link}
-
-Would you like a free preview made just for ${shop}, with your own photos and menu? Just reply "yes" and I'll send it in a couple of days. No cost, no pressure.
-
-Thanks,
 ${(meInfo.name || "").trim() || "[Name]"}
 ${sign}
-If you'd rather not hear from me again, just reply "no thanks" and I won't contact you again.`;
+If you'd rather not hear from me again, just reply "no thanks".`;
 }
 let mIdx = -1, mKind = "dm";
 function copy(text) {
@@ -345,8 +326,8 @@ function copy(text) {
 }
 function fillMsg(keepText) {
   const s = SHOPS[mIdx], shop = $("mShop").value.trim() || s.n, link = sampleFor(s);
-  if (!keepText) $("mText").value = mKind === "dm" ? dmText(shop, link) : mKind === "sms" ? smsText(shop, link) : mKind === "ask" ? askText(shop) : mailText(shop, link);
-  $("mSubj").value = `Quick idea for ${shop}`;
+  if (!keepText) $("mText").value = mKind === "dm" ? dmText(shop, link) : mKind === "sms" ? smsText(shop, link) : mailText(shop, link);
+  $("mSubj").value = `Quick question for ${shop}`;
   $("mSubjWrap").style.display = mKind === "mail" ? "" : "none";
   document.querySelectorAll("[data-kind]").forEach(b => b.setAttribute("aria-pressed", b.dataset.kind === mKind));
   const warn = [];
@@ -363,7 +344,7 @@ function fillMsg(keepText) {
   }).join("");
   const sent = (marks[keyOf(s)] || "") === "sent";
   const smsBtn = s.p ? `<a class="main" href="${esc(smsHref(s.p, $("mText").value))}" data-copyopen>メッセージアプリで開く</a>` : "";
-  $("mActs").innerHTML = (mKind === "dm" ? socials : mKind === "sms" ? smsBtn : mKind === "ask" ? socials + smsBtn : `<a class="main" href="mailto:?subject=${encodeURIComponent($("mSubj").value)}&body=${encodeURIComponent($("mText").value)}" data-copyopen>コピーしてメールを開く</a><button type="button" data-copysubj>件名をコピー</button>`) +
+  $("mActs").innerHTML = (mKind === "dm" ? socials : mKind === "sms" ? smsBtn : `<a class="main" href="mailto:?subject=${encodeURIComponent($("mSubj").value)}&body=${encodeURIComponent($("mText").value)}" data-copyopen>コピーしてメールを開く</a><button type="button" data-copysubj>件名をコピー</button>`) +
     `<button type="button" data-copytext>文だけコピー</button>` +
     `<button type="button" class="sent" data-sent>${sent ? "📨 送った（外す）" : "📨 送ったにする"}</button>` +
     (sent ? `<a href="${esc(calLink(s))}" target="_blank" rel="noopener">📅 1週間後に「もう一度送る」をカレンダーに</a>` : "");
