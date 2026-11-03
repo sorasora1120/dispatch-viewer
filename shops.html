@@ -300,12 +300,13 @@ function hook(g) {
 }
 // DM・SMS は同じ短い文（2026-11-03「全部SMSとFacebookも同じ文にして」）。最後の一文は送らないでと言える一言（CASL）
 const OPTOUT = "(Reply STOP to opt out)";
-function dmText(shop) { return askText(shop) + " " + OPTOUT; }
-function smsText(shop) { return askText(shop) + " " + OPTOUT; }
+function dmText(shop) { return askText(shop); }
+function smsText(shop) { return askText(shop); }
+// 2026-11-03「ただの質問だから、ソラと学校名だけ。質問してもいいですかって聞く。それ以外書かない」
 function askText(shop) {
   const s = SHOPS[mIdx], name = (meInfo.name || "").trim() || "[Name]", school = (meInfo.school || "").trim();
-  if ((marks[keyOf(s)] || "") === "sent") return `Hi again! Quick question from a local student: how do most new customers find you? 🙏`;
-  return `Hi! I'm ${name}, a ${school ? school + " " : ""}student starting a web design business. Quick question: how do most new customers find ${shop}? 🙏`;
+  if ((marks[keyOf(s)] || "") === "sent") return `Hi again! Can I ask you a quick question?`;
+  return `Hi! I'm ${name}${school ? " from " + school : ""}. Can I ask you a quick question?`;
 }
 function smsHref(num, body) {
   // iPhone と Android の両方で本文が入る形（sms:番号?&body=）
