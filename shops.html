@@ -126,7 +126,7 @@ body.listmode #list{display:block}
   <p class="sub" id="mSub"></p>
   <label for="mShop">お店の名前（文に入る名前。変なら直す）</label>
   <input id="mShop" type="text" autocomplete="off">
-  <div class="tabs2"><button type="button" data-kind="dm" aria-pressed="true">DM</button><button type="button" data-kind="sms" aria-pressed="false">SMS</button><button type="button" data-kind="mail" aria-pressed="false">メール</button></div>
+  <div class="tabs2"><button type="button" data-kind="dm" aria-pressed="true">DM</button><button type="button" data-kind="sms" aria-pressed="false">SMS</button><button type="button" data-kind="mail" aria-pressed="false">メール</button><button type="button" data-kind="ask" aria-pressed="false">質問</button></div>
   <div id="mSubjWrap" style="display:none"><label for="mSubj">件名</label><input id="mSubj" type="text"></div>
   <label for="mText">送る文（ここで直してもOK）</label>
   <textarea id="mText"></textarea>
@@ -311,6 +311,20 @@ function smsText(shop, link) {
   return `Hi ${shop}! ${whoLine()} I'm starting my own small web design business and looking for my first few local shops. Here's an example site: ${link}
 Can I make a free preview for ${shop}? Just reply YES. (Reply STOP and I won't text again.)`;
 }
+// 「質問」：返事が来ないとき用。正直に「ビジネスを始めた学生として聞きたい」と書いて、質問は2つだけ。送ったお店には追いかけの文
+function askText(shop) {
+  const s = SHOPS[mIdx];
+  if ((marks[keyOf(s)] || "") === "sent") {
+    return `Hi again! I'm a student starting out, so I'm trying to learn what local shops actually need. Could I ask: how do most new customers find you? Even a short answer would really help. Thanks! 🙏`;
+  }
+  return `Hi ${shop}! 👋 ${whoLine()} I'm starting a small web design business, and I'd love to learn from local shops first.
+
+Could I ask you 2 quick questions?
+1. How do most new customers find you?
+2. Have you ever thought about having a website, or is it not really needed for you?
+
+Even a one-word answer helps a lot. Thank you! 🙏`;
+}
 function smsHref(num, body) {
   // iPhone と Android の両方で本文が入る形（sms:番号?&body=）
   return `sms:${String(num).replace(/[^\d+]/g, "")}?&body=${encodeURIComponent(body)}`;
@@ -339,7 +353,7 @@ function copy(text) {
 }
 function fillMsg(keepText) {
   const s = SHOPS[mIdx], shop = $("mShop").value.trim() || s.n, link = sampleFor(s);
-  if (!keepText) $("mText").value = mKind === "dm" ? dmText(shop, link) : mKind === "sms" ? smsText(shop, link) : mailText(shop, link);
+  if (!keepText) $("mText").value = mKind === "dm" ? dmText(shop, link) : mKind === "sms" ? smsText(shop, link) : mKind === "ask" ? askText(shop) : mailText(shop, link);
   $("mSubj").value = `Quick idea for ${shop}`;
   $("mSubjWrap").style.display = mKind === "mail" ? "" : "none";
   document.querySelectorAll("[data-kind]").forEach(b => b.setAttribute("aria-pressed", b.dataset.kind === mKind));
@@ -357,7 +371,7 @@ function fillMsg(keepText) {
   }).join("");
   const sent = (marks[keyOf(s)] || "") === "sent";
   const smsBtn = s.p ? `<a class="main" href="${esc(smsHref(s.p, $("mText").value))}" data-copyopen>メッセージアプリで開く</a>` : "";
-  $("mActs").innerHTML = (mKind === "dm" ? socials : mKind === "sms" ? smsBtn : `<a class="main" href="mailto:?subject=${encodeURIComponent($("mSubj").value)}&body=${encodeURIComponent($("mText").value)}" data-copyopen>コピーしてメールを開く</a><button type="button" data-copysubj>件名をコピー</button>`) +
+  $("mActs").innerHTML = (mKind === "dm" ? socials : mKind === "sms" ? smsBtn : mKind === "ask" ? socials + smsBtn : `<a class="main" href="mailto:?subject=${encodeURIComponent($("mSubj").value)}&body=${encodeURIComponent($("mText").value)}" data-copyopen>コピーしてメールを開く</a><button type="button" data-copysubj>件名をコピー</button>`) +
     `<button type="button" data-copytext>文だけコピー</button>` +
     `<button type="button" class="sent" data-sent>${sent ? "📨 送った（外す）" : "📨 送ったにする"}</button>` +
     (sent ? `<a href="${esc(calLink(s))}" target="_blank" rel="noopener">📅 1週間後に「もう一度送る」をカレンダーに</a>` : "");
