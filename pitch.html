@@ -187,6 +187,27 @@ h2{font-size:clamp(36px,min(8.6vw,7vh),74px);line-height:1.02}
 .script small{font:600 10.5px/1.3 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:#b4502b}
 .script p{font-size:15px;line-height:1.4;margin-top:2px}
 .script .ja{font-size:12.5px;color:#6a564b;margin-top:3px}
+/* 2026-11-04 作り直し：4枚・そのお店の口コミの数・タダのQRとの違い */
+.cmpbar{display:grid;gap:18px;margin-top:6px}
+.cb .lbl{display:flex;justify-content:space-between;align-items:baseline;font-size:clamp(16px,2.4vh,20px);color:var(--sub);margin-bottom:8px}
+.cb .lbl b{font:400 clamp(40px,7vh,64px)/1 var(--serif);color:var(--ink)}
+.cb .track{height:clamp(16px,2.6vh,24px);border-radius:999px;background:rgba(246,239,228,.08);overflow:hidden}
+.cb .fill{height:100%;border-radius:999px;transform-origin:0 50%;transform:scaleX(0);transition:transform 1.2s cubic-bezier(.2,.7,.2,1) .35s}
+.cb.you .fill{background:var(--rust)}
+.cb.them .fill{background:rgba(246,239,228,.45)}
+.on .cb .fill{transform:scaleX(var(--w,1))}
+.rating{color:var(--gold);font-size:clamp(16px,2.4vh,20px);margin-top:12px}
+.vs{width:100%;border-collapse:collapse;margin-top:6px;font-size:clamp(14px,2.2vh,18px)}
+.vs th{font:500 12px/1.3 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--dim);text-align:left;padding:0 10px 10px 0}
+.vs th:last-child{color:var(--gold)}
+.vs td{padding:12px 10px 12px 0;border-top:1px solid var(--line);vertical-align:top;color:var(--sub)}
+.vs td:last-child{color:var(--ink)}
+.vs td:first-child{width:46%}
+.pr{display:flex;align-items:baseline;gap:14px;margin:6px 0 4px}
+.pr b{font:400 clamp(80px,min(22vw,16vh),150px)/.9 var(--serif)}
+.pr span{color:var(--sub);font-size:clamp(16px,2.4vh,20px)}
+#setup .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+#setup .hint{font-size:12.5px;color:#7b685c;margin-top:6px;line-height:1.5}
 @media (prefers-reduced-motion:reduce){.slide,.rise>*,.stars span{transition:none!important}.rc.float,.phone,.ping{animation:none!important}}
 </style>
 </head>
@@ -200,16 +221,19 @@ h2{font-size:clamp(36px,min(8.6vw,7vh),74px);line-height:1.02}
     <small>The slides do the explaining. Turn the screen to the owner, tap to go on, and say a few words.</small></p>
 
   <div class="box">
-    <h2>最初に入れる <small style="font-weight:400;color:#9b8677">Before you go</small></h2>
-    <label for="fShop">お店の名前 <small>Shop name（表紙に出る）</small></label>
+    <h2>行く前に入れる（1軒ごと） <small style="font-weight:400;color:#9b8677">Before each visit</small></h2>
+    <label for="fShop">お店の名前 <small>Shop name</small></label>
     <input id="fShop" type="text" autocomplete="off" placeholder="例：Mario's Pizza">
-    <label for="fName">見せる人の名前（英語） <small>Your name</small></label>
-    <input id="fName" type="text" autocomplete="off" placeholder="例：Alex">
-    <label for="fEmail">メール <small>Email（最後のスライドに出る）</small></label>
-    <input id="fEmail" type="email" autocomplete="off" placeholder="you@example.com">
-    <label for="fPhone">電話（なくてもいい） <small>Phone, optional</small></label>
-    <input id="fPhone" type="tel" autocomplete="off">
-    <label class="chk"><input id="fSite" type="checkbox" checked> サイトのスライドも入れる <small style="color:#9b8677">Include the website slide</small></label>
+    <div class="row2">
+      <div><label for="fRev">口コミの数 <small>Reviews</small></label><input id="fRev" type="number" inputmode="numeric" min="0" placeholder="例：12"></div>
+      <div><label for="fStar">星 <small>Rating</small></label><input id="fStar" type="number" inputmode="decimal" min="1" max="5" step="0.1" placeholder="例：4.6"></div>
+    </div>
+    <label for="fComp">近くの似たお店の口コミの数（なくてもいい） <small>A similar shop nearby</small></label>
+    <input id="fComp" type="number" inputmode="numeric" min="0" placeholder="例：240">
+    <p class="hint">Google マップでお店を開くと、名前の下に「4.6 ★（12）」のように出ます。近くの似たお店は、Google マップで「pizza」などと検索して、口コミがいちばん多いお店の数を入れる。お店の名前は画面に出しません（数字だけ）。<b>ウソの数字は入れない。</b></p>
+    <label class="chk"><input id="fSite" type="checkbox"> サイトの話も入れる（サイトがないお店だけ） <small style="color:#9b8677">Website slide</small></label>
+    <p class="hint">名前・メール・電話は「自分の情報」（お店マップのメッセージ画面）と同じものが入ります。</p>
+    <input id="fName" type="hidden"><input id="fEmail" type="hidden"><input id="fPhone" type="hidden">
   </div>
 
   <div class="go">
@@ -221,11 +245,11 @@ h2{font-size:clamp(36px,min(8.6vw,7vh),74px);line-height:1.02}
     <h2>緊張したときは <small style="font-weight:400;color:#9b8677">If you're nervous</small></h2>
     <ul>
       <li><b>説明はスライドの仕事。</b>あなたは「めくる人」でいい。書いてあることを指さすだけでも伝わる<small>The slides explain it. You just turn the pages.</small></li>
-      <li><b>覚えるのは最初のひとことだけ。</b>「Hi! Is the owner around?」→ 「I made something for your shop. Can I show you? It takes one minute.」<small>Only remember the first line.</small></li>
+      <li><b>覚えるのは最初のひとことだけ。</b>「Hi! Is the owner around? I'm Sora from Brennan. Can I ask you a quick question?」<small>Only remember the first line.</small></li>
       <li><b>家で2回、声に出して練習する。</b>「練習する」で、下に台本が出る。1回1分くらい<small>Practice out loud twice at home.</small></li>
       <li><b>ゆっくりでいい。</b>緊張すると早口になるのが普通。スライドを見せて、相手が読み終わるのを待ってからめくる<small>Slow is fine. Wait for them to read.</small></li>
       <li><b>断られても成功。</b>「No problem, thanks for your time!」で笑って終わり。行ったこと自体が練習になる<small>A "no" is fine. Smile and say thanks.</small></li>
-      <li><b>本物のカードを1枚持っていく。</b>⑤のスライドで渡して、オーナーのスマホでかざしてもらう<small>Bring one card with the shop's link on it.</small></li>
+      <li><b>本物のカードを1枚持っていく。</b>そのお店のレビューのリンクを書いたもの。②のスライドで渡して、オーナーのスマホでかざしてもらう（ここがいちばん効く）<small>Bring one card with the shop's link on it.</small></li>
     </ul>
   </div>
   <p class="note">名前とメールはこの端末のブラウザにだけ保存します（「現地のお店の売り方」の見せる紙と同じ）。めくるのは画面の右をタップ（戻るのは左）か、スワイプ。</p>
@@ -236,74 +260,36 @@ h2{font-size:clamp(36px,min(8.6vw,7vh),74px);line-height:1.02}
   <div class="bar"><i id="barI"></i></div>
   <div class="top"><button class="x" id="exit" type="button" aria-label="Close">✕</button><span class="n" id="count"></span><span style="width:34px"></span></div>
 
-  <section class="slide cover" data-say="Hi! I'm {name}, a student here in Windsor. I made something for {shop}. Can I show you? It takes one minute."
-    data-ja="こんにちは、Windsorの学生の〇〇です。〇〇さん用に作ったものがあります。見てもらえますか？1分で終わります。">
-    <div class="wrap rise">
-      <div class="kick" data-shop-kick>For your shop</div>
-      <h1>More Google reviews,<br><em>one tap</em> away.</h1>
-      <p class="sub">A one-minute idea for <span data-shop>your shop</span>.</p>
-      <p class="by" data-by></p>
-    </div>
-  </section>
-
-  <section class="slide" data-say="Before people visit a new place, they check the reviews on Google Maps."
-    data-ja="初めてのお店に行く前に、みんなGoogleマップでレビューを見ます。">
+  <!-- ① そのお店の口コミの数（行く前に入れた数字）-->
+  <section class="slide" data-say="Before people try a new place, they check Google. You have {rev} reviews. {comp}Most happy customers never leave one, because it takes too many steps."
+    data-ja="初めてのお店に行く前に、みんなGoogleを見ます。こちらは口コミが{rev}件です。{compja}満足したお客さんでも、手順が多いので書かない人がほとんどです。">
     <div class="wrap two">
       <div class="rise">
-        <div class="kick">01 · Reviews</div>
-        <h2>New customers read your <em>reviews</em> first.</h2>
-        <p class="sub">Before they visit, people check Google Maps: the stars, the photos, and what others said.</p>
+        <div class="kick" data-shop-kick>For your shop</div>
+        <h2><span data-shop>Your shop</span> has <em data-rev>—</em> Google reviews.</h2>
+        <p class="sub">New customers check reviews before they visit. Happy customers rarely write one. It takes too many steps.</p>
       </div>
       <div class="rise">
-        <div class="stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-        <div class="bubble"><p>"Friendly staff and great food. We'll be back!"</p><small>Example review</small></div>
-        <div class="bubble" style="margin-left:24px"><p>"Best spot in the neighbourhood."</p><small>Example review</small></div>
+        <div class="cmpbar">
+          <div class="cb you"><div class="lbl"><span data-shop>Your shop</span><b data-rev>—</b></div><div class="track"><div class="fill" id="barYou"></div></div></div>
+          <div class="cb them" id="compRow"><div class="lbl"><span>A similar shop nearby</span><b id="compN">—</b></div><div class="track"><div class="fill" id="barThem"></div></div></div>
+        </div>
+        <p class="rating" id="ratingLine"></p>
       </div>
     </div>
   </section>
 
-  <section class="slide" data-say="Lots of happy customers never write a review. Not because they don't want to. It just takes too many steps."
-    data-ja="満足したお客さんでも、レビューを書かない人が多いです。書きたくないからじゃなくて、手順が多すぎるからです。">
+  <!-- ② かざしてもらう（いちばん効くところ）-->
+  <section class="slide" data-say="Here, try it. Hold the top of your phone on this card. ... That's your review page. One tap, and your customer can leave a review."
+    data-ja="どうぞ、スマホの上のふちをこのカードに当ててみてください。……これがお店のレビューの画面です。お客さんはタップするだけで書けます。（カードを渡す）">
     <div class="wrap two">
       <div class="rise">
-        <div class="kick">02 · The problem</div>
-        <h2>Happy customers often <em>forget</em> to write one.</h2>
-        <p class="sub">Not because they don't want to. It just takes too many steps.</p>
-      </div>
-      <div class="cmp rise">
-        <div class="col"><h3>Today</h3><ol><li>Open Google Maps</li><li>Search for the shop</li><li>Find the reviews</li><li>Tap "Write a review"</li></ol></div>
-        <div class="col card1"><h3>With a card</h3><div class="one">1 tap</div><p>Their phone opens your review page.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="slide" data-say="This is a review card. Customers tap their phone on it, and your Google review page opens."
-    data-ja="これがレビューカードです。お客さんがスマホをかざすと、お店のGoogleレビューの画面が開きます。">
-    <div class="wrap two">
-      <div class="rise">
-        <div class="kick">03 · The card</div>
-        <h2>Meet the <em>review card.</em></h2>
-        <p class="sub">Customers tap their phone. Your review page opens. That's it. No app, no searching.</p>
-      </div>
-      <div class="stage"><div class="rc float">
-        <div class="t1">Enjoyed your visit?<br><em>Tap for a review.</em></div>
-        <div class="row"><span class="st">★★★★★</span>
-          <svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 30a12 12 0 0 1 0-16"/><path d="M18 26a6 6 0 0 1 0-8"/><path d="M26 18a6 6 0 0 1 0 8"/><path d="M32 14a12 12 0 0 1 0 16"/></svg></div>
-      </div></div>
-    </div>
-  </section>
-
-  <section class="slide" data-say="Here, try it. Hold the top of your phone on the card."
-    data-ja="どうぞ、やってみてください。スマホの上のふちをカードに当ててください。（カードを渡す）">
-    <div class="wrap two">
-      <div class="rise">
-        <div class="kick">04 · Try it</div>
-        <h2>Try it <em>now.</em></h2>
-        <p class="sub">Hold the top edge of your phone on the card.</p>
+        <div class="kick">Try it</div>
+        <h2>One tap. Your <em>review page</em> opens.</h2>
+        <p class="sub">Hold the top of your phone on the card.</p>
         <p class="small">iPhone: just hold it close. Android: NFC needs to be on.</p>
       </div>
-      <div class="stage tapdemo"><div class="rc" style="transform:rotateX(18deg)">
-        <div class="t1">Enjoyed your visit?<br><em>Tap for a review.</em></div>
+      <div class="stage tapdemo"><div class="rc"><div class="t1">Enjoyed your visit?<br><em>Tap for a review.</em></div>
         <div class="row"><span class="st">★★★★★</span>
           <svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 30a12 12 0 0 1 0-16"/><path d="M18 26a6 6 0 0 1 0-8"/><path d="M26 18a6 6 0 0 1 0 8"/><path d="M32 14a12 12 0 0 1 0 16"/></svg></div>
         <span class="ping"></span>
@@ -311,56 +297,51 @@ h2{font-size:clamp(36px,min(8.6vw,7vh),74px);line-height:1.02}
     </div>
   </section>
 
-  <section class="slide" data-say="Put one by the counter and one on the tables. When people pay, just say: if you enjoyed it, we'd love a review."
-    data-ja="レジに1枚、テーブルに1枚置きます。お会計の時に「よかったらレビューお願いします」と言うだけです。">
+  <!-- ③ 値段と「タダのQRとの違い」-->
+  <section class="slide" data-say="It's 39 dollars for two cards, one for the counter and one for the tables. No monthly fee. You could make a free QR code yourself, but we set everything up for you, and tapping is faster than scanning."
+    data-ja="2枚で39ドルです。レジに1枚、テーブルに1枚。毎月の料金はありません。QRコードは自分でも無料で作れますが、こちらで全部セットしますし、かざす方がスキャンより早いです。（聞かれたら：レビューと引きかえの割引はGoogleのルールで禁止。みんなに頼んでください）">
     <div class="wrap two">
       <div class="rise">
-        <div class="kick">05 · How to use it</div>
-        <h2>One by the <em>counter.</em> One on the <em>tables.</em></h2>
+        <div class="kick">Price</div>
+        <div class="pr"><b>$39</b><span>for two cards<br>No monthly fee</span></div>
+        <p class="sub">One for the counter, one for the tables. Extra cards $15.</p>
       </div>
-      <div class="places rise">
-        <div class="place"><svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="20" width="32" height="16" rx="2"/><path d="M12 20v-8h20v8"/><path d="M18 28h8"/></svg>
-          <div><b>At the counter</b><span>"If you enjoyed it, we'd love a review. Just tap here."</span></div></div>
-        <div class="place"><svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 18h32"/><path d="M10 18v16M34 18v16"/><path d="M16 18l2-8h8l2 8"/></svg>
-          <div><b>On the tables or by the door</b><span>People tap it while they wait.</span></div></div>
-        <p class="rule">Ask everyone, not only the happy customers. And no discounts for reviews. Google doesn't allow that.</p>
+      <div class="rise">
+        <table class="vs">
+          <tr><th>Free QR code</th><th>Review card</th></tr>
+          <tr><td>You make it and print it</td><td>We set it up with your link</td></tr>
+          <tr><td>Open the camera, scan</td><td>Just tap</td></tr>
+          <tr><td>Paper gets worn</td><td>A clean card that lasts</td></tr>
+        </table>
       </div>
     </div>
   </section>
 
-  <section class="slide price" data-say="It's 39 dollars for two cards. Extra cards are 15. No monthly fee. We put your review link on them for you."
-    data-ja="2枚で39ドルです。追加は1枚15ドル。毎月の料金はありません。お店のレビューのリンクはこちらで入れます。">
-    <div class="wrap rise">
-      <div class="kick">06 · Price</div>
-      <div class="big"><small>$</small>39</div>
-      <div class="for">for two cards · Canadian dollars</div>
-      <div class="lines"><div>Extra cards</div><div>$15 each</div><div>Monthly fee</div><div>None</div><div>Setup</div><div>We add your review link</div></div>
-    </div>
-  </section>
-
-  <section class="slide site" data-site data-say="And if you ever want a website, we make simple ones too. When people find you on Google Maps, there's no website button yet. We can make a free preview first."
-    data-ja="サイトがほしくなったら、それも作っています。今はGoogleマップでお店を見つけても、ウェブサイトのボタンがありません。まず無料で見本を作れます。">
+  <!-- （サイトがないお店だけ）-->
+  <section class="slide site" data-site data-say="One more thing. When people find you on Google Maps, there's no website button yet. We make simple websites too. I can make a free preview."
+    data-ja="もう1つ。Googleマップでお店を見つけても、まだウェブサイトのボタンがありません。サイトも作っています。無料で見本を作れます。">
     <div class="wrap two">
       <div class="rise">
-        <div class="kick">07 · Also</div>
+        <div class="kick">Also</div>
         <h2>No website button on Google Maps <em>yet?</em></h2>
-        <p class="sub">We also make simple one-page websites: menu, hours, photos, a map and a call button.</p>
+        <p class="sub">A simple one-page site: menu, hours, photos, map and a call button.</p>
         <div class="offer"><s>$400</s><b>$250</b><span>for our first three shops<br>Two review cards included</span></div>
-        <p class="small">Free preview first. Pay half to start, the rest when it's live.</p>
+        <p class="small">Free preview first.</p>
       </div>
       <div class="rise wide-only"><div class="mini"><div class="h" data-shop-mini>Your Shop</div><div class="open">● Open now</div><div class="ph"></div>
         <div class="ln"></div><div class="ln s"></div><div class="bt"><i>Call</i><i>Directions</i></div></div></div>
     </div>
   </section>
 
-  <section class="slide" data-say="You can keep this card and try it for a week. I'll come back next week. If you like it, it's 39 for this one and one more. If not, just give it back."
-    data-ja="このカードは置いていくので、1週間使ってみてください。来週また来ます。よかったら、これともう1枚で39ドル。いらなければ返してください。（断られたら：No problem, thanks for your time!）">
+  <!-- ④ 1週間無料で試す -->
+  <section class="slide" data-say="You can keep this card and try it for a week, free. I'll come back next week. If you like it, it's 39 for this one and one more. If not, just give it back."
+    data-ja="このカードは置いていくので、1週間無料で試してください。来週また来ます。よかったら、これともう1枚で39ドル。いらなければ返してください。（断られたら：No problem, thanks for your time!）">
     <div class="wrap rise">
-      <div class="kick">Next step</div>
-      <h2>Want to <em>try it?</em></h2>
+      <div class="kick">No risk</div>
+      <h2>Try it <em>free</em> for a week.</h2>
       <div class="opts">
-        <div class="opt a"><b>Try one free for a week</b><span>Keep this card. If you like it, it's $39 for this one and one more. If not, just give it back.</span></div>
-        <div class="opt"><b>Get two cards</b><span>$39. We set them up with your review link.</span></div>
+        <div class="opt a"><b>Keep this card for a week</b><span>If more customers leave reviews, it's $39 for this one and one more. If not, just give it back.</span></div>
+        <div class="opt"><b>Or get two cards today</b><span>$39. We set them up with your review link.</span></div>
       </div>
       <div class="contact" data-contact></div>
     </div>
@@ -373,20 +354,20 @@ h2{font-size:clamp(36px,min(8.6vw,7vh),74px);line-height:1.02}
 <script>
 (function () {
   var KEY = "local-sheet-contact", SKEY = "pitch-settings";   // KEY は local.html の「見せる紙」と同じ（名前とメールを共有）
-  var f = { shop: fShop, name: fName, email: fEmail, phone: fPhone };
+  var f = { shop: fShop, name: fName, email: fEmail, phone: fPhone, rev: fRev, star: fStar, comp: fComp };
   var c = {}, st = {};
   try { c = JSON.parse(localStorage.getItem(KEY) || "{}"); st = JSON.parse(localStorage.getItem(SKEY) || "{}"); } catch (e) {}
   f.name.value = c.name || ""; f.email.value = c.email || ""; f.phone.value = c.phone || "";
-  f.shop.value = st.shop || ""; fSite.checked = st.site !== false;
+  f.shop.value = st.shop || ""; fSite.checked = !!st.site; f.rev.value = st.rev || ""; f.star.value = st.star || ""; f.comp.value = st.comp || "";
   function save() {
     try {
       var cc = {}; try { cc = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) {}
       cc.name = f.name.value; cc.email = f.email.value; cc.phone = f.phone.value;
       localStorage.setItem(KEY, JSON.stringify(cc));
-      localStorage.setItem(SKEY, JSON.stringify({ shop: f.shop.value, site: fSite.checked }));
+      localStorage.setItem(SKEY, JSON.stringify({ shop: f.shop.value, site: fSite.checked, rev: f.rev.value, star: f.star.value, comp: f.comp.value }));
     } catch (e) {}
   }
-  ["shop", "name", "email", "phone"].forEach(function (k) { f[k].addEventListener("input", save); });
+  ["shop", "rev", "star", "comp"].forEach(function (k) { f[k].addEventListener("input", save); });
   fSite.addEventListener("change", save);
 
   var deck = document.getElementById("deck"), slides = [], i = 0;
@@ -396,8 +377,17 @@ h2{font-size:clamp(36px,min(8.6vw,7vh),74px);line-height:1.02}
     var shop = f.shop.value.trim(), name = f.name.value.trim(), email = f.email.value.trim(), phone = f.phone.value.trim();
     document.querySelectorAll("[data-shop]").forEach(function (e) { e.textContent = shop || "your shop"; });
     document.querySelector("[data-shop-kick]").textContent = shop ? "For " + shop : "For your shop";
+    document.querySelectorAll("[data-shop]").forEach(function (e) { e.textContent = shop || "Your shop"; });
+    var rev = parseInt(f.rev.value, 10), comp = parseInt(f.comp.value, 10), star = parseFloat(f.star.value);
+    document.querySelectorAll("[data-rev]").forEach(function (e) { e.textContent = isNaN(rev) ? "—" : String(rev); });
+    var hasComp = !isNaN(comp) && comp > 0 && !isNaN(rev);
+    document.getElementById("compRow").style.display = hasComp ? "" : "none";
+    document.getElementById("compN").textContent = hasComp ? String(comp) : "—";
+    var mx = Math.max(isNaN(rev) ? 0 : rev, hasComp ? comp : 0, 1);
+    document.getElementById("barYou").style.setProperty("--w", isNaN(rev) ? 0 : Math.max(rev / mx, .02));
+    document.getElementById("barThem").style.setProperty("--w", hasComp ? comp / mx : 0);
+    document.getElementById("ratingLine").textContent = !isNaN(star) ? "★ " + star.toFixed(1) + " on Google" + (hasComp ? "" : " · great rating, not many reviews yet") : "";
     document.querySelector("[data-shop-mini]").textContent = shop || "Your Shop";
-    document.querySelector("[data-by]").textContent = name ? name + " · Windsor" : "Windsor";
     var h = "";
     if (name) h += "<b>" + esc(name) + "</b>";
     if (email) h += "<span>" + esc(email) + "</span>";
@@ -410,7 +400,9 @@ h2{font-size:clamp(36px,min(8.6vw,7vh),74px);line-height:1.02}
     });
     slides.forEach(function (s) {
       var school = ""; try { school = (JSON.parse(localStorage.getItem(KEY) || "{}").school || "").trim(); } catch (e) {}
+      var revS = isNaN(rev) ? "[number]" : String(rev);
       s._say = (s.dataset.say || "").replace("{name}", name || "[Name]").replace("{shop}", shop || "your shop")
+        .replace("{rev}", revS).replace("{comp}", hasComp ? "A similar place nearby has " + comp + ". " : "")
         .replace("a student here in Windsor", school ? "a student at " + school + " here in Windsor" : "a student here in Windsor");
     });
   }
@@ -419,7 +411,10 @@ h2{font-size:clamp(36px,min(8.6vw,7vh),74px);line-height:1.02}
     slides.forEach(function (s, k) { s.classList.toggle("on", k === i); s.classList.toggle("prev", k < i); });
     barI.style.transform = "scaleX(" + ((i + 1) / slides.length) + ")";
     count.textContent = (i + 1) + " / " + slides.length;
-    sayEn.textContent = slides[i]._say; sayJa.textContent = slides[i].dataset.ja || "";
+    var revJ = parseInt(f.rev.value, 10), compJ = parseInt(f.comp.value, 10);
+    sayEn.textContent = slides[i]._say;
+    sayJa.textContent = (slides[i].dataset.ja || "").replace("{rev}", isNaN(revJ) ? "〇" : revJ)
+      .replace("{compja}", !isNaN(compJ) && compJ > 0 ? "近くの似たお店は" + compJ + "件です。" : "");
     nextB.textContent = i === slides.length - 1 ? "DONE" : "NEXT ›";
     prevB.style.visibility = i === 0 ? "hidden" : "visible";
   }
