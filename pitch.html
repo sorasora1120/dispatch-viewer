@@ -209,6 +209,14 @@ h2{font-size:clamp(36px,min(8.6vw,7vh),74px);line-height:1.02}
 .pr span{color:var(--sub);font-size:clamp(16px,2.4vh,20px)}
 #setup .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 #setup .hint{font-size:12.5px;color:#7b685c;margin-top:6px;line-height:1.5}
+.site-phone{width:min(64vw,300px,29vh);aspect-ratio:9/18.5;border-radius:40px;background:#0b0908;padding:10px;margin:0 auto;box-shadow:0 30px 60px -20px rgba(0,0,0,.8),0 0 0 2px #3a332d;overflow:hidden}
+.site-phone iframe{width:100%;height:100%;border:0;border-radius:30px;background:#fff}
+.chk2{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.chk2 label{display:flex;gap:6px;align-items:center;font-size:14px;color:#241915;margin:0;background:#fff;border:1px solid rgba(36,25,21,.15);border-radius:999px;padding:6px 12px}
+.addon{display:flex;gap:14px;align-items:center;margin-top:18px;border:1px solid var(--gold);border-radius:16px;padding:12px 16px;background:rgba(217,183,122,.07)}
+.addon b{font:400 clamp(22px,3.4vh,28px)/1.1 var(--serif)}
+.addon span{color:var(--sub);font-size:clamp(13px,2vh,15px)}
+@media (max-width:759px){.hide-sm{display:none}}
 .qrbox{background:#fff;border-radius:22px;padding:18px;width:min(70vw,300px,34vh);margin:0 auto;box-shadow:0 30px 60px -20px rgba(0,0,0,.7)}
 .qrbox svg{display:block;width:100%;height:auto}
 .qrcap{text-align:center;color:var(--sub);font-size:14px;margin-top:12px}
@@ -235,8 +243,12 @@ h2{font-size:clamp(36px,min(8.6vw,7vh),74px);line-height:1.02}
     <label for="fComp">近くの似たお店の口コミの数（なくてもいい） <small>A similar shop nearby</small></label>
     <input id="fComp" type="number" inputmode="numeric" min="0" placeholder="例：240">
     <p class="hint">Google マップでお店を開くと、名前の下に「4.6 ★（12）」のように出ます。近くの似たお店は、Google マップで「pizza」などと検索して、口コミがいちばん多いお店の数を入れる。お店の名前は画面に出しません（数字だけ）。<b>ウソの数字は入れない。</b></p>
+    <label>中心に見せるもの <small>Main pitch</small></label>
+    <div class="chk2"><label><input type="radio" name="mode" value="site" checked> サイト（おすすめ）</label><label><input type="radio" name="mode" value="card"> レビューカード</label></div>
+    <label>お店の種類（見本のサイト） <small>Sample</small></label>
+    <div class="chk2"><label><input type="radio" name="kind" value="cafe" checked> カフェ・飲食</label><label><input type="radio" name="kind" value="pizza"> ピザ</label><label><input type="radio" name="kind" value="salon"> 美容・ネイル</label><label><input type="radio" name="kind" value="barber"> 床屋</label></div>
     <label class="chk"><input id="fNoCard" type="checkbox" checked> カードがまだ手元にない（QRコードで見せる・最後は「届いたら無料で試す」） <small style="color:#9b8677">No card yet</small></label>
-    <label class="chk"><input id="fSite" type="checkbox"> サイトの話も入れる（サイトがないお店だけ） <small style="color:#9b8677">Website slide</small></label>
+    <label class="chk"><input id="fSite" type="checkbox"> （レビューカードの時）サイトの話も入れる <small style="color:#9b8677">Website slide</small></label>
     <p class="hint">名前・メール・電話は「自分の情報」（お店マップのメッセージ画面）と同じものが入ります。</p>
     <input id="fName" type="hidden"><input id="fEmail" type="hidden"><input id="fPhone" type="hidden">
   </div>
@@ -265,8 +277,70 @@ h2{font-size:clamp(36px,min(8.6vw,7vh),74px);line-height:1.02}
   <div class="bar"><i id="barI"></i></div>
   <div class="top"><button class="x" id="exit" type="button" aria-label="Close">✕</button><span class="n" id="count"></span><span style="width:34px"></span></div>
 
+  <!-- ===== サイト中心（2026-11-07〜、「Webサイトを中心にいきたい」）===== -->
+  <!-- S1 そのお店にサイトがない -->
+  <section data-mode="site" class="slide" data-say="Your shop has {rev} reviews on Google. People clearly like you. But when they find you on Google Maps, there's no website button yet. So they can't see your menu, hours or photos in one place."
+    data-ja="Googleで口コミが{rev}件あって、お客さんに好かれているのが分かります。でもGoogleマップでお店を見つけても、まだウェブサイトのボタンがありません。メニューや営業時間や写真を、1か所で見られないんです。">
+    <div class="wrap two">
+      <div class="rise">
+        <div class="kick" data-shop-kick>For your shop</div>
+        <h2>People find <span data-shop>your shop</span> on Google. <em>Then what?</em></h2>
+        <p class="sub">There's no website button yet. Customers can't see your menu, hours or photos in one place.</p>
+      </div>
+      <div class="rise">
+        <div class="cmpbar"><div class="cb you"><div class="lbl"><span>Google reviews</span><b data-rev>—</b></div></div></div>
+        <p class="rating" id="ratingLine2"></p>
+        <p class="sub" style="margin-top:14px">Website: <em>none yet</em></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- S2 見本を触ってもらう -->
+  <section data-mode="site" class="slide" data-say="Here's an example I made. Go ahead, scroll it. Menu, hours, photos, a map and a call button. Yours would use your own photos and menu."
+    data-ja="これが作った見本です。どうぞ触ってスクロールしてみてください。メニュー、営業時間、写真、地図、電話のボタン。〇〇さんのは、お店の写真とメニューで作ります。（iPadを渡す）">
+    <div class="wrap two">
+      <div class="rise">
+        <div class="kick">Example</div>
+        <h2>A simple site, made for <em>phones.</em></h2>
+        <p class="sub hide-sm">Menu, hours with "Open now", your photos, a map and a tap-to-call button.</p>
+        <p class="small hide-sm">Sample design · fictional shop. Scroll it!</p>
+      </div>
+      <div class="rise"><div class="site-phone"><iframe id="sampleFrame" title="Sample website" loading="lazy"></iframe></div></div>
+    </div>
+  </section>
+
+  <!-- S3 値段・レビューカードもある -->
+  <section data-mode="site" class="slide" data-say="It's 250 dollars for our first three shops, normally 400. One time, no monthly fee. Half to start, the rest when it's live. And we also have Google review cards. Two come free with a website."
+    data-ja="最初の3店は250ドルです（ふつうは400ドル）。1回だけで、毎月の料金はありません。最初に半分、公開したら残りの半分。それと、Googleレビューカードもあって、サイトを作ったお店には2枚無料で付けます。">
+    <div class="wrap two">
+      <div class="rise">
+        <div class="kick">Price</div>
+        <div class="pr"><b>$250</b><span>first three shops<br>normally $400 · one time</span></div>
+        <p class="sub">No monthly fee. Pay half to start, the rest when it's live. Ready in about a week.</p>
+      </div>
+      <div class="rise">
+        <div class="addon"><div class="rc" style="width:120px;padding:10px 12px;border-radius:10px;flex:0 0 auto"><div class="t1" style="font-size:13px">Tap for<br><em>a review.</em></div></div>
+          <div><b>+ Google review cards</b><br><span>Customers tap their phone and your review page opens. Two free with a website ($39 on their own).</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- S4 無料の見本 -->
+  <section data-mode="site" class="slide" data-say="Here's my idea. I'll make a free preview for {shop}, with your photos and menu, in a couple of days. If you like it, we go ahead. If not, no problem at all. Can I use a few photos from your Instagram?"
+    data-ja="提案です。〇〇さん用の見本を、お店の写真とメニューで2〜3日で無料で作ります。気に入ったら進めて、気に入らなければそれで大丈夫です。Instagramの写真を何枚か使ってもいいですか？（OKなら：オーナーの名前と連絡先をメモ）">
+    <div class="wrap rise">
+      <div class="kick">Next step</div>
+      <h2>A <em>free</em> preview for <span data-shop>your shop</span>.</h2>
+      <div class="opts">
+        <div class="opt a"><b>I'll make it in 2-3 days</b><span>With your photos and menu. If you like it, we go ahead. If not, no problem.</span></div>
+        <div class="opt"><b>Nothing to pay today</b><span>You only pay when you decide to go ahead.</span></div>
+      </div>
+      <div class="contact" data-contact3></div>
+    </div>
+  </section>
+
   <!-- ① そのお店の口コミの数（行く前に入れた数字）-->
-  <section class="slide" data-say="Before people try a new place, they check Google. You have {rev} reviews. {comp}Most happy customers never leave one, because it takes too many steps."
+  <section data-mode="card" class="slide" data-say="Before people try a new place, they check Google. You have {rev} reviews. {comp}Most happy customers never leave one, because it takes too many steps."
     data-ja="初めてのお店に行く前に、みんなGoogleを見ます。こちらは口コミが{rev}件です。{compja}満足したお客さんでも、手順が多いので書かない人がほとんどです。">
     <div class="wrap two">
       <div class="rise">
@@ -285,7 +359,7 @@ h2{font-size:clamp(36px,min(8.6vw,7vh),74px);line-height:1.02}
   </section>
 
   <!-- ②' カードがまだない時：QRコードでそのお店の Google ページを開いてもらう -->
-  <section class="slide" data-nocard data-say="Point your phone's camera here. ... That's your shop on Google. Customers can leave a review from there. With our card, they don't even need the camera. They just tap."
+  <section data-mode="card" class="slide" data-nocard data-say="Point your phone's camera here. ... That's your shop on Google. Customers can leave a review from there. With our card, they don't even need the camera. They just tap."
     data-ja="スマホのカメラをここに向けてください。……これがGoogleのお店のページです。ここからレビューを書けます。カードなら、カメラもいらなくて、かざすだけです。">
     <div class="wrap two">
       <div class="rise">
@@ -298,7 +372,7 @@ h2{font-size:clamp(36px,min(8.6vw,7vh),74px);line-height:1.02}
   </section>
 
   <!-- ② かざしてもらう（いちばん効くところ）-->
-  <section class="slide" data-card data-say="Here, try it. Hold the top of your phone on this card. ... That's your review page. One tap, and your customer can leave a review."
+  <section data-mode="card" class="slide" data-card data-say="Here, try it. Hold the top of your phone on this card. ... That's your review page. One tap, and your customer can leave a review."
     data-ja="どうぞ、スマホの上のふちをこのカードに当ててみてください。……これがお店のレビューの画面です。お客さんはタップするだけで書けます。（カードを渡す）">
     <div class="wrap two">
       <div class="rise">
@@ -316,7 +390,7 @@ h2{font-size:clamp(36px,min(8.6vw,7vh),74px);line-height:1.02}
   </section>
 
   <!-- ③ 値段と「タダのQRとの違い」-->
-  <section class="slide" data-say="It's 39 dollars for two cards, one for the counter and one for the tables. No monthly fee. You could make a free QR code yourself, but we set everything up for you, and tapping is faster than scanning."
+  <section data-mode="card" class="slide" data-say="It's 39 dollars for two cards, one for the counter and one for the tables. No monthly fee. You could make a free QR code yourself, but we set everything up for you, and tapping is faster than scanning."
     data-ja="2枚で39ドルです。レジに1枚、テーブルに1枚。毎月の料金はありません。QRコードは自分でも無料で作れますが、こちらで全部セットしますし、かざす方がスキャンより早いです。（聞かれたら：レビューと引きかえの割引はGoogleのルールで禁止。みんなに頼んでください）">
     <div class="wrap two">
       <div class="rise">
@@ -336,7 +410,7 @@ h2{font-size:clamp(36px,min(8.6vw,7vh),74px);line-height:1.02}
   </section>
 
   <!-- （サイトがないお店だけ）-->
-  <section class="slide site" data-site data-say="One more thing. When people find you on Google Maps, there's no website button yet. We make simple websites too. I can make a free preview."
+  <section data-mode="card" class="slide site" data-site data-say="One more thing. When people find you on Google Maps, there's no website button yet. We make simple websites too. I can make a free preview."
     data-ja="もう1つ。Googleマップでお店を見つけても、まだウェブサイトのボタンがありません。サイトも作っています。無料で見本を作れます。">
     <div class="wrap two">
       <div class="rise">
@@ -352,7 +426,7 @@ h2{font-size:clamp(36px,min(8.6vw,7vh),74px);line-height:1.02}
   </section>
 
   <!-- ④' カードがまだない時 -->
-  <section class="slide" data-nocard data-say="The cards are on their way. When they arrive, can I bring one and you try it free for a week? If you like it, it's 39 for two. If not, just give it back."
+  <section data-mode="card" class="slide" data-nocard data-say="The cards are on their way. When they arrive, can I bring one and you try it free for a week? If you like it, it's 39 for two. If not, just give it back."
     data-ja="カードは今取り寄せ中です。届いたら1枚持ってくるので、1週間無料で試してもらえますか？よかったら2枚で39ドル、いらなければ返してください。（OKなら：お店の名前と連絡先をメモ。断られたら：No problem, thanks for your time!）">
     <div class="wrap rise">
       <div class="kick">No risk</div>
@@ -366,7 +440,7 @@ h2{font-size:clamp(36px,min(8.6vw,7vh),74px);line-height:1.02}
   </section>
 
   <!-- ④ 1週間無料で試す -->
-  <section class="slide" data-card data-say="You can keep this card and try it for a week, free. I'll come back next week. If you like it, it's 39 for this one and one more. If not, just give it back."
+  <section data-mode="card" class="slide" data-card data-say="You can keep this card and try it for a week, free. I'll come back next week. If you like it, it's 39 for this one and one more. If not, just give it back."
     data-ja="このカードは置いていくので、1週間無料で試してください。来週また来ます。よかったら、これともう1枚で39ドル。いらなければ返してください。（断られたら：No problem, thanks for your time!）">
     <div class="wrap rise">
       <div class="kick">No risk</div>
@@ -390,18 +464,22 @@ h2{font-size:clamp(36px,min(8.6vw,7vh),74px);line-height:1.02}
   var c = {}, st = {};
   try { c = JSON.parse(localStorage.getItem(KEY) || "{}"); st = JSON.parse(localStorage.getItem(SKEY) || "{}"); } catch (e) {}
   f.name.value = c.name || ""; f.email.value = c.email || ""; f.phone.value = c.phone || "";
-  f.shop.value = st.shop || ""; fSite.checked = !!st.site; fNoCard.checked = st.nocard !== false; f.rev.value = st.rev || ""; f.star.value = st.star || ""; f.comp.value = st.comp || "";
+  f.shop.value = st.shop || ""; fSite.checked = !!st.site; fNoCard.checked = st.nocard !== false;
+  function radio(n) { var r = document.querySelector('input[name="' + n + '"]:checked'); return r ? r.value : ""; }
+  if (st.mode) { var rm = document.querySelector('input[name="mode"][value="' + st.mode + '"]'); if (rm) rm.checked = true; }
+  if (st.kind) { var rk = document.querySelector('input[name="kind"][value="' + st.kind + '"]'); if (rk) rk.checked = true; } f.rev.value = st.rev || ""; f.star.value = st.star || ""; f.comp.value = st.comp || "";
   function save() {
     try {
       var cc = {}; try { cc = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) {}
       cc.name = f.name.value; cc.email = f.email.value; cc.phone = f.phone.value;
       localStorage.setItem(KEY, JSON.stringify(cc));
-      localStorage.setItem(SKEY, JSON.stringify({ shop: f.shop.value, site: fSite.checked, nocard: fNoCard.checked, rev: f.rev.value, star: f.star.value, comp: f.comp.value }));
+      localStorage.setItem(SKEY, JSON.stringify({ shop: f.shop.value, site: fSite.checked, nocard: fNoCard.checked, mode: radio("mode"), kind: radio("kind"), rev: f.rev.value, star: f.star.value, comp: f.comp.value }));
     } catch (e) {}
   }
   ["shop", "rev", "star", "comp"].forEach(function (k) { f[k].addEventListener("input", save); });
   fSite.addEventListener("change", save);
   fNoCard.addEventListener("change", save);
+  document.querySelectorAll('input[name="mode"],input[name="kind"]').forEach(function (r) { r.addEventListener("change", save); });
 
   var deck = document.getElementById("deck"), slides = [], i = 0;
   var esc = function (s) { return String(s).replace(/[&<>"']/g, function (ch) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch]; }); };
@@ -427,6 +505,13 @@ h2{font-size:clamp(36px,min(8.6vw,7vh),74px);line-height:1.02}
     if (phone) h += "<span>" + esc(phone) + "</span>";
     document.querySelector("[data-contact]").innerHTML = h;
     document.querySelector("[data-contact2]").innerHTML = h;
+    document.querySelector("[data-contact3]").innerHTML = h;
+    var mode = radio("mode") || "site";
+    document.getElementById("ratingLine2").textContent = !isNaN(star) ? "★ " + star.toFixed(1) + " on Google" : "";
+    // 見本のサイト（学校の外でも中でも開ける rawcdn のコミット固定）
+    var SO = "https://rawcdn.githack.com/sorasora1120/sorasora1120.github.io/69ab595e1a53ad26ff9bd9539e18c37e7c12d17a/samples/";
+    var fr = document.getElementById("sampleFrame"), want = SO + (radio("kind") || "cafe") + ".html";
+    if (mode === "site" && fr.getAttribute("src") !== want) fr.setAttribute("src", want);
     // カードがまだない時：そのお店の Google マップのページを開く QR コード
     var noCard = fNoCard.checked;
     if (noCard && window.qrcode) {
@@ -438,7 +523,7 @@ h2{font-size:clamp(36px,min(8.6vw,7vh),74px);line-height:1.02}
       document.getElementById("qrBox").innerHTML = "<p style='color:#241915;padding:20px'>QRコードを読み込めませんでした（ネットにつないで開き直してください）</p>";
     }
     slides = Array.prototype.filter.call(deck.querySelectorAll(".slide"), function (s) {
-      var off = (s.hasAttribute("data-site") && !fSite.checked) || (s.hasAttribute("data-nocard") && !noCard) || (s.hasAttribute("data-card") && noCard);
+      var off = (s.getAttribute("data-mode") !== mode) || (s.hasAttribute("data-site") && !fSite.checked) || (s.hasAttribute("data-nocard") && !noCard) || (s.hasAttribute("data-card") && noCard);
       s.style.display = off ? "none" : "";
       return !off;
     });
