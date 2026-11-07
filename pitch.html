@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
 <style>
 /* お店で見せるプレゼン（2026-10-26、「緊張しちゃうからプレゼン作って」）。
    スライドが説明するので、見せる人はめくって短く話すだけ。「練習」で開くと下に台本（英語＋日本語）が出る。
@@ -208,6 +209,9 @@ h2{font-size:clamp(36px,min(8.6vw,7vh),74px);line-height:1.02}
 .pr span{color:var(--sub);font-size:clamp(16px,2.4vh,20px)}
 #setup .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 #setup .hint{font-size:12.5px;color:#7b685c;margin-top:6px;line-height:1.5}
+.qrbox{background:#fff;border-radius:22px;padding:18px;width:min(70vw,300px,34vh);margin:0 auto;box-shadow:0 30px 60px -20px rgba(0,0,0,.7)}
+.qrbox svg{display:block;width:100%;height:auto}
+.qrcap{text-align:center;color:var(--sub);font-size:14px;margin-top:12px}
 @media (prefers-reduced-motion:reduce){.slide,.rise>*,.stars span{transition:none!important}.rc.float,.phone,.ping{animation:none!important}}
 </style>
 </head>
@@ -231,6 +235,7 @@ h2{font-size:clamp(36px,min(8.6vw,7vh),74px);line-height:1.02}
     <label for="fComp">近くの似たお店の口コミの数（なくてもいい） <small>A similar shop nearby</small></label>
     <input id="fComp" type="number" inputmode="numeric" min="0" placeholder="例：240">
     <p class="hint">Google マップでお店を開くと、名前の下に「4.6 ★（12）」のように出ます。近くの似たお店は、Google マップで「pizza」などと検索して、口コミがいちばん多いお店の数を入れる。お店の名前は画面に出しません（数字だけ）。<b>ウソの数字は入れない。</b></p>
+    <label class="chk"><input id="fNoCard" type="checkbox" checked> カードがまだ手元にない（QRコードで見せる・最後は「届いたら無料で試す」） <small style="color:#9b8677">No card yet</small></label>
     <label class="chk"><input id="fSite" type="checkbox"> サイトの話も入れる（サイトがないお店だけ） <small style="color:#9b8677">Website slide</small></label>
     <p class="hint">名前・メール・電話は「自分の情報」（お店マップのメッセージ画面）と同じものが入ります。</p>
     <input id="fName" type="hidden"><input id="fEmail" type="hidden"><input id="fPhone" type="hidden">
@@ -279,8 +284,21 @@ h2{font-size:clamp(36px,min(8.6vw,7vh),74px);line-height:1.02}
     </div>
   </section>
 
+  <!-- ②' カードがまだない時：QRコードでそのお店の Google ページを開いてもらう -->
+  <section class="slide" data-nocard data-say="Point your phone's camera here. ... That's your shop on Google. Customers can leave a review from there. With our card, they don't even need the camera. They just tap."
+    data-ja="スマホのカメラをここに向けてください。……これがGoogleのお店のページです。ここからレビューを書けます。カードなら、カメラもいらなくて、かざすだけです。">
+    <div class="wrap two">
+      <div class="rise">
+        <div class="kick">Try it</div>
+        <h2>Scan this. Your <em>Google page</em> opens.</h2>
+        <p class="sub">With the review card, it's even easier: no camera, just one tap.</p>
+      </div>
+      <div class="rise"><div class="qrbox" id="qrBox"></div><p class="qrcap">Open your camera and point it here</p></div>
+    </div>
+  </section>
+
   <!-- ② かざしてもらう（いちばん効くところ）-->
-  <section class="slide" data-say="Here, try it. Hold the top of your phone on this card. ... That's your review page. One tap, and your customer can leave a review."
+  <section class="slide" data-card data-say="Here, try it. Hold the top of your phone on this card. ... That's your review page. One tap, and your customer can leave a review."
     data-ja="どうぞ、スマホの上のふちをこのカードに当ててみてください。……これがお店のレビューの画面です。お客さんはタップするだけで書けます。（カードを渡す）">
     <div class="wrap two">
       <div class="rise">
@@ -333,8 +351,22 @@ h2{font-size:clamp(36px,min(8.6vw,7vh),74px);line-height:1.02}
     </div>
   </section>
 
+  <!-- ④' カードがまだない時 -->
+  <section class="slide" data-nocard data-say="The cards are on their way. When they arrive, can I bring one and you try it free for a week? If you like it, it's 39 for two. If not, just give it back."
+    data-ja="カードは今取り寄せ中です。届いたら1枚持ってくるので、1週間無料で試してもらえますか？よかったら2枚で39ドル、いらなければ返してください。（OKなら：お店の名前と連絡先をメモ。断られたら：No problem, thanks for your time!）">
+    <div class="wrap rise">
+      <div class="kick">No risk</div>
+      <h2>Try it <em>free</em> for a week.</h2>
+      <div class="opts">
+        <div class="opt a"><b>I'll bring a card</b><span>The cards are on their way. Try one free for a week. If you like it, it's $39 for two. If not, just give it back.</span></div>
+        <div class="opt"><b>No pressure</b><span>Nothing to pay today.</span></div>
+      </div>
+      <div class="contact" data-contact2></div>
+    </div>
+  </section>
+
   <!-- ④ 1週間無料で試す -->
-  <section class="slide" data-say="You can keep this card and try it for a week, free. I'll come back next week. If you like it, it's 39 for this one and one more. If not, just give it back."
+  <section class="slide" data-card data-say="You can keep this card and try it for a week, free. I'll come back next week. If you like it, it's 39 for this one and one more. If not, just give it back."
     data-ja="このカードは置いていくので、1週間無料で試してください。来週また来ます。よかったら、これともう1枚で39ドル。いらなければ返してください。（断られたら：No problem, thanks for your time!）">
     <div class="wrap rise">
       <div class="kick">No risk</div>
@@ -358,17 +390,18 @@ h2{font-size:clamp(36px,min(8.6vw,7vh),74px);line-height:1.02}
   var c = {}, st = {};
   try { c = JSON.parse(localStorage.getItem(KEY) || "{}"); st = JSON.parse(localStorage.getItem(SKEY) || "{}"); } catch (e) {}
   f.name.value = c.name || ""; f.email.value = c.email || ""; f.phone.value = c.phone || "";
-  f.shop.value = st.shop || ""; fSite.checked = !!st.site; f.rev.value = st.rev || ""; f.star.value = st.star || ""; f.comp.value = st.comp || "";
+  f.shop.value = st.shop || ""; fSite.checked = !!st.site; fNoCard.checked = st.nocard !== false; f.rev.value = st.rev || ""; f.star.value = st.star || ""; f.comp.value = st.comp || "";
   function save() {
     try {
       var cc = {}; try { cc = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) {}
       cc.name = f.name.value; cc.email = f.email.value; cc.phone = f.phone.value;
       localStorage.setItem(KEY, JSON.stringify(cc));
-      localStorage.setItem(SKEY, JSON.stringify({ shop: f.shop.value, site: fSite.checked, rev: f.rev.value, star: f.star.value, comp: f.comp.value }));
+      localStorage.setItem(SKEY, JSON.stringify({ shop: f.shop.value, site: fSite.checked, nocard: fNoCard.checked, rev: f.rev.value, star: f.star.value, comp: f.comp.value }));
     } catch (e) {}
   }
   ["shop", "rev", "star", "comp"].forEach(function (k) { f[k].addEventListener("input", save); });
   fSite.addEventListener("change", save);
+  fNoCard.addEventListener("change", save);
 
   var deck = document.getElementById("deck"), slides = [], i = 0;
   var esc = function (s) { return String(s).replace(/[&<>"']/g, function (ch) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch]; }); };
@@ -393,8 +426,19 @@ h2{font-size:clamp(36px,min(8.6vw,7vh),74px);line-height:1.02}
     if (email) h += "<span>" + esc(email) + "</span>";
     if (phone) h += "<span>" + esc(phone) + "</span>";
     document.querySelector("[data-contact]").innerHTML = h;
+    document.querySelector("[data-contact2]").innerHTML = h;
+    // カードがまだない時：そのお店の Google マップのページを開く QR コード
+    var noCard = fNoCard.checked;
+    if (noCard && window.qrcode) {
+      var q = qrcode(0, "M");
+      q.addData("https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent((shop || "") + " Windsor ON"));
+      q.make();
+      document.getElementById("qrBox").innerHTML = q.createSvgTag({ cellSize: 6, margin: 2 });
+    } else if (noCard) {
+      document.getElementById("qrBox").innerHTML = "<p style='color:#241915;padding:20px'>QRコードを読み込めませんでした（ネットにつないで開き直してください）</p>";
+    }
     slides = Array.prototype.filter.call(deck.querySelectorAll(".slide"), function (s) {
-      var off = s.hasAttribute("data-site") && !fSite.checked;
+      var off = (s.hasAttribute("data-site") && !fSite.checked) || (s.hasAttribute("data-nocard") && !noCard) || (s.hasAttribute("data-card") && noCard);
       s.style.display = off ? "none" : "";
       return !off;
     });
