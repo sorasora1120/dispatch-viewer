@@ -27,6 +27,7 @@ a.dl{background:#b4502b}
 .post{display:grid;grid-template-columns:120px 1fr;gap:12px;align-items:start}
 .post img{width:120px;border-radius:8px;display:block;border:1px solid var(--line);background:#ece8e1}
 .done{opacity:.55}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}.chip{border:1px solid rgba(25,21,18,.2);background:#fff;border-radius:99px;padding:5px 11px;font:inherit;font-size:13px;color:var(--ink)}.chip.on{background:#e8f1e6;border-color:#7aa56f}
 label.ck{display:flex;gap:6px;align-items:center;font-size:13px;margin-top:10px}
 </style>
 </head>
@@ -48,10 +49,12 @@ label.ck{display:flex;gap:6px;align-items:center;font-size:13px;margin-top:10px}
   <div class="card">
     <ol>
       <li>「画像を保存」→ Add New Work で、その画像を選ぶ</li>
-      <li>Title・Tags・Description を「コピー」して貼る</li>
+      <li>タイトル・メインタグ・説明を「コピー」して貼る</li>
+      <li>サポートタグは1つずつタップ → コピーされるので貼って Enter（コピーしたのは緑になる）。「全部コピー」でまとめて貼ってもOK</li>
       <li>商品は全部オンのまま。Default product は <b>Sticker</b>、Media は <b>Digital art</b></li>
       <li>「Is this work mature?」は No → 権利のチェックに ✓ → <b>Save Work</b></li>
     </ol>
+    <p class="note"><b>Safari の翻訳はオフに</b>（アドレスバーの翻訳マーク → 原文を表示）。オンだと画像の文字まで日本語に置きかわって見えます。タグも英語のまま入れる（英語のタブ）。</p>
     <p class="note">背景は透明。デザインは黒・赤・紺なので、白や明るい色の商品で映えます（黒いTシャツはオフにしてOK）。</p>
   </div>
   <div id="list"></div>
@@ -80,19 +83,25 @@ const D = [
   ["10-ganbaranai", "Kyou mo Ganbaranai - Not Trying Hard Today (Japanese)", "ganbaranai, japanese, funny japanese, lazy, hiragana, japanese text, introvert, chill, japanese words, japan, nihongo, sarcastic, tired, weekend, japanese aesthetic",
    "今日もがんばらない (kyou mo ganbaranai): not trying hard today either. A funny twist on the Japanese word ganbaru (do your best). Designed by a Japanese student."],
 ];
+const MAIN = { "01-mendokusai": "funny japanese", "02-nemui": "japanese calligraphy", "03-ichigo-ichie": "ichigo ichie", "04-nanakorobi": "japanese proverb", "05-harahetta": "ramen", "06-daijoubu": "funny japanese", "07-wabi-sabi": "wabi sabi", "08-ikigai": "ikigai", "09-neko": "japanese cat", "10-ganbaranai": "funny japanese" };
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 let done = {}; try { done = JSON.parse(localStorage.getItem("rb-done") || "{}"); } catch (e) {}
-document.getElementById("list").innerHTML = D.map(([f, t, g, d], i) =>
-  `<div class="card post${done[f] ? " done" : ""}" id="p-${f}"><div><img src="rb/preview/${f}.jpg" alt=""><a class="dl" href="rb/${f}.png" download="${f}.png">画像を保存</a></div><div>` +
-  `<b>${i + 1}.</b><div class="lb">Title</div><pre id="t${i}">${esc(t)}</pre><button class="cp" data-cp="t${i}">コピー</button>` +
-  `<div class="lb">Tags</div><pre id="g${i}">${esc(g)}</pre><button class="cp" data-cp="g${i}">コピー</button>` +
-  `<div class="lb">Description</div><pre id="d${i}">${esc(d)}</pre><button class="cp" data-cp="d${i}">コピー</button>` +
-  `<label class="ck"><input type="checkbox" data-f="${f}"${done[f] ? " checked" : ""}> 出品した</label></div></div>`).join("");
+document.getElementById("list").innerHTML = D.map(([f, t, g, d], i) => {
+  const main = MAIN[f], sup = g.split(/,\s*/).filter(x => x && x !== main).slice(0, 14);
+  return `<div class="card post${done[f] ? " done" : ""}" id="p-${f}"><div><img src="rb/preview/${f}.jpg" alt=""><a class="dl" href="rb/${f}.png" download="${f}.png">画像を保存</a></div><div>` +
+  `<b>${i + 1}.</b><div class="lb">タイトル</div><pre id="t${i}">${esc(t)}</pre><button class="cp" data-cp="t${i}">コピー</button>` +
+  `<div class="lb">メインタグ</div><pre id="m${i}">${esc(main)}</pre><button class="cp" data-cp="m${i}">コピー</button>` +
+  `<div class="lb">サポートタグ（${sup.length}個・タップでコピー）</div><div class="chips">${sup.map(x => `<button class="chip" data-tag="${esc(x)}">${esc(x)}</button>`).join("")}</div>` +
+  `<pre id="g${i}" hidden>${esc(sup.join(", "))}</pre><button class="cp" data-cp="g${i}">全部コピー</button>` +
+  `<div class="lb">説明</div><pre id="d${i}">${esc(d)}</pre><button class="cp" data-cp="d${i}">コピー</button>` +
+  `<label class="ck"><input type="checkbox" data-f="${f}"${done[f] ? " checked" : ""}> 出品した</label></div></div>`;
+}).join("");
 document.addEventListener("click", e => {
-  const b = e.target.closest("[data-cp]");
+  const c = e.target.closest("[data-tag]");
+  const b = c || e.target.closest("[data-cp]");
   if (!b) return;
-  const t = document.getElementById(b.dataset.cp).textContent;
-  const ok = () => { const o = b.textContent; b.textContent = "コピーしました"; setTimeout(() => b.textContent = o, 1400); };
+  const t = c ? c.dataset.tag : document.getElementById(b.dataset.cp).textContent;
+  const ok = c ? () => c.classList.add("on") : () => { const o = b.textContent; b.textContent = "コピーしました"; setTimeout(() => b.textContent = o, 1400); };
   if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(ok, () => prompt("コピーしてください", t));
   else prompt("コピーしてください", t);
 });
