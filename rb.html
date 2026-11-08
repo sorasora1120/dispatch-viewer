@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#14110f">
+<title>Redbubble の出品</title>
+<style>
+/* Redbubble に出す和風デザイン（2026-11-08〜、「1円も払いたくない・めんどくさい作業はしない」）。
+   画像は rb/*.png（透明・4500x5400、tools/rb-designs.js で作る）。アカウントは親の名義 */
+:root{--bg:#f4efe8;--card:#fffdf9;--ink:#191512;--mute:#6f675f;--line:rgba(25,21,18,.1)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.6 -apple-system,"Hiragino Sans","Noto Sans JP",system-ui,sans-serif;-webkit-text-size-adjust:100%}
+header{background:#14110f;color:#f4efe8;padding:22px 16px 18px;padding-top:calc(22px + env(safe-area-inset-top))}
+header h1{font-size:22px}
+header p{color:#bdb3a8;font-size:13px;margin-top:4px}
+main{max-width:760px;margin:0 auto;padding:6px 14px 60px}
+h2{font-size:17px;margin:24px 2px 8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+.card ol{padding-left:20px}.card li{margin:4px 0}
+.note{font-size:12.5px;color:var(--mute);margin-top:6px}
+pre{white-space:pre-wrap;font:14px/1.5 -apple-system,system-ui,sans-serif;background:#f3ede4;border-radius:10px;padding:8px 11px;margin-top:4px}
+.lb{font-size:12px;color:var(--mute);margin-top:10px;font-weight:600}
+button.cp,a.dl{display:inline-block;margin-top:6px;padding:7px 13px;border-radius:9px;border:0;background:#14110f;color:#fff;font:inherit;font-size:13px;font-weight:600;text-decoration:none}
+a.dl{background:#b4502b}
+.post{display:grid;grid-template-columns:120px 1fr;gap:12px;align-items:start}
+.post img{width:120px;border-radius:8px;display:block;border:1px solid var(--line);background:#ece8e1}
+.done{opacity:.55}
+label.ck{display:flex;gap:6px;align-items:center;font-size:13px;margin-top:10px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Redbubble の出品</h1>
+  <p>無料。画像をアップして文を貼るだけ。売れたら Redbubble が作って送ってくれる</p>
+</header>
+<main>
+  <h2>① 最初だけ（5分）</h2>
+  <div class="card">
+    <ol>
+      <li>redbubble.com で「Sign up」→ <b>親の名義</b>でアカウントを作る（お金の受け取りも親の PayPal か口座）</li>
+      <li>ショップ名の例：<b>SoraKanji</b></li>
+      <li>右上のアイコン → <b>Add New Work</b> が出品の画面</li>
+    </ol>
+  </div>
+  <h2>② 1つずつ出品（1つ2〜3分）</h2>
+  <div class="card">
+    <ol>
+      <li>「画像を保存」→ Add New Work で、その画像を選ぶ</li>
+      <li>Title・Tags・Description を「コピー」して貼る</li>
+      <li>商品は全部オンのまま。Default product は <b>Sticker</b>、Media は <b>Digital art</b></li>
+      <li>「Is this work mature?」は No → 権利のチェックに ✓ → <b>Save Work</b></li>
+    </ol>
+    <p class="note">背景は透明。デザインは黒・赤・紺なので、白や明るい色の商品で映えます（黒いTシャツはオフにしてOK）。</p>
+  </div>
+  <div id="list"></div>
+</main>
+<script>
+// [ファイル, Title, Tags, Description]
+const D = [
+  ["01-mendokusai", "Mendokusai - Too Much Effort (Japanese Kanji)", "mendokusai, japanese, kanji, japanese text, funny japanese, lazy, introvert, japanese words, japan, nihongo, hiragana, minimalist, japanese aesthetic, tired, gift for japan lover",
+   "面倒くさい (mendokusai): when literally everything is too much effort. Bold Japanese typography for anyone who'd rather stay home. Designed by a Japanese student."],
+  ["02-nemui", "Nemui - Sleepy in Japanese Brush Calligraphy", "nemui, sleepy, japanese, kanji, japanese calligraphy, brush, tired, nap, japanese words, japan, nihongo, minimalist, sleep, morning person, japanese aesthetic",
+   "眠い (nemui) means sleepy. Always. Hand-brush style Japanese calligraphy with a little red stamp. Designed by a Japanese student."],
+  ["03-ichigo-ichie", "Ichigo Ichie - Once in a Lifetime (Japanese Kanji)", "ichigo ichie, japanese proverb, kanji, enso, zen, japanese calligraphy, mindfulness, japanese words, japan, once in a lifetime, meaningful, japanese aesthetic, minimalist, tea ceremony, japanese quote",
+   "一期一会 (ichigo ichie): one time, one meeting. Every moment happens only once, so treasure it. Kanji inside a red ensō circle. Designed by a Japanese student."],
+  ["04-nanakorobi", "Fall Seven Times Stand Up Eight - Japanese Proverb", "nanakorobi yaoki, fall seven times stand up eight, japanese proverb, kanji, motivation, resilience, japanese calligraphy, japanese quote, japan, never give up, japanese words, inspirational, gym, japanese aesthetic, nihongo",
+   "七転び八起き (nana korobi ya oki): fall seven times, stand up eight. A classic Japanese proverb about never giving up, in brush calligraphy. Designed by a Japanese student."],
+  ["05-harahetta", "Harahetta - I'm Hungry (Japanese Ramen)", "harahetta, hungry, ramen, japanese food, kanji, funny japanese, noodles, foodie, japanese words, japan, nihongo, ramen bowl, japanese text, japanese aesthetic, food lover",
+   "腹減った (harahetta): I'm hungry. It's always ramen time. Bold Japanese text with a ramen bowl. Designed by a Japanese student."],
+  ["06-daijoubu", "Daijoubu - It's Fine (Japanese Kanji)", "daijoubu, its fine, everything is fine, japanese, kanji, funny japanese, sarcastic, japanese words, japan, nihongo, japanese text, anxiety, introvert, meme, japanese aesthetic",
+   "大丈夫 (daijoubu): it's fine. Everything is fine. (It is not fine.) Bold Japanese typography for stressful days. Designed by a Japanese student."],
+  ["07-wabi-sabi", "Wabi Sabi - Beauty in Imperfection (Japanese Kanji)", "wabi sabi, japanese, kanji, enso, zen, japanese philosophy, imperfection, minimalist, japanese aesthetic, mindfulness, japan, japanese calligraphy, japanese words, buddhism, calm",
+   "侘び寂び (wabi-sabi): beauty in the imperfect. Japanese characters inside a hand-drawn ensō circle. Designed by a Japanese student."],
+  ["08-ikigai", "Ikigai - Reason for Being (Japanese Kanji)", "ikigai, japanese, reason for being, purpose, japanese philosophy, kanji, motivation, japanese words, japan, minimalist, japanese aesthetic, inspirational, hiragana, nihongo, life purpose",
+   "生きがい (ikigai): a reason to get up in the morning. Vertical Japanese text in navy with a small red stamp. Designed by a Japanese student."],
+  ["09-neko", "Neko - Cat in Japanese Kanji", "neko, cat, japanese cat, kanji, cat lover, kawaii, japanese, cute cat, japanese words, japan, nihongo, minimalist, cat mom, cat dad, japanese aesthetic",
+   "猫 (neko): cat. The boss of the house. A simple cat drawing with the kanji in brush style. Designed by a Japanese student."],
+  ["10-ganbaranai", "Kyou mo Ganbaranai - Not Trying Hard Today (Japanese)", "ganbaranai, japanese, funny japanese, lazy, hiragana, japanese text, introvert, chill, japanese words, japan, nihongo, sarcastic, tired, weekend, japanese aesthetic",
+   "今日もがんばらない (kyou mo ganbaranai): not trying hard today either. A funny twist on the Japanese word ganbaru (do your best). Designed by a Japanese student."],
+];
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+let done = {}; try { done = JSON.parse(localStorage.getItem("rb-done") || "{}"); } catch (e) {}
+document.getElementById("list").innerHTML = D.map(([f, t, g, d], i) =>
+  `<div class="card post${done[f] ? " done" : ""}" id="p-${f}"><div><img src="rb/preview/${f}.jpg" alt=""><a class="dl" href="rb/${f}.png" download="${f}.png">画像を保存</a></div><div>` +
+  `<b>${i + 1}.</b><div class="lb">Title</div><pre id="t${i}">${esc(t)}</pre><button class="cp" data-cp="t${i}">コピー</button>` +
+  `<div class="lb">Tags</div><pre id="g${i}">${esc(g)}</pre><button class="cp" data-cp="g${i}">コピー</button>` +
+  `<div class="lb">Description</div><pre id="d${i}">${esc(d)}</pre><button class="cp" data-cp="d${i}">コピー</button>` +
+  `<label class="ck"><input type="checkbox" data-f="${f}"${done[f] ? " checked" : ""}> 出品した</label></div></div>`).join("");
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-cp]");
+  if (!b) return;
+  const t = document.getElementById(b.dataset.cp).textContent;
+  const ok = () => { const o = b.textContent; b.textContent = "コピーしました"; setTimeout(() => b.textContent = o, 1400); };
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(ok, () => prompt("コピーしてください", t));
+  else prompt("コピーしてください", t);
+});
+document.addEventListener("change", e => {
+  const f = e.target.dataset && e.target.dataset.f; if (!f) return;
+  done[f] = e.target.checked; document.getElementById("p-" + f).classList.toggle("done", e.target.checked);
+  try { localStorage.setItem("rb-done", JSON.stringify(done)); } catch (er) {}
+});
+</script>
+</body>
+</html>
