@@ -13,6 +13,8 @@
   affiliate-pipeline の `viewer_version.yml` を手動実行して、スプレッドシートの「設定」タブ B1 に最新SHAを書く
   （収集のたびに worker_match.yml の最後でも書く）。`goToLatestVersion()` は消さないこと
 
+- **Notion Memory に記憶する**（2026-11-09「毎日の話とかこれまでのことノーションに記憶するんだぞ」）。会話を始めたら Notion の memory（fetch id "memory"）を読み、その日の出来事は「毎日の記録」に日付ごとに足す。プロフィール・好み・仕事の状況が変わったら、その memory と About ページを直す
+
 ## このリポジトリ
 - `index.html`：案件ビューア。Googleスプレッドシート（シート「案件一覧」）を gviz で読んで表示するだけの静的ページ。
   データを作るのは `affiliate-pipeline`（CrowdWorks 収集・マッチング・提案文生成）
