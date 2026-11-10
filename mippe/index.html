@@ -92,6 +92,21 @@ section{padding:84px 0}
 .nums b i{font-style:normal;font-size:16px;margin-left:2px}
 .nums small{display:block;font-size:12px;margin-top:6px;color:#f3c9a8}
 .card.ky p.s{font-weight:500;font-size:14.5px;color:#f7e6d6}
+.card p.s2{font-weight:500;font-size:14px;color:var(--mute);margin-top:6px;line-height:1.75}
+.card .at{font-size:12px;font-weight:900;color:var(--red2);margin-top:10px}
+.card .at::before{content:"📍 "}
+.more2{display:inline-block;margin-top:14px;font-weight:900;color:var(--yel);border-bottom:2px solid var(--yel)}
+.prof{margin-top:14px;background:#fff;border-radius:20px;border:2px solid #f2dcc2;overflow:hidden}
+.prof div{display:grid;grid-template-columns:84px 1fr;gap:10px;padding:12px 16px;border-top:1px dashed #ecd5ba;font-size:14px}
+.prof div:first-child{border-top:0}
+.prof dt{font-weight:900;color:var(--red)}
+.tl{margin-top:30px;border-left:3px solid var(--red);padding-left:20px;display:grid;gap:26px}
+.tl .it{position:relative}
+.tl .it::before{content:"";position:absolute;left:-29px;top:4px;width:15px;height:15px;border-radius:50%;background:var(--cream);border:3px solid var(--red)}
+.tl time{font:14px/1 "Dela Gothic One";color:var(--red)}
+.tl b{display:block;font-size:17px;margin-top:6px;line-height:1.5}
+.tl p{font-size:13.5px;color:var(--mute);margin-top:4px}
+.tl .im{height:160px;border-radius:14px;overflow:hidden;margin-top:10px}
 /* members */
 .mem .row{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:30px}
 .mb{background:#fff;border-radius:20px;padding:16px;text-align:center;border:2px solid #f2dcc2}
@@ -191,6 +206,14 @@ footer .fl{display:flex;justify-content:center;gap:22px;margin-bottom:14px;font-
       <ul><li>東京都 板橋区・豊島区</li><li>栃木県 各所</li><li>瀬戸内地方（広島県福山市、岡山県笠岡市 など）</li><li>石川県珠洲市・奥能登地方</li></ul>
       <p class="sub">ほかにも単発の活動拠点あり（鹿児島県錦江町、福岡県北九州市、岩手県盛岡市、長野県高森町 など）</p>
     </div>
+    <dl class="prof rv">
+      <div><dt>団体名</dt><dd>任意団体MIPPE!</dd></div>
+      <div><dt>設立</dt><dd>2025年5月23日</dd></div>
+      <div><dt>代表者</dt><dd>遠藤光大</dd></div>
+      <div><dt>活動地域</dt><dd>東京都、栃木県、鹿児島県ほか全国各地</dd></div>
+      <div><dt>主な活動</dt><dd>地域活動、イベント企画、農業、探究学習の支援、マルシェ出店 など</dd></div>
+      <div><dt>設立目的</dt><dd>学生と地域との続いていく関係づくりと、主体的に挑戦できる機会をつくること</dd></div>
+    </dl>
   </div>
 </section>
 
@@ -198,14 +221,31 @@ footer .fl{display:flex;justify-content:center;gap:22px;margin-bottom:14px;font-
   <div class="wrap">
     <div class="k">OUR</div>
     <h2 class="h">PROJECT</h2>
-    <p class="intro">6つの企画が、全国で動いています。</p>
+    <p class="intro">それぞれの「やってみたい」から生まれた企画が、全国で動いています。</p>
     <div class="grid">
-      <div class="card rv"><div class="ph"><img src="img/henjin1.jpg" alt=""><img src="img/henjin2.jpg" alt=""></div><div class="bd"><span class="nm">変人企画</span><p>変人（地域を変える人）を集めたり。</p></div></div>
-      <div class="card rv"><div class="ph"><img src="img/hyaku1.jpg" alt=""><img src="img/hyaku2.jpg" alt=""></div><div class="bd"><span class="nm">百姓企画</span><p>お米を作ったり、販売したり。</p></div></div>
-      <div class="card rv"><div class="ph one"><img src="img/yuri.jpg" alt=""></div><div class="bd"><span class="nm">百合企画</span><p>マルシェに出店したり、運営したり。</p></div></div>
-      <div class="card rv"><div class="ph four" style="height:240px"><img src="img/umi1.jpg" alt=""><img src="img/umi2.jpg" alt=""><img src="img/umi3.jpg" alt=""><img src="img/umi4.jpg" alt=""></div><div class="bd"><span class="nm">里山・里海企画</span><p>瀬戸内海の離島で地引網をしたり、海岸清掃をしたり。</p></div></div>
-      <div class="card ky rv"><div class="nums"><div><b>22<i>名</i></b><small>出動した学生（昨年）</small></div><div><b>31<i>コマ</i></b><small>都内の中学校で担当</small></div></div><div class="bd"><span class="nm">共育探究企画</span><p>中高生の探究に、授業の中から伴走する。</p><p class="s">放課後や土日ではなく、学校の授業そのものに入るのがMIPPE!流。先生たちと一緒にプログラムをつくり、大学生が教えるのではなく、一緒に考えて、話して、問いを深める。年齢の近い大学生だからこそできる関わり方で、中高生の「やってみたい」を広げていきます。</p></div></div>
-      <div class="card rv"><div class="ph one"><img src="img/iac.jpg" alt=""></div><div class="bd"><span class="nm">IAC企画</span><p>コミュニティスペースIACの運営をしたり、交流イベントを企画したり。</p></div></div>
+      <div class="card rv"><div class="ph"><img src="img/walk.jpg" alt=""><img src="img/henjin2.jpg" alt=""></div><div class="bd"><span class="nm">変人企画</span><p>変人（地域を変える人）が、立場を越えて集まる。</p><p class="s2">現状を変えたい学生・社会人が集まり、対話や共同企画から新しい取り組みの種を生み出す場。少人数の対話会から合宿型イベントまで。</p><p class="at">全国各所</p></div></div>
+      <div class="card rv"><div class="ph"><img src="img/hyaku1.jpg" alt=""><img src="img/rice1.jpg" alt=""></div><div class="bd"><span class="nm">百姓企画</span><p>お米を作ったり、販売したり。</p><p class="s2">栃木県佐野市の米農家と一緒に米づくり。今年度からは田んぼを借りて、都内の大学生も巻き込みながら1tを超えるお米を作る予定。ゆくゆくは商品開発も。</p><p class="at">栃木県</p></div></div>
+      <div class="card rv"><div class="ph"><img src="img/mutsu.jpg" alt=""><img src="img/yuri.jpg" alt=""></div><div class="bd"><span class="nm">百合の企画</span><p>マルシェに出店したり、運営したり。</p><p class="s2">屋号「陸奥屋」として、東北の特産品や郷土料理を板橋区のゆりの木商店街などで販売。これまでに4回出店し、売上は活動費に。</p><p class="at">東京都内</p></div></div>
+      <div class="card rv"><div class="ph four" style="height:240px"><img src="img/umi1.jpg" alt=""><img src="img/umi2.jpg" alt=""><img src="img/umi3.jpg" alt=""><img src="img/umi4.jpg" alt=""></div><div class="bd"><span class="nm">里山・里海企画</span><p>瀬戸内海の離島で地引網をしたり、海岸清掃をしたり。</p><p class="s2">里山・里海の環境や生業に関わり、自然と人の暮らしの関係を学びながら、持続可能な地域のあり方を考える。</p><p class="at">瀬戸内地方（広島県・岡山県など）</p></div></div>
+      <div class="card ky rv"><div class="nums"><div><b>22<i>名</i></b><small>出動した学生（昨年）</small></div><div><b>31<i>コマ</i></b><small>都内の中学校で担当</small></div></div><div class="bd"><span class="nm">共育探究企画</span><p>中高生の探究に、授業の中から伴走する。</p><p class="s">放課後や土日ではなく、学校の授業そのものに入るのがMIPPE!流。テーマ決めから調査、発表まで、先生たちと一緒にプログラムをつくり、大学生が教えるのではなく、一緒に考えて問いを深める。いまは豊島区立巣鴨北中学校で伴走しています。</p></div></div>
+      <div class="card rv"><div class="ph one"><img src="img/iac.jpg" alt=""></div><div class="bd"><span class="nm">IAC企画</span><p>企画が生まれる場をつくる。</p><p class="s2">オンラインコミュニティIACを運営し、地域や大学を越えて企画の相談や情報共有ができる場に。活動の入口にもなる、MIPPE!の土台です。</p><p class="at">オンライン</p></div></div>
+      <div class="card rv"><div class="ph"><img src="img/kinko1.jpg" alt=""><img src="img/kinko2.jpg" alt=""></div><div class="bd"><span class="nm">錦江企画</span><p>学生向けのツアーを開く。</p><p class="s2">鹿児島県錦江町で「SUIGA KINKO TOUR」を開催。東京の学生を中心に、10名ほどが参加しました。</p><p class="at">鹿児島県錦江町</p></div></div>
+      <div class="card ky rv"><div class="bd" style="padding-top:24px"><span class="nm">メディア部</span><p>地域で起きていることを、言葉にして届ける。</p><p class="s">活動の記録やインタビュー、記事制作、冊子編集。ただの広報ではなく、活動の振り返りと学びを共有する役割。記事は note で読めます。</p><a class="more2" href="https://note.com/mippe2025" target="_blank" rel="noopener">note を読む →</a></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="act" id="activity">
+  <div class="wrap">
+    <div class="k">ACTIVITY</div>
+    <h2 class="h rv">これまでの活動</h2>
+    <div class="tl">
+      <div class="it rv"><time>2025.06 / 12</time><b>陸奥屋 ゆりの木商店街に出店</b><p>百合の企画。東北の特産品と郷土料理を販売。これまでに4回出店。</p><div class="im"><img src="img/mutsu.jpg" alt=""></div></div>
+      <div class="it rv"><time>2025.11.24</time><b>変人会議 in 岡山</b><p>社会人6名・学生4名。「どうすれば学生は変人になれるのか？」を輪になって語り合った。</p></div>
+      <div class="it rv"><time>2025.12.20</time><b>変人会議 in 巣鴨</b><p>15名。巣鴨地蔵通り商店街を街歩きして、「学生だから」で終わらない共創関係を考えた。</p><div class="im"><img src="img/walk.jpg" alt=""></div></div>
+      <div class="it rv"><time>2026.03.04-06</time><b>SUIGA KINKO TOUR</b><p>錦江企画。鹿児島県錦江町に、東京の学生を中心に10名ほどで。</p><div class="im"><img src="img/kinko1.jpg" alt=""></div></div>
+      <div class="it rv"><time>2026.03.05</time><b>変人会議 in 錦江町</b><p>25名。錦江町長や地元高校生も登壇し、「共創は幻想か？」を語り合った。</p></div>
+      <div class="it rv"><time>2026</time><b>米づくり（栃木県佐野市）</b><p>百姓企画。米農家と一緒に、1tを超えるお米を作る予定。</p><div class="im"><img src="img/rice2.jpg" alt=""></div></div>
     </div>
   </div>
 </section>
