@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#6e0b0b">
+<title>MIPPE!｜行ってみっぺ 会ってみっぺ やってみっぺ</title>
+<meta name="description" content="MIPPE!は、学生一人ひとりの「やってみたい」や「ワクワク」から、地域を越えてさまざまな企画を生み出している学生主体の団体です。">
+<!-- MIPPE! 公式LPの試作（2026-11-10〜）。中身と写真は MIPPE! の Canva サイト（mippesimulation.my.canva.site）から。
+     写真は img/*.jpg。運営メンバーとリンク先（Instagram・応募フォーム）は届いたら入れる -->
+<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--red:#6e0b0b;--red2:#8e1212;--or:#f39800;--yel:#ffd34d;--cream:#fff7ea;--ink:#2a1608;--mute:#7a5a46}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"Zen Maru Gothic",sans-serif;color:var(--ink);background:var(--cream);line-height:1.9;-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%}
+img{display:block;width:100%;height:100%;object-fit:cover}
+a{color:inherit;text-decoration:none}
+.dg{font-family:"Dela Gothic One",sans-serif;font-weight:400;letter-spacing:.02em}
+.wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+/* header */
+header{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:14px 18px;padding-top:calc(14px + env(safe-area-inset-top));transition:background .3s}
+header.on{background:rgba(110,11,11,.94)}
+.logo{display:flex;align-items:center;gap:8px;color:#fff}
+.logo svg{width:30px;height:30px}
+.logo b{font:italic 900 22px/1 "Zen Maru Gothic";letter-spacing:.02em}
+.join{background:var(--or);color:var(--red);font-weight:900;font-size:14px;border-radius:99px;padding:9px 18px}
+/* hero */
+.hero{position:relative;height:100svh;min-height:600px;color:#fff;overflow:hidden}
+.hero img{position:absolute;inset:0;object-position:50% 30%}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.25),rgba(0,0,0,.05) 40%,rgba(40,5,5,.75))}
+.hero .in{position:absolute;left:0;right:0;bottom:0;z-index:1;padding:0 24px calc(48px + env(safe-area-inset-bottom))}
+.hero .big{display:flex;flex-direction:column;align-items:center;position:absolute;top:30%;left:0;right:0;z-index:1}
+.hero .big svg{width:110px;height:110px}
+.hero .big b{font:italic 900 54px/1 "Zen Maru Gothic";margin-top:6px;text-shadow:0 4px 20px rgba(0,0,0,.3)}
+.hero h1{font-size:28px;line-height:1.5;font-weight:900}
+.hero p{margin-top:10px;font-size:14px;opacity:.9}
+.scroll{display:inline-block;margin-top:22px;font-size:12px;letter-spacing:.3em;border-bottom:1px solid rgba(255,255,255,.6);padding-bottom:4px}
+/* message */
+.msg{background:var(--red);color:#fff;padding:90px 0 80px}
+.msg .lead{font-size:15px;color:#f3d9c4}
+.msg .lead span{display:block}
+.msg .but{margin:34px 0 24px;font-size:44px;line-height:1.1;color:var(--yel)}
+.msg h2{font-size:26px;line-height:1.6;font-weight:900}
+.msg .body{margin-top:18px;font-size:15.5px;color:#f7e6d6}
+.msg .body b{color:var(--yel)}
+.msg .end{margin-top:34px;padding:22px;border:2px solid rgba(255,211,77,.5);border-radius:18px;font-weight:700;font-size:16px;line-height:1.8}
+.msg .end strong{color:var(--yel);font-weight:900}
+/* mippe band */
+.band{background:var(--or);color:var(--red);padding:60px 0 54px;overflow:hidden}
+.band .l{font-size:40px;line-height:1.35;white-space:nowrap}
+.band .l:nth-child(2){padding-left:.8em}.band .l:nth-child(3){padding-left:1.6em;color:#fff}
+.band p{margin-top:24px;font-weight:700;font-size:15px}
+/* about */
+section{padding:84px 0}
+.k{font:13px/1 "Dela Gothic One";letter-spacing:.2em;color:var(--or)}
+.h{font-size:30px;line-height:1.45;font-weight:900;color:var(--red);margin-top:10px}
+.about p{margin-top:18px;font-size:15.5px}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.tags span{background:#fff;border:2px solid var(--red);color:var(--red);border-radius:99px;padding:4px 14px;font-weight:700;font-size:14px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:34px}
+.st{background:var(--red);color:#fff;border-radius:20px;padding:18px}
+.st small{display:block;font-size:12px;color:#f3c9a8;font-weight:700}
+.st b{display:block;font:30px/1.2 "Dela Gothic One";color:var(--yel);margin-top:6px}
+.st b i{font-style:normal;font-size:15px;margin-left:3px;color:#fff}
+.st.w{grid-column:1/-1}
+.area{margin-top:12px;background:#fff;border-radius:20px;padding:20px;border:2px solid #f2dcc2}
+.area h3{font-size:15px;color:var(--red)}
+.area ul{list-style:none;margin-top:8px}
+.area li{padding:6px 0 6px 22px;position:relative;font-size:14.5px;border-top:1px dashed #ecd5ba}
+.area li:first-child{border-top:0}
+.area li::before{content:"";position:absolute;left:4px;top:15px;width:9px;height:9px;border-radius:50%;background:var(--or)}
+.area .sub{font-size:12.5px;color:var(--mute);margin-top:8px}
+/* projects */
+.pj{background:var(--or)}
+.pj .h{color:#fff;font-family:"Dela Gothic One";font-weight:400;font-size:46px;letter-spacing:.04em}
+.pj .k{color:var(--red)}
+.pj .intro{color:var(--red);font-weight:700;margin-top:12px;font-size:15px}
+.grid{display:grid;gap:18px;margin-top:34px}
+.card{background:var(--cream);border-radius:24px;overflow:hidden;box-shadow:0 18px 30px -22px rgba(80,20,0,.6)}
+.ph{display:grid;grid-template-columns:1fr 1fr;gap:3px;height:200px}
+.ph.one{grid-template-columns:1fr}
+.ph.four{grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr}
+.card .bd{padding:20px 20px 22px}
+.card .nm{display:inline-block;background:var(--red);color:#fff;border-radius:10px;padding:4px 12px;font:18px/1.4 "Dela Gothic One"}
+.card p{margin-top:10px;font-weight:700;font-size:15.5px;line-height:1.7}
+.card.ky{background:var(--red);color:#fff}
+.card.ky .nm{background:var(--yel);color:var(--red)}
+.nums{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:20px 20px 0}
+.nums div{background:rgba(255,255,255,.08);border:1.5px solid rgba(255,211,77,.4);border-radius:16px;padding:14px;text-align:center}
+.nums b{display:block;font:40px/1 "Dela Gothic One";color:var(--yel)}
+.nums b i{font-style:normal;font-size:16px;margin-left:2px}
+.nums small{display:block;font-size:12px;margin-top:6px;color:#f3c9a8}
+.card.ky p.s{font-weight:500;font-size:14.5px;color:#f7e6d6}
+/* members */
+.mem .row{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:30px}
+.mb{background:#fff;border-radius:20px;padding:16px;text-align:center;border:2px solid #f2dcc2}
+.mb .av{width:84px;height:84px;margin:0 auto;border-radius:50%;background:repeating-linear-gradient(45deg,#f7e4cc,#f7e4cc 8px,#fbeedd 8px,#fbeedd 16px);display:grid;place-items:center;color:var(--mute);font-size:11px}
+.mb b{display:block;margin-top:10px;color:var(--red)}
+.mb small{display:block;font-size:12px;color:var(--mute)}
+.note{font-size:12.5px;color:var(--mute);margin-top:14px}
+/* join */
+.cta{background:var(--red);color:#fff;text-align:center;padding:90px 0 80px;position:relative;overflow:hidden}
+.cta h2{font-size:25px;line-height:1.5;font-weight:900}
+.cta h2 span{color:var(--yel);white-space:nowrap}
+.cta p{margin-top:14px;color:#f3d9c4;font-size:15px}
+.btns{display:flex;flex-direction:column;gap:12px;margin:30px auto 0;max-width:360px}
+.btn{display:block;border-radius:99px;padding:16px;font-weight:900;font-size:16px;background:var(--or);color:var(--red)}
+.btn.o{background:transparent;border:2px solid rgba(255,255,255,.7);color:#fff}
+footer{background:#3d0606;color:#d9b9a4;text-align:center;padding:30px 20px calc(30px + env(safe-area-inset-bottom));font-size:12px}
+footer .logo{justify-content:center;margin-bottom:10px}
+/* reveal */
+.rv{opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s}
+.rv.in{opacity:1;transform:none}
+@media (min-width:760px){
+  header{padding:18px 32px}
+  .hero h1{font-size:40px}.hero .big b{font-size:80px}.hero .big svg{width:150px;height:150px}
+  .hero .in{padding:0 48px 60px}
+  .msg .wrap{max-width:760px}
+  .band .l{font-size:84px}
+  .grid{grid-template-columns:1fr 1fr}
+  .stats{grid-template-columns:repeat(3,1fr)}.st.w{grid-column:auto}
+  .mem .row{grid-template-columns:repeat(4,1fr)}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute"><defs><symbol id="bulb" viewBox="0 0 100 100"><path d="M50 8c-17 0-29 13-29 28 0 11 6 18 11 24 3 4 4 7 4 11h28c0-4 1-7 4-11 5-6 11-13 11-24C79 21 67 8 50 8z" fill="#fff"/><path d="M12 74c10-6 22-6 32 0s22 6 32 0 14-4 14-4M8 84c10-6 22-6 32 0s22 6 32 0 16-5 16-5" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round"/></symbol></defs></svg>
+
+<header id="hd">
+  <a class="logo" href="#top"><svg><use href="#bulb"/></svg><b>MIPPE!</b></a>
+  <a class="join" href="#join">参加する</a>
+</header>
+
+<div class="hero" id="top">
+  <img src="img/hero.jpg" alt="霧のかかる山">
+  <div class="big"><svg><use href="#bulb"/></svg><b>MIPPE!</b></div>
+  <div class="in">
+    <h1>ガクチカのために、<br>何かをする…？</h1>
+    <p>「やってみたい」から動く、学生主体の団体です。</p>
+    <a class="scroll" href="#msg">SCROLL ↓</a>
+  </div>
+</div>
+
+<div class="msg" id="msg">
+  <div class="wrap">
+    <div class="lead rv"><span>就活で話せる経験がほしい。</span><span>実績になることをしたい。</span><span>自分の将来に役立つことをしたい。</span></div>
+    <p class="lead rv" style="margin-top:14px">そんな理由から、地域活動やボランティア、学生団体に参加する学生も少なくありません。もちろん、それ自体が悪いわけではないよ？</p>
+    <div class="but dg rv">だがしかし<br>BUT</div>
+    <h2 class="rv">いつから挑戦は、<br>誰かに評価されるための<br>ものになったんだろう。</h2>
+    <div class="body rv">
+      <p>もっと単純でよくない？<br>誰かに与えられた「やるべきこと」ではなく、自分自身の<b>「やってみたい」</b>や<b>「ワクワク」</b>を起点に動いてみようよ。</p>
+      <p style="margin-top:14px">そこから人とつながり、新しい挑戦が生まれ、気づけば自分だけの経験になってるはず。実績をつくるために動くのではなく、夢中になって動いたその先に、結果として実績がついてくる。</p>
+      <p style="margin-top:14px">ガクチカは、つくるものじゃなくて、あとからついてくるものでしょ。</p>
+    </div>
+    <div class="end rv">MIPPE!は、<strong>ガクチカのために動く学生</strong>を減らしたい。<br>「やらないと」ではなく、<br>「やってみたい」から動き出せる社会へ。</div>
+  </div>
+</div>
+
+<div class="band">
+  <div class="wrap">
+    <div class="l dg rv">行ってみっぺ</div>
+    <div class="l dg rv">会ってみっぺ</div>
+    <div class="l dg rv">やってみっぺ</div>
+    <p class="rv">「みっぺ」は、東北の方言で「〜してみよう」という意味。<br>まず行ってみる。会ってみる。やってみる。<br>そんな小さな「みっぺ」から始まる団体です。</p>
+  </div>
+</div>
+
+<section class="about" id="about">
+  <div class="wrap">
+    <div class="k">ABOUT</div>
+    <h2 class="h rv">「やってみたい」から、<br>地域を越えて企画をつくる。</h2>
+    <p class="rv">MIPPE!は、学生一人ひとりの「やってみたい」や「ワクワク」から、地域を越えてさまざまな企画を生み出している学生主体の団体です。</p>
+    <div class="tags rv"><span>米作り</span><span>中高生の探究</span><span>お祭りに出店</span><span>全国でイベント</span></div>
+    <p class="rv">活動する地域も、取り組む分野もさまざま。それぞれの企画は、メンバー自身の「面白そう」「やってみたい」という気持ちをエンジンに動いています。そこに仲間が加わり、地域の人が加わり、いつの間にか新しい企画や関係が生まれていく。</p>
+    <div class="stats rv">
+      <div class="st"><small>コミュニティメンバー</small><b>95<i>人</i></b></div>
+      <div class="st"><small>企画メンバー</small><b>30<i>人ほど</i></b></div>
+      <div class="st w"><small>設立日</small><b>2025.5.23</b></div>
+    </div>
+    <div class="area rv">
+      <h3>活動エリア</h3>
+      <ul><li>東京都 板橋区・豊島区</li><li>栃木県 各所</li><li>瀬戸内地方（広島県福山市、岡山県笠岡市 など）</li><li>石川県珠洲市・奥能登地方</li></ul>
+      <p class="sub">ほかにも単発の活動拠点あり（鹿児島県錦江町、福岡県北九州市、岩手県盛岡市、長野県高森町 など）</p>
+    </div>
+  </div>
+</section>
+
+<section class="pj" id="project">
+  <div class="wrap">
+    <div class="k">OUR</div>
+    <h2 class="h">PROJECT</h2>
+    <p class="intro">6つの企画が、全国で動いています。</p>
+    <div class="grid">
+      <div class="card rv"><div class="ph"><img src="img/henjin1.jpg" alt=""><img src="img/henjin2.jpg" alt=""></div><div class="bd"><span class="nm">変人企画</span><p>変人（地域を変える人）を集めたり。</p></div></div>
+      <div class="card rv"><div class="ph"><img src="img/hyaku1.jpg" alt=""><img src="img/hyaku2.jpg" alt=""></div><div class="bd"><span class="nm">百姓企画</span><p>お米を作ったり、販売したり。</p></div></div>
+      <div class="card rv"><div class="ph one"><img src="img/yuri.jpg" alt=""></div><div class="bd"><span class="nm">百合企画</span><p>マルシェに出店したり、運営したり。</p></div></div>
+      <div class="card rv"><div class="ph four" style="height:240px"><img src="img/umi1.jpg" alt=""><img src="img/umi2.jpg" alt=""><img src="img/umi3.jpg" alt=""><img src="img/umi4.jpg" alt=""></div><div class="bd"><span class="nm">里山・里海企画</span><p>瀬戸内海の離島で地引網をしたり、海岸清掃をしたり。</p></div></div>
+      <div class="card ky rv"><div class="nums"><div><b>22<i>名</i></b><small>出動した学生（昨年）</small></div><div><b>31<i>コマ</i></b><small>都内の中学校で担当</small></div></div><div class="bd"><span class="nm">共育探究企画</span><p>中高生の探究に、授業の中から伴走する。</p><p class="s">放課後や土日ではなく、学校の授業そのものに入るのがMIPPE!流。先生たちと一緒にプログラムをつくり、大学生が教えるのではなく、一緒に考えて、話して、問いを深める。年齢の近い大学生だからこそできる関わり方で、中高生の「やってみたい」を広げていきます。</p></div></div>
+      <div class="card rv"><div class="ph one"><img src="img/iac.jpg" alt=""></div><div class="bd"><span class="nm">IAC企画</span><p>コミュニティスペースIACの運営をしたり、交流イベントを企画したり。</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="mem" id="member">
+  <div class="wrap">
+    <div class="k">MEMBER</div>
+    <h2 class="h rv">運営メンバー</h2>
+    <div class="row">
+      <div class="mb rv"><div class="av">写真</div><b>遠藤 光大</b><small>代表</small></div>
+      <div class="mb rv"><div class="av">写真</div><b>名前</b><small>役職</small></div>
+      <div class="mb rv"><div class="av">写真</div><b>名前</b><small>役職</small></div>
+      <div class="mb rv"><div class="av">写真</div><b>名前</b><small>役職</small></div>
+    </div>
+    <p class="note">※ 試作版です。メンバーの写真・名前・役職は、いただいたら入れます。</p>
+  </div>
+</section>
+
+<div class="cta" id="join">
+  <div class="wrap">
+    <h2 class="rv">あなたの<span>「やってみたい」</span>、<br>一緒にやってみっぺ。</h2>
+    <p class="rv">大学生・高校生、どこに住んでいても大歓迎。<br>まずは気軽に話を聞きにきてください。</p>
+    <div class="btns rv">
+      <a class="btn" href="#join">メンバーに応募する</a>
+      <a class="btn o" href="#join">Instagram を見る</a>
+      <a class="btn o" href="#join">お問い合わせ</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="logo"><svg><use href="#bulb"/></svg><b>MIPPE!</b></div>
+  © MIPPE!
+</footer>
+
+<script>
+const hd = document.getElementById("hd");
+const onScroll = () => hd.classList.toggle("on", scrollY > innerHeight * .6);
+addEventListener("scroll", onScroll, { passive: true }); onScroll();
+if ("IntersectionObserver" in window) {
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { rootMargin: "0px 0px -8% 0px" });
+  document.querySelectorAll(".rv").forEach(el => io.observe(el));
+} else document.querySelectorAll(".rv").forEach(el => el.classList.add("in"));
+</script>
+</body>
+</html>
