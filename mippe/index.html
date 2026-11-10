@@ -24,7 +24,7 @@ header.on{background:rgba(110,11,11,.94)}
 .logo{display:flex;align-items:center;gap:8px;color:#fff}
 .logo svg{width:30px;height:30px}
 .logo b{font:italic 900 22px/1 "Zen Maru Gothic";letter-spacing:.02em}
-.join{background:var(--or);color:var(--red);font-weight:900;font-size:14px;border-radius:99px;padding:9px 18px}
+.join{background:#fff;color:var(--red);font-weight:900;font-size:14px;border-radius:99px;padding:9px 18px}
 /* hero */
 .hero{position:relative;height:100svh;min-height:600px;color:#fff;overflow:hidden}
 .hero img{position:absolute;inset:0;object-position:50% 30%}
@@ -47,13 +47,13 @@ header.on{background:rgba(110,11,11,.94)}
 .msg .end{margin-top:34px;padding:22px;border:2px solid rgba(255,211,77,.5);border-radius:18px;font-weight:700;font-size:16px;line-height:1.8}
 .msg .end strong{color:var(--yel);font-weight:900}
 /* mippe band */
-.band{background:var(--or);color:var(--red);padding:60px 0 54px;overflow:hidden}
+.band{background:var(--cream);color:var(--red);border-top:6px solid var(--red);padding:60px 0 54px;overflow:hidden}
 .band .l{font-size:40px;line-height:1.35;white-space:nowrap}
-.band .l:nth-child(2){padding-left:.8em}.band .l:nth-child(3){padding-left:1.6em;color:#fff}
+.band .l:nth-child(2){padding-left:.8em}.band .l:nth-child(3){padding-left:1.6em;color:var(--red2)}
 .band p{margin-top:24px;font-weight:700;font-size:15px}
 /* about */
 section{padding:84px 0}
-.k{font:13px/1 "Dela Gothic One";letter-spacing:.2em;color:var(--or)}
+.k{font:13px/1 "Dela Gothic One";letter-spacing:.2em;color:var(--red2);opacity:.7}
 .h{font-size:30px;line-height:1.45;font-weight:900;color:var(--red);margin-top:10px}
 .about p{margin-top:18px;font-size:15.5px}
 .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
@@ -69,13 +69,13 @@ section{padding:84px 0}
 .area ul{list-style:none;margin-top:8px}
 .area li{padding:6px 0 6px 22px;position:relative;font-size:14.5px;border-top:1px dashed #ecd5ba}
 .area li:first-child{border-top:0}
-.area li::before{content:"";position:absolute;left:4px;top:15px;width:9px;height:9px;border-radius:50%;background:var(--or)}
+.area li::before{content:"";position:absolute;left:4px;top:15px;width:9px;height:9px;border-radius:50%;background:var(--red)}
 .area .sub{font-size:12.5px;color:var(--mute);margin-top:8px}
 /* projects */
-.pj{background:var(--or)}
+.pj{background:var(--red)}
 .pj .h{color:#fff;font-family:"Dela Gothic One";font-weight:400;font-size:46px;letter-spacing:.04em}
-.pj .k{color:var(--red)}
-.pj .intro{color:var(--red);font-weight:700;margin-top:12px;font-size:15px}
+.pj .k{color:var(--yel);opacity:1}
+.pj .intro{color:#f3d9c4;font-weight:700;margin-top:12px;font-size:15px}
 .grid{display:grid;gap:18px;margin-top:34px}
 .card{background:var(--cream);border-radius:24px;overflow:hidden;box-shadow:0 18px 30px -22px rgba(80,20,0,.6)}
 .ph{display:grid;grid-template-columns:1fr 1fr;gap:3px;height:200px}
@@ -84,7 +84,7 @@ section{padding:84px 0}
 .card .bd{padding:20px 20px 22px}
 .card .nm{display:inline-block;background:var(--red);color:#fff;border-radius:10px;padding:4px 12px;font:18px/1.4 "Dela Gothic One"}
 .card p{margin-top:10px;font-weight:700;font-size:15.5px;line-height:1.7}
-.card.ky{background:var(--red);color:#fff}
+.card.ky{background:#4a0707;color:#fff}
 .card.ky .nm{background:var(--yel);color:var(--red)}
 .nums{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:20px 20px 0}
 .nums div{background:rgba(255,255,255,.08);border:1.5px solid rgba(255,211,77,.4);border-radius:16px;padding:14px;text-align:center}
@@ -100,12 +100,12 @@ section{padding:84px 0}
 .mb small{display:block;font-size:12px;color:var(--mute)}
 .note{font-size:12.5px;color:var(--mute);margin-top:14px}
 /* join */
-.cta{background:var(--red);color:#fff;text-align:center;padding:90px 0 80px;position:relative;overflow:hidden}
+.cta{background:#4a0707;color:#fff;text-align:center;padding:90px 0 80px;position:relative;overflow:hidden}
 .cta h2{font-size:25px;line-height:1.5;font-weight:900}
 .cta h2 span{color:var(--yel);white-space:nowrap}
 .cta p{margin-top:14px;color:#f3d9c4;font-size:15px}
 .btns{display:flex;flex-direction:column;gap:12px;margin:30px auto 0;max-width:360px}
-.btn{display:block;border-radius:99px;padding:16px;font-weight:900;font-size:16px;background:var(--or);color:var(--red)}
+.btn{display:block;border-radius:99px;padding:16px;font-weight:900;font-size:16px;background:#fff;color:var(--red)}
 .btn.o{background:transparent;border:2px solid rgba(255,255,255,.7);color:#fff}
 footer{background:#3d0606;color:#d9b9a4;text-align:center;padding:30px 20px calc(30px + env(safe-area-inset-bottom));font-size:12px}
 footer .logo{justify-content:center;margin-bottom:10px}
