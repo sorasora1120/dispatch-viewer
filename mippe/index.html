@@ -27,10 +27,10 @@ header.on{background:rgba(110,11,11,.94)}
 .join{background:#fff;color:var(--red);font-weight:900;font-size:14px;border-radius:99px;padding:9px 18px}
 /* hero */
 .hero{position:relative;height:100svh;min-height:600px;color:#fff;overflow:hidden}
-.hero img{position:absolute;inset:0;object-position:50% 30%}
+.hero>img{position:absolute;inset:0;object-position:50% 30%}
 .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.25),rgba(0,0,0,.05) 40%,rgba(40,5,5,.75))}
 .hero .in{position:absolute;left:0;right:0;bottom:0;z-index:1;padding:0 24px calc(48px + env(safe-area-inset-bottom))}
-.hero .big{display:flex;flex-direction:column;align-items:center;position:absolute;top:30%;left:0;right:0;z-index:1}
+.hero .big{display:flex;flex-direction:column;align-items:center;position:absolute;top:22%;left:0;right:0;z-index:1}
 .hero .big svg{width:110px;height:110px}
 .hero .big b{font:italic 900 54px/1 "Zen Maru Gothic";margin-top:6px;text-shadow:0 4px 20px rgba(0,0,0,.3)}
 .hero h1{font-size:28px;line-height:1.5;font-weight:900}
@@ -108,7 +108,15 @@ section{padding:84px 0}
 .btn{display:block;border-radius:99px;padding:16px;font-weight:900;font-size:16px;background:#fff;color:var(--red)}
 .btn.o{background:transparent;border:2px solid rgba(255,255,255,.7);color:#fff}
 footer{background:#3d0606;color:#d9b9a4;text-align:center;padding:30px 20px calc(30px + env(safe-area-inset-bottom));font-size:12px}
-footer .logo{justify-content:center;margin-bottom:10px}
+footer .fl{display:flex;justify-content:center;gap:22px;margin-bottom:14px;font-size:14px;font-weight:700;color:#fff}
+.news{background:var(--cream)}
+.nw{display:grid;gap:14px;margin-top:28px}
+.ni{display:block;background:#fff;border-radius:20px;padding:18px 20px;border:2px solid #f2dcc2}
+.ni time{font:13px/1 "Dela Gothic One";color:var(--red2)}
+.ni .tg{display:inline-block;margin-left:8px;font-size:11px;font-weight:900;background:var(--red);color:#fff;border-radius:99px;padding:2px 10px;vertical-align:2px}
+.ni b{display:block;margin-top:8px;font-size:16px;line-height:1.6;color:var(--ink)}
+.ni p{font-size:13.5px;color:var(--mute);margin-top:4px}
+.more{display:inline-block;margin-top:18px;font-weight:900;color:var(--red);border-bottom:2px solid var(--red)}
 /* reveal */
 .rv{opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s}
 .rv.in{opacity:1;transform:none}
@@ -128,13 +136,13 @@ footer .logo{justify-content:center;margin-bottom:10px}
 <svg width="0" height="0" style="position:absolute"><defs><symbol id="bulb" viewBox="0 0 100 100"><path d="M50 8c-17 0-29 13-29 28 0 11 6 18 11 24 3 4 4 7 4 11h28c0-4 1-7 4-11 5-6 11-13 11-24C79 21 67 8 50 8z" fill="#fff"/><path d="M12 74c10-6 22-6 32 0s22 6 32 0 14-4 14-4M8 84c10-6 22-6 32 0s22 6 32 0 16-5 16-5" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round"/></symbol></defs></svg>
 
 <header id="hd">
-  <a class="logo" href="#top"><svg><use href="#bulb"/></svg><b>MIPPE!</b></a>
+  <a class="logo" href="#top"><img src="img/logo-white.png" alt="MIPPE!" style="height:36px;width:auto"></a>
   <a class="join" href="#join">参加する</a>
 </header>
 
 <div class="hero" id="top">
   <img src="img/hero.jpg" alt="霧のかかる山">
-  <div class="big"><svg><use href="#bulb"/></svg><b>MIPPE!</b></div>
+  <div class="big"><img src="img/logo-white.png" alt="MIPPE!" style="width:min(62vw,300px);height:auto;filter:drop-shadow(0 4px 18px rgba(0,0,0,.35))"></div>
   <div class="in">
     <h1>ガクチカのために、<br>何かをする…？</h1>
     <p>「やってみたい」から動く、学生主体の団体です。</p>
@@ -202,6 +210,19 @@ footer .logo{justify-content:center;margin-bottom:10px}
   </div>
 </section>
 
+<section class="news" id="news">
+  <div class="wrap">
+    <div class="k">NEWS</div>
+    <h2 class="h rv">お知らせ</h2>
+    <div class="nw">
+      <a class="ni rv" href="https://www.instagram.com/mippe2025/" target="_blank" rel="noopener"><time>11.28</time><span class="tg">能登</span><b>能登 想いをつなぐ FIREWORKS<br>石川県珠洲市で花火を打ち上げます</b><p>クラウドファンディング実施中。くわしくは Instagram で。</p></a>
+      <a class="ni rv" href="https://www.instagram.com/mippe2025/" target="_blank" rel="noopener"><time>EVENT</time><span class="tg">変人企画</span><b>HENJIN MEETING を開催しました</b><p>地域を変える「変人」が集まる交流会。</p></a>
+      <a class="ni rv" href="https://www.instagram.com/mippe2025/" target="_blank" rel="noopener"><time>PROJECT</time><span class="tg">百姓企画</span><b>MIPPE!米づくり × わくわくお米本舗</b><p>お米を作って、売るところまで。</p></a>
+    </div>
+    <a class="more" href="https://note.com/mippe2025" target="_blank" rel="noopener">活動の記録は note で →</a>
+  </div>
+</section>
+
 <section class="mem" id="member">
   <div class="wrap">
     <div class="k">MEMBER</div>
@@ -229,7 +250,8 @@ footer .logo{justify-content:center;margin-bottom:10px}
 </div>
 
 <footer>
-  <div class="logo"><svg><use href="#bulb"/></svg><b>MIPPE!</b></div>
+  <img src="img/logo-white.png" alt="MIPPE!" style="width:120px;height:auto;margin:0 auto 14px">
+  <div class="fl"><a href="https://www.instagram.com/mippe2025/" target="_blank" rel="noopener">Instagram</a><a href="https://note.com/mippe2025" target="_blank" rel="noopener">note</a></div>
   © MIPPE!
 </footer>
 
