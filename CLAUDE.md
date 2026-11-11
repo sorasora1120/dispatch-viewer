@@ -62,6 +62,7 @@
 - `ig.html`：お店に DM する用の Instagram ビジネスアカウントの準備（2026-11-02〜）。名前・自己紹介・アイコン・投稿9枚（`sns/ig/*.jpg`、1080x1350）と投稿の文。画像は `tools/ig-shoot.js`（見本の画面を撮る）→ `tools/ig-posts.js` で作る。料金を変えたら 08-pricing と 09-cards も作り直す。プロフィールに学校名・住所・年齢は書かない
 - `rb.html`：Redbubble（プリントオンデマンド）に出す和風デザイン10個の出品ページ（2026-11-08〜、「1円も払いたくない・めんどくさい作業はしない」→ドロップシッピングの代わり）。画像は `rb/*.png`（透明4500x5400）と `rb/preview/*.jpg`、作るのは `tools/rb-designs.js`。Title・Tags・Description をコピーして貼るだけ。アカウントは親の名義
 - `mippe/`：学生団体 MIPPE!（Sora は運営メンバー、代表は遠藤光大さん）の公式LPの試作（2026-11-10〜）。中身と写真は MIPPE! の Canva サイト（mippesimulation.my.canva.site）から。運営メンバーの写真・名前とリンク先（応募・Instagram・問い合わせ）は届いたら入れる
+- `fiverr.html`：Fiverr 2つ目の出品「Shopify のお店を日本向けに」のコピペ用ページ（2026-11-11〜）。画像は `fiverr/gig2-*.jpg`（`tools/fiverr-gig2.js`、架空のお店）。Fiverr のコネクタは買う側の機能だけ（ライバル調査はできる、出品の編集はできない）
 - `works/`：古い制作サンプル。今のポートフォリオは `sorasora1120.github.io`
 - `vocab-app/`：別プロジェクト（単語アプリ VisuWord）。触るときは `.github/workflows/ios-*.yml` が動く
 - `icon-options/` は `.git/info/exclude` で除外しているローカルのみのファイル
