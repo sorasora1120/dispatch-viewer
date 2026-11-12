@@ -3,293 +3,278 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#6e0b0b">
+<meta name="theme-color" content="#7a0f12">
 <title>MIPPE!｜行ってみっぺ 会ってみっぺ やってみっぺ</title>
 <meta name="description" content="MIPPE!は、学生一人ひとりの「やってみたい」や「ワクワク」から、地域を越えてさまざまな企画を生み出している学生主体の団体です。">
-<!-- MIPPE! 公式LPの試作（2026-11-10〜）。中身と写真は MIPPE! の Canva サイト（mippesimulation.my.canva.site）から。
-     写真は img/*.jpg。運営メンバーとリンク先（Instagram・応募フォーム）は届いたら入れる -->
-<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
+<!-- MIPPE! 公式LPの試作（2026-11-10〜）。2026-11-12「UIがAIっぽい」→ 角丸カード・影・丸タグ・絵文字をやめて、明朝の見出し・細い線・番号・写真のコラージュの紙っぽい作りに。
+     中身は遠藤さんの文と MIPPE! の Canva サイト・団体概要PDF・note から。写真は img/*.jpg。学校名は出さない（遠藤さんの希望）。
+     sorasora1120.github.io/mippe/ にもコピーして公開している（直したら両方） -->
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Cormorant+Garamond:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
 <style>
-:root{--red:#6e0b0b;--red2:#8e1212;--or:#f39800;--yel:#ffd34d;--cream:#fff7ea;--ink:#2a1608;--mute:#7a5a46}
+:root{--paper:#f4efe6;--paper2:#ebe3d5;--ink:#1f1a17;--mute:#6d6259;--red:#7a0f12;--rule:rgba(31,26,23,.22)}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:"Zen Maru Gothic",sans-serif;color:var(--ink);background:var(--cream);line-height:1.9;-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%}
+body{font-family:"Zen Kaku Gothic New",sans-serif;color:var(--ink);background:var(--paper);line-height:2;-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%;letter-spacing:.02em}
 img{display:block;width:100%;height:100%;object-fit:cover}
 a{color:inherit;text-decoration:none}
-.dg{font-family:"Dela Gothic One",sans-serif;font-weight:400;letter-spacing:.02em}
-.wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+.mc{font-family:"Shippori Mincho B1",serif}
+.en{font-family:"Cormorant Garamond",serif;font-style:italic;letter-spacing:.04em}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
 /* header */
-header{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:14px 18px;padding-top:calc(14px + env(safe-area-inset-top));transition:background .3s}
-header.on{background:rgba(110,11,11,.94)}
-.logo{display:flex;align-items:center;gap:8px;color:#fff}
-.logo svg{width:30px;height:30px}
-.logo b{font:italic 900 22px/1 "Zen Maru Gothic";letter-spacing:.02em}
-.join{background:#fff;color:var(--red);font-weight:900;font-size:14px;border-radius:99px;padding:9px 18px}
+header{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:12px 18px;padding-top:calc(12px + env(safe-area-inset-top));transition:background .3s,color .3s;color:#fff}
+header.on{background:var(--paper);color:var(--ink);border-bottom:1px solid var(--rule)}
+header .lg{height:34px;width:auto}
+header .lg.r{display:none}header.on .lg.w{display:none}header.on .lg.r{display:block}
+header nav{display:flex;gap:18px;font-size:13px;font-weight:700}
+header nav a.j{border-bottom:1.5px solid currentColor}
 /* hero */
-.hero{position:relative;height:100svh;min-height:600px;color:#fff;overflow:hidden}
+.hero{position:relative;height:100svh;min-height:620px;color:#fff;overflow:hidden;background:#222}
 .hero>img{position:absolute;inset:0;object-position:50% 30%}
-.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.25),rgba(0,0,0,.05) 40%,rgba(40,5,5,.75))}
-.hero .in{position:absolute;left:0;right:0;bottom:0;z-index:1;padding:0 24px calc(48px + env(safe-area-inset-bottom))}
-.hero .big{display:flex;flex-direction:column;align-items:center;position:absolute;top:22%;left:0;right:0;z-index:1}
-.hero .big svg{width:110px;height:110px}
-.hero .big b{font:italic 900 54px/1 "Zen Maru Gothic";margin-top:6px;text-shadow:0 4px 20px rgba(0,0,0,.3)}
-.hero h1{font-size:28px;line-height:1.5;font-weight:900}
-.hero p{margin-top:10px;font-size:14px;opacity:.9}
-.scroll{display:inline-block;margin-top:22px;font-size:12px;letter-spacing:.3em;border-bottom:1px solid rgba(255,255,255,.6);padding-bottom:4px}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.18),rgba(0,0,0,0) 35%,rgba(0,0,0,.55))}
+.hero .tate{position:absolute;right:20px;top:92px;z-index:1;writing-mode:vertical-rl;font:700 15px/2.1 "Shippori Mincho B1";letter-spacing:.3em;opacity:.95}
+.hero .in{position:absolute;left:24px;right:24px;bottom:calc(40px + env(safe-area-inset-bottom));z-index:1}
+.hero .lgbig{width:min(52vw,250px);margin-bottom:26px}
+.hero h1{font:800 34px/1.45 "Shippori Mincho B1";letter-spacing:.04em}
+.hero p{margin-top:8px;font-size:13.5px;opacity:.9}
+/* section heads */
+section{padding:88px 0}
+.sh{display:flex;align-items:baseline;gap:14px;border-top:1.5px solid var(--ink);padding-top:12px}
+.sh .no{font:500 15px/1 "Cormorant Garamond";font-style:italic;color:var(--red)}
+.sh .en{font-size:15px;color:var(--mute)}
+.sh h2{font:800 15px/1 "Shippori Mincho B1";letter-spacing:.2em;margin-left:auto}
+.ttl{font:800 30px/1.5 "Shippori Mincho B1";margin-top:34px}
 /* message */
-.msg{background:var(--red);color:#fff;padding:90px 0 80px}
-.msg .lead{font-size:15px;color:#f3d9c4}
-.msg .lead span{display:block}
-.msg .but{margin:34px 0 24px;font-size:44px;line-height:1.1;color:var(--yel)}
-.msg h2{font-size:26px;line-height:1.6;font-weight:900}
-.msg .body{margin-top:18px;font-size:15.5px;color:#f7e6d6}
-.msg .body b{color:var(--yel)}
-.msg .end{margin-top:34px;padding:22px;border:2px solid rgba(255,211,77,.5);border-radius:18px;font-weight:700;font-size:16px;line-height:1.8}
-.msg .end strong{color:var(--yel);font-weight:900}
-/* mippe band */
-.band{background:var(--cream);color:var(--red);border-top:6px solid var(--red);padding:60px 0 54px;overflow:hidden}
-.band .l{font-size:40px;line-height:1.35;white-space:nowrap}
-.band .l:nth-child(2){padding-left:.8em}.band .l:nth-child(3){padding-left:1.6em;color:var(--red2)}
-.band p{margin-top:24px;font-weight:700;font-size:15px}
-.band .mp{list-style:none;margin-top:16px;display:grid;gap:10px}
-.band .mp li{background:#fff;border-radius:16px;padding:14px 16px;font-weight:700;font-size:15px;line-height:1.6;box-shadow:0 10px 20px -16px rgba(80,10,10,.5)}
-.band .mp b{display:block;font:15px/1.4 "Dela Gothic One";color:var(--red2);margin-bottom:2px}
+.msg .lead{font-size:15px;color:var(--mute);line-height:2.1}
+.msg .but{margin:44px 0 30px;font:800 46px/1.15 "Shippori Mincho B1";color:var(--red)}
+.msg .but span{display:block;font:500 italic 40px/1 "Cormorant Garamond";letter-spacing:.06em;margin-top:6px}
+.msg h3{font:800 25px/1.75 "Shippori Mincho B1"}
+.msg .body{margin-top:24px;font-size:15.5px;line-height:2.15}
+.msg .body p+p{margin-top:16px}
+.msg .body b{font-weight:700;background:linear-gradient(transparent 62%,rgba(122,15,18,.16) 62%)}
+.msg .end{margin-top:46px;padding-left:18px;border-left:3px solid var(--red);font:700 17px/2 "Shippori Mincho B1"}
+.msg .end strong{font-size:21px;line-height:1.75;display:block;margin-bottom:6px}
+/* mippe */
+.mippe{background:var(--paper2)}
+.mippe .row{display:grid;grid-template-columns:auto 1fr;gap:4px 18px;padding:22px 0;border-bottom:1px solid var(--rule)}
+.mippe .row:first-of-type{border-top:1px solid var(--rule);margin-top:30px}
+.mippe .row .n{font:500 italic 22px/1.2 "Cormorant Garamond";color:var(--red);grid-row:span 2}
+.mippe .row b{font:800 28px/1.3 "Shippori Mincho B1"}
+.mippe .row p{font-size:15px;color:var(--mute)}
+.mippe .def{font-size:14px;color:var(--mute);margin-top:30px}
+.mippe .last{margin-top:22px;font:700 18px/1.9 "Shippori Mincho B1"}
 /* about */
-section{padding:84px 0}
-.k{font:13px/1 "Dela Gothic One";letter-spacing:.2em;color:var(--red2);opacity:.7}
-.h{font-size:30px;line-height:1.45;font-weight:900;color:var(--red);margin-top:10px}
-.about p{margin-top:18px;font-size:15.5px}
-.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
-.tags span{background:#fff;border:2px solid var(--red);color:var(--red);border-radius:99px;padding:4px 14px;font-weight:700;font-size:14px}
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:34px}
-.st{background:var(--red);color:#fff;border-radius:20px;padding:18px}
-.st small{display:block;font-size:12px;color:#f3c9a8;font-weight:700}
-.st b{display:block;font:30px/1.2 "Dela Gothic One";color:var(--yel);margin-top:6px}
-.st b i{font-style:normal;font-size:15px;margin-left:3px;color:#fff}
-.st.w{grid-column:1/-1}
-.area{margin-top:12px;background:#fff;border-radius:20px;padding:20px;border:2px solid #f2dcc2}
-.area h3{font-size:15px;color:var(--red)}
-.area ul{list-style:none;margin-top:8px}
-.area li{padding:6px 0 6px 22px;position:relative;font-size:14.5px;border-top:1px dashed #ecd5ba}
-.area li:first-child{border-top:0}
-.area li::before{content:"";position:absolute;left:4px;top:15px;width:9px;height:9px;border-radius:50%;background:var(--red)}
-.area .sub{font-size:12.5px;color:var(--mute);margin-top:8px}
+.about p.t{margin-top:22px;font-size:15.5px;line-height:2.1}
+.nums{display:grid;grid-template-columns:1fr 1fr 1fr;margin-top:40px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.nums div{padding:18px 4px 16px;border-left:1px solid var(--rule)}
+.nums div:first-child{border-left:0}
+.nums b{display:block;font:800 34px/1.1 "Shippori Mincho B1";color:var(--red)}
+.nums b i{font-style:normal;font-size:14px;color:var(--ink);margin-left:2px}
+.nums small{font-size:11.5px;color:var(--mute)}
+.prof{margin-top:40px}
+.prof div{display:grid;grid-template-columns:86px 1fr;gap:12px;padding:12px 0;border-bottom:1px solid var(--rule);font-size:14px;line-height:1.8}
+.prof dt{font-weight:700}
+.prof dd{color:#3d342e}
 /* projects */
-.pj{background:var(--red)}
-.pj .h{color:#fff;font-family:"Dela Gothic One";font-weight:400;font-size:46px;letter-spacing:.04em}
-.pj .k{color:var(--yel);opacity:1}
-.pj .intro{color:#f3d9c4;font-weight:700;margin-top:12px;font-size:15px}
-.grid{display:grid;gap:18px;margin-top:34px}
-.card{background:var(--cream);border-radius:24px;overflow:hidden;box-shadow:0 18px 30px -22px rgba(80,20,0,.6)}
-.ph{display:grid;grid-template-columns:1fr 1fr;gap:3px;height:200px}
-.ph.one{grid-template-columns:1fr}
-.ph.four{grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr}
-.card .bd{padding:20px 20px 22px}
-.card .nm{display:inline-block;background:var(--red);color:#fff;border-radius:10px;padding:4px 12px;font:18px/1.4 "Dela Gothic One"}
-.card p{margin-top:10px;font-weight:700;font-size:15.5px;line-height:1.7}
-.card.ky{background:#4a0707;color:#fff}
-.card.ky .nm{background:var(--yel);color:var(--red)}
-.nums{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:20px 20px 0}
-.nums div{background:rgba(255,255,255,.08);border:1.5px solid rgba(255,211,77,.4);border-radius:16px;padding:14px;text-align:center}
-.nums b{display:block;font:40px/1 "Dela Gothic One";color:var(--yel)}
-.nums b i{font-style:normal;font-size:16px;margin-left:2px}
-.nums small{display:block;font-size:12px;margin-top:6px;color:#f3c9a8}
-.card.ky p.s{font-weight:500;font-size:14.5px;color:#f7e6d6}
-.card p.s2{font-weight:500;font-size:14px;color:var(--mute);margin-top:6px;line-height:1.75}
-.card .at{font-size:12px;font-weight:900;color:var(--red2);margin-top:10px}
-.card .at::before{content:"📍 "}
-.more2{display:inline-block;margin-top:14px;font-weight:900;color:var(--yel);border-bottom:2px solid var(--yel)}
-.prof{margin-top:14px;background:#fff;border-radius:20px;border:2px solid #f2dcc2;overflow:hidden}
-.prof div{display:grid;grid-template-columns:84px 1fr;gap:10px;padding:12px 16px;border-top:1px dashed #ecd5ba;font-size:14px}
-.prof div:first-child{border-top:0}
-.prof dt{font-weight:900;color:var(--red)}
-.tl{margin-top:30px;border-left:3px solid var(--red);padding-left:20px;display:grid;gap:26px}
-.tl .it{position:relative}
-.tl .it::before{content:"";position:absolute;left:-29px;top:4px;width:15px;height:15px;border-radius:50%;background:var(--cream);border:3px solid var(--red)}
-.tl time{font:14px/1 "Dela Gothic One";color:var(--red)}
-.tl b{display:block;font-size:17px;margin-top:6px;line-height:1.5}
-.tl p{font-size:13.5px;color:var(--mute);margin-top:4px}
-.tl .im{height:160px;border-radius:14px;overflow:hidden;margin-top:10px}
-.sh{margin-top:40px;font-size:18px;color:var(--red);font-weight:900}
-.nl{display:grid;gap:12px;margin-top:14px}
-.na{display:grid;grid-template-columns:116px 1fr;gap:14px;align-items:center;background:#fff;border-radius:16px;padding:10px;border:2px solid #f2dcc2}
-.na .th{height:62px;border-radius:10px;overflow:hidden;background:#f3e3d0}
-.na time{font:12px/1 "Dela Gothic One";color:var(--red2)}
-.na b{display:block;margin-top:5px;font-size:13.5px;line-height:1.55}
-@media (min-width:760px){.nl{grid-template-columns:1fr 1fr}}
+.pj .it{display:grid;gap:18px;padding:44px 0;border-bottom:1px solid var(--rule)}
+.pj .it:first-of-type{margin-top:20px}
+.pj .hd{display:flex;align-items:baseline;gap:14px}
+.pj .hd .n{font:500 italic 30px/1 "Cormorant Garamond";color:var(--red)}
+.pj .hd h3{font:800 26px/1.3 "Shippori Mincho B1"}
+.pj .catch{font:700 17px/1.7 "Shippori Mincho B1"}
+.pj .tx{font-size:14.5px;line-height:2.05;color:#3d342e}
+.pj .pl{font-size:12px;color:var(--mute);letter-spacing:.1em}
+.ph2{display:grid;grid-template-columns:1.3fr 1fr;gap:8px;height:230px}
+.ph2.one{grid-template-columns:1fr}
+.ph2.four{grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;height:260px}
+.big{border:1.5px solid var(--ink);padding:20px 18px;display:flex;gap:26px;align-items:flex-end}
+.big b{font:800 54px/1 "Shippori Mincho B1";color:var(--red)}
+.big b i{font-style:normal;font-size:16px;color:var(--ink);margin-left:3px}
+.big small{display:block;font-size:12px;color:var(--mute);margin-top:6px}
+/* timeline */
+.tl{margin-top:30px}
+.tl .r{display:grid;grid-template-columns:96px 1fr;gap:14px;padding:16px 0;border-bottom:1px solid var(--rule)}
+.tl time{font:500 italic 16px/1.5 "Cormorant Garamond";color:var(--red)}
+.tl b{font:700 16px/1.6 "Shippori Mincho B1"}
+.tl p{font-size:13.5px;color:var(--mute);line-height:1.8;margin-top:2px}
+/* news */
+.list{margin-top:30px;border-top:1px solid var(--rule)}
+.list a{display:grid;grid-template-columns:96px 1fr;gap:14px;padding:16px 0;border-bottom:1px solid var(--rule)}
+.list time{font:500 italic 16px/1.5 "Cormorant Garamond";color:var(--red)}
+.list b{font-weight:700;font-size:14.5px;line-height:1.7}
+.list p{font-size:12.5px;color:var(--mute)}
+.more{display:inline-block;margin-top:22px;font-weight:700;font-size:14px;border-bottom:1.5px solid var(--ink)}
+.sub{margin-top:50px;font:800 18px/1 "Shippori Mincho B1"}
 /* members */
-.mem .row{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:30px}
-.mb{background:#fff;border-radius:20px;padding:16px;text-align:center;border:2px solid #f2dcc2}
-.mb .av{width:84px;height:84px;margin:0 auto;border-radius:50%;background:repeating-linear-gradient(45deg,#f7e4cc,#f7e4cc 8px,#fbeedd 8px,#fbeedd 16px);display:grid;place-items:center;color:var(--mute);font-size:11px}
-.mb b{display:block;margin-top:10px;color:var(--red)}
-.mb small{display:block;font-size:12px;color:var(--mute)}
-.note{font-size:12.5px;color:var(--mute);margin-top:14px}
+.mem .row{display:grid;grid-template-columns:repeat(2,1fr);gap:24px 14px;margin-top:30px}
+.mb .av{aspect-ratio:4/5;background:var(--paper2);display:grid;place-items:center;color:var(--mute);font-size:12px}
+.mb b{display:block;margin-top:10px;font:700 16px/1.4 "Shippori Mincho B1"}
+.mb small{font-size:12px;color:var(--mute)}
+.note{font-size:12.5px;color:var(--mute);margin-top:18px}
 /* join */
-.cta{background:#4a0707;color:#fff;text-align:center;padding:90px 0 80px;position:relative;overflow:hidden}
-.cta h2{font-size:25px;line-height:1.5;font-weight:900}
-.cta h2 span{color:var(--yel);white-space:nowrap}
-.cta p{margin-top:14px;color:#f3d9c4;font-size:15px}
-.btns{display:flex;flex-direction:column;gap:12px;margin:30px auto 0;max-width:360px}
-.btn{display:block;border-radius:99px;padding:16px;font-weight:900;font-size:16px;background:#fff;color:var(--red)}
-.btn.o{background:transparent;border:2px solid rgba(255,255,255,.7);color:#fff}
-footer{background:#3d0606;color:#d9b9a4;text-align:center;padding:30px 20px calc(30px + env(safe-area-inset-bottom));font-size:12px}
-footer .fl{display:flex;justify-content:center;gap:22px;margin-bottom:14px;font-size:14px;font-weight:700;color:#fff}
-.news{background:var(--cream)}
-.nw{display:grid;gap:14px;margin-top:28px}
-.ni{display:block;background:#fff;border-radius:20px;padding:18px 20px;border:2px solid #f2dcc2}
-.ni time{font:13px/1 "Dela Gothic One";color:var(--red2)}
-.ni .tg{display:inline-block;margin-left:8px;font-size:11px;font-weight:900;background:var(--red);color:#fff;border-radius:99px;padding:2px 10px;vertical-align:2px}
-.ni b{display:block;margin-top:8px;font-size:16px;line-height:1.6;color:var(--ink)}
-.ni p{font-size:13.5px;color:var(--mute);margin-top:4px}
-.more{display:inline-block;margin-top:18px;font-weight:900;color:var(--red);border-bottom:2px solid var(--red)}
+.cta{background:var(--red);color:#fff;padding:96px 0 90px}
+.cta h2{font:800 31px/1.6 "Shippori Mincho B1"}
+.cta p{margin-top:16px;font-size:15px;opacity:.85}
+.btns{display:grid;gap:10px;margin-top:36px;max-width:420px}
+.btn{display:flex;justify-content:space-between;align-items:center;padding:17px 18px;font-weight:700;font-size:15px;border:1.5px solid #fff}
+.btn.f{background:#fff;color:var(--red)}
+.btn::after{content:"→"}
+footer{background:#1f1a17;color:#bfb3a6;padding:40px 24px calc(30px + env(safe-area-inset-bottom));font-size:12px}
+footer .in{max-width:1040px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px}
+footer img{width:110px;height:auto}
+footer nav{display:flex;gap:20px;font-size:14px;font-weight:700;color:#fff}
 /* reveal */
-.rv{opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s}
+.rv{opacity:0;transform:translateY(18px);transition:opacity .8s,transform .8s}
 .rv.in{opacity:1;transform:none}
+@media (max-width:640px){header nav a:not(.j){display:none}}
 @media (min-width:760px){
   header{padding:18px 32px}
-  .hero h1{font-size:40px}.hero .big b{font-size:80px}.hero .big svg{width:150px;height:150px}
-  .hero .in{padding:0 48px 60px}
-  .msg .wrap{max-width:760px}
-  .band .l{font-size:84px}
-  .grid{grid-template-columns:1fr 1fr}
-  .stats{grid-template-columns:repeat(3,1fr)}.st.w{grid-column:auto}
+  .hero .in{left:56px;bottom:64px}.hero h1{font-size:52px}.hero .tate{right:44px;font-size:18px}
+  .msg .wrap{max-width:720px}
+  .ttl{font-size:38px}
+  .pj .it{grid-template-columns:1fr 1fr;gap:20px 48px;align-items:start}
+  .pj .it .ph2,.pj .it .big{grid-column:2;grid-row:1/span 4}
+  .pj .it:nth-of-type(even) .ph2,.pj .it:nth-of-type(even) .big{grid-column:1}
+  .ph2{height:320px}.ph2.four{height:340px}
   .mem .row{grid-template-columns:repeat(4,1fr)}
+  .tl .r,.list a{grid-template-columns:140px 1fr}
 }
 </style>
 </head>
 <body>
-<svg width="0" height="0" style="position:absolute"><defs><symbol id="bulb" viewBox="0 0 100 100"><path d="M50 8c-17 0-29 13-29 28 0 11 6 18 11 24 3 4 4 7 4 11h28c0-4 1-7 4-11 5-6 11-13 11-24C79 21 67 8 50 8z" fill="#fff"/><path d="M12 74c10-6 22-6 32 0s22 6 32 0 14-4 14-4M8 84c10-6 22-6 32 0s22 6 32 0 16-5 16-5" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round"/></symbol></defs></svg>
-
 <header id="hd">
-  <a class="logo" href="#top"><img src="img/logo-white.png" alt="MIPPE!" style="height:36px;width:auto"></a>
-  <a class="join" href="#join">参加する</a>
+  <a href="#top"><img class="lg w" src="img/logo-white.png" alt="MIPPE!"><img class="lg r" src="img/logo-red.png" alt="MIPPE!"></a>
+  <nav><a href="#about">MIPPE!とは</a><a href="#project">企画</a><a href="#news">お知らせ</a><a class="j" href="#join">参加する</a></nav>
 </header>
 
 <div class="hero" id="top">
   <img src="img/hero.jpg" alt="霧のかかる山">
-  <div class="big"><img src="img/logo-white.png" alt="MIPPE!" style="width:min(62vw,300px);height:auto;filter:drop-shadow(0 4px 18px rgba(0,0,0,.35))"></div>
+  <div class="tate">行ってみっぺ　会ってみっぺ　やってみっぺ</div>
   <div class="in">
+    <img class="lgbig" src="img/logo-white.png" alt="MIPPE!">
     <h1>ガクチカのために、<br>何かをする…？</h1>
-    <p>「やってみたい」から動く、学生主体の団体です。</p>
-    <a class="scroll" href="#msg">SCROLL ↓</a>
+    <p>「やってみたい」から動く、学生主体の団体。</p>
   </div>
 </div>
 
-<div class="msg" id="msg">
+<section class="msg" id="msg">
   <div class="wrap">
-    <div class="lead rv"><span>就活で話せる経験がほしい。</span><span>実績になることをしたい。</span><span>自分の将来に役立つことをしたい。</span></div>
-    <p class="lead rv" style="margin-top:14px">そんな理由から、地域活動やボランティア、学生団体に参加する学生も少なくありません。<br>もちろん、それ自体が悪いわけではないよ？</p>
-    <div class="but dg rv">だがしかし<br>BUT</div>
-    <h2 class="rv">いつから挑戦は、<br>誰かに評価されるための<br>ものになったんだろう。</h2>
+    <div class="sh"><span class="no">01</span><span class="en">Message</span><h2>想い</h2></div>
+    <p class="lead rv" style="margin-top:34px">就活で話せる経験がほしい。<br>実績になることをしたい。<br>自分の将来に役立つことをしたい。</p>
+    <p class="lead rv" style="margin-top:16px">そんな理由から、地域活動やボランティア、学生団体に参加する学生も少なくありません。<br>もちろん、それ自体が悪いわけではないよ？</p>
+    <div class="but rv">だがしかし<span>BUT</span></div>
+    <h3 class="rv">いつから挑戦は、<br>誰かに評価されるための<br>ものになったんだろう。</h3>
     <div class="body rv">
       <p>もっと単純でよくないか？<br>誰かに与えられた「やるべきこと」ではなく、自分自身が<b>「やってみたい」</b>や<b>「ワクワク」</b>を起点に動いてみようよ。</p>
-      <p style="margin-top:14px">そこから人と繋がって、新しい挑戦が生まれて、気づけば自分だけの経験になってるはず。<br>実績をつくるために動くのではなく、夢中になって動いたその先に、結果として実績がついてくる。</p>
+      <p>そこから人と繋がって、新しい挑戦が生まれて、気づけば自分だけの経験になってるはず。<br>実績をつくるために動くのではなく、夢中になって動いたその先に、結果として実績がついてくる。</p>
     </div>
-    <div class="end rv"><strong>ガクチカは、つくるものじゃなくて、<br>あとからついてくるもの。</strong><br>順番を間違えてはいけない。<br>と、MIPPE!は思っています。</div>
+    <div class="end rv"><strong>ガクチカは、つくるものじゃなくて、<br>あとからついてくるもの。</strong>順番を間違えてはいけない。<br>と、MIPPE!は思っています。</div>
   </div>
-</div>
+</section>
 
-<div class="band">
+<section class="mippe">
   <div class="wrap">
-    <div class="l dg rv">行ってみっぺ</div>
-    <div class="l dg rv">会ってみっぺ</div>
-    <div class="l dg rv">やってみっぺ</div>
-    <p class="rv">「みっぺ」は、東北の方言で「〜してみよう」という意味。</p>
-    <ul class="mp rv"><li><b>行ってみっぺ</b>まだ知らないまちに行ってみよう。</li><li><b>会ってみっぺ</b>多様な価値観を持つ人たちと会ってみよう。</li><li><b>やってみっぺ</b>まずは、自分の興味や好奇心を行動に移してみよう。</li></ul>
-    <p class="rv">そんな一人ひとりの小さな「みっぺ」から始まる団体です。</p>
+    <div class="sh"><span class="no">02</span><span class="en">Mippe</span><h2>みっぺ</h2></div>
+    <p class="def rv">「みっぺ」は、東北の方言で「〜してみよう」という意味。</p>
+    <div class="row rv"><span class="n">i.</span><b>行ってみっぺ</b><p>まだ知らないまちに行ってみよう。</p></div>
+    <div class="row rv"><span class="n">ii.</span><b>会ってみっぺ</b><p>多様な価値観を持つ人たちと会ってみよう。</p></div>
+    <div class="row rv"><span class="n">iii.</span><b>やってみっぺ</b><p>まずは、自分の興味や好奇心を行動に移してみよう。</p></div>
+    <p class="last rv">そんな一人ひとりの小さな「みっぺ」から始まる団体です。</p>
   </div>
-</div>
+</section>
 
 <section class="about" id="about">
   <div class="wrap">
-    <div class="k">ABOUT</div>
-    <h2 class="h rv">「やってみたい」から、<br>地域を越えて企画をつくる。</h2>
-    <p class="rv">MIPPE!は、学生一人ひとりの「やってみたい」や「ワクワク」から、地域を越えてさまざまな企画を生み出している学生主体の団体です。</p>
-    <div class="tags rv"><span>米作り</span><span>中高生の探究</span><span>お祭りに出店</span><span>全国でイベント</span></div>
-    <p class="rv">活動する地域も、取り組む分野もさまざま。それぞれの企画は、メンバー自身の「面白そう」「やってみたい」という気持ちをエンジンに動いています。そこに仲間が加わり、地域の人が加わり、いつの間にか新しい企画や関係が生まれていく。</p>
-    <div class="stats rv">
-      <div class="st"><small>コミュニティメンバー</small><b>95<i>人</i></b></div>
-      <div class="st"><small>企画メンバー</small><b>30<i>人ほど</i></b></div>
-      <div class="st w"><small>設立日</small><b>2025.5.23</b></div>
-    </div>
-    <div class="area rv">
-      <h3>活動エリア</h3>
-      <ul><li>東京都 板橋区・豊島区</li><li>栃木県 各所</li><li>瀬戸内地方（広島県福山市、岡山県笠岡市 など）</li><li>石川県珠洲市・奥能登地方</li></ul>
-      <p class="sub">ほかにも単発の活動拠点あり（鹿児島県錦江町、福岡県北九州市、岩手県盛岡市、長野県高森町 など）</p>
+    <div class="sh"><span class="no">03</span><span class="en">About</span><h2>MIPPE!とは</h2></div>
+    <p class="ttl rv">「やってみたい」から、<br>地域を越えて企画をつくる。</p>
+    <p class="t rv">MIPPE!は、学生一人ひとりの「やってみたい」や「ワクワク」から、地域を越えてさまざまな企画を生み出している学生主体の団体です。米作りをしたり、中高生の探究に関わったり、地域のお祭りに出店したり、全国各地でイベントを開いたり。</p>
+    <p class="t rv">それぞれの企画は、メンバー自身の「面白そう」「やってみたい」という気持ちをエンジンに動いています。そこに仲間が加わり、地域の人が加わり、いつの間にか新しい企画や関係が生まれていく。</p>
+    <div class="nums rv">
+      <div><b>95<i>人</i></b><small>コミュニティメンバー</small></div>
+      <div><b>30<i>人ほど</i></b><small>企画メンバー</small></div>
+      <div><b>2025</b><small>5月23日 設立</small></div>
     </div>
     <dl class="prof rv">
       <div><dt>団体名</dt><dd>任意団体MIPPE!</dd></div>
-      <div><dt>設立</dt><dd>2025年5月23日</dd></div>
       <div><dt>代表者</dt><dd>遠藤光大</dd></div>
-      <div><dt>活動地域</dt><dd>東京都、栃木県、鹿児島県ほか全国各地</dd></div>
+      <div><dt>活動エリア</dt><dd>東京都（板橋区・豊島区）、栃木県、瀬戸内地方（広島県福山市・岡山県笠岡市 など）、石川県珠洲市・奥能登。ほかにも鹿児島県錦江町、福岡県北九州市、岩手県盛岡市、長野県高森町 などで活動</dd></div>
       <div><dt>主な活動</dt><dd>地域活動、イベント企画、農業、探究学習の支援、マルシェ出店 など</dd></div>
       <div><dt>設立目的</dt><dd>学生と地域との続いていく関係づくりと、主体的に挑戦できる機会をつくること</dd></div>
     </dl>
   </div>
 </section>
 
-<section class="pj" id="project">
+<section class="pj" id="project" style="padding-top:20px">
   <div class="wrap">
-    <div class="k">OUR</div>
-    <h2 class="h">PROJECT</h2>
-    <p class="intro">それぞれの「やってみたい」から生まれた企画が、全国で動いています。</p>
-    <div class="grid">
-      <div class="card rv"><div class="ph"><img src="img/walk.jpg" alt=""><img src="img/henjin2.jpg" alt=""></div><div class="bd"><span class="nm">変人企画</span><p>変人（地域を変える人）が、立場を越えて集まる。</p><p class="s2">現状を変えたい学生・社会人が集まり、対話や共同企画から新しい取り組みの種を生み出す場。少人数の対話会から合宿型イベントまで。</p><p class="at">全国各所</p></div></div>
-      <div class="card rv"><div class="ph"><img src="img/hyaku1.jpg" alt=""><img src="img/rice1.jpg" alt=""></div><div class="bd"><span class="nm">百姓企画</span><p>お米を作ったり、販売したり。</p><p class="s2">栃木県佐野市の米農家と一緒に米づくり。今年度からは田んぼを借りて、都内の大学生も巻き込みながら1tを超えるお米を作る予定。ゆくゆくは商品開発も。</p><p class="at">栃木県</p></div></div>
-      <div class="card rv"><div class="ph"><img src="img/mutsu.jpg" alt=""><img src="img/yuri.jpg" alt=""></div><div class="bd"><span class="nm">百合の企画</span><p>マルシェに出店したり、運営したり。</p><p class="s2">屋号「陸奥屋」として、東北の特産品や郷土料理を板橋区のゆりの木商店街などで販売。これまでに4回出店し、売上は活動費に。</p><p class="at">東京都内</p></div></div>
-      <div class="card rv"><div class="ph four" style="height:240px"><img src="img/umi1.jpg" alt=""><img src="img/umi2.jpg" alt=""><img src="img/umi3.jpg" alt=""><img src="img/umi4.jpg" alt=""></div><div class="bd"><span class="nm">里山・里海企画</span><p>瀬戸内海の離島で地引網をしたり、海岸清掃をしたり。</p><p class="s2">里山・里海の環境や生業に関わり、自然と人の暮らしの関係を学びながら、持続可能な地域のあり方を考える。</p><p class="at">瀬戸内地方（広島県・岡山県など）</p></div></div>
-      <div class="card ky rv"><div class="nums"><div><b>22<i>名</i></b><small>出動した学生（昨年）</small></div><div><b>31<i>コマ</i></b><small>都内の中学校で担当</small></div></div><div class="bd"><span class="nm">共育探究企画</span><p>中高生の探究に、大学生が伴走する。</p><p class="s">学校の先生方と連携し、中高生の探究学習に大学生が伴走する企画。これまでは学校の正規授業に参加し、探究学習に意欲的な生徒だけでなく、苦手意識を持つ生徒にも寄り添いながら、一緒に考え、学び合う機会をつくってきました。今後は授業時間外にも活動の幅を広げ、生徒一人ひとりの興味や関心を深められる多様な探究プログラムの企画・実施を目指しています。</p></div></div>
-      <div class="card rv"><div class="ph one"><img src="img/iac.jpg" alt=""></div><div class="bd"><span class="nm">IAC企画</span><p>企画が生まれる場をつくる。</p><p class="s2">オンラインコミュニティIACを運営し、地域や大学を越えて企画の相談や情報共有ができる場に。活動の入口にもなる、MIPPE!の土台です。</p><p class="at">オンライン</p></div></div>
-      <div class="card ky rv"><div class="nums"><div><b>11.28</b><small>能登で花火を打ち上げ</small></div><div><b>3<i>店舗</i></b><small>当日の屋台を企画中</small></div></div><div class="bd"><span class="nm">能登企画</span><p>能登で、想いをつなぐ花火を。</p><p class="s">11月28日に石川県珠洲市で開かれる花火イベント「能登 想いをつなぐ FIREWORKS」に、MIPPE!も主催団体の一つとして参加します。高徳花火工場さんとトイレットペッパーズさんが昨年から続けてきたイベントで、MIPPE!は当日の屋台を3店舗企画中。班に分かれて、出店の中身を考えています。花火のあとも、ワークキャンプや変人会議など、能登を舞台にした活動を続けていきます。</p><p class="at" style="color:var(--yel)">石川県珠洲市・奥能登</p></div></div>
-      <div class="card ky rv"><div class="bd" style="padding-top:24px"><span class="nm">メディア部</span><p>地域で起きていることを、言葉にして届ける。</p><p class="s">活動の記録やインタビュー、記事制作、冊子編集。ただの広報ではなく、活動の振り返りと学びを共有する役割。記事は note で読めます。</p><a class="more2" href="https://note.com/mippe2025" target="_blank" rel="noopener">note を読む →</a></div></div>
-    </div>
+    <div class="sh"><span class="no">04</span><span class="en">Projects</span><h2>企画</h2></div>
+    <p class="ttl rv">「やってみたい」から生まれた企画が、<br>全国で動いています。</p>
+
+    <div class="it rv"><div class="ph2"><img src="img/walk.jpg" alt="商店街を歩く参加者"><img src="img/henjin2.jpg" alt="変人会議の集合写真"></div>
+      <div class="hd"><span class="n">01</span><h3>変人企画</h3></div><p class="catch">変人（地域を変える人）が、立場を越えて集まる。</p><p class="tx">現状を変えたい学生・社会人が集まり、対話や共同企画から新しい取り組みの種を生み出す場。少人数の対話会から合宿型イベントまで。</p><p class="pl">全国各所</p></div>
+
+    <div class="it rv"><div class="ph2"><img src="img/hyaku1.jpg" alt="田植え機に乗るメンバー"><img src="img/rice1.jpg" alt="田んぼでのお昼"></div>
+      <div class="hd"><span class="n">02</span><h3>百姓企画</h3></div><p class="catch">お米を作ったり、販売したり。</p><p class="tx">栃木県佐野市の米農家と一緒に米づくり。今年度からは田んぼを借りて、都内の大学生も巻き込みながら1tを超えるお米を作る予定。ゆくゆくは商品開発も。</p><p class="pl">栃木県</p></div>
+
+    <div class="it rv"><div class="ph2"><img src="img/mutsu.jpg" alt="陸奥屋の屋台"><img src="img/yuri.jpg" alt="マルシェの様子"></div>
+      <div class="hd"><span class="n">03</span><h3>百合の企画</h3></div><p class="catch">マルシェに出店したり、運営したり。</p><p class="tx">屋号「陸奥屋」として、東北の特産品や郷土料理を板橋区のゆりの木商店街などで販売。これまでに4回出店し、売上は活動費に。</p><p class="pl">東京都内</p></div>
+
+    <div class="it rv"><div class="ph2 four"><img src="img/umi1.jpg" alt=""><img src="img/umi2.jpg" alt=""><img src="img/umi3.jpg" alt=""><img src="img/umi4.jpg" alt=""></div>
+      <div class="hd"><span class="n">04</span><h3>里山・里海企画</h3></div><p class="catch">瀬戸内海の離島で地引網をしたり、海岸清掃をしたり。</p><p class="tx">里山・里海の環境や生業に関わり、自然と人の暮らしの関係を学びながら、持続可能な地域のあり方を考える。</p><p class="pl">瀬戸内地方（広島県・岡山県など）</p></div>
+
+    <div class="it rv"><div class="big"><div><b>22<i>名</i></b><small>出動した学生（昨年）</small></div><div><b>31<i>コマ</i></b><small>都内の中学校で担当</small></div></div>
+      <div class="hd"><span class="n">05</span><h3>共育探究企画</h3></div><p class="catch">中高生の探究に、大学生が伴走する。</p><p class="tx">学校の先生方と連携し、中高生の探究学習に大学生が伴走する企画。これまでは学校の正規授業に参加し、探究学習に意欲的な生徒だけでなく、苦手意識を持つ生徒にも寄り添いながら、一緒に考え、学び合う機会をつくってきました。今後は授業時間外にも活動の幅を広げ、生徒一人ひとりの興味や関心を深められる多様な探究プログラムの企画・実施を目指しています。</p><p class="pl">東京都内</p></div>
+
+    <div class="it rv"><div class="ph2 one"><img src="img/iac.jpg" alt="焚き火を囲むメンバー"></div>
+      <div class="hd"><span class="n">06</span><h3>IAC企画</h3></div><p class="catch">企画が生まれる場をつくる。</p><p class="tx">オンラインコミュニティIACを運営し、地域や大学を越えて企画の相談や情報共有ができる場に。活動の入口にもなる、MIPPE!の土台です。</p><p class="pl">オンライン</p></div>
+
+    <div class="it rv"><div class="big"><div><b>11.28</b><small>能登で花火を打ち上げ</small></div><div><b>3<i>店舗</i></b><small>当日の屋台を企画中</small></div></div>
+      <div class="hd"><span class="n">07</span><h3>能登企画</h3></div><p class="catch">能登で、想いをつなぐ花火を。</p><p class="tx">11月28日に石川県珠洲市で開かれる花火イベント「能登 想いをつなぐ FIREWORKS」に、MIPPE!も主催団体の一つとして参加します。高徳花火工場さんとトイレットペッパーズさんが昨年から続けてきたイベントで、MIPPE!は当日の屋台を3店舗企画中。班に分かれて、出店の中身を考えています。花火のあとも、ワークキャンプや変人会議など、能登を舞台にした活動を続けていきます。</p><p class="pl">石川県珠洲市・奥能登</p></div>
+
+    <div class="it rv"><div class="big" style="align-items:center"><div><b style="font-size:40px">note</b><small>活動の記録とインタビュー</small></div></div>
+      <div class="hd"><span class="n">08</span><h3>メディア部</h3></div><p class="catch">地域で起きていることを、言葉にして届ける。</p><p class="tx">活動の記録やインタビュー、記事制作、冊子編集。ただの広報ではなく、活動の振り返りと学びを共有する役割。記事は note で読めます。</p><p class="pl"><a class="more" style="margin-top:0" href="https://note.com/mippe2025" target="_blank" rel="noopener">note を読む →</a></p></div>
   </div>
 </section>
 
-<section class="act" id="activity">
+<section class="act" id="activity" style="padding-top:20px">
   <div class="wrap">
-    <div class="k">ACTIVITY</div>
-    <h2 class="h rv">これまでの活動</h2>
+    <div class="sh"><span class="no">05</span><span class="en">Activity</span><h2>これまでの活動</h2></div>
     <div class="tl">
-      <div class="it rv"><time>2025.05.23</time><b>MIPPE! 始動</b><p>「行ってみっぺ・会ってみっぺ・やってみっぺ」から活動スタート。</p></div>
-      <div class="it rv"><time>2025.06 / 12</time><b>陸奥屋 ゆりの木商店街に出店</b><p>百合の企画。東北の特産品と郷土料理を販売。これまでに4回出店。</p><div class="im"><img src="img/mutsu.jpg" alt=""></div></div>
-      <div class="it rv"><time>2025.08</time><b>キックオフミーティング</b><p>メンバーが集まり、それぞれの「やってみたい」を共有。</p></div>
-      <div class="it rv"><time>2025.11.24</time><b>変人会議 in 岡山</b><p>社会人6名・学生4名。「どうすれば学生は変人になれるのか？」を輪になって語り合った。</p></div>
-      <div class="it rv"><time>2025.12</time><b>変人会議 in 栃木</b><p>大学生対象、農業の新たな可能性を探る旅。</p></div>
-      <div class="it rv"><time>2025.12.20</time><b>変人会議 in 巣鴨</b><p>15名。巣鴨地蔵通り商店街を街歩きして、「学生だから」で終わらない共創関係を考えた。</p><div class="im"><img src="img/walk.jpg" alt=""></div></div>
-      <div class="it rv"><time>2026.03.04-06</time><b>SUIGA KINKO TOUR</b><p>錦江企画。鹿児島県錦江町に、東京の学生を中心に10名ほどで。</p><div class="im"><img src="img/kinko1.jpg" alt=""></div></div>
-      <div class="it rv"><time>2026.03.05</time><b>変人会議 in 錦江町</b><p>25名。錦江町長や地元高校生も登壇し、「共創は幻想か？」を語り合った。</p></div>
-      <div class="it rv"><time>2026.06</time><b>臨時変人 能登ツアー</b><p>能登の現地に行って、これからの企画を考えた。</p></div>
-      <div class="it rv"><time>2026.07</time><b>変人会議 in 盛岡</b><p>全国の変人が盛岡に集まった。</p></div>
-      <div class="it rv"><time>2026</time><b>米づくり（栃木県佐野市）</b><p>百姓企画。米農家と一緒に、1tを超えるお米を作る予定。</p><div class="im"><img src="img/rice2.jpg" alt=""></div></div>
+      <div class="r rv"><time>2025.05.23</time><div><b>MIPPE! 始動</b><p>「行ってみっぺ・会ってみっぺ・やってみっぺ」から活動スタート。</p></div></div>
+      <div class="r rv"><time>2025.06 / 12</time><div><b>陸奥屋 ゆりの木商店街に出店</b><p>百合の企画。東北の特産品と郷土料理を販売。これまでに4回出店。</p></div></div>
+      <div class="r rv"><time>2025.08</time><div><b>キックオフミーティング</b><p>メンバーが集まり、それぞれの「やってみたい」を共有。</p></div></div>
+      <div class="r rv"><time>2025.11.24</time><div><b>変人会議 in 岡山</b><p>社会人6名・学生4名。「どうすれば学生は変人になれるのか？」を輪になって語り合った。</p></div></div>
+      <div class="r rv"><time>2025.12</time><div><b>変人会議 in 栃木</b><p>大学生対象、農業の新たな可能性を探る旅。</p></div></div>
+      <div class="r rv"><time>2025.12.20</time><div><b>変人会議 in 巣鴨</b><p>15名。巣鴨地蔵通り商店街を街歩きして、「学生だから」で終わらない共創関係を考えた。</p></div></div>
+      <div class="r rv"><time>2026.03.04-06</time><div><b>SUIGA KINKO TOUR</b><p>鹿児島県錦江町に、東京の学生を中心に10名ほどで。</p></div></div>
+      <div class="r rv"><time>2026.03.05</time><div><b>変人会議 in 錦江町</b><p>25名。錦江町長や地元高校生も登壇し、「共創は幻想か？」を語り合った。</p></div></div>
+      <div class="r rv"><time>2026.06</time><div><b>臨時変人 能登ツアー</b><p>能登の現地に行って、これからの企画を考えた。</p></div></div>
+      <div class="r rv"><time>2026.07</time><div><b>変人会議 in 盛岡</b><p>全国の変人が盛岡に集まった。</p></div></div>
+      <div class="r rv"><time>2026.11.28</time><div><b>能登 想いをつなぐ FIREWORKS</b><p>能登企画。主催団体の一つとして、屋台を3店舗出店。</p></div></div>
     </div>
   </div>
 </section>
 
-<section class="news" id="news">
+<section class="news" id="news" style="padding-top:20px">
   <div class="wrap">
-    <div class="k">NEWS</div>
-    <h2 class="h rv">お知らせ</h2>
-    <div class="nw">
-      <a class="ni rv" href="https://www.instagram.com/mippe2025/" target="_blank" rel="noopener"><time>11.28</time><span class="tg">能登</span><b>能登 想いをつなぐ FIREWORKS<br>石川県珠洲市で花火を打ち上げます</b><p>クラウドファンディング実施中。くわしくは Instagram で。</p></a>
-      <a class="ni rv" href="https://www.instagram.com/mippe2025/" target="_blank" rel="noopener"><time>EVENT</time><span class="tg">変人企画</span><b>HENJIN MEETING を開催しました</b><p>地域を変える「変人」が集まる交流会。</p></a>
-      <a class="ni rv" href="https://www.instagram.com/mippe2025/" target="_blank" rel="noopener"><time>PROJECT</time><span class="tg">百姓企画</span><b>MIPPE!米づくり × わくわくお米本舗</b><p>お米を作って、売るところまで。</p></a>
+    <div class="sh"><span class="no">06</span><span class="en">News</span><h2>お知らせ</h2></div>
+    <div class="list">
+      <a class="rv" href="https://www.instagram.com/mippe2025/" target="_blank" rel="noopener"><time>11.28</time><div><b>能登 想いをつなぐ FIREWORKS　石川県珠洲市で花火を打ち上げます</b><p>クラウドファンディング実施中。くわしくは Instagram で。</p></div></a>
+      <a class="rv" href="https://www.instagram.com/mippe2025/" target="_blank" rel="noopener"><time>Event</time><div><b>HENJIN MEETING を開催しました</b><p>地域を変える「変人」が集まる交流会。</p></div></a>
+      <a class="rv" href="https://www.instagram.com/mippe2025/" target="_blank" rel="noopener"><time>Project</time><div><b>MIPPE!米づくり × わくわくお米本舗</b><p>お米を作って、売るところまで。</p></div></a>
     </div>
-    <h3 class="sh rv">note の記事</h3>
-    <div class="nl">
-      <a class="na rv" href="https://note.com/mippe2025/n/n0a7630f52e54" target="_blank" rel="noopener"><div class="th"><img src="https://assets.st-note.com/production/uploads/images/296934210/rectangle_large_type_2_bf255655659e69533833a52197ea6d26.jpeg?width=600" alt="" loading="lazy"></div><div><time>2026.07.26</time><b>【全国の変人が盛岡へ！】変人会議in盛岡開催！</b></div></a>
-      <a class="na rv" href="https://note.com/mippe2025/n/n216e337dd03d" target="_blank" rel="noopener"><div class="th"><img src="https://assets.st-note.com/production/uploads/images/283538127/rectangle_large_type_2_5cfa3c9419b31afc731e359a5419f138.jpeg?width=600" alt="" loading="lazy"></div><div><time>2026.06.08</time><b>【臨時変人能登ツアー】能登の現地に行って企んでみっぺ！</b></div></a>
-      <a class="na rv" href="https://note.com/mippe2025/n/naba667b5ec03" target="_blank" rel="noopener"><div class="th"><img src="https://assets.st-note.com/production/uploads/images/238278862/rectangle_large_type_2_8d9b9a0ed7bc68596eb33cd3e5ba643f.jpeg?width=600" alt="" loading="lazy"></div><div><time>2025.12.29</time><b>【変人・変態大集合！】変人会議in栃木 実施報告！</b></div></a>
-      <a class="na rv" href="https://note.com/mippe2025/n/nb2e2dc4ea0cb" target="_blank" rel="noopener"><div class="th"><img src="https://assets.st-note.com/production/uploads/images/223761531/rectangle_large_type_2_b41a76815375da663283a1fe8107499d.png?width=600" alt="" loading="lazy"></div><div><time>2025.10.21</time><b>【中学生の探究学習の伴走をしてみませんか？】共育探究企画 メンバー募集！</b></div></a>
+    <p class="sub rv">note の記事</p>
+    <div class="list">
+      <a class="rv" href="https://note.com/mippe2025/n/n0a7630f52e54" target="_blank" rel="noopener"><time>2026.07.26</time><div><b>【全国の変人が盛岡へ！】変人会議in盛岡開催！</b></div></a>
+      <a class="rv" href="https://note.com/mippe2025/n/n216e337dd03d" target="_blank" rel="noopener"><time>2026.06.08</time><div><b>【臨時変人能登ツアー】能登の現地に行って企んでみっぺ！</b></div></a>
+      <a class="rv" href="https://note.com/mippe2025/n/naba667b5ec03" target="_blank" rel="noopener"><time>2025.12.29</time><div><b>【変人・変態大集合！】変人会議in栃木 実施報告！</b></div></a>
+      <a class="rv" href="https://note.com/mippe2025/n/nb2e2dc4ea0cb" target="_blank" rel="noopener"><time>2025.10.21</time><div><b>【中学生の探究学習の伴走をしてみませんか？】共育探究企画 メンバー募集！</b></div></a>
     </div>
-    <a class="more" href="https://note.com/mippe2025" target="_blank" rel="noopener">note の記事をすべて見る →</a>
+    <a class="more rv" href="https://note.com/mippe2025" target="_blank" rel="noopener">note の記事をすべて見る →</a>
   </div>
 </section>
 
-<section class="mem" id="member">
+<section class="mem" id="member" style="padding-top:20px">
   <div class="wrap">
-    <div class="k">MEMBER</div>
-    <h2 class="h rv">運営メンバー</h2>
+    <div class="sh"><span class="no">07</span><span class="en">Members</span><h2>運営メンバー</h2></div>
     <div class="row">
       <div class="mb rv"><div class="av">写真</div><b>遠藤 光大</b><small>代表</small></div>
       <div class="mb rv"><div class="av">写真</div><b>名前</b><small>役職</small></div>
@@ -302,25 +287,27 @@ footer .fl{display:flex;justify-content:center;gap:22px;margin-bottom:14px;font-
 
 <div class="cta" id="join">
   <div class="wrap">
-    <h2 class="rv">あなたの<span>「やってみたい」</span>、<br>一緒にやってみっぺ。</h2>
+    <h2 class="rv">あなたの「やってみたい」、<br>一緒にやってみっぺ。</h2>
     <p class="rv">大学生・高校生、どこに住んでいても大歓迎。<br>まずは気軽に話を聞きにきてください。</p>
     <div class="btns rv">
-      <a class="btn" href="#join">メンバーに応募する</a>
-      <a class="btn o" href="https://www.instagram.com/mippe2025/" target="_blank" rel="noopener">Instagram を見る</a>
-      <a class="btn o" href="https://ig.me/m/mippe2025" target="_blank" rel="noopener">お問い合わせ（Instagram DM）</a>
+      <a class="btn f" href="#join">メンバーに応募する</a>
+      <a class="btn" href="https://www.instagram.com/mippe2025/" target="_blank" rel="noopener">Instagram を見る</a>
+      <a class="btn" href="https://ig.me/m/mippe2025" target="_blank" rel="noopener">お問い合わせ（Instagram DM）</a>
     </div>
   </div>
 </div>
 
 <footer>
-  <img src="img/logo-white.png" alt="MIPPE!" style="width:120px;height:auto;margin:0 auto 14px">
-  <div class="fl"><a href="https://www.instagram.com/mippe2025/" target="_blank" rel="noopener">Instagram</a><a href="https://note.com/mippe2025" target="_blank" rel="noopener">note</a></div>
-  © MIPPE!
+  <div class="in">
+    <img src="img/logo-white.png" alt="MIPPE!">
+    <nav><a href="https://www.instagram.com/mippe2025/" target="_blank" rel="noopener">Instagram</a><a href="https://note.com/mippe2025" target="_blank" rel="noopener">note</a></nav>
+    <span>© MIPPE!</span>
+  </div>
 </footer>
 
 <script>
 const hd = document.getElementById("hd");
-const onScroll = () => hd.classList.toggle("on", scrollY > innerHeight * .6);
+const onScroll = () => hd.classList.toggle("on", scrollY > innerHeight * .8);
 addEventListener("scroll", onScroll, { passive: true }); onScroll();
 if ("IntersectionObserver" in window) {
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { rootMargin: "0px 0px -8% 0px" });
