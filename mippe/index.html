@@ -9,9 +9,9 @@
 <!-- MIPPE! 公式LPの試作（2026-11-10〜）。2026-11-12「UIがAIっぽい」→ 角丸カード・影・丸タグ・絵文字をやめて、明朝の見出し・細い線・番号・写真のコラージュの紙っぽい作りに。
      中身は遠藤さんの文と MIPPE! の Canva サイト・団体概要PDF・note から。写真は img/*.jpg。学校名は出さない（遠藤さんの希望）。
      sorasora1120.github.io/mippe/ にもコピーして公開している（直したら両方） -->
-<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Cormorant+Garamond:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Shippori+Mincho+B1:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Cormorant+Garamond:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
 <style>
-:root{--paper:#f4efe6;--paper2:#ebe3d5;--ink:#1f1a17;--mute:#6d6259;--red:#7a0f12;--rule:rgba(31,26,23,.22)}
+:root{--paper:#fff7ea;--paper2:#f6e9d6;--ink:#2a1608;--mute:#7a5a46;--red:#6e0b0b;--red2:#8e1212;--yel:#ffd34d;--rule:rgba(42,22,8,.2)}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{font-family:"Zen Kaku Gothic New",sans-serif;color:var(--ink);background:var(--paper);line-height:2;-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%;letter-spacing:.02em}
@@ -138,6 +138,45 @@ footer nav{display:flex;gap:20px;font-size:14px;font-weight:700;color:#fff}
   .mem .row{grid-template-columns:repeat(4,1fr)}
   .tl .r,.list a{grid-template-columns:140px 1fr}
 }
+
+/* ---- 赤基準（2026-11-12「この赤基準は良かったのに」）：形は線と番号のまま、色は濃い赤・クリーム・黄色 ---- */
+.dg,.msg .but,.mippe .row b,.pj .hd h3,.cta h2{font-family:"Dela Gothic One",sans-serif;font-weight:400;letter-spacing:.02em}
+.msg,.pj{background:var(--red);color:#fff}
+.msg .sh,.pj .sh{border-top-color:rgba(255,255,255,.85)}
+.msg .sh .no,.pj .sh .no{color:var(--yel)}
+.msg .sh .en,.pj .sh .en{color:#f3c9a8}
+.msg .lead{color:#f3d9c4}
+.msg .but{color:var(--yel);font-size:50px;line-height:1.1}
+.msg .but span{color:var(--yel)}
+.msg .body{color:#f7e6d6}
+.msg .body b{color:var(--yel);background:none}
+.msg .end{border-left-color:var(--yel)}
+.msg .end strong{color:var(--yel)}
+.mippe{background:var(--paper)}
+.mippe .row b{color:var(--red);font-size:30px}
+.mippe .row .n{color:var(--red2)}
+.mippe .last{color:var(--red)}
+.ttl{color:var(--red)}
+.pj .ttl{color:#fff}
+.pj .it{border-bottom-color:rgba(255,255,255,.25)}
+.pj .hd .n{color:var(--yel)}
+.pj .hd h3{font-size:25px}
+.pj .catch{color:#fff}
+.pj .tx{color:#f7e6d6}
+.pj .pl{color:#f3c9a8}
+.pj .big{border-color:rgba(255,255,255,.7)}
+.pj .big b{color:var(--yel)}
+.pj .big b i{color:#fff}
+.pj .big small{color:#f3c9a8}
+.pj .more{border-bottom-color:#fff}
+.nums b,.big b{color:var(--red)}
+.tl time,.list time{color:var(--red2);font-family:"Dela Gothic One";font-style:normal;font-size:13px}
+.act,.news,.mem,.about{background:var(--paper)}
+.cta{background:#4a0707}
+.cta h2{font-size:28px;line-height:1.55}
+footer{background:#3d0606}
+header.on{background:var(--red);color:#fff;border-bottom:0}
+header.on .lg.w{display:block}header.on .lg.r{display:none}
 </style>
 </head>
 <body>
@@ -203,7 +242,7 @@ footer nav{display:flex;gap:20px;font-size:14px;font-weight:700;color:#fff}
   </div>
 </section>
 
-<section class="pj" id="project" style="padding-top:20px">
+<section class="pj" id="project">
   <div class="wrap">
     <div class="sh"><span class="no">04</span><span class="en">Projects</span><h2>企画</h2></div>
     <p class="ttl rv">「やってみたい」から生まれた企画が、<br>全国で動いています。</p>
@@ -234,7 +273,7 @@ footer nav{display:flex;gap:20px;font-size:14px;font-weight:700;color:#fff}
   </div>
 </section>
 
-<section class="act" id="activity" style="padding-top:20px">
+<section class="act" id="activity">
   <div class="wrap">
     <div class="sh"><span class="no">05</span><span class="en">Activity</span><h2>これまでの活動</h2></div>
     <div class="tl">
