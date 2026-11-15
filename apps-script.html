@@ -1,0 +1,174 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex"><title>Apps Script コード</title>
+<style>body{margin:0;background:#f4efe8;font:15px/1.6 -apple-system,system-ui,sans-serif;color:#191512}main{max-width:860px;margin:0 auto;padding:16px}ol{padding-left:20px}li{margin:4px 0}
+pre{white-space:pre-wrap;word-break:break-all;font:12px/1.5 ui-monospace,Menlo,monospace;background:#fff;border:1px solid rgba(0,0,0,.1);border-radius:10px;padding:12px;max-height:50vh;overflow:auto}
+button{border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:700;background:#14110f;color:#fff;width:100%;margin:10px 0}</style></head><body><main>
+<h1 style="font-size:20px">Apps Script を新しくする</h1>
+<!-- affiliate-pipeline/job_scraper/apps_script_stage_sync.gs の写し（iPad から貼れるように）。元を直したらこれも作り直す -->
+<ol>
+<li>下の「コードをコピー」を押す</li>
+<li>案件収集シートを開く → 拡張機能 → Apps Script</li>
+<li>エディタの中身を全部消して、貼り付けて保存</li>
+<li>左の歯車（プロジェクトの設定）→ いちばん下の「スクリプト プロパティ」→ 追加：プロパティ <b>AI_PIN</b>、値は自分で決めた数字（人に教えない）</li>
+<li>デプロイ → デプロイを管理 → 鉛筆 → バージョン「新バージョン」→ デプロイ（URLは変わらない）</li>
+</ol>
+<button id="cp">コードをコピー</button>
+<pre id="code">/**
+ * Dispatchビューアの進行状況（②採用待ち等）を、みんなで同じスプレッドシートに
+ * 書き込んで共有するためのWeb App。
+ *
+ * デプロイ手順:
+ *   1. 案件一覧のスプレッドシートを開く
+ *   2. 「拡張機能」→「Apps Script」
+ *   3. 出てきたエディタの中身を全部消して、このファイルの内容を貼り付ける
+ *   4. 右上の「デプロイ」→「新しいデプロイ」
+ *   5. 種類の選択（歯車アイコン）で「ウェブアプリ」を選ぶ
+ *   6. 「次のユーザーとして実行」＝自分、「アクセスできるユーザー」＝全員　に設定
+ *   7. 「デプロイ」→ 初回は権限の承認を求められるので許可する
+ *   8. 発行された「ウェブアプリのURL」（https://script.google.com/macros/s/.../exec）
+ *      をコピーしてClaudeに渡す → docs/index.htmlのAPPS_SCRIPT_URLに設定してもらう
+ *
+ * シート名・列名を変更した場合はこのファイルも合わせて直すこと。
+ *
+ * 直したあと（同じURLのまま新しい版にする）: 「デプロイ」→「デプロイを管理」→ 鉛筆 → バージョン「新バージョン」→「デプロイ」
+ */
+function doGet(e) {
+  // 2026-11-02〜 お店マップ（dispatch-viewer/shops.html）の印（📨送った・💬返事あり など）を「お店マップ」タブの K列（状態）・L列（更新日時）に書く
+  if (e.parameter.shop) return saveShopMark(e.parameter);
+  // 2026-11-15〜 AI COMPANY OS のダッシュボード（dispatch-viewer/company.html）からの書き込み。AI_ で始まるタブに書く
+  if (e.parameter.ai) return aiCompany(e.parameter);
+  var url = e.parameter.url;
+  var stage = e.parameter.stage;
+  if (!url || !stage) {
+    return ContentService.createTextOutput(JSON.stringify({ ok: false, error: &quot;url/stage が必要です&quot; }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+
+  var lock = LockService.getScriptLock();
+  lock.waitLock(10000);
+  try {
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(&quot;案件一覧&quot;);
+    var data = sheet.getDataRange().getValues();
+    var header = data[0];
+    var urlCol = header.indexOf(&quot;URL&quot;);
+    var stageCol = header.indexOf(&quot;進捗ステージ&quot;);
+    if (urlCol === -1 || stageCol === -1) {
+      return ContentService.createTextOutput(JSON.stringify({ ok: false, error: &quot;列が見つかりません&quot; }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+    for (var i = 1; i &lt; data.length; i++) {
+      if (data[i][urlCol] === url) {
+        sheet.getRange(i + 1, stageCol + 1).setValue(stage);
+        return ContentService.createTextOutput(JSON.stringify({ ok: true }))
+          .setMimeType(ContentService.MimeType.JSON);
+      }
+    }
+    return ContentService.createTextOutput(JSON.stringify({ ok: false, error: &quot;該当URLが見つかりません&quot; }))
+      .setMimeType(ContentService.MimeType.JSON);
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+function saveShopMark(p) {
+  var out = function (o) { return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON); };
+  var name = p.shop, lat = parseFloat(p.lat), lon = parseFloat(p.lon), state = p.state || &quot;&quot;;
+  var lock = LockService.getScriptLock();
+  lock.waitLock(10000);
+  try {
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(&quot;お店マップ&quot;);
+    if (!sheet) return out({ ok: false, error: &quot;お店マップのタブがありません&quot; });
+    var data = sheet.getRange(1, 1, sheet.getLastRow(), 7).getValues();   // A 名前 … F 緯度 G 経度
+    for (var i = 1; i &lt; data.length; i++) {
+      if (data[i][0] === name &amp;&amp; Math.abs(parseFloat(data[i][5]) - lat) &lt; 0.0002 &amp;&amp; Math.abs(parseFloat(data[i][6]) - lon) &lt; 0.0002) {
+        var now = Utilities.formatDate(new Date(), &quot;America/Toronto&quot;, &quot;yyyy-MM-dd HH:mm&quot;);
+        sheet.getRange(i + 1, 11, 1, 2).setValues([[state, state ? now : &quot;&quot;]]);   // K 状態・L 更新日時
+        return out({ ok: true, row: i + 1 });
+      }
+    }
+    return out({ ok: false, error: &quot;お店が見つかりません&quot; });
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+
+// ===== AI COMPANY OS（dispatch-viewer/company.html、設計は dispatch-viewer/docs/ai-company-os.md）=====
+// 書き込みには暗証番号が必要。Apps Script の「プロジェクトの設定 → スクリプト プロパティ」に AI_PIN を入れておく（リポジトリには書かない）。
+// 返事は JSONP（callback があれば）なので、ページ側で成功・失敗がわかる。
+var AI_STATUSES = [&quot;待ち&quot;, &quot;実行中&quot;, &quot;確認中&quot;, &quot;完了&quot;, &quot;失敗&quot;];
+function aiCompany(p) {
+  var out = function (o) {
+    var t = JSON.stringify(o);
+    if (p.callback &amp;&amp; /^[A-Za-z_$][\w$]*$/.test(p.callback)) return ContentService.createTextOutput(p.callback + &quot;(&quot; + t + &quot;)&quot;).setMimeType(ContentService.MimeType.JAVASCRIPT);
+    return ContentService.createTextOutput(t).setMimeType(ContentService.MimeType.JSON);
+  };
+  var pin = PropertiesService.getScriptProperties().getProperty(&quot;AI_PIN&quot;);
+  if (!pin) return out({ ok: false, error: &quot;AI_PIN がまだ設定されていません（スクリプト プロパティ）&quot; });
+  if (String(p.pin || &quot;&quot;) !== pin) return out({ ok: false, error: &quot;暗証番号がちがいます&quot; });
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var now = Utilities.formatDate(new Date(), &quot;America/Toronto&quot;, &quot;yyyy-MM-dd HH:mm&quot;);
+  var log = function (who, what, result) { ss.getSheetByName(&quot;AI_Activity&quot;).appendRow([now, who, what, result]); };
+  var lock = LockService.getScriptLock();
+  lock.waitLock(10000);
+  try {
+    var a = p.ai;
+    if (a === &quot;ping&quot;) return out({ ok: true });
+    if (a === &quot;addTask&quot;) {
+      var title = String(p.title || &quot;&quot;).trim();
+      if (!title) return out({ ok: false, error: &quot;タイトルが空です&quot; });
+      var sh = ss.getSheetByName(&quot;AI_Tasks&quot;), last = sh.getLastRow(), max = 0;
+      if (last &gt; 1) sh.getRange(2, 1, last - 1, 1).getValues().forEach(function (r) { var n = parseInt(String(r[0]).replace(/^T/, &quot;&quot;), 10); if (n &gt; max) max = n; });
+      var id = &quot;T&quot; + (max + 1);
+      sh.appendRow([id, title, String(p.dept || &quot;CEO&quot;), &quot;待ち&quot;, &quot;&quot;, &quot;&quot;, String(p.note || &quot;&quot;), now, now, &quot;&quot;, &quot;Sora&quot;]);
+      log(&quot;Sora&quot;, &quot;タスクを追加：&quot; + id + &quot; &quot; + title, &quot;ok&quot;);
+      return out({ ok: true, id: id });
+    }
+    if (a === &quot;setStatus&quot;) {
+      if (AI_STATUSES.indexOf(p.status) &lt; 0) return out({ ok: false, error: &quot;状態がおかしい&quot; });
+      var row = aiFind(ss.getSheetByName(&quot;AI_Tasks&quot;), p.id);
+      if (!row) return out({ ok: false, error: &quot;タスクが見つかりません&quot; });
+      ss.getSheetByName(&quot;AI_Tasks&quot;).getRange(row, 4).setValue(p.status);
+      ss.getSheetByName(&quot;AI_Tasks&quot;).getRange(row, 9).setValue(now);
+      log(&quot;Sora&quot;, &quot;タスク &quot; + p.id + &quot; を「&quot; + p.status + &quot;」に&quot;, &quot;ok&quot;);
+      return out({ ok: true });
+    }
+    if (a === &quot;decide&quot;) {
+      if (p.decision !== &quot;承認&quot; &amp;&amp; p.decision !== &quot;却下&quot;) return out({ ok: false, error: &quot;承認か却下だけ&quot; });
+      var ap = ss.getSheetByName(&quot;AI_Approvals&quot;), r = aiFind(ap, p.id);
+      if (!r) return out({ ok: false, error: &quot;承認の行が見つかりません&quot; });
+      var v = ap.getRange(r, 1, 1, 10).getValues()[0];   // A id … E ハッシュ F 期限 G 状態
+      if (v[6] !== &quot;待ち&quot;) return out({ ok: false, error: &quot;もう「&quot; + v[6] + &quot;」になっています（二重の操作はできません）&quot; });
+      if (String(v[4]) !== String(p.hash || &quot;&quot;)) { log(&quot;Sora&quot;, &quot;承認 &quot; + p.id + &quot; を止めた&quot;, &quot;内容が変わっていた&quot;); return out({ ok: false, error: &quot;内容が書きかえられています。開き直して確認してください&quot; }); }
+      var exp = v[5] ? new Date(v[5]) : null;
+      if (exp &amp;&amp; !isNaN(exp) &amp;&amp; exp &lt; new Date()) { ap.getRange(r, 7).setValue(&quot;期限切れ&quot;); log(&quot;Sora&quot;, &quot;承認 &quot; + p.id, &quot;期限切れ&quot;); return out({ ok: false, error: &quot;期限が切れています&quot; }); }
+      ap.getRange(r, 7, 1, 2).setValues([[p.decision, now]]);
+      log(&quot;Sora&quot;, &quot;承認 &quot; + p.id + &quot; を「&quot; + p.decision + &quot;」&quot;, &quot;ok&quot;);
+      return out({ ok: true });
+    }
+    if (a === &quot;setSchedule&quot;) {
+      var sc = ss.getSheetByName(&quot;AI_Schedules&quot;), rr = aiFind(sc, p.name);
+      if (!rr) return out({ ok: false, error: &quot;自動化が見つかりません&quot; });
+      var on = p.on === &quot;1&quot; ? &quot;オン&quot; : &quot;オフ&quot;;
+      sc.getRange(rr, 4).setValue(on);
+      log(&quot;Sora&quot;, &quot;自動化「&quot; + p.name + &quot;」を&quot; + on, &quot;ok（実際の定期実行は Claude が合わせる）&quot;);
+      return out({ ok: true });
+    }
+    return out({ ok: false, error: &quot;知らない操作です&quot; });
+  } catch (err) {
+    return out({ ok: false, error: String(err) });
+  } finally {
+    lock.releaseLock();
+  }
+}
+function aiFind(sheet, key) {
+  var last = sheet.getLastRow();
+  if (last &lt; 2) return 0;
+  var col = sheet.getRange(2, 1, last - 1, 1).getValues();
+  for (var i = 0; i &lt; col.length; i++) if (String(col[i][0]) === String(key)) return i + 2;
+  return 0;
+}
+</pre>
+</main><script>
+document.getElementById("cp").onclick=()=>{const t=document.getElementById("code").textContent;const b=document.getElementById("cp");
+(navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(t):Promise.reject()).then(()=>{b.textContent="コピーしました"},()=>prompt("コピーしてください",t));};
+</script></body></html>
