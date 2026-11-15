@@ -63,6 +63,7 @@
 - `rb.html`：Redbubble（プリントオンデマンド）に出す和風デザイン10個の出品ページ（2026-11-08〜、「1円も払いたくない・めんどくさい作業はしない」→ドロップシッピングの代わり）。画像は `rb/*.png`（透明4500x5400）と `rb/preview/*.jpg`、作るのは `tools/rb-designs.js`。Title・Tags・Description をコピーして貼るだけ。アカウントは親の名義
 - `mippe/`：学生団体 MIPPE!（Sora は運営メンバー、代表は遠藤光大さん）の公式LPの試作（2026-11-10〜）。中身と写真は MIPPE! の Canva サイト（mippesimulation.my.canva.site）から。運営メンバーの写真・名前とリンク先（応募・Instagram・問い合わせ）は届いたら入れる
 - `fiverr.html`：Fiverr 2つ目の出品「Shopify のお店を日本向けに」のコピペ用ページ（2026-11-11〜）。画像は `fiverr/gig2-*.jpg`（`tools/fiverr-gig2.js`、架空のお店）。Fiverr のコネクタは買う側の機能だけ（ライバル調査はできる、出品の編集はできない）
+- `company.html`：AI COMPANY OS のダッシュボード（2026-11-15〜、設計とルールは `docs/ai-company-os.md`）。データはシートの AI_ タブ、書き込みは Apps Script の aiCompany（暗証番号 AI_PIN）。架空のデータは入れない。外への送信・投稿は承認制で、実行するのは Sora
 - `works/`：古い制作サンプル。今のポートフォリオは `sorasora1120.github.io`
 - `vocab-app/`：別プロジェクト（単語アプリ VisuWord）。触るときは `.github/workflows/ios-*.yml` が動く
 - `icon-options/` は `.git/info/exclude` で除外しているローカルのみのファイル

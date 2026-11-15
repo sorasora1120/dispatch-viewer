@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#14110f">
+<title>AI Company</title>
+<style>
+/* AI COMPANY OS のダッシュボード（2026-11-15〜、設計は docs/ai-company-os.md）。
+   読む：スプレッドシートの AI_ タブを gviz（JSONP）で。書く：affiliate-pipeline の Apps Script（aiCompany）を JSONP で。
+   書き込みには暗証番号（Apps Script の AI_PIN）が要る。暗証番号はこの端末にだけ保存。架空のデータは表示しない */
+:root{--bg:#f4efe8;--card:#fffdf9;--ink:#191512;--mute:#6f675f;--line:rgba(25,21,18,.12);--acc:#7a0f12;--ok:#2f6b45;--warn:#a5671a;--ng:#9a2b2b}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.55 -apple-system,"Hiragino Sans",system-ui,sans-serif;-webkit-text-size-adjust:100%}
+header{background:#14110f;color:#f4efe8;padding:16px 16px 0;padding-top:calc(16px + env(safe-area-inset-top));position:sticky;top:0;z-index:5}
+header .t{display:flex;justify-content:space-between;align-items:center}
+header h1{font-size:19px;letter-spacing:.02em}
+header .st{font-size:12px;color:#bdb3a8}
+nav{display:flex;gap:2px;overflow-x:auto;margin-top:12px}
+nav button{flex:none;background:none;border:0;color:#bdb3a8;font:inherit;font-size:14px;font-weight:600;padding:9px 12px;border-bottom:2px solid transparent}
+nav button.on{color:#fff;border-bottom-color:#e3a57c}
+nav .b[hidden]{display:none}
+nav .b{display:inline-block;min-width:18px;margin-left:4px;padding:0 5px;border-radius:9px;background:#e3a57c;color:#14110f;font-size:11px;text-align:center}
+main{max-width:860px;margin:0 auto;padding:14px 14px 80px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:10px}
+h2{font-size:15px;margin:18px 2px 8px}
+.kpi{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.kpi .card{margin:0}
+.kpi b{display:block;font-size:28px;line-height:1.1}
+.kpi small{color:var(--mute);font-size:12px}
+.row{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.it{border-top:1px solid var(--line);padding:11px 0}
+.it:first-child{border-top:0;padding-top:0}
+.it .tt{font-weight:600}
+.meta{font-size:12px;color:var(--mute)}
+.pill{display:inline-block;font-size:11.5px;font-weight:700;border-radius:6px;padding:2px 7px;background:#ebe4d9;white-space:nowrap}
+.s-待ち{background:#ebe4d9}.s-実行中{background:#f3e2c4;color:var(--warn)}.s-確認中{background:#e4e6f3;color:#3a4a8a}.s-完了{background:#dcebe0;color:var(--ok)}.s-失敗,.s-却下,.s-期限切れ{background:#f3dcdc;color:var(--ng)}.s-承認{background:#dcebe0;color:var(--ok)}
+select,input,textarea{font:inherit;border:1px solid var(--line);border-radius:9px;padding:8px 10px;background:#fff;width:100%}
+textarea{min-height:70px}
+.btn{border:0;border-radius:9px;padding:9px 14px;font:inherit;font-weight:700;background:#14110f;color:#fff}
+.btn.ok{background:var(--ok)}.btn.ng{background:var(--ng)}.btn.l{background:#ebe4d9;color:var(--ink)}
+.btns{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.form{display:grid;gap:8px}
+.empty{color:var(--mute);font-size:13.5px;text-align:center;padding:18px 0}
+.err{background:#f3dcdc;color:var(--ng);border-radius:10px;padding:10px 12px;font-size:13px;margin-bottom:10px}
+pre{white-space:pre-wrap;font:13.5px/1.6 -apple-system,system-ui,sans-serif;background:#f3ede4;border-radius:9px;padding:9px 11px;margin-top:6px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#14110f;color:#fff;padding:9px 16px;border-radius:99px;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:9}
+.toast.on{opacity:1}
+.sec{display:none}.sec.on{display:block}
+@media (min-width:760px){.kpi{grid-template-columns:repeat(4,1fr)}}
+</style>
+</head>
+<body>
+<header>
+  <div class="t"><h1>AI Company</h1><span class="st" id="upd">読み込み中…</span></div>
+  <nav id="nav">
+    <button data-s="home" class="on">ホーム</button>
+    <button data-s="tasks">タスク</button>
+    <button data-s="appr">承認<span class="b" id="bA" hidden></span></button>
+    <button data-s="rep">レポート</button>
+    <button data-s="log">履歴</button>
+    <button data-s="auto">自動化</button>
+    <button data-s="set">設定</button>
+  </nav>
+</header>
+<main>
+  <div id="errs"></div>
+
+  <section class="sec on" id="s-home">
+    <div class="kpi">
+      <div class="card"><b id="kT">-</b><small>進行中のタスク</small></div>
+      <div class="card"><b id="kA">-</b><small>承認待ち</small></div>
+      <div class="card"><b id="kD">-</b><small>今週終わったタスク</small></div>
+      <div class="card"><b id="kE">-</b><small>失敗・エラー</small></div>
+    </div>
+    <h2>承認が必要なもの</h2><div class="card" id="hA"></div>
+    <h2>進行中のタスク</h2><div class="card" id="hT"></div>
+    <h2>最近の動き</h2><div class="card" id="hL"></div>
+  </section>
+
+  <section class="sec" id="s-tasks">
+    <div class="card form">
+      <b>タスクを追加</b>
+      <input id="nTitle" placeholder="やること（例：ライバルの値段を調べる）">
+      <select id="nDept"><option>CEO</option><option>Secretary</option><option>Research</option><option>Marketing</option><option>Product</option><option>Sales</option><option>Finance</option><option>Creative</option><option>Operations</option><option>Quality Control</option></select>
+      <input id="nNote" placeholder="メモ（なくてもOK）">
+      <div><button class="btn" id="addT">追加</button></div>
+    </div>
+    <div class="row" style="margin:14px 2px 8px"><b>タスク一覧</b><select id="fT" style="width:auto"><option value="open">終わってないもの</option><option value="all">すべて</option><option value="完了">完了</option><option value="失敗">失敗</option></select></div>
+    <div class="card" id="lT"></div>
+  </section>
+
+  <section class="sec" id="s-appr">
+    <p class="meta" style="margin:0 2px 10px">AI社員は、メール送信・SNS投稿・購入などを自分ではしない。ここで承認したものだけ、Sora が実行する。内容が書きかえられていたり、期限が切れていたりすると承認できない。</p>
+    <div id="lA"></div>
+  </section>
+
+  <section class="sec" id="s-rep"><div class="card" id="lR"></div></section>
+  <section class="sec" id="s-log"><div class="card" id="lL"></div></section>
+
+  <section class="sec" id="s-auto">
+    <p class="meta" style="margin:0 2px 10px">オン／オフはシートに記録される。実際の定期実行（スケジュールタスク）は、Claude がこの表に合わせて作ったり止めたりする。</p>
+    <div class="card" id="lS"></div>
+  </section>
+
+  <section class="sec" id="s-set">
+    <div class="card form">
+      <b>暗証番号</b>
+      <p class="meta">タスクの追加や承認に使う。Apps Script の「スクリプト プロパティ」に入れた AI_PIN と同じものを入れる。この端末にだけ保存される。</p>
+      <input id="pin" type="password" inputmode="numeric" placeholder="暗証番号">
+      <div class="btns"><button class="btn" id="savePin">保存して確かめる</button><button class="btn l" id="reload">データを読み直す</button></div>
+      <p class="meta" id="pinMsg"></p>
+    </div>
+    <div class="card"><b>データの置き場所</b><p class="meta">Google スプレッドシート（案件収集シート）の AI_Tasks・AI_Approvals・AI_Reports・AI_Activity・AI_Schedules タブ。</p></div>
+  </section>
+</main>
+<div class="toast" id="toast"></div>
+<script>
+const SHEET_ID = "1i2BtQulkchFt2dXxt9o6qLhdC7CXlBpv91EziyCp3o0";
+const API = "https://script.google.com/macros/s/AKfycbwF0mDtzb1s23EyW6D6cUIpWGGo4f70nEwmLz87jC16kkuNLBGF6m0dmP4EOPGw_vkf4w/exec";
+const TABS = { tasks: "AI_Tasks", appr: "AI_Approvals", rep: "AI_Reports", log: "AI_Activity", auto: "AI_Schedules" };
+const D = { tasks: [], appr: [], rep: [], log: [], auto: [] };
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const toast = t => { const el = $("toast"); el.textContent = t; el.classList.add("on"); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove("on"), 2000); };
+let PIN = ""; try { PIN = localStorage.getItem("ai-company-pin") || ""; } catch (e) {}
+const errs = {};
+function showErr(k, m) { if (m) errs[k] = m; else delete errs[k]; $("errs").innerHTML = Object.values(errs).map(x => `<div class="err">${esc(x)}</div>`).join(""); }
+
+// ---- JSONP（シートを読む・Apps Script に書く。どちらも別のサイトなので script タグで呼ぶ）----
+let seq = 0;
+function jsonp(url, timeout) {
+  return new Promise((ok, ng) => {
+    const cb = "__cb" + (++seq) + "_" + Date.now(), sc = document.createElement("script");
+    const done = () => { delete window[cb]; sc.remove(); clearTimeout(t); };
+    const t = setTimeout(() => { done(); ng(new Error("時間切れ（ネットか Apps Script の問題）")); }, timeout || 15000);
+    window[cb] = r => { done(); ok(r); };
+    sc.onerror = () => { done(); ng(new Error("読み込めませんでした")); };
+    sc.src = url + (url.includes("?") ? "&" : "?") + (url.includes("gviz") ? "tqx=out:json;responseHandler:" + cb : "callback=" + cb);
+    document.head.appendChild(sc);
+  });
+}
+const cellV = c => c == null ? "" : (c.f != null && typeof c.v !== "string" ? c.f : c.v);
+async function loadTab(k) {
+  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=${encodeURIComponent(TABS[k])}&headers=1&tq=${encodeURIComponent("select *")}&_=${Date.now()}`;
+  try {
+    const r = await jsonp(url);
+    if (r.status === "error") throw new Error((r.errors && r.errors[0] && r.errors[0].detailed_message) || "読み込みエラー");
+    D[k] = (r.table.rows || []).map(x => (x.c || []).map(cellV)).filter(x => x.some(v => v !== "" && v != null));
+    showErr(k);
+  } catch (e) { showErr(k, `${TABS[k]} を読めませんでした：${e.message}`); }
+}
+async function loadAll() {
+  $("upd").textContent = "読み込み中…";
+  await Promise.all(Object.keys(TABS).map(loadTab));
+  draw();
+  $("upd").textContent = "更新 " + new Date().toLocaleTimeString("ja-JP", { hour: "2-digit", minute: "2-digit" });
+}
+async function call(params) {
+  if (!PIN) { toast("先に「設定」で暗証番号を入れてね"); go("set"); throw new Error("no pin"); }
+  const q = Object.entries(Object.assign({ pin: PIN }, params)).map(([k, v]) => k + "=" + encodeURIComponent(v)).join("&");
+  const r = await jsonp(API + "?" + q, 20000);
+  if (!r || !r.ok) throw new Error((r && r.error) || "失敗しました");
+  return r;
+}
+async function sha16(s) {
+  const b = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(String(s)));
+  return [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, "0")).join("").slice(0, 16);
+}
+
+// ---- 表示 ----
+// AI_Tasks: 0 id 1 タイトル 2 部署 3 状態 4 依存 5 成果物 6 メモ 7 作成 8 更新 9 エラー 10 作った人
+// AI_Approvals: 0 id 1 タスク 2 種類 3 内容 4 ハッシュ 5 期限 6 状態 7 決めた日時 8 作成 9 作った人
+const STAT = ["待ち", "実行中", "確認中", "完了", "失敗"];
+const pill = s => `<span class="pill s-${esc(s)}">${esc(s || "-")}</span>`;
+function taskRow(t, edit) {
+  return `<div class="it"><div class="row"><div><div class="tt">${esc(t[1])}</div><div class="meta">${esc(t[0])} ・ ${esc(t[2])}${t[6] ? " ・ " + esc(t[6]) : ""}${t[5] ? " ・ 成果物：" + esc(t[5]) : ""}</div>${t[9] ? `<div class="meta" style="color:var(--ng)">エラー：${esc(t[9])}</div>` : ""}</div>` +
+    (edit ? `<select data-task="${esc(t[0])}" style="width:auto">${STAT.map(s => `<option${s === t[3] ? " selected" : ""}>${s}</option>`).join("")}</select>` : pill(t[3])) + `</div></div>`;
+}
+function apprCard(a) {
+  const waiting = a[6] === "待ち";
+  return `<div class="card"><div class="row"><b>${esc(a[2])}</b>${pill(a[6])}</div><div class="meta">${esc(a[0])}${a[1] ? " ・ タスク " + esc(a[1]) : ""} ・ ${esc(a[9] || "")} ・ 期限 ${esc(a[5] || "なし")}</div><pre>${esc(a[3])}</pre>` +
+    (waiting ? `<div class="btns"><button class="btn ok" data-ap="${esc(a[0])}" data-d="承認">承認</button><button class="btn ng" data-ap="${esc(a[0])}" data-d="却下">却下</button></div>` : `<div class="meta" style="margin-top:6px">${esc(a[7] || "")}</div>`) + `</div>`;
+}
+const empty = t => `<div class="empty">${t}</div>`;
+function draw() {
+  const open = D.tasks.filter(t => t[3] !== "完了" && t[3] !== "失敗");
+  const waitA = D.appr.filter(a => a[6] === "待ち");
+  const weekAgo = Date.now() - 7 * 864e5;
+  const doneW = D.tasks.filter(t => t[3] === "完了" && Date.parse(String(t[8]).replace(" ", "T")) > weekAgo);
+  const fails = D.tasks.filter(t => t[3] === "失敗" || t[9]);
+  $("kT").textContent = open.length; $("kA").textContent = waitA.length; $("kD").textContent = doneW.length; $("kE").textContent = fails.length;
+  $("bA").hidden = !waitA.length; $("bA").textContent = waitA.length;
+  $("hA").innerHTML = waitA.length ? waitA.slice(0, 3).map(a => `<div class="it"><div class="row"><span class="tt">${esc(a[2])}</span>${pill("待ち")}</div><div class="meta">${esc(String(a[3]).slice(0, 60))}</div></div>`).join("") : empty("承認待ちはありません");
+  $("hT").innerHTML = open.length ? open.slice(0, 6).map(t => taskRow(t, false)).join("") : empty("進行中のタスクはありません");
+  $("hL").innerHTML = D.log.length ? D.log.slice(-5).reverse().map(l => `<div class="it"><div class="tt" style="font-weight:500">${esc(l[2])}</div><div class="meta">${esc(l[0])} ・ ${esc(l[1])} ・ ${esc(l[3])}</div></div>`).join("") : empty("まだ記録がありません");
+  const f = $("fT").value;
+  const ts = D.tasks.filter(t => f === "all" ? true : f === "open" ? (t[3] !== "完了" && t[3] !== "失敗") : t[3] === f).slice().reverse();
+  $("lT").innerHTML = ts.length ? ts.map(t => taskRow(t, true)).join("") : empty("ありません");
+  $("lA").innerHTML = D.appr.length ? D.appr.slice().reverse().map(apprCard).join("") : `<div class="card">${empty("承認のお願いはまだありません")}</div>`;
+  $("lR").innerHTML = D.rep.length ? D.rep.slice().reverse().map(r => `<div class="it"><div class="row"><span class="tt">${esc(r[2])}</span><span class="pill">${esc(r[5] || "-")}</span></div><div class="meta">${esc(r[0])} ・ ${esc(r[1])}</div><pre>${esc(r[3])}</pre>${r[4] ? `<div class="meta">出典：${esc(r[4])}</div>` : ""}${r[6] ? `<div class="meta"><a href="${esc(r[6])}" target="_blank" rel="noopener">開く</a></div>` : ""}</div>`).join("") : empty("レポートはまだありません（フェーズ2から届きます）");
+  $("lL").innerHTML = D.log.length ? D.log.slice().reverse().map(l => `<div class="it"><div class="tt" style="font-weight:500">${esc(l[2])}</div><div class="meta">${esc(l[0])} ・ ${esc(l[1])} ・ ${esc(l[3])}</div></div>`).join("") : empty("まだ記録がありません");
+  $("lS").innerHTML = D.auto.length ? D.auto.map(s => `<div class="it"><div class="row"><div><div class="tt">${esc(s[0])}</div><div class="meta">${esc(s[1])} ・ ${esc(s[2])}${s[4] ? " ・ " + esc(s[4]) : ""}</div></div><button class="btn ${s[3] === "オン" ? "ok" : "l"}" data-sc="${esc(s[0])}" data-on="${s[3] === "オン" ? 0 : 1}">${s[3] === "オン" ? "オン" : "オフ"}</button></div></div>`).join("") : empty("ありません");
+}
+
+// ---- 操作 ----
+function go(s) {
+  document.querySelectorAll("nav button").forEach(b => b.classList.toggle("on", b.dataset.s === s));
+  document.querySelectorAll(".sec").forEach(x => x.classList.toggle("on", x.id === "s-" + s));
+  try { localStorage.setItem("ai-company-tab", s); } catch (e) {}
+  scrollTo(0, 0);
+}
+$("nav").onclick = e => { const b = e.target.closest("button"); if (b) go(b.dataset.s); };
+$("fT").onchange = draw;
+$("addT").onclick = async () => {
+  const title = $("nTitle").value.trim(); if (!title) return toast("やることを入れてね");
+  const b = $("addT"); b.disabled = true;
+  try { const r = await call({ ai: "addTask", title, dept: $("nDept").value, note: $("nNote").value.trim() }); toast("追加しました：" + r.id); $("nTitle").value = ""; $("nNote").value = ""; await loadAll(); }
+  catch (e) { if (e.message !== "no pin") toast(e.message); } finally { b.disabled = false; }
+};
+document.addEventListener("change", async e => {
+  const s = e.target.closest("[data-task]"); if (!s) return;
+  try { await call({ ai: "setStatus", id: s.dataset.task, status: s.value }); toast("「" + s.value + "」にしました"); await loadAll(); }
+  catch (er) { if (er.message !== "no pin") toast(er.message); await loadAll(); }
+});
+document.addEventListener("click", async e => {
+  const a = e.target.closest("[data-ap]");
+  if (a) {
+    const row = D.appr.find(x => String(x[0]) === a.dataset.ap); if (!row) return;
+    if (!confirm(`「${row[2]}」を${a.dataset.d}しますか？`)) return;
+    a.disabled = true;
+    try { await call({ ai: "decide", id: row[0], decision: a.dataset.d, hash: await sha16(row[3]) }); toast(a.dataset.d + "しました"); }
+    catch (er) { if (er.message !== "no pin") toast(er.message); }
+    await loadAll(); return;
+  }
+  const sc = e.target.closest("[data-sc]");
+  if (sc) {
+    try { await call({ ai: "setSchedule", name: sc.dataset.sc, on: sc.dataset.on }); toast("変えました"); } catch (er) { if (er.message !== "no pin") toast(er.message); }
+    await loadAll();
+  }
+});
+$("pin").value = PIN;
+$("savePin").onclick = async () => {
+  PIN = $("pin").value.trim(); try { localStorage.setItem("ai-company-pin", PIN); } catch (e) {}
+  $("pinMsg").textContent = "確かめています…";
+  try { await call({ ai: "ping" }); $("pinMsg").textContent = "OK。書き込めます。"; }
+  catch (e) { $("pinMsg").textContent = "だめでした：" + e.message; }
+};
+$("reload").onclick = loadAll;
+try { const t = localStorage.getItem("ai-company-tab"); if (t && $("s-" + t)) go(t); } catch (e) {}
+loadAll();
+</script>
+</body>
+</html>
