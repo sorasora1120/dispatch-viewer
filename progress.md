@@ -235,3 +235,6 @@
 
 ## 2026-11-10 MIPPE! の公式LP
 - 遠藤さん（MIPPE!代表）が公式LPがほしいとのことで、Canva サイトの中身と写真で mippe/index.html を作った（スマホ向け）。メンバー情報とリンク先待ち。Notion の企画部ポータルの改善案も出した。
+
+## 2026-11-15 AI COMPANY OS Phase 1（ai-company/）
+- Next.js + Supabase の本番版を ai-company/ に。ページ7つ・RLS・操作ログ・承認（DB関数）・AI社員9人の自動作成。テスト：型・単体7・DB（RLS）・build・e2e（偽Supabase）は通過。本物の Supabase/Vercel は未確認（アカウント待ち）。手順は ai-company/README.md
