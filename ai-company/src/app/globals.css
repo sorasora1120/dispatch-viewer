@@ -1,21 +1,32 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg: #0b0c0e;
-  --color-panel: #121418;
-  --color-panel2: #181b20;
-  --color-line: #23262d;
-  --color-ink: #e8e6e1;
-  --color-mute: #8a8f98;
-  --color-dim: #5c616b;
-  --color-accent: #d9b77e;
-  --color-ok: #6fbf8a;
-  --color-warn: #e0b45c;
-  --color-bad: #e07a6f;
-  --color-info: #7fa6e0;
+  --color-bg: #080a1c;
+  --color-panel: #10132b;
+  --color-panel2: #171b3a;
+  --color-line: #252a52;
+  --color-ink: #eceefe;
+  --color-mute: #9aa0c7;
+  --color-dim: #646a95;
+  --color-accent: #8b6cff;
+  --color-accent2: #4f8cff;
+  --color-ok: #3ccf8e;
+  --color-warn: #f5a524;
+  --color-bad: #f0566b;
+  --color-info: #4f8cff;
   --font-sans: "Inter", ui-sans-serif, -apple-system, "Hiragino Sans", "Noto Sans JP", system-ui, sans-serif;
 }
 
 html { background: var(--color-bg); color-scheme: dark; }
-body { background: var(--color-bg); color: var(--color-ink); -webkit-font-smoothing: antialiased; -webkit-text-size-adjust: 100%; }
+body {
+  background:
+    radial-gradient(900px 500px at 75% -10%, rgba(110, 80, 255, .16), transparent 60%),
+    radial-gradient(700px 500px at 10% 110%, rgba(60, 120, 255, .10), transparent 60%),
+    var(--color-bg);
+  background-attachment: fixed;
+  color: var(--color-ink); -webkit-font-smoothing: antialiased; -webkit-text-size-adjust: 100%;
+}
 input, select, textarea { font-size: 16px; } /* no zoom on iOS */
+.glass { background: linear-gradient(180deg, rgba(26, 30, 66, .72), rgba(14, 17, 40, .72)); border: 1px solid var(--color-line); box-shadow: inset 0 1px 0 rgba(255,255,255,.04), 0 10px 30px rgba(0,0,0,.25); }
+.grad-text { background: linear-gradient(90deg, #a78bfa, #7c5cff 50%, #5b8cff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.grad-btn { background: linear-gradient(90deg, #7c5cff, #4f8cff); box-shadow: 0 8px 24px rgba(108, 92, 255, .35); }
