@@ -3,6 +3,9 @@ import { notFound } from "next/navigation";
 import { getUser } from "@/lib/supabase/server";
 import { ErrorBox, PageHeader, Panel, btnGhostCls, fmtDate } from "@/components/ui";
 import { TaskForm } from "@/components/task-form";
+import { Linkify } from "@/components/linkify";
+import { StatusBadge } from "@/components/ui";
+import type { TaskStatus } from "@/lib/domain";
 import { deleteTask, updateTask } from "../../actions";
 
 export default async function TaskDetail({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ error?: string }> }) {
@@ -19,11 +22,12 @@ export default async function TaskDetail({ params, searchParams }: { params: Pro
   if (!task && !error) notFound();
   return (
     <>
-      <PageHeader title="Edit task" sub={task ? `Created ${fmtDate(task.created_at)} · Updated ${fmtDate(task.updated_at)}` : undefined} action={<Link href="/tasks" className={btnGhostCls}>Back</Link>} />
+      <PageHeader title={task?.title ?? "Task"} sub={task ? `Created ${fmtDate(task.created_at)} · Updated ${fmtDate(task.updated_at)}` : undefined} action={<Link href="/tasks" className={btnGhostCls}>Back</Link>} />
       {(qErr || error) && <ErrorBox message={qErr ?? error!.message} />}
       {task && (
         <>
-          <Panel><TaskForm action={updateTask.bind(null, id)} agents={agents.data ?? []} projects={projects.data ?? []} task={task} submit="Save changes" /></Panel>
+          <Panel title="内容と結果" action={<StatusBadge status={task.status as TaskStatus} />}>{task.description ? <Linkify text={task.description} /> : <p className="text-sm text-mute">まだ何も書かれていません</p>}</Panel>
+          <details className="glass mt-6 rounded-2xl"><summary className="cursor-pointer px-5 py-3.5 text-sm font-medium">編集する</summary><div className="px-5 pb-5"><TaskForm action={updateTask.bind(null, id)} agents={agents.data ?? []} projects={projects.data ?? []} task={task} submit="Save changes" /></div></details>
           <Panel title="History" className="mt-6">
             <ul className="divide-y divide-line text-sm">
               {(logs.data ?? []).map((l) => (

@@ -112,3 +112,18 @@ export async function signOut() {
   await supabase.auth.signOut();
   redirect("/login");
 }
+
+/** "Ask the AI": Sora writes a request in plain words. It becomes a task for the CEO agent; Claude picks it up on its next run. */
+export async function askAI(fd: FormData) {
+  const { supabase } = await requireUser();
+  const text = String(fd.get("text") ?? "").trim();
+  if (!text) back("/", "頼みたいことを書いてください");
+  if (text.length > 2000) back("/", "2000文字以内で書いてください");
+  const first = text.split("\n")[0].trim();
+  const title = first.length > 80 ? first.slice(0, 79) + "…" : first;
+  const { data: ceo } = await supabase.from("agents").select("id").eq("slug", "ceo").maybeSingle();
+  const { error } = await supabase.from("tasks").insert({ title, description: text, agent_id: ceo?.id ?? null, status: "pending", priority: "medium" });
+  if (error) back("/", `送れませんでした: ${error.message}`);
+  revalidatePath("/", "layout");
+  redirect("/?asked=1");
+}

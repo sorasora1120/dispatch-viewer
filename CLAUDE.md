@@ -68,6 +68,7 @@
 - `company.html`：AI COMPANY OS のダッシュボード（2026-11-15〜、設計とルールは `docs/ai-company-os.md`）。データはシートの AI_ タブ、書き込みは Apps Script の aiCompany（暗証番号 AI_PIN）。架空のデータは入れない。外への送信・投稿は承認制で、実行するのは Sora
 - `ai-company/`：AI COMPANY OS の本番版（2026-11-15〜、Next.js＋Supabase＋Vercel。Vercel の Root Directory は ai-company、main から自動デプロイ）。Supabase プロジェクト ggonrzyuntrzrjthufwa（Free）、ログインは Sora のユーザーだけ。手順とテスト結果は `ai-company/README.md`、SQL のコピーページは `ai-sql.html`。
   AI社員の仕事は Claude がやる（Sora はチャットで日本語で頼むだけ。担当を決めて手順に分けるのは Claude）。Claude は Supabase コネクタ（execute_sql、project_id ggonrzyuntrzrjthufwa）で読み書きする（2026-11-15 接続）。Sora のユーザーID は 74961dcf-045b-4ca9-900c-997ba0a5a422。SQL は RLS を通らないので owner_id を必ず Sora のユーザーIDにし、tasks を作ったら activity_logs にも actor='agent' で記録。送信・投稿・購入はしない（承認と実行は Sora）
+  2026-11-15〜 アプリの「AIに頼む」：Sora が書いた文が CEO 担当・pending のタスクになる。毎時の予約タスク（AI COMPANY 当番）が pending を拾って、担当を決めて仕事をし、結果を description の【結果】に書いて review にする
 - `works/`：古い制作サンプル。今のポートフォリオは `sorasora1120.github.io`
 - `vocab-app/`：別プロジェクト（単語アプリ VisuWord）。触るときは `.github/workflows/ios-*.yml` が動く
 - `icon-options/` は `.git/info/exclude` で除外しているローカルのみのファイル

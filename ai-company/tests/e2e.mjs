@@ -33,7 +33,8 @@ await p.locator("main a", { hasText: "競合の値段を調べる" }).first().wa
 if (!(await p.textContent("main")).includes("競合の値段を調べる")) { console.log(p.url(), (await p.textContent("main")).slice(0,600)); fail("created task not listed"); }
 if (!(await p.textContent("main")).includes("Assigned")) fail("task with agent should be Assigned");
 await p.click("text=競合の値段を調べる");
-await p.selectOption('select[name=status]', "running");
+await p.click("text=編集する");
+await p.selectOption("select[name=status]", "running");
 await p.click("text=Save changes");
 await p.waitForURL(base + "/tasks");
 await p.getByText("Running").first().waitFor({ timeout: 15000 }).catch(() => {});
@@ -50,6 +51,18 @@ await p.click("summary");
 await p.evaluate(() => { const i = document.querySelector('input[name=title]'); i.removeAttribute('required'); i.value = '   '; });
 await p.click("text=Create task");
 await p.waitForURL(/error=/);
+
+// "Ask the AI" creates a pending task for the CEO and shows it on the task page
+await p.goto(base + "/");
+await p.fill("#ask", "Windsor のカフェを10店調べて\n口コミが少ないお店を優先");
+await p.click("form button:has-text(\"頼む\")");
+await p.waitForURL(/asked=1/);
+await p.getByText("受け付けました").waitFor({ timeout: 15000 }).catch(() => fail("ask not acknowledged"));
+await p.goto(base + "/tasks?f=all&q=" + encodeURIComponent("カフェ"));
+await p.click("text=Windsor のカフェを10店調べて");
+await p.waitForURL(/\/tasks\/[0-9a-f-]{36}/);
+const det = await p.textContent("main");
+if (!det.includes("口コミが少ないお店を優先") || !det.includes("Pending")) fail("request detail not shown");
 
 const m = await b.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, storageState: await ctx.storageState() });
 const mp = await m.newPage();

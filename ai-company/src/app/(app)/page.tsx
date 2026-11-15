@@ -5,11 +5,13 @@ import { countByDay, describeLog, isCompletion, lastDays, relTime } from "@/lib/
 import { Empty, ErrorBox, Panel, StatusBadge } from "@/components/ui";
 import { AgentIcon, ICON, Icon } from "@/components/icons";
 import { OverviewChart, Spark } from "@/components/chart";
+import { askAI } from "./actions";
 
 const STATUS_DOT: Record<AgentStatus, string> = { active: "bg-ok", idle: "bg-dim", paused: "bg-warn", error: "bg-bad" };
 const LOG_DOT = (a: string) => (a.startsWith("task.result") || a.startsWith("approval.approved") ? "bg-ok" : a.startsWith("task") ? "bg-info" : a.startsWith("project") ? "bg-warn" : a.startsWith("approval") ? "bg-accent" : "bg-dim");
 
-export default async function Dashboard() {
+export default async function Dashboard({ searchParams }: { searchParams: Promise<{ asked?: string; error?: string }> }) {
+  const { asked, error: qErr } = await searchParams;
   const { supabase, user } = await getUser();
   const now = new Date();
   const since = new Date(now.getTime() - 14 * 86400000).toISOString();
@@ -57,6 +59,16 @@ export default async function Dashboard() {
         </p>
       </div>
       {err && <ErrorBox message={`Some data could not be loaded: ${err.message}`} />}
+      {qErr && <ErrorBox message={qErr} />}
+      <form action={askAI} className="glass mb-5 rounded-2xl p-4 lg:p-5">
+        <label htmlFor="ask" className="flex items-center gap-2 text-[15px] font-semibold"><Icon d={ICON.bolt} className="size-5 text-warn" />AIに頼む</label>
+        <textarea id="ask" name="text" required maxLength={2000} rows={2} placeholder="例：Vivarium に送る返事を考えて／Windsor のカフェを10店調べて"
+          className="mt-3 w-full resize-none rounded-xl border border-line bg-panel2/70 px-3.5 py-3 text-ink placeholder:text-dim focus:border-accent/70 focus:outline-none" />
+        <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
+          <p className="text-xs text-mute">{asked ? "受け付けました。CEO が担当を決めて、1時間以内に始めます。終わると Tasks が「Review」になります。" : "CEO が担当を決めて、1時間以内に始めます。送信・投稿・お金を払うことはしません（押すのは Sora）。"}</p>
+          <button className="grad-btn rounded-xl px-6 py-2.5 text-sm font-medium text-white">頼む</button>
+        </div>
+      </form>
 
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">
         {stats.map((s) => (
