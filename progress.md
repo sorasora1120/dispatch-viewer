@@ -241,3 +241,4 @@
 - 公開済み：Supabase に SQL 実行・ユーザー作成、Vercel デプロイ、ログインしてダッシュボードに AI社員9人を確認。Claude 用の secret キーを Default 環境の Network secret に登録（新しいチャットから使える）。次：新しいチャットで接続確認 → 頼まれた仕事をタスクに入れて実行。Vercel の URL はまだ聞けていない
 - Supabase コネクタをつないだ（secret キーの登録はやめた）。Claude から users1・agents9・tasks0 を確認
 - 見本4つ（cafe/pizza/salon/barber）の一番上を背景動画に（Mixkit 無料素材）。github.io の samples/ にも反映
+- 参考動画9本（Drive）を見て、高級サイトの見本6つを AI COMPANY のプロジェクトに。①コーヒー（previews/premium/coffee.html）完成。②〜⑥はこれから
