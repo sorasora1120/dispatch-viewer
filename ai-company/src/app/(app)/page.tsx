@@ -65,7 +65,7 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
         <textarea id="ask" name="text" required maxLength={2000} rows={2} placeholder="例：Vivarium に送る返事を考えて／Windsor のカフェを10店調べて"
           className="mt-3 w-full resize-none rounded-xl border border-line bg-panel2/70 px-3.5 py-3 text-ink placeholder:text-dim focus:border-accent/70 focus:outline-none" />
         <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
-          <p className="text-xs text-mute">{asked ? "受け付けました。CEO が担当を決めて、1時間以内に始めます。終わると Tasks が「Review」になります。" : "CEO が担当を決めて、1時間以内に始めます。送信・投稿・お金を払うことはしません（押すのは Sora）。"}</p>
+          <p className="text-xs text-mute">{asked ? "受け付けました。Claude が CEO として担当を決めて始めます。終わると Tasks が「Review」になります。" : "Claude が CEO として担当を決めて始めます。送信・投稿・お金を払うことはしません（押すのは Sora）。"}</p>
           <button className="grad-btn rounded-xl px-6 py-2.5 text-sm font-medium text-white">頼む</button>
         </div>
       </form>
