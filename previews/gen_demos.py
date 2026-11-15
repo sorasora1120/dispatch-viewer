@@ -109,6 +109,8 @@ nav .links a{margin-left:26px;font-size:13px;letter-spacing:.2em;text-transform:
 .hero .bg{position:absolute;inset:0;animation:kb 18s ease-out forwards}
 .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,6,4,.5) 0%%,rgba(10,6,4,.12) 35%%,rgba(10,6,4,.78) 100%%)}
 @keyframes kb{from{transform:scale(1.18)}to{transform:scale(1)}}
+.hero .bg video{position:absolute;inset:0;width:100%%;height:100%%;object-fit:cover;opacity:0;transition:opacity 1s}
+.hero .bg video.on{opacity:1}
 .hero .in{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:0 28px 9vh;max-width:1200px;margin:0 auto}
 .hero h1{font-size:clamp(56px,12.5vw,164px);line-height:.9}
 .hero h1 i{color:var(--acc2)}
@@ -212,7 +214,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   <div class="links"><a href="#story">About</a><a href="#menu">Menu</a><a href="#visit">Visit</a></div>
 </nav>
 <header class="hero">
-  <div class="bg"><img src="{{%(hero)s}}" alt=""></div>
+  <div class="bg"><img src="{{%(hero)s}}" alt=""><video muted loop playsinline preload="none" aria-hidden="true" style="object-position:%(vpos)s" data-src="video/hero-%(key)s.mp4"></video></div>
   <div class="in">
     <p class="kicker" style="margin-bottom:22px;opacity:.85">%(kind)s · Windsor, Ontario</p>
     <h1><span class="line"><span>%(h1a)s</span></span><span class="line"><span>%(h1b)s</span></span></h1>
@@ -278,6 +280,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   <span>Photos: free-to-use stock (CC0 / Unsplash License).</span>
 </div></footer>
 <script>
+(function(){var v=document.querySelector(".hero video");if(!v||matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+v.src=v.dataset.src;v.addEventListener("playing",function(){v.classList.add("on")});var p=v.play();if(p&&p.catch)p.catch(function(){});})();
 const nav=document.getElementById('nav');
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');e.target.querySelectorAll('.mask').forEach(m=>m.classList.add('on'));io.unobserve(e.target)}}),{threshold:.18});
 // clip-path で隠した写真は IntersectionObserver で見えないことになるので、親を見る
@@ -329,7 +333,7 @@ for key, d in DEMOS.items():
     v.update(
         upper="text-transform:uppercase;" if d["upper"] else "",
         ital="normal" if d["upper"] else "italic",
-        hero=f"{key}_hero", h1a=d["h1"][0], h1b=d["h1"][1],
+        hero=f"{key}_hero", key=key, vpos={"cafe": "38% 50%", "pizza": "72% 50%", "salon": "82% 50%", "barber": "50% 40%"}[key], h1a=d["h1"][0], h1b=d["h1"][1],
         marquee="".join(f"<span>{html.escape(m)}<b>✦</b></span>" for m in d["marquee"]),
         cards="".join(f'<a class="card rv" href="#visit"><div class="ph" data-n="0{i + 1}"><img src="{{{{{img}}}}}" alt=""></div>'
                       f"<h3>{t}</h3><p>{p}</p></a>" for i, (img, t, p) in enumerate(d["cards"])),

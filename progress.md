@@ -240,3 +240,4 @@
 - Next.js + Supabase の本番版を ai-company/ に。ページ7つ・RLS・操作ログ・承認（DB関数）・AI社員9人の自動作成。テスト：型・単体7・DB（RLS）・build・e2e（偽Supabase）は通過。本物の Supabase/Vercel は未確認（アカウント待ち）。手順は ai-company/README.md
 - 公開済み：Supabase に SQL 実行・ユーザー作成、Vercel デプロイ、ログインしてダッシュボードに AI社員9人を確認。Claude 用の secret キーを Default 環境の Network secret に登録（新しいチャットから使える）。次：新しいチャットで接続確認 → 頼まれた仕事をタスクに入れて実行。Vercel の URL はまだ聞けていない
 - Supabase コネクタをつないだ（secret キーの登録はやめた）。Claude から users1・agents9・tasks0 を確認
+- 見本4つ（cafe/pizza/salon/barber）の一番上を背景動画に（Mixkit 無料素材）。github.io の samples/ にも反映
