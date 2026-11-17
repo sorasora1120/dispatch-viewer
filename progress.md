@@ -244,3 +244,4 @@
 - 参考動画9本（Drive）を見て、高級サイトの見本6つを AI COMPANY のプロジェクトに。①コーヒー（previews/premium/coffee.html）完成。②〜⑥はこれから
 - AI COMPANY の見た目を Sora の参考画像（紫と青のダーク・ガラスのカード）に作り直し。数字・グラフは全部実データ（グラフは activity_logs の task.create と completed への変更を日ごとに数える）。検索・通知ベル・クイックアクション。架空の数字（+20% など）や Enterprise Plan は出さない
 - AI COMPANY に「AIに頼む」（ダッシュボード）とタスク画面の「内容と結果」。毎時の予約タスクで Claude が pending を処理する
+- MIPPE! LP（遠藤さんの希望）：見出し・数字は太字（Dela Gothic）のまま、能登の「3店舗」→「3ブース」、企画名は Shorai Sans Black 風（Adobe Fonts なので無料の M PLUS 1 Black）

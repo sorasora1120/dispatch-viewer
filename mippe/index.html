@@ -9,7 +9,7 @@
 <!-- MIPPE! 公式LPの試作（2026-11-10〜）。2026-11-12「UIがAIっぽい」→ 角丸カード・影・丸タグ・絵文字をやめて、明朝の見出し・細い線・番号・写真のコラージュの紙っぽい作りに。
      中身は遠藤さんの文と MIPPE! の Canva サイト・団体概要PDF・note から。写真は img/*.jpg。学校名は出さない（遠藤さんの希望）。
      sorasora1120.github.io/mippe/ にもコピーして公開している（直したら両方） -->
-<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Shippori+Mincho+B1:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Cormorant+Garamond:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=M+PLUS+1:wght@900&family=Shippori+Mincho+B1:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Cormorant+Garamond:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
 <style>
 :root{--paper:#fff7ea;--paper2:#f6e9d6;--ink:#2a1608;--mute:#7a5a46;--red:#6e0b0b;--red2:#8e1212;--yel:#ffd34d;--rule:rgba(42,22,8,.2)}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -140,7 +140,10 @@ footer nav{display:flex;gap:20px;font-size:14px;font-weight:700;color:#fff}
 }
 
 /* ---- 赤基準（2026-11-12「この赤基準は良かったのに」）：形は線と番号のまま、色は濃い赤・クリーム・黄色 ---- */
-.dg,.msg .but,.mippe .row b,.pj .hd h3,.cta h2{font-family:"Dela Gothic One",sans-serif;font-weight:400;letter-spacing:.02em}
+.dg,.msg .but,.mippe .row b,.cta h2,.ttl,.nums b,.big b,.pj .hd .n{font-family:"Dela Gothic One",sans-serif;font-weight:400;font-style:normal;letter-spacing:.02em}
+.nums b{font-size:26px;white-space:nowrap}.big b{font-size:42px;white-space:nowrap}
+/* 企画名は遠藤さんの希望で Shorai Sans Black 風（Shorai Sans は Adobe Fonts なので、無料で近い M PLUS 1 Black） */
+.pj .hd h3{font-family:"M PLUS 1",sans-serif;font-weight:900;letter-spacing:.01em}
 .msg,.pj{background:var(--red);color:#fff}
 .msg .sh,.pj .sh{border-top-color:rgba(255,255,255,.85)}
 .msg .sh .no,.pj .sh .no{color:var(--yel)}
@@ -265,8 +268,8 @@ header.on .lg.w{display:block}header.on .lg.r{display:none}
     <div class="it rv"><div class="ph2 one"><img src="img/iac.jpg" alt="焚き火を囲むメンバー"></div>
       <div class="hd"><span class="n">06</span><h3>IAC企画</h3></div><p class="catch">企画が生まれる場をつくる。</p><p class="tx">オンラインコミュニティIACを運営し、地域や大学を越えて企画の相談や情報共有ができる場に。活動の入口にもなる、MIPPE!の土台です。</p><p class="pl">オンライン</p></div>
 
-    <div class="it rv"><div class="big"><div><b>11.28</b><small>能登で花火を打ち上げ</small></div><div><b>3<i>店舗</i></b><small>当日の屋台を企画中</small></div></div>
-      <div class="hd"><span class="n">07</span><h3>能登企画</h3></div><p class="catch">能登で、想いをつなぐ花火を。</p><p class="tx">11月28日に石川県珠洲市で開かれる花火イベント「能登 想いをつなぐ FIREWORKS」に、MIPPE!も主催団体の一つとして参加します。高徳花火工場さんとトイレットペッパーズさんが昨年から続けてきたイベントで、MIPPE!は当日の屋台を3店舗企画中。班に分かれて、出店の中身を考えています。花火のあとも、ワークキャンプや変人会議など、能登を舞台にした活動を続けていきます。</p><p class="pl">石川県珠洲市・奥能登</p></div>
+    <div class="it rv"><div class="big"><div><b>11.28</b><small>能登で花火を打ち上げ</small></div><div><b>3<i>ブース</i></b><small>当日の屋台を企画中</small></div></div>
+      <div class="hd"><span class="n">07</span><h3>能登企画</h3></div><p class="catch">能登で、想いをつなぐ花火を。</p><p class="tx">11月28日に石川県珠洲市で開かれる花火イベント「能登 想いをつなぐ FIREWORKS」に、MIPPE!も主催団体の一つとして参加します。高徳花火工場さんとトイレットペッパーズさんが昨年から続けてきたイベントで、MIPPE!は当日の屋台を3ブース企画中。班に分かれて、出店の中身を考えています。花火のあとも、ワークキャンプや変人会議など、能登を舞台にした活動を続けていきます。</p><p class="pl">石川県珠洲市・奥能登</p></div>
 
     <div class="it rv"><div class="big" style="align-items:center"><div><b style="font-size:40px">note</b><small>活動の記録とインタビュー</small></div></div>
       <div class="hd"><span class="n">08</span><h3>メディア部</h3></div><p class="catch">地域で起きていることを、言葉にして届ける。</p><p class="tx">活動の記録やインタビュー、記事制作、冊子編集。ただの広報ではなく、活動の振り返りと学びを共有する役割。記事は note で読めます。</p><p class="pl"><a class="more" style="margin-top:0" href="https://note.com/mippe2025" target="_blank" rel="noopener">note を読む</a></p></div>
@@ -287,7 +290,7 @@ header.on .lg.w{display:block}header.on .lg.r{display:none}
       <div class="r rv"><time>2026.03.05</time><div><b>変人会議 in 錦江町</b><p>25名。錦江町長や地元高校生も登壇し、「共創は幻想か？」を語り合った。</p></div></div>
       <div class="r rv"><time>2026.06</time><div><b>臨時変人 能登ツアー</b><p>能登の現地に行って、これからの企画を考えた。</p></div></div>
       <div class="r rv"><time>2026.07</time><div><b>変人会議 in 盛岡</b><p>全国の変人が盛岡に集まった。</p></div></div>
-      <div class="r rv"><time>2026.11.28</time><div><b>能登 想いをつなぐ FIREWORKS</b><p>能登企画。主催団体の一つとして、屋台を3店舗出店。</p></div></div>
+      <div class="r rv"><time>2026.11.28</time><div><b>能登 想いをつなぐ FIREWORKS</b><p>能登企画。主催団体の一つとして、屋台を3ブース出店。</p></div></div>
     </div>
   </div>
 </section>
