@@ -192,7 +192,7 @@ header.on .lg.w{display:block}header.on .lg.r{display:none}
   <img src="img/hero.jpg" alt="霧のかかる山">
   <div class="tate">行ってみっぺ　会ってみっぺ　やってみっぺ</div>
   <div class="in">
-    <img class="lgbig" src="img/logo-white.png" alt="MIPPE!">
+    <img class="lgbig" src="img/logo-white.png" alt="MIPPE!" style="cursor:pointer;-webkit-tap-highlight-color:transparent">
     <h1>ガクチカのために、<br>何かをする…？</h1>
     <p>「やってみたい」から動く、学生主体の団体。</p>
   </div>
@@ -355,6 +355,37 @@ if ("IntersectionObserver" in window) {
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { rootMargin: "0px 0px -8% 0px" });
   document.querySelectorAll(".rv").forEach(el => io.observe(el));
 } else document.querySelectorAll(".rv").forEach(el => el.classList.add("in"));
+</script>
+<script>
+/* 隠し機能（2026-11-18）：①上の大きいロゴを5回タップ（PCは「mippe」と打つ）→ 花火 ②下のロゴを3回タップ → 変人認定 ③開発者ツールにメッセージ。
+   ふだんは何も動かさない（押した時だけ canvas を作る） */
+(function(){
+var toastEl;
+function toast(t){ if(!toastEl){ toastEl=document.createElement("div"); toastEl.style.cssText="position:fixed;left:50%;bottom:28px;z-index:9999;transform:translate(-50%,20px);opacity:0;transition:opacity .4s,transform .4s;background:#6e0b0b;color:#fff7ea;border:1px solid #ffd34d;padding:12px 20px;font:700 15px/1.6 'Shippori Mincho B1',serif;text-align:center;width:max-content;max-width:88vw;pointer-events:none"; document.body.appendChild(toastEl); }
+  toastEl.innerHTML=t; requestAnimationFrame(function(){ toastEl.style.opacity="1"; toastEl.style.transform="translate(-50%,0)"; });
+  clearTimeout(toastEl._t); toastEl._t=setTimeout(function(){ toastEl.style.opacity="0"; toastEl.style.transform="translate(-50%,20px)"; },3800); }
+var busy=false;
+function fireworks(){
+  if(busy) return; busy=true;
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches){ toast("11.28、能登で花火があがります。"); busy=false; return; }
+  var c=document.createElement("canvas"), x=c.getContext("2d"), W=c.width=innerWidth, H=c.height=innerHeight, P=[], cols=["#ffd34d","#fff7ea","#ff7a59","#ffb703","#ffe9a8"];
+  c.style.cssText="position:fixed;inset:0;z-index:9998;pointer-events:none"; document.body.appendChild(c);
+  function burst(){ var cx=W*(.2+Math.random()*.6), cy=H*(.18+Math.random()*.35), col=cols[Math.random()*cols.length|0];
+    for(var i=0;i<70;i++){ var a=Math.PI*2*i/70, v=2+Math.random()*3.2; P.push({x:cx,y:cy,vx:Math.cos(a)*v,vy:Math.sin(a)*v,l:1,c:col}); } }
+  var n=0, t0=performance.now();
+  (function loop(t){ if(n<6 && t-t0>n*420){ burst(); n++; }
+    x.globalCompositeOperation="destination-out"; x.fillStyle="rgba(0,0,0,.22)"; x.fillRect(0,0,W,H); x.globalCompositeOperation="lighter";
+    for(var i=P.length-1;i>=0;i--){ var p=P[i]; p.x+=p.vx; p.y+=p.vy; p.vy+=.05; p.vx*=.985; p.vy*=.985; p.l-=.012;
+      if(p.l<=0){ P.splice(i,1); continue; } x.globalAlpha=p.l; x.fillStyle=p.c; x.beginPath(); x.arc(p.x,p.y,2.2,0,7); x.fill(); }
+    if(n<6||P.length) requestAnimationFrame(loop); else { c.remove(); busy=false; } })(t0);
+  toast("ほんものは 11.28、能登で。<br><small style='font-weight:500'>能登 想いをつなぐ FIREWORKS</small>");
+}
+function taps(el,need,fn){ if(!el) return; var k=0,last=0; el.addEventListener("click",function(e){ var now=Date.now(); k=now-last<600?k+1:1; last=now; if(k>=need){ k=0; e.preventDefault(); fn(); } }); }
+taps(document.querySelector(".lgbig"),5,fireworks);
+taps(document.querySelector("footer img"),3,function(){ toast("見つけたあなたは、立派な変人です。<br><small style='font-weight:500'>※変人＝地域を変える人。ようこそ MIPPE! へ。</small>"); });
+var buf=""; addEventListener("keydown",function(e){ if(e.key.length!==1) return; buf=(buf+e.key.toLowerCase()).slice(-5); if(buf==="mippe") fireworks(); });
+try{ console.log("%cMIPPE!","font:900 40px sans-serif;color:#6e0b0b"); console.log("%cここまで見に来たあなた、たぶん変人です（いい意味で）。\nやってみたいことがあるなら、メンバー募集中→ https://www.instagram.com/mippe2025/","font:14px sans-serif;color:#6e0b0b"); }catch(e){}
+})();
 </script>
 </body>
 </html>
