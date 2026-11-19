@@ -33,7 +33,7 @@ header nav a.j{border-bottom:1.5px solid currentColor}
 .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.18),rgba(0,0,0,0) 35%,rgba(0,0,0,.55))}
 .hero .tate{position:absolute;right:20px;top:92px;z-index:1;writing-mode:vertical-rl;font:700 15px/2.1 "Shippori Mincho B1";letter-spacing:.3em;opacity:.95}
 .hero .in{position:absolute;left:24px;right:24px;bottom:calc(40px + env(safe-area-inset-bottom));z-index:1}
-.hero .lgbig{width:min(52vw,250px);margin-bottom:26px}
+.hero .lgbig{width:min(52vw,250px);margin-bottom:26px;position:relative;z-index:3;-webkit-touch-callout:none}
 .hero h1{font:800 34px/1.45 "Shippori Mincho B1";letter-spacing:.04em}
 .hero p{margin-top:8px;font-size:13.5px;opacity:.9}
 /* section heads */
@@ -357,7 +357,7 @@ if ("IntersectionObserver" in window) {
 } else document.querySelectorAll(".rv").forEach(el => el.classList.add("in"));
 </script>
 <script>
-/* 隠し機能（2026-11-18）：①上の大きいロゴを5回タップ（PCは「mippe」と打つ）→ 花火 ②下のロゴを3回タップ → 変人認定 ③開発者ツールにメッセージ。
+/* 隠し機能（2026-11-18）：①上の大きいロゴを3回タップ（PCは「mippe」と打つ）→ 花火 ②下のロゴを3回タップ → 変人認定 ③開発者ツールにメッセージ。
    ふだんは何も動かさない（押した時だけ canvas を作る） */
 (function(){
 var toastEl;
@@ -380,8 +380,8 @@ function fireworks(){
     if(n<6||P.length) requestAnimationFrame(loop); else { c.remove(); busy=false; } })(t0);
   toast("ほんものは 11.28、能登で。<br><small style='font-weight:500'>能登 想いをつなぐ FIREWORKS</small>");
 }
-function taps(el,need,fn){ if(!el) return; var k=0,last=0; el.addEventListener("click",function(e){ var now=Date.now(); k=now-last<600?k+1:1; last=now; if(k>=need){ k=0; e.preventDefault(); fn(); } }); }
-taps(document.querySelector(".lgbig"),5,fireworks);
+function taps(el,need,fn){ if(!el) return; el.style.touchAction="manipulation"; el.style.webkitUserSelect="none"; el.style.userSelect="none"; el.draggable=false; var k=0,last=0; el.addEventListener("pointerup",function(e){ var now=Date.now(); k=now-last<900?k+1:1; last=now; if(k>=need){ k=0; fn(); } }); el.addEventListener("click",function(e){ if(el.closest("a")) e.preventDefault(); }); el.addEventListener("contextmenu",function(e){ e.preventDefault(); }); }
+taps(document.querySelector(".lgbig"),3,fireworks);
 taps(document.querySelector("footer img"),3,function(){ toast("見つけたあなたは、立派な変人です。<br><small style='font-weight:500'>※変人＝地域を変える人。ようこそ MIPPE! へ。</small>"); });
 var buf=""; addEventListener("keydown",function(e){ if(e.key.length!==1) return; buf=(buf+e.key.toLowerCase()).slice(-5); if(buf==="mippe") fireworks(); });
 try{ console.log("%cMIPPE!","font:900 40px sans-serif;color:#6e0b0b"); console.log("%cここまで見に来たあなた、たぶん変人です（いい意味で）。\nやってみたいことがあるなら、メンバー募集中→ https://www.instagram.com/mippe2025/","font:14px sans-serif;color:#6e0b0b"); }catch(e){}
