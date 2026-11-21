@@ -4,120 +4,252 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#0f1a12">
+<meta name="theme-color" content="#06110a">
 <title>The Vivarium · Sample website</title>
 <!-- 2026-11-21 The Vivarium（LaSalle の爬虫類・ペット用品のお店）用の見本。お店に見せるだけで公開していない（noindex）。
-     わかっていることだけ書く（住所・電話・SNS・「爬虫類と用品と飼い方の相談」）。営業時間・値段・扱う種類は書かない。
-     動画は Mixkit の Free License（商用OK）。お店の写真に替えるまでの仮 -->
+     Sora の参考動画（高級サイトの紹介）の見せ方：目が開いて始まる・後ろに大きい文字・スクロールで動画が進む・ガラスケースが浮いて並ぶ・丸いレンズで次の場面。
+     わかっていることだけ書く（住所・電話・SNS・爬虫類と用品と飼い方の相談）。営業時間・値段・扱う種類は書かない。
+     動画は Mixkit の Free License（商用OK）。お店の写真に替えるまでの仮。スクロール中は transform / opacity / video.currentTime だけ変える -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0f1a12;--bg2:#15241a;--ink:#eef3e6;--mute:#a8b8a0;--lime:#c6f36b;--sand:#e9d8b4;--line:rgba(238,243,230,.14)}
+:root{--bg:#06110a;--bg2:#0d1f14;--ink:#eef6e4;--mute:#9db497;--lime:#c6f36b;--glow:#9cff5a;--sand:#e9d8b4;--line:rgba(238,246,228,.14)}
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--ink);font:400 16px/1.6 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
-a{color:inherit}
-.brand{text-decoration:none}
-h1,h2,h3,.brand{font-family:"Bricolage Grotesque",Inter,sans-serif;font-weight:800;letter-spacing:-.02em}
-.note{position:fixed;left:12px;right:12px;bottom:12px;z-index:60;background:rgba(15,26,18,.92);border:1px solid var(--line);color:var(--mute);font-size:12px;padding:9px 14px;border-radius:12px;text-align:center}
+html{background:var(--bg)}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.6 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,.brand,.huge{font-family:"Bricolage Grotesque",Inter,sans-serif;font-weight:800;letter-spacing:-.03em}
+.note{position:fixed;left:12px;right:12px;bottom:12px;z-index:70;background:rgba(6,17,10,.9);border:1px solid var(--line);color:var(--mute);font-size:11.5px;padding:8px 14px;border-radius:12px;text-align:center}
 .note b{color:var(--lime);font-weight:500}
-nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:space-between;align-items:center;padding:16px 20px;padding-top:calc(16px + env(safe-area-inset-top))}
-.brand{font-size:20px}
-.brand span{color:var(--lime)}
-nav a.call{font-size:14px;font-weight:500;text-decoration:none;background:var(--lime);color:#0f1a12;border-radius:999px;padding:9px 16px}
-.hero{position:relative;height:100svh;min-height:600px;overflow:hidden}
+nav{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;justify-content:space-between;align-items:center;padding:14px 18px;padding-top:calc(14px + env(safe-area-inset-top))}
+.brand{font-size:19px}.brand span{color:var(--lime)}
+.pill{display:flex;gap:4px;background:rgba(6,17,10,.55);border:1px solid var(--line);border-radius:999px;padding:4px}
+.pill a{font-size:12.5px;padding:6px 12px;border-radius:999px;color:var(--mute)}
+.pill a:first-child{background:rgba(238,246,228,.12);color:var(--ink)}
+@media(max-width:720px){.pill{display:none}}
+nav .call{font-size:13.5px;font-weight:500;background:var(--lime);color:#06110a;border-radius:999px;padding:9px 16px;box-shadow:0 0 30px rgba(156,255,90,.35)}
+
+/* 1. 目が開くように始まる */
+.hero{position:relative;height:100svh;min-height:620px;overflow:hidden;animation:eye 1.8s cubic-bezier(.75,0,.2,1) .2s both}
+@keyframes eye{0%{clip-path:ellipse(0% 0% at 50% 50%)}35%{clip-path:ellipse(40% 2% at 50% 50%)}100%{clip-path:ellipse(150% 150% at 50% 50%)}}
+.hero .media{position:absolute;inset:0;will-change:transform}
 .hero img,.hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:35% 50%}
 .hero video{opacity:0;transition:opacity 1s}.hero video.on{opacity:1}
-.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,var(--bg) 4%,rgba(15,26,18,.2) 55%,rgba(15,26,18,.35))}
-.hero .in{position:absolute;z-index:2;left:20px;right:20px;bottom:15vh;max-width:900px}
-.kick{font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--lime)}
-.hero h1{font-size:clamp(52px,12vw,128px);line-height:.92;margin-top:10px}
-.hero p{max-width:30em;color:var(--sand);margin-top:16px;font-size:17px}
-.btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
-.btn{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:500;border-radius:999px;padding:13px 22px;border:1px solid var(--line)}
-.btn.main{background:var(--lime);color:#0f1a12;border-color:var(--lime)}
-section{padding:80px 20px;max-width:1100px;margin:0 auto}
-h2{font-size:clamp(36px,7vw,64px);line-height:1}
-.lead{color:var(--mute);margin-top:12px;max-width:34em}
-.cards{display:grid;gap:14px;margin-top:34px}
-@media(min-width:760px){.cards{grid-template-columns:repeat(3,1fr)}}
-.card{background:var(--bg2);border:1px solid var(--line);border-radius:20px;overflow:hidden}
-.card .m{position:relative;aspect-ratio:4/3;overflow:hidden}
-.card .m img,.card .m video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.card .t{padding:18px}
-.card h3{font-size:24px}
-.card p{color:var(--mute);font-size:15px;margin-top:4px}
-.ask{background:linear-gradient(135deg,#1c3322,#0f1a12);border:1px solid var(--line);border-radius:24px;padding:34px 24px}
-.ask h2{font-size:clamp(32px,6vw,52px)}
-.qs{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
-.qs span{border:1px solid var(--line);border-radius:999px;padding:8px 14px;font-size:14px;color:var(--sand)}
-.visit{display:grid;gap:18px;margin-top:30px}
-@media(min-width:760px){.visit{grid-template-columns:1fr 1fr}}
+.hero::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,transparent 20%,rgba(6,17,10,.55) 70%),linear-gradient(0deg,var(--bg) 2%,transparent 45%)}
+.hero .back{position:absolute;z-index:1;left:50%;top:44%;transform:translate(-50%,-50%);font-size:clamp(90px,22vw,330px);line-height:.8;white-space:nowrap;color:transparent;-webkit-text-stroke:1.5px rgba(238,246,228,.35);pointer-events:none;will-change:transform}
+.hero .in{position:absolute;z-index:3;left:18px;right:18px;bottom:13vh;max-width:900px}
+.kick{font-size:12.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--lime)}
+.hero h1{font-size:clamp(54px,12.5vw,140px);line-height:.88;margin-top:10px}
+.hero h1 span{display:block;overflow:hidden}.hero h1 span i{display:block;font-style:normal;transform:translateY(105%);animation:up 1s cubic-bezier(.2,.7,.1,1) forwards}
+.hero h1 span:nth-child(1) i{animation-delay:1.5s}.hero h1 span:nth-child(2) i{animation-delay:1.65s;color:var(--lime)}
+@keyframes up{to{transform:none}}
+.hero p{max-width:29em;color:var(--sand);margin-top:16px;font-size:16.5px;opacity:0;animation:fade 1s 2s forwards}
+@keyframes fade{to{opacity:1}}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px;opacity:0;animation:fade 1s 2.2s forwards}
+.btn{display:inline-flex;align-items:center;gap:8px;font-weight:500;border-radius:999px;padding:13px 22px;border:1px solid var(--line);background:rgba(6,17,10,.4)}
+.btn.main{background:var(--lime);color:#06110a;border-color:var(--lime);box-shadow:0 0 40px rgba(156,255,90,.35)}
+.spores{position:absolute;inset:0;z-index:2;pointer-events:none}
+.spores i{position:absolute;width:var(--s);height:var(--s);border-radius:50%;background:radial-gradient(circle,rgba(198,243,107,.9),rgba(198,243,107,0) 70%);animation:drift var(--d) ease-in-out infinite alternate}
+@keyframes drift{from{transform:translate(0,0)}to{transform:translate(var(--x),-40px)}}
+
+/* 2. スクロールで目が動く */
+.scrub{position:relative;height:330vh}
+.scrub .stage{position:sticky;top:0;height:100svh;overflow:hidden}
+.scrub video,.scrub .poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.scrub .stage::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 25%,rgba(6,17,10,.85) 100%)}
+.scrub .huge{position:absolute;z-index:2;left:50%;top:50%;font-size:clamp(110px,28vw,400px);line-height:1;color:transparent;-webkit-text-stroke:2px rgba(238,246,228,.5);transform:translate(-50%,-50%);white-space:nowrap;will-change:transform,opacity}
+.cap{position:absolute;z-index:3;left:18px;right:18px;bottom:15vh;max-width:540px;opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s}
+.cap.on{opacity:1;transform:none}
+.cap small{font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--lime)}
+.cap h2{font-size:clamp(36px,7vw,68px);line-height:1;margin-top:8px}
+.bar{position:absolute;z-index:3;left:18px;right:18px;top:calc(76px + env(safe-area-inset-top));height:2px;background:var(--line)}
+.bar i{display:block;height:100%;width:100%;background:var(--lime);transform-origin:0 50%;transform:scaleX(0)}
+
+/* 3. ガラスケースが浮いて並ぶ */
+.tanks{position:relative;padding:110px 0 70px;overflow:hidden;background:radial-gradient(ellipse 80% 55% at 50% 58%,#173a20 0%,var(--bg) 72%)}
+.tanks .head{text-align:center;padding:0 18px;position:relative;z-index:3}
+.tanks h2{font-size:clamp(40px,8vw,84px);line-height:.95;margin-top:8px}
+.tanks .bigword{position:absolute;left:50%;top:330px;transform:translateX(-50%);font:800 clamp(110px,26vw,360px)/1 "Bricolage Grotesque";color:rgba(198,243,107,.07);white-space:nowrap;pointer-events:none}
+.rail{position:relative;height:440px;margin-top:36px;perspective:1200px}
+.tank{position:absolute;left:50%;top:30px;width:230px;margin-left:-115px;transition:transform .9s cubic-bezier(.2,.7,.1,1),opacity .9s;cursor:pointer}
+.glass{position:relative;width:230px;height:290px;border-radius:14px;overflow:hidden;border:1px solid rgba(238,246,228,.28);box-shadow:inset 0 0 0 6px rgba(6,17,10,.35),0 40px 70px rgba(0,0,0,.6);animation:bob 4.5s ease-in-out infinite alternate}
+@keyframes bob{from{transform:translateY(-7px)}to{transform:translateY(7px)}}
+.glass img,.glass video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.glass video{opacity:0;transition:opacity .8s}.glass video.on{opacity:1}
+.glass::before{content:"";position:absolute;inset:0;z-index:2;background:linear-gradient(115deg,rgba(255,255,255,.22) 0%,rgba(255,255,255,0) 32%,rgba(255,255,255,0) 70%,rgba(255,255,255,.08) 100%)}
+.glass::after{content:"";position:absolute;left:0;right:0;top:0;height:18px;z-index:2;background:repeating-linear-gradient(90deg,rgba(20,30,22,.9) 0 2px,rgba(60,80,62,.9) 2px 5px)}
+.halo{position:absolute;left:50%;top:268px;width:300px;height:80px;margin-left:-150px;border-radius:50%;border:2px solid var(--glow);box-shadow:0 0 30px var(--glow),inset 0 0 20px rgba(156,255,90,.5);opacity:0;transition:opacity .9s;animation:pulse 2.4s ease-in-out infinite alternate;z-index:-1}
+@keyframes pulse{from{box-shadow:0 0 14px var(--glow),inset 0 0 10px rgba(156,255,90,.35)}to{box-shadow:0 0 38px var(--glow),inset 0 0 24px rgba(156,255,90,.6)}}
+.tank.on .halo{opacity:1}
+.pick{text-align:center;padding:0 18px;position:relative;z-index:3}
+.pick h3{font-size:30px}
+.pick p{color:var(--mute);margin-top:2px}
+.ctrl{display:flex;justify-content:center;align-items:center;gap:12px;margin-top:20px}
+.ctrl button{width:48px;height:48px;border-radius:50%;border:1px solid var(--line);background:rgba(238,246,228,.06);color:var(--ink);font-size:20px;cursor:pointer}
+.dots{display:flex;gap:6px}.dots i{width:7px;height:7px;border-radius:50%;background:var(--line);transition:background .3s,width .3s}.dots i.on{background:var(--lime);width:20px;border-radius:4px}
+
+/* 4. 丸いレンズで次の場面 */
+.lens{position:relative;height:260vh}
+.lens .stage{position:sticky;top:0;height:100svh;overflow:hidden;display:grid;place-items:center}
+.lens .bgtext{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:0 18px;z-index:1}
+.lens .bgtext h2{font-size:clamp(44px,10vw,120px);line-height:.92}
+.lens .bgtext h2 em{font-style:normal;color:var(--lime)}
+.lens .circle{position:relative;z-index:2;width:min(70vw,420px);aspect-ratio:1;border-radius:50%;overflow:hidden;will-change:transform;box-shadow:0 0 0 1px rgba(238,246,228,.3),0 0 80px rgba(156,255,90,.25)}
+.lens .circle img,.lens .circle video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.lens .circle video{opacity:0;transition:opacity .8s}.lens .circle video.on{opacity:1}
+.lens .after{position:absolute;z-index:3;left:18px;right:18px;bottom:14vh;text-align:center;opacity:0;transition:opacity .6s}
+.lens .after.on{opacity:1}
+.lens .after p{color:var(--sand);max-width:30em;margin:10px auto 0}
+.qs{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:16px}
+.qs span{border:1px solid var(--line);background:rgba(6,17,10,.55);border-radius:999px;padding:8px 14px;font-size:14px}
+
+/* 5. 来店 */
+.marq{border-block:1px solid var(--line);overflow:hidden;padding:18px 0;white-space:nowrap}
+.marq div{display:inline-block;animation:mq 26s linear infinite;font:800 28px/1 "Bricolage Grotesque";color:var(--mute)}
+.marq b{color:var(--lime);margin:0 22px;font-weight:800}
+@keyframes mq{to{transform:translateX(-50%)}}
+section.visit{padding:90px 18px 40px;max-width:1100px;margin:0 auto}
+.visit h2{font-size:clamp(44px,9vw,110px);line-height:.9}
+.grid{display:grid;gap:14px;margin-top:30px}
+@media(min-width:760px){.grid{grid-template-columns:repeat(3,1fr)}}
 .box{background:var(--bg2);border:1px solid var(--line);border-radius:20px;padding:22px}
-.box b{display:block;font-family:"Bricolage Grotesque";font-size:22px}
+.box b{display:block;font-family:"Bricolage Grotesque";font-size:22px;line-height:1.2}
 .box p{color:var(--mute);margin-top:6px}
 .box a{display:inline-block;margin-top:12px;color:var(--lime);font-weight:500}
-footer{padding:40px 20px 110px;text-align:center;color:var(--mute);font-size:13px;border-top:1px solid var(--line)}
-.rv{opacity:0;transform:translateY(24px);transition:opacity .8s,transform .8s}.rv.in{opacity:1;transform:none}
-@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none}}
+footer{padding:40px 18px 110px;text-align:center;color:var(--mute);font-size:13px}
+.rv{opacity:0;transform:translateY(26px);transition:opacity .8s,transform .8s}.rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.hero{animation:none}.hero h1 span i,.hero p,.btns{animation:none;transform:none;opacity:1}.rv{opacity:1;transform:none}.glass,.halo,.marq div,.spores i{animation:none}}
 </style>
 </head>
 <body>
 <div class="note"><b>Sample made for The Vivarium</b> · not public · videos are placeholders until we add your own photos</div>
-<nav><a class="brand" href="#">The <span>Vivarium</span></a><a class="call" href="tel:+15199679118">Call us</a></nav>
+<nav>
+  <a class="brand" href="#">The <span>Vivarium</span></a>
+  <div class="pill"><a href="#">Home</a><a href="#store">In store</a><a href="#tanks">Habitats</a><a href="#ask">Ask us</a><a href="#visit">Visit</a></div>
+  <a class="call" href="tel:+15199679118">Call us</a>
+</nav>
 
 <header class="hero">
-  <img src="gecko.jpg" alt="">
-  <video muted loop playsinline preload="auto" data-src="gecko.mp4" aria-hidden="true"></video>
+  <div class="media" id="heroMedia"><img src="gecko.jpg" alt=""><video data-auto muted loop playsinline preload="auto" src="gecko.mp4" aria-hidden="true"></video></div>
+  <div class="back" id="back">VIVARIUM</div>
+  <div class="spores" id="spores"></div>
   <div class="in">
-    <div class="kick">Reptiles &amp; supplies · LaSalle</div>
-    <h1>Your reptile people.</h1>
+    <div class="kick">Reptiles &amp; supplies · LaSalle, ON</div>
+    <h1><span><i>Life under</i></span><span><i>glass.</i></span></h1>
     <p>Reptiles, everything for their home, and real advice from people who keep them. Right here on Talbot Road.</p>
     <div class="btns"><a class="btn main" href="#visit">Visit the store</a><a class="btn" href="#ask">New to reptiles?</a></div>
   </div>
 </header>
 
-<section>
-  <div class="kick rv">In the store</div>
-  <h2 class="rv">Come see them<br>up close.</h2>
-  <p class="lead rv">Photos coming soon. This is where your animals, tanks and supplies will be.</p>
-  <div class="cards">
-    <div class="card rv"><div class="m"><img src="c1489.jpg" alt=""><video muted loop playsinline preload="none" data-src="c1489.mp4" aria-hidden="true"></video></div><div class="t"><h3>Reptiles</h3><p>Meet them in person before you take one home.</p></div></div>
-    <div class="card rv"><div class="m"><img src="c1465.jpg" alt=""><video muted loop playsinline preload="none" data-src="c1465.mp4" aria-hidden="true"></video></div><div class="t"><h3>Habitat &amp; supplies</h3><p>Tanks, lights, heat, food and everything in between.</p></div></div>
-    <div class="card rv"><div class="m"><img src="c1471.jpg" alt=""><video muted loop playsinline preload="none" data-src="c1471.mp4" aria-hidden="true"></video></div><div class="t"><h3>Care advice</h3><p>Ask us anything. We'll help you set it up right.</p></div></div>
+<section class="scrub" id="store">
+  <div class="stage">
+    <img class="poster" src="eye.jpg" alt="">
+    <video id="scrubV" muted playsinline preload="auto" src="eye-scrub.mp4" aria-hidden="true"></video>
+    <div class="bar"><i id="bar"></i></div>
+    <div class="huge" id="huge">LOOK</div>
+    <div class="cap" data-at="0.06"><small>01 · Meet them</small><h2>See every reptile<br>up close, in person.</h2></div>
+    <div class="cap" data-at="0.38"><small>02 · Build their home</small><h2>Tanks, heat, light,<br>food. All of it.</h2></div>
+    <div class="cap" data-at="0.70"><small>03 · Ask the keepers</small><h2>Real answers from<br>people who keep them.</h2></div>
   </div>
 </section>
 
-<section id="ask">
-  <div class="ask rv">
-    <div class="kick">New to reptiles?</div>
-    <h2>Ask before you buy.</h2>
-    <p class="lead">Not sure where to start? Come in or give us a call. Questions people ask:</p>
-    <div class="qs"><span>What's a good first reptile?</span><span>How big a tank?</span><span>What do they eat?</span><span>How warm should it be?</span></div>
+<section class="tanks" id="tanks">
+  <div class="bigword" id="bigword">DESERT</div>
+  <div class="head"><div class="kick">Habitats</div><h2>Which world<br>will you build?</h2></div>
+  <div class="rail" id="rail"></div>
+  <div class="pick"><h3 id="pName"></h3><p id="pNote"></p></div>
+  <div class="ctrl"><button id="prev" aria-label="Previous">‹</button><div class="dots" id="dots"></div><button id="next" aria-label="Next">›</button></div>
+</section>
+
+<section class="lens" id="ask">
+  <div class="stage">
+    <div class="bgtext"><h2>New to<br><em>reptiles?</em></h2></div>
+    <div class="circle" id="circle"><img src="c1471.jpg" alt=""><video data-auto muted loop playsinline preload="none" data-src="c1471.mp4" aria-hidden="true"></video></div>
+    <div class="after" id="after"><div class="kick">Ask before you buy</div><p>Come in or give us a call. We'll help you pick the right animal and set it up the right way.</p>
+      <div class="qs"><span>What's a good first reptile?</span><span>How big a tank?</span><span>What do they eat?</span><span>How warm should it be?</span></div></div>
   </div>
 </section>
 
-<section id="visit">
+<div class="marq" aria-hidden="true"><div><span>Reptiles</span><b>✦</b><span>Habitats</span><b>✦</b><span>Supplies</span><b>✦</b><span>Care advice</span><b>✦</b><span>LaSalle</span><b>✦</b><span>Reptiles</span><b>✦</b><span>Habitats</span><b>✦</b><span>Supplies</span><b>✦</b><span>Care advice</span><b>✦</b><span>LaSalle</span><b>✦</b></div></div>
+
+<section class="visit" id="visit">
   <div class="kick rv">Visit</div>
-  <h2 class="rv">Find us on<br>Talbot Road.</h2>
-  <div class="visit">
-    <div class="box rv"><b>1555 Talbot Rd, LaSalle, ON</b><p>In LaSalle, just south of Windsor.</p><a href="https://www.google.com/maps/search/?api=1&amp;query=The%20Vivarium%2C%201555%20Talbot%20Rd%2C%20LaSalle%2C%20ON" target="_blank" rel="noopener">Open in Google Maps →</a></div>
+  <h2 class="rv">Come say hi<br>on Talbot Road.</h2>
+  <div class="grid">
+    <div class="box rv"><b>1555 Talbot Rd<br>LaSalle, ON</b><p>Just south of Windsor.</p><a href="https://www.google.com/maps/search/?api=1&amp;query=The%20Vivarium%2C%201555%20Talbot%20Rd%2C%20LaSalle%2C%20ON" target="_blank" rel="noopener">Open in Google Maps →</a></div>
     <div class="box rv"><b>(519) 967-9118</b><p>Call for today's hours, or to check what's in stock before you drive over.</p><a href="tel:+15199679118">Call now →</a></div>
     <div class="box rv"><b>Follow along</b><p>New arrivals and store updates.</p><a href="http://www.instagram.com/the_vivarium" target="_blank" rel="noopener">Instagram →</a> &nbsp; <a href="https://www.facebook.com/87475588266" target="_blank" rel="noopener">Facebook →</a></div>
   </div>
 </section>
 <footer>Sample website made for The Vivarium by a local student. Not published.</footer>
+
 <script>
 (function(){
-var reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
-function play(v){ if(reduce) return; if(!v.src) v.src=v.dataset.src; v.addEventListener("playing",function(){v.classList.add("on")},{once:true}); var p=v.play(); if(p&&p.catch)p.catch(function(){}); }
-var vs=[].slice.call(document.querySelectorAll("video"));
-var io="IntersectionObserver" in window?new IntersectionObserver(function(es){es.forEach(function(e){ if(e.isIntersecting) play(e.target); else if(e.target.src) e.target.pause(); })},{rootMargin:"150px"}):null;
-vs.forEach(function(v){ if(io) io.observe(v); else play(v); });
+var reduce=matchMedia("(prefers-reduced-motion: reduce)").matches, $=function(id){return document.getElementById(id)};
+// 背景の動画：画面に入ったら再生、出たら止める（動かない時は写真のまま）
+function play(v){ if(reduce) return; if(!v.getAttribute("src")&&v.dataset.src) v.src=v.dataset.src; v.addEventListener("playing",function(){v.classList.add("on")},{once:true}); var p=v.play(); if(p&&p.catch)p.catch(function(){}); }
+var io="IntersectionObserver" in window?new IntersectionObserver(function(es){es.forEach(function(e){ if(e.isIntersecting) play(e.target); else if(e.target.getAttribute("src")) e.target.pause(); })},{rootMargin:"200px"}):null;
+function watch(v){ if(io) io.observe(v); else play(v); }
+[].forEach.call(document.querySelectorAll("video[data-auto]"),watch);
+
+// 光の粒
+var sp=$("spores"); for(var i=0;i<14;i++){ var e=document.createElement("i"); e.style.cssText="left:"+(i*37%100)+"%;top:"+(20+i*23%70)+"%;--s:"+(6+i%4*5)+"px;--d:"+(4+i%5)+"s;--x:"+((i%2?1:-1)*(10+i%3*12))+"px;opacity:"+(.3+i%3*.2); sp.appendChild(e); }
+
+// スクロール
+var scrub=document.querySelector(".scrub"), sv=$("scrubV"), huge=$("huge"), bar=$("bar"), caps=[].slice.call(document.querySelectorAll(".cap"));
+var lens=document.querySelector(".lens"), circle=$("circle"), after=$("after"), hm=$("heroMedia"), back=$("back");
+var vh=innerHeight, s0=0, sh=1, l0=0, lh=1;
+function measure(){ vh=innerHeight; s0=scrub.offsetTop; sh=scrub.offsetHeight-vh; l0=lens.offsetTop; lh=lens.offsetHeight-vh; }
+var ready=sv.readyState>=1; sv.addEventListener("loadedmetadata",function(){ ready=true; tick(); });
+var unlocked=false; function unlock(){ if(unlocked) return; unlocked=true; var p=sv.play(); if(p&&p.then) p.then(function(){ sv.pause(); tick(); }).catch(function(){}); else sv.pause(); }
+var want=-1, seeking=false; sv.addEventListener("seeked",function(){ seeking=false; if(want>=0&&Math.abs(sv.currentTime-want)>.04){ seeking=true; sv.currentTime=want; } });
+var clamp=function(x){return x<0?0:x>1?1:x};
+function tick(){
+  var y=scrollY;
+  hm.style.transform="translate3d(0,"+(y*.3)+"px,0) scale("+(1+y/vh*.08)+")";
+  back.style.transform="translate(-50%,-50%) translate3d(0,"+(y*-.25)+"px,0)";
+  var p=clamp((y-s0)/sh);
+  huge.style.transform="translate(-50%,-50%) scale("+(.6+p*1.6)+")"; huge.style.opacity=String(Math.max(0,1-p*1.3));
+  bar.style.transform="scaleX("+p+")";
+  caps.forEach(function(c,i){ var a=+c.dataset.at, b=i<caps.length-1?+caps[i+1].dataset.at:1.05; c.classList.toggle("on",p>=a&&p<b-.04); });
+  if(ready&&!reduce&&sv.duration){ want=p*(sv.duration-.05); if(!seeking){ seeking=true; sv.currentTime=want; } }
+  var q=clamp((y-l0)/lh), sc=.35+q*2.6;
+  circle.style.transform="scale("+sc+")";
+  after.classList.toggle("on",q>.55);
+}
+var raf=0; function onScroll(){ unlock(); if(!raf) raf=requestAnimationFrame(function(){ raf=0; tick(); }); }
+addEventListener("scroll",onScroll,{passive:true}); addEventListener("touchstart",unlock,{passive:true,once:true});
+addEventListener("resize",function(){ measure(); tick(); lay(); });
+
+// ガラスケース（種類ではなく「すみか」のタイプ。お店の在庫は書かない）
+var H=[
+ {n:"Desert",w:"DESERT",t:"Warm, dry and bright. Sand, rocks and a basking spot.",img:"c1469"},
+ {n:"Tropical",w:"TROPICAL",t:"Humid and green. Plants, mist and places to climb.",img:"c1489"},
+ {n:"Woodland",w:"WOODLAND",t:"Branches, bark and cover. Calm, natural light.",img:"c1465"},
+ {n:"Up close",w:"CLOSE",t:"Not sure yet? Come in and meet them first.",img:"c1471"}
+];
+var rail=$("rail"), dots=$("dots"), tanks=[], cur=0;
+H.forEach(function(h,i){ var el=document.createElement("div"); el.className="tank";
+  el.innerHTML='<div class="halo"></div><div class="glass" style="animation-delay:-'+i+'s"><img src="'+h.img+'.jpg" alt=""><video muted loop playsinline preload="none" data-src="'+h.img+'.mp4" aria-hidden="true"></video></div>';
+  el.onclick=function(){ cur=i; lay(); }; rail.appendChild(el); tanks.push(el); watch(el.querySelector("video"));
+  var d=document.createElement("i"); dots.appendChild(d); });
+function lay(){ var n=H.length, w=Math.min(innerWidth,1100);
+  tanks.forEach(function(el,i){ var d=((i-cur)%n+n+1)%n-1; if(d>n/2) d-=n;
+    var x=d*Math.min(w*.36,320), s=d===0?1.1:.7, ry=d*-28, o=Math.abs(d)>1?0:d===0?1:.5;
+    el.style.transform="translateX("+x+"px) rotateY("+ry+"deg) scale("+s+")"; el.style.opacity=o; el.style.zIndex=10-Math.abs(d); el.classList.toggle("on",d===0); });
+  [].forEach.call(dots.children,function(d,i){ d.classList.toggle("on",i===cur); });
+  $("pName").textContent=H[cur].n; $("pNote").textContent=H[cur].t; $("bigword").textContent=H[cur].w;
+}
+$("prev").onclick=function(){ cur=(cur-1+H.length)%H.length; lay(); };
+$("next").onclick=function(){ cur=(cur+1)%H.length; lay(); };
+var sx=0; rail.addEventListener("touchstart",function(e){ sx=e.touches[0].clientX; },{passive:true});
+rail.addEventListener("touchend",function(e){ var dx=e.changedTouches[0].clientX-sx; if(Math.abs(dx)>40){ cur=(cur+(dx<0?1:-1)+H.length)%H.length; lay(); } });
+
 var rv=[].slice.call(document.querySelectorAll(".rv"));
 if(io){ var ro=new IntersectionObserver(function(es){es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add("in"); ro.unobserve(e.target);} })},{threshold:.15}); rv.forEach(function(r){ro.observe(r)}); } else rv.forEach(function(r){r.classList.add("in")});
+measure(); lay(); tick();
 })();
 </script>
-<style>.card .m video{opacity:0;transition:opacity .8s}.card .m video.on{opacity:1}</style>
 </body>
 </html>
