@@ -42,7 +42,7 @@
   行動経済学のしくみ（返報性・保有効果・損失回避・アンカリング・ゼロリスクなど）は「決めやすくする」ためだけに使い、ウソの期限・残り枠・数字は書かない。
   料金は local.html・local-en.html・sorasora1120.github.io/en.html と同じ。「最初の3店は$250」は3店が埋まったら全部から消す
 - `previews/`：お店に見せるページ。`showcase.html`（2026-10-18〜 sorasora1120.github.io/en.html に移る転送ページ。前にお店へ送ったリンクのために残す）、架空のお店の見本4つ `demo-*.html`、
-  実在のお店のプレビュー（`vivarium/`＝LaSalle の爬虫類のお店・2026-11-21、わかっていることだけ書いて動画は Mixkit の仮、`balkan-style-bakery.html`、`dar-scarlett.html`＝ドレスのブティック。お店に送るのは sorasora1120.github.io/p/ にコピーした方）。`src/` を直して `python3 previews/gen_demos.py && python3 previews/build.py`（写真は `img/*.json` の data URI）。
+  実在のお店のプレビュー（`vivarium/`＝LaSalle の爬虫類のお店・2026-11-21。参考動画の作り：Mixkit 動画のコマを rembg（python3.13、isnet-general-use）で切り抜いた主役を巨大な文字の前に浮かせ、GSAP＋ScrollTrigger（js/ に同梱）でスクロールの場面を作る。わかっていることだけ書く、`balkan-style-bakery.html`、`dar-scarlett.html`＝ドレスのブティック。お店に送るのは sorasora1120.github.io/p/ にコピーした方）。`src/` を直して `python3 previews/gen_demos.py && python3 previews/build.py`（写真は `img/*.json` の data URI）。
   2026-11-15〜 見本4つの一番上は背景動画（`video/hero-*.mp4`、Mixkit の Free License・商用OK・クレジット不要、8秒・音なし・200〜400KB。スマホは `vpos` で映す位置を決める。動かない時・動きを減らす設定の時は写真のまま）。github.io の samples/ にコピーする時は samples/video/ にも mp4 をコピー。
   2026-11-15〜 `premium/`：上のプランの見本（Sora の参考動画＝Instagram の高級サイト紹介をまねた架空のお店。AI COMPANY のプロジェクト「高級サイトの見本6つ」）。①`coffee.html`（Halo Roast：光の輪で開く・スクロールで動画が進む・豆の袋を選ぶ）。動画は `premium/v/`（Mixkit 無料）。スクロールで進める動画は全フレームをキーフレームにする（-g 1）。ローカルで試す時は Range が使えるサーバー（npx http-server）でないと動画が進まない。github.io の samples/premium/ にコピー
   動画 `video/*.mp4` は `tools/record-demos.js` で見本を録画して Actions の ffmpeg で mp4 にした（料金を変えたら showcase.html も直す）
