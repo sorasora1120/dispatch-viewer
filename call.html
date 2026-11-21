@@ -80,6 +80,13 @@ input,select{font:inherit;border:1px solid var(--line);border-radius:10px;paddin
     <p><b>③ If they'd like a website → free sample</b></p>
     <p class="say">We can make you a free sample website first, menu or services, hours, photos and a map. If you like it, it's $250 one time, no monthly fee.<span class="jp">まず無料で見本を作れます。気に入ったら $250、月額なし。</span></p>
     <p class="say">What's the best email or number to send it to?<span class="jp">送り先のメールか番号を教えてください。</span></p>
+    <p><b>④ If they talked with you → "I made a sample for your shop"</b></p>
+    <p class="say">I actually made a sample website for your shop. It's free to look, no obligation. Would you like me to send you the link?<span class="jp">実はお店用に見本のサイトを作ってみました。見るのは無料で、買わなくても大丈夫です。リンクを送ってもいいですか？</span></p>
+    <p style="font-size:13px;color:var(--mute)">Only send the link after they say yes (by text or Instagram, the same day). <span class="jp">「いいよ」と言われてから、その日のうちに SMS か Instagram でリンクを送る。いきなり送らない。</span></p>
+    <p class="say">Hi, this is <b class="nm">[your name]</b> from the call today. Here's the sample website for <b>[shop name]</b>: [link] It's free to look, no obligation.<span class="jp">今日お電話した[名前]です。お店用の見本のサイトです：[リンク] 見るのは無料です。</span></p>
+    <p><b>⑤ 2–3 days later → ask what they'd change</b></p>
+    <p class="say">Did you get a chance to look? Is there anything you'd like to change?<span class="jp">見てもらえましたか？直したいところはありますか？</span></p>
+    <p style="font-size:13px;color:var(--mute)">If they ask for changes, they're interested. Fix it, then visit with an iPad and talk price ($250 one time, 2 review cards free). Money and contracts go through the friend. <span class="jp">「ここ直して」が来たら買う気がある。直して iPad で見せに行って、ここで値段の話。お金と契約は友達。</span></p>
     <p><b>Not interested</b></p>
     <p class="say">No problem, thank you for your time. Have a great day!<span class="jp">大丈夫です、ありがとうございました！</span></p>
     <p><b>Busy?</b></p>
@@ -104,7 +111,7 @@ const SHEET_ID = "1i2BtQulkchFt2dXxt9o6qLhdC7CXlBpv91EziyCp3o0";
 const RES = [["noans", "No answer"], ["later", "Call back"], ["talked", "🎤 Interviewed"], ["yes", "⭐ Interested"], ["no", "✕ Not interested"], ["site", "🌐 Has a website"]];
 // interview answers and what they want (card / sample site) stay on this phone and go into "Copy results"
 const QS = [["q1", "How new customers find them"], ["q2", "Why no website"], ["q3", "What's hard online"]];
-const WANT = [["card", "💳 Wants review card"], ["sample", "🖥️ Wants free sample site"]];
+const WANT = [["card", "💳 Wants review card"], ["sample", "🖥️ Wants free sample site"], ["sent", "📨 Sample sent"], ["changes", "✏️ Asked for changes"]];
 const TO_SHEET = { yes: "like", no: "skip", site: "site" };
 const KEY = "call-list-v1";
 let st = {}; try { st = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) {}
@@ -158,7 +165,7 @@ function draw() {
   }).join("") || `<p style="text-align:center;color:var(--mute);padding:30px">Nothing here 🎉</p>`;
   $("more").style.display = list.length > shown ? "" : "none";
   const all = Object.values(st), n = r => all.filter(x => x.r === r).length;
-  $("stats").innerHTML = `<span>Called ${all.filter(x => x.r).length}</span><span>🎤 ${n("talked")}</span><span>💳 ${all.filter(x => x.card).length}</span><span>🖥️ ${all.filter(x => x.sample).length}</span><span>⭐ ${n("yes")}</span><span>Call back ${n("later")}</span><span>✕ ${n("no")}</span>`;
+  $("stats").innerHTML = `<span>Called ${all.filter(x => x.r).length}</span><span>🎤 ${n("talked")}</span><span>💳 ${all.filter(x => x.card).length}</span><span>🖥️ ${all.filter(x => x.sample).length}</span><span>📨 ${all.filter(x => x.sent).length}</span><span>✏️ ${all.filter(x => x.changes).length}</span><span>⭐ ${n("yes")}</span><span>Call back ${n("later")}</span><span>✕ ${n("no")}</span>`;
 }
 $("list").addEventListener("click", e => {
   const w = e.target.closest("[data-w]");

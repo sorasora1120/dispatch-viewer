@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0f1a12">
+<title>The Vivarium · Sample website</title>
+<!-- 2026-11-21 The Vivarium（LaSalle の爬虫類・ペット用品のお店）用の見本。お店に見せるだけで公開していない（noindex）。
+     わかっていることだけ書く（住所・電話・SNS・「爬虫類と用品と飼い方の相談」）。営業時間・値段・扱う種類は書かない。
+     動画は Mixkit の Free License（商用OK）。お店の写真に替えるまでの仮 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f1a12;--bg2:#15241a;--ink:#eef3e6;--mute:#a8b8a0;--lime:#c6f36b;--sand:#e9d8b4;--line:rgba(238,243,230,.14)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.6 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.brand{text-decoration:none}
+h1,h2,h3,.brand{font-family:"Bricolage Grotesque",Inter,sans-serif;font-weight:800;letter-spacing:-.02em}
+.note{position:fixed;left:12px;right:12px;bottom:12px;z-index:60;background:rgba(15,26,18,.92);border:1px solid var(--line);color:var(--mute);font-size:12px;padding:9px 14px;border-radius:12px;text-align:center}
+.note b{color:var(--lime);font-weight:500}
+nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:space-between;align-items:center;padding:16px 20px;padding-top:calc(16px + env(safe-area-inset-top))}
+.brand{font-size:20px}
+.brand span{color:var(--lime)}
+nav a.call{font-size:14px;font-weight:500;text-decoration:none;background:var(--lime);color:#0f1a12;border-radius:999px;padding:9px 16px}
+.hero{position:relative;height:100svh;min-height:600px;overflow:hidden}
+.hero img,.hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:35% 50%}
+.hero video{opacity:0;transition:opacity 1s}.hero video.on{opacity:1}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,var(--bg) 4%,rgba(15,26,18,.2) 55%,rgba(15,26,18,.35))}
+.hero .in{position:absolute;z-index:2;left:20px;right:20px;bottom:15vh;max-width:900px}
+.kick{font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--lime)}
+.hero h1{font-size:clamp(52px,12vw,128px);line-height:.92;margin-top:10px}
+.hero p{max-width:30em;color:var(--sand);margin-top:16px;font-size:17px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+.btn{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:500;border-radius:999px;padding:13px 22px;border:1px solid var(--line)}
+.btn.main{background:var(--lime);color:#0f1a12;border-color:var(--lime)}
+section{padding:80px 20px;max-width:1100px;margin:0 auto}
+h2{font-size:clamp(36px,7vw,64px);line-height:1}
+.lead{color:var(--mute);margin-top:12px;max-width:34em}
+.cards{display:grid;gap:14px;margin-top:34px}
+@media(min-width:760px){.cards{grid-template-columns:repeat(3,1fr)}}
+.card{background:var(--bg2);border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.card .m{position:relative;aspect-ratio:4/3;overflow:hidden}
+.card .m img,.card .m video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.card .t{padding:18px}
+.card h3{font-size:24px}
+.card p{color:var(--mute);font-size:15px;margin-top:4px}
+.ask{background:linear-gradient(135deg,#1c3322,#0f1a12);border:1px solid var(--line);border-radius:24px;padding:34px 24px}
+.ask h2{font-size:clamp(32px,6vw,52px)}
+.qs{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.qs span{border:1px solid var(--line);border-radius:999px;padding:8px 14px;font-size:14px;color:var(--sand)}
+.visit{display:grid;gap:18px;margin-top:30px}
+@media(min-width:760px){.visit{grid-template-columns:1fr 1fr}}
+.box{background:var(--bg2);border:1px solid var(--line);border-radius:20px;padding:22px}
+.box b{display:block;font-family:"Bricolage Grotesque";font-size:22px}
+.box p{color:var(--mute);margin-top:6px}
+.box a{display:inline-block;margin-top:12px;color:var(--lime);font-weight:500}
+footer{padding:40px 20px 110px;text-align:center;color:var(--mute);font-size:13px;border-top:1px solid var(--line)}
+.rv{opacity:0;transform:translateY(24px);transition:opacity .8s,transform .8s}.rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="note"><b>Sample made for The Vivarium</b> · not public · videos are placeholders until we add your own photos</div>
+<nav><a class="brand" href="#">The <span>Vivarium</span></a><a class="call" href="tel:+15199679118">Call us</a></nav>
+
+<header class="hero">
+  <img src="gecko.jpg" alt="">
+  <video muted loop playsinline preload="auto" data-src="gecko.mp4" aria-hidden="true"></video>
+  <div class="in">
+    <div class="kick">Reptiles &amp; supplies · LaSalle</div>
+    <h1>Your reptile people.</h1>
+    <p>Reptiles, everything for their home, and real advice from people who keep them. Right here on Talbot Road.</p>
+    <div class="btns"><a class="btn main" href="#visit">Visit the store</a><a class="btn" href="#ask">New to reptiles?</a></div>
+  </div>
+</header>
+
+<section>
+  <div class="kick rv">In the store</div>
+  <h2 class="rv">Come see them<br>up close.</h2>
+  <p class="lead rv">Photos coming soon. This is where your animals, tanks and supplies will be.</p>
+  <div class="cards">
+    <div class="card rv"><div class="m"><img src="c1489.jpg" alt=""><video muted loop playsinline preload="none" data-src="c1489.mp4" aria-hidden="true"></video></div><div class="t"><h3>Reptiles</h3><p>Meet them in person before you take one home.</p></div></div>
+    <div class="card rv"><div class="m"><img src="c1465.jpg" alt=""><video muted loop playsinline preload="none" data-src="c1465.mp4" aria-hidden="true"></video></div><div class="t"><h3>Habitat &amp; supplies</h3><p>Tanks, lights, heat, food and everything in between.</p></div></div>
+    <div class="card rv"><div class="m"><img src="c1471.jpg" alt=""><video muted loop playsinline preload="none" data-src="c1471.mp4" aria-hidden="true"></video></div><div class="t"><h3>Care advice</h3><p>Ask us anything. We'll help you set it up right.</p></div></div>
+  </div>
+</section>
+
+<section id="ask">
+  <div class="ask rv">
+    <div class="kick">New to reptiles?</div>
+    <h2>Ask before you buy.</h2>
+    <p class="lead">Not sure where to start? Come in or give us a call. Questions people ask:</p>
+    <div class="qs"><span>What's a good first reptile?</span><span>How big a tank?</span><span>What do they eat?</span><span>How warm should it be?</span></div>
+  </div>
+</section>
+
+<section id="visit">
+  <div class="kick rv">Visit</div>
+  <h2 class="rv">Find us on<br>Talbot Road.</h2>
+  <div class="visit">
+    <div class="box rv"><b>1555 Talbot Rd, LaSalle, ON</b><p>In LaSalle, just south of Windsor.</p><a href="https://www.google.com/maps/search/?api=1&amp;query=The%20Vivarium%2C%201555%20Talbot%20Rd%2C%20LaSalle%2C%20ON" target="_blank" rel="noopener">Open in Google Maps →</a></div>
+    <div class="box rv"><b>(519) 967-9118</b><p>Call for today's hours, or to check what's in stock before you drive over.</p><a href="tel:+15199679118">Call now →</a></div>
+    <div class="box rv"><b>Follow along</b><p>New arrivals and store updates.</p><a href="http://www.instagram.com/the_vivarium" target="_blank" rel="noopener">Instagram →</a> &nbsp; <a href="https://www.facebook.com/87475588266" target="_blank" rel="noopener">Facebook →</a></div>
+  </div>
+</section>
+<footer>Sample website made for The Vivarium by a local student. Not published.</footer>
+<script>
+(function(){
+var reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+function play(v){ if(reduce) return; if(!v.src) v.src=v.dataset.src; v.addEventListener("playing",function(){v.classList.add("on")},{once:true}); var p=v.play(); if(p&&p.catch)p.catch(function(){}); }
+var vs=[].slice.call(document.querySelectorAll("video"));
+var io="IntersectionObserver" in window?new IntersectionObserver(function(es){es.forEach(function(e){ if(e.isIntersecting) play(e.target); else if(e.target.src) e.target.pause(); })},{rootMargin:"150px"}):null;
+vs.forEach(function(v){ if(io) io.observe(v); else play(v); });
+var rv=[].slice.call(document.querySelectorAll(".rv"));
+if(io){ var ro=new IntersectionObserver(function(es){es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add("in"); ro.unobserve(e.target);} })},{threshold:.15}); rv.forEach(function(r){ro.observe(r)}); } else rv.forEach(function(r){r.classList.add("in")});
+})();
+</script>
+<style>.card .m video{opacity:0;transition:opacity .8s}.card .m video.on{opacity:1}</style>
+</body>
+</html>
