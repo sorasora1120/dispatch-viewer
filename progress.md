@@ -246,3 +246,4 @@
 - AI COMPANY に「AIに頼む」（ダッシュボード）とタスク画面の「内容と結果」。毎時の予約タスクで Claude が pending を処理する
 - MIPPE! LP（遠藤さんの希望）：見出し・数字は太字（Dela Gothic）のまま、能登の「3店舗」→「3ブース」、企画名は Shorai Sans Black 風（Adobe Fonts なので無料の M PLUS 1 Black）
 - MIPPE! LP に隠し機能：上の大きいロゴ3回タップ（PCは mippe と打つ）で花火＋「ほんものは11.28、能登で。」、下のロゴ3回で「変人認定」、開発者ツールにメッセージ
+- AI COMPANY 当番（予約タスク）はコネクタが付けられず止めた。頼んだら「AI COMPANY 見て」で Claude が処理
