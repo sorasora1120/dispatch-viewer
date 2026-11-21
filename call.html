@@ -43,12 +43,20 @@ input,select{font:inherit;border:1px solid var(--line);border-radius:10px;paddin
 .bar button{flex:1;border:0;border-radius:10px;padding:11px;font:inherit;font-weight:700;background:#f4efe8}
 .toast{position:fixed;left:50%;bottom:80px;transform:translateX(-50%);background:#14110f;color:#fff;padding:8px 14px;border-radius:99px;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none}
 .toast.on{opacity:1}
+.jp{display:block;font-size:12px;color:var(--mute);margin-top:4px}
+.iv{margin-top:8px;border-top:1px dashed var(--line);padding-top:6px}
+.iv summary{font-size:13px;font-weight:700;color:var(--acc)}
+.iv textarea{font:inherit;font-size:14px;border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:#fff;width:100%;margin-top:6px;resize:vertical}
+.iv label{display:block;font-size:12px;color:var(--mute);margin-top:6px}
+.want{display:flex;gap:6px;margin-top:8px}
+.want button{border:1px solid var(--line);background:#fff;border-radius:9px;padding:6px 10px;font:inherit;font-size:12.5px}
+.want button.on{background:var(--acc);color:#fff;border-color:var(--acc)}
 </style>
 </head>
 <body>
 <header>
   <h1>📞 Call List · Windsor shops</h1>
-  <p>Local shops with no website. Call → ask if we can make a free sample site.</p>
+  <p>Local shops with no website. Ask 3 questions → offer the review card or a free sample site only if they need it.</p>
   <div class="stats" id="stats"></div>
 </header>
 <main>
@@ -58,16 +66,23 @@ input,select{font:inherit;border:1px solid var(--line);border-radius:10px;paddin
   </div>
 
   <details class="card script" open>
-    <summary>📝 Script (30 seconds)</summary>
-    <p class="say">Hi, is this <b>[shop name]</b>? My name is <b class="nm">[your name]</b>.<br>I'm calling for a local student web designer here in Windsor.<br>I noticed you don't have a website yet.<br>Could we make you a <b>free sample</b> of one? Menu or services, hours, photos and a map.<br>No cost, no obligation.<br>What's the best number or email to send it to?</p>
-    <p><b>If they say yes</b> → write the email or number in the note, then tap ⭐ Interested.</p>
-    <p><b>"How much?"</b></p>
-    <p class="say">$250 one time, normally $400. No monthly fees. But see the free sample first.</p>
-    <p><b>"Not interested"</b></p>
-    <p class="say">No problem, thanks for your time. Have a great day!</p>
+    <summary>📝 Script: interview → card → website</summary>
+    <p style="font-size:13px;color:var(--mute)">Start with questions, not selling. Only offer the card or the site if they say they need it. <span class="jp">売り込みじゃなくて、まず話を聞く。困っていると言った時だけ紹介する。</span></p>
+    <p><b>① Ask for a short interview (探究)</b></p>
+    <p class="say">Hi, is this <b>[shop name]</b>? My name is <b class="nm">[your name]</b>, I'm a student here in Windsor.<br>I'm doing a school project about local shops. Could I ask you three quick questions? It takes two minutes.<span class="jp">学生です。地元のお店について調べています。2分で3つだけ質問してもいいですか？</span></p>
+    <p class="say">1. How do new customers usually find you?<br>2. Is there a reason you don't have your own website?<br>3. Is there anything online that's hard for you right now?<span class="jp">①新しいお客さんはどうやってお店を知る？ ②自分のサイトがないのは理由がある？ ③ネットで困ってることはある？</span></p>
+    <p style="font-size:13px;color:var(--mute)">Write the answers in “Interview” under the shop. <span class="jp">答えはお店の下の「Interview」に書く。</span></p>
+    <p><b>② If they want more Google reviews → review card ($39)</b></p>
+    <p class="say">We have a small card for your counter. Customers tap it with their phone and your Google review page opens. Two cards are $39.<span class="jp">カウンターに置くカード。スマホをかざすと Google の口コミページが開く。2枚 $39。</span></p>
+    <p style="font-size:12.5px;color:var(--no)">Never ask for good reviews only, and never offer discounts for reviews (Google rules). <span class="jp">「いい口コミだけ」「口コミで割引」は言わない。</span></p>
+    <p><b>③ If they'd like a website → free sample</b></p>
+    <p class="say">We can make you a free sample website first, menu or services, hours, photos and a map. If you like it, it's $250 one time, no monthly fee.<span class="jp">まず無料で見本を作れます。気に入ったら $250、月額なし。</span></p>
+    <p class="say">What's the best email or number to send it to?<span class="jp">送り先のメールか番号を教えてください。</span></p>
+    <p><b>Not interested</b></p>
+    <p class="say">No problem, thank you for your time. Have a great day!<span class="jp">大丈夫です、ありがとうございました！</span></p>
     <p><b>Busy?</b></p>
-    <p class="say">No worries! When's a better time to call back?</p>
-    <p style="font-size:13px;color:var(--mute)">Best time: weekdays 2–4 pm (skip lunch and dinner rush). Be polite, keep it short, never pushy.</p>
+    <p class="say">No worries! When's a better time to call back?<span class="jp">いつかけ直せばいいですか？</span></p>
+    <p style="font-size:13px;color:var(--mute)">Best time: weekdays 2–4 pm. Money and contracts are handled by the friend, not Sora. <span class="jp">平日の午後2〜4時がおすすめ。お金と契約は友達がやる。</span></p>
   </details>
 
   <div class="row"><input id="q" placeholder="Search name or street"></div>
@@ -84,7 +99,10 @@ const SHOPS = /*DATA*/[{"n":"Fringe Theory","g":"Beauty","c":"Beauty & spa","a":
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwF0mDtzb1s23EyW6D6cUIpWGGo4f70nEwmLz87jC16kkuNLBGF6m0dmP4EOPGw_vkf4w/exec";
 const SHEET_ID = "1i2BtQulkchFt2dXxt9o6qLhdC7CXlBpv91EziyCp3o0";
 // results: noans / later / yes / no / site. yes→like, no→skip, site→site are shared with the sheet
-const RES = [["noans", "No answer"], ["later", "Call back"], ["yes", "⭐ Interested"], ["no", "✕ Not interested"], ["site", "🌐 Has a website"]];
+const RES = [["noans", "No answer"], ["later", "Call back"], ["talked", "🎤 Interviewed"], ["yes", "⭐ Interested"], ["no", "✕ Not interested"], ["site", "🌐 Has a website"]];
+// interview answers and what they want (card / sample site) stay on this phone and go into "Copy results"
+const QS = [["q1", "How new customers find them"], ["q2", "Why no website"], ["q3", "What's hard online"]];
+const WANT = [["card", "💳 Wants review card"], ["sample", "🖥️ Wants free sample site"]];
 const TO_SHEET = { yes: "like", no: "skip", site: "site" };
 const KEY = "call-list-v1";
 let st = {}; try { st = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) {}
@@ -96,6 +114,7 @@ const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;"
 const toast = t => { const el = $("toast"); el.textContent = t; el.classList.add("on"); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove("on"), 1600); };
 const fmtTel = p => { const d = p.replace(/\D/g, "").replace(/^1(?=\d{10}$)/, ""); return d.length === 10 ? `(${d.slice(0, 3)}) ${d.slice(3, 6)}-${d.slice(6)}` : p; };
 let cat = "All", town = "All", flt = "todo", q = "", shown = 40;
+const keep = new Set(); // shops touched now stay on the list until reload, so the interview can be filled in
 
 try { $("me").value = localStorage.getItem("call-me") || ""; } catch (e) {}
 const nameFill = () => document.querySelectorAll(".nm").forEach(e => e.textContent = $("me").value.trim() || "[your name]");
@@ -112,28 +131,34 @@ function stateOf(s) { const k = keyOf(s); return (st[k] && st[k].r) || ""; }
 function draw() {
   chips($("cats"), CATS.map(c => [c, c]), cat, v => cat = v);
   chips($("towns"), TOWNS.map(c => [c, c === "All" ? "All towns" : c]), town, v => town = v);
-  chips($("flt"), [["todo", "Not called yet"], ["later", "Call back"], ["yes", "⭐ Interested"], ["all", "All"]], flt, v => flt = v);
+  chips($("flt"), [["todo", "Not called yet"], ["later", "Call back"], ["talked", "🎤 Interviewed"], ["yes", "⭐ Interested"], ["all", "All"]], flt, v => flt = v);
   const ql = q.toLowerCase();
   const list = SHOPS.filter(s => (cat === "All" || s.g === cat) && (town === "All" || s.t === town) &&
     (!ql || (s.n + " " + s.a + " " + s.c).toLowerCase().includes(ql)) &&
-    (flt === "all" || (flt === "todo" ? !stateOf(s) && !sheet[keyOf(s)] : stateOf(s) === flt)));
+    (flt === "all" || keep.has(keyOf(s)) || (flt === "todo" ? !stateOf(s) && !sheet[keyOf(s)] : stateOf(s) === flt)));
   $("list").innerHTML = list.slice(0, shown).map(s => {
     const k = keyOf(s), r = stateOf(s), note = (st[k] && st[k].note) || "", sh = sheet[k];
-    return `<div class="shop${r && r !== "later" ? " done" : ""}" data-k="${esc(k)}">
+    return `<div class="shop${r && r !== "later" && r !== "talked" && !keep.has(k) ? " done" : ""}" data-k="${esc(k)}">
       <h3>${esc(s.n)}${sh ? `<span class="tag">Sora: ${esc(sh)}</span>` : ""}</h3>
       <div class="meta">${esc(s.c)} · ${esc(s.a)}, ${esc(s.t)}</div>
       <a class="call" href="tel:${esc(s.p)}">📞 ${esc(fmtTel(s.p))}</a>
       <div class="res">${RES.map(([v, l]) => `<button data-r="${v}" class="${r === v ? "on" : ""}">${l}</button>`).join("")}</div>
+      <div class="want">${WANT.map(([v, l]) => `<button data-w="${v}" class="${st[k] && st[k][v] ? "on" : ""}">${l}</button>`).join("")}</div>
       <input class="note" placeholder="Note (email / number / best time)" value="${esc(note)}">
+      <details class="iv"${st[k] && QS.some(([q]) => st[k][q]) ? " open" : ""}><summary>🎤 Interview</summary>
+        ${QS.map(([q, l]) => `<label>${l}</label><textarea data-q="${q}" rows="2">${esc((st[k] && st[k][q]) || "")}</textarea>`).join("")}
+      </details>
     </div>`;
   }).join("") || `<p style="text-align:center;color:var(--mute);padding:30px">Nothing here 🎉</p>`;
   $("more").style.display = list.length > shown ? "" : "none";
   const all = Object.values(st), n = r => all.filter(x => x.r === r).length;
-  $("stats").innerHTML = `<span>Called ${all.filter(x => x.r).length}</span><span>⭐ ${n("yes")}</span><span>Call back ${n("later")}</span><span>✕ ${n("no")}</span>`;
+  $("stats").innerHTML = `<span>Called ${all.filter(x => x.r).length}</span><span>🎤 ${n("talked")}</span><span>💳 ${all.filter(x => x.card).length}</span><span>🖥️ ${all.filter(x => x.sample).length}</span><span>⭐ ${n("yes")}</span><span>Call back ${n("later")}</span><span>✕ ${n("no")}</span>`;
 }
 $("list").addEventListener("click", e => {
+  const w = e.target.closest("[data-w]");
+  if (w) { const k = w.closest(".shop").dataset.k; keep.add(k); const cur = st[k] || {}; cur[w.dataset.w] = !cur[w.dataset.w]; cur.t = new Date().toISOString(); st[k] = cur; save(); toast("Saved"); draw(); return; }
   const b = e.target.closest("[data-r]"); if (!b) return;
-  const card = b.closest(".shop"), k = card.dataset.k, s = SHOPS.find(x => keyOf(x) === k);
+  const card = b.closest(".shop"), k = card.dataset.k, s = SHOPS.find(x => keyOf(x) === k); keep.add(k);
   const v = b.dataset.r, cur = st[k] || {};
   cur.r = cur.r === v ? "" : v; cur.t = new Date().toISOString(); st[k] = cur; save();
   const sv = TO_SHEET[cur.r];
@@ -141,15 +166,18 @@ $("list").addEventListener("click", e => {
   toast(cur.r ? "Saved" : "Cleared"); draw();
 });
 $("list").addEventListener("change", e => {
+  if (e.target.dataset.q) { const k = e.target.closest(".shop").dataset.k; st[k] = Object.assign(st[k] || {}, { [e.target.dataset.q]: e.target.value.trim() }); save(); toast("Answer saved"); return; }
   if (!e.target.classList.contains("note")) return;
   const k = e.target.closest(".shop").dataset.k; st[k] = Object.assign(st[k] || {}, { note: e.target.value.trim() }); save(); toast("Note saved");
 });
 $("q").addEventListener("input", e => { q = e.target.value; shown = 40; draw(); });
 $("more").onclick = () => { shown += 40; draw(); };
 $("copy").onclick = () => {
-  const lines = SHOPS.filter(s => st[keyOf(s)] && (st[keyOf(s)].r || st[keyOf(s)].note)).map(s => {
+  const lines = SHOPS.filter(s => { const x = st[keyOf(s)]; return x && (x.r || x.note || x.card || x.sample || QS.some(([q]) => x[q])); }).map(s => {
     const x = st[keyOf(s)], l = (RES.find(r => r[0] === x.r) || ["", "-"])[1];
-    return `${s.n} (${fmtTel(s.p)}) – ${l}${x.note ? " – " + x.note : ""}`;
+    const wants = WANT.filter(([v]) => x[v]).map(([, w]) => w).join(", ");
+    const iv = QS.filter(([q]) => x[q]).map(([q, ql]) => `   ${ql}: ${x[q]}`).join("\n");
+    return `${s.n} (${fmtTel(s.p)}) – ${l}${wants ? " – " + wants : ""}${x.note ? " – " + x.note : ""}${iv ? "\n" + iv : ""}`;
   });
   const t = lines.length ? "Call results\n" + lines.join("\n") : "No results yet";
   if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(() => toast("Copied! Paste it to Sora"), () => prompt("Copy this", t));
