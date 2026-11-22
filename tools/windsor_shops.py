@@ -7,7 +7,7 @@ places から、チェーン・病院・役所などを外し、自分のサイ�
 import collections, json, os, re, sys
 import pyarrow.compute as pc, pyarrow.dataset as ds, pyarrow.fs as fs
 
-RELEASE = os.getenv("OVERTURE_RELEASE", "2026-09-23.1")
+RELEASE = os.getenv("OVERTURE_RELEASE", "2026-11-18.0")
 W, E, S, N = -83.145, -82.84, 42.20, 42.37  # Windsor 市内＋Tecumseh・LaSalle の近く（デトロイトは国で外す）
 
 CHAINS = re.compile(r"(tim hortons|mcdonald|subway|starbucks|pizza pizza|pizza hut|domino|little caesars|wendy|burger king|a&w|kfc|popeyes|harvey|dairy queen|"
