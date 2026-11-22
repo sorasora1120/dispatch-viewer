@@ -82,7 +82,7 @@ def fetch():
     d = ds.dataset(f"overturemaps-us-west-2/release/{RELEASE}/theme=places/type=place/", filesystem=s3, format="parquet")
     f = (pc.field("bbox", "xmin") > W) & (pc.field("bbox", "xmax") < E) & (pc.field("bbox", "ymin") > S) & (pc.field("bbox", "ymax") < N)
     cols = ["id", "names", "basic_category", "taxonomy", "addresses", "websites", "socials", "phones", "confidence", "bbox",
-            "operating_status", "brand"]
+            "operating_status", "brand", "sources"]
     rows = d.to_table(filter=f, columns=cols).to_pylist()
     for r in rows:
         b = r.pop("bbox")
@@ -90,10 +90,58 @@ def fetch():
     return rows
 
 
+BADNAME = re.compile(r"hospital|clinic|veterinar|\bvet\b|dental|denti|pharmac|church|funeral|chiropract|physio|optometr|medical", re.I)
+LOCAL = ("519", "226", "548")  # Windsor-Essex area codes
+STOP = re.compile(r"\b(the|and|inc|ltd|co|llc|corp|company)\b|&|[^a-z0-9 ]", re.I)
+
+
+def norm_name(n):
+    return re.sub(r"\s+", "", STOP.sub(" ", (n or "").lower()))
+
+
+def norm_phone(p):
+    d = re.sub(r"\D", "", p or "")
+    return d[1:] if len(d) == 11 and d.startswith("1") else d
+
+
+def related(d):
+    """2026-11-22: 同じお店が地図データに何件も入っていることがある（Vivarium は Foursquare 版にだけ自分のサイトがあった）。
+    名前が似ていて400m以内、または同じ電話番号のレコードをまとめて、サイト・電話・出どころを合わせて見る。"""
+    byphone, recs = collections.defaultdict(list), []
+    for i, p in enumerate(d):
+        n = norm_name((p.get("names") or {}).get("primary"))
+        recs.append((i, n, p["lat"], p["lon"]))
+        for ph in p.get("phones") or []:
+            k = norm_phone(ph)
+            if len(k) == 10:
+                byphone[k].append(i)
+    grid = collections.defaultdict(list)
+    for i, n, la, lo in recs:
+        grid[(round(la, 2), round(lo, 2))].append((i, n, la, lo))
+    rel = collections.defaultdict(set)
+    for i, n, la, lo in recs:
+        if len(n) < 4:
+            continue
+        for dla in (-0.01, 0, 0.01):
+            for dlo in (-0.01, 0, 0.01):
+                for j, m, la2, lo2 in grid.get((round(la + dla, 2), round(lo + dlo, 2)), []):
+                    if j != i and len(m) >= 4 and (n in m or m in n) and abs(la - la2) < 0.004 and abs(lo - lo2) < 0.005:
+                        rel[i].add(j)
+    for k, ids in byphone.items():
+        names = {recs[i][1] for i in ids}
+        if len(ids) > 1:
+            for i in ids:
+                rel[i].update(x for x in ids if x != i and (recs[x][1] in recs[i][1] or recs[i][1] in recs[x][1]))
+    shared = {k: len({recs[i][1] for i in ids}) for k, ids in byphone.items()}  # 名前の違うお店がいくつ同じ番号か
+    return rel, shared
+
+
 def pick(d):
+    rel, shared = related(d)
+    chosen = set()
 
     out, seen = [], collections.defaultdict(list)
-    for p in d:
+    for idx, p in enumerate(d):
         a = (p.get('addresses') or [{}])[0] or {}
         if a.get('country') != 'CA':
             continue
@@ -106,7 +154,7 @@ def pick(d):
         br = p.get('brand') or {}
         if br.get('wikidata') or (br.get('names') or {}).get('primary'):
             continue
-        if CHAINS.search(name) or EXTRA_CHAINS.search(name):
+        if CHAINS.search(name) or EXTRA_CHAINS.search(name) or BADNAME.search(name):
             continue
         cat = p.get('basic_category') or ''
         tax = (p.get('taxonomy') or {}).get('primary') or ''
@@ -119,8 +167,10 @@ def pick(d):
         if (p.get('confidence') or 0) < 0.6:
             continue
         webs = [w for w in (p.get('websites') or []) if w]
-        if [w for w in webs if not NOT_OWN.search(w)]:
-            continue  # 自分のサイトがある
+        group = [p] + [d[j] for j in rel.get(idx, ())]
+        allwebs = [w for q in group for w in (q.get('websites') or []) if w]
+        if [w for w in allwebs if not NOT_OWN.search(w)]:
+            continue  # 自分のサイトがある（同じお店の別のレコードも見る）
         addr = (a.get('freeform') or '').strip()
         if not addr:
             continue
@@ -132,6 +182,9 @@ def pick(d):
                 dup = True; break
         if dup:
             continue
+        if rel.get(idx, set()) & chosen:
+            continue  # 同じお店の別のレコードをもう入れた
+        chosen.add(idx)
         seen[k].append((p['lat'], p['lon']))
         g = next((g for g, rx in GROUPS if rx.search(f'{cat} {tax}')), None) or next((g for g, rx in GROUPS if rx.search(allcat)), 'お店')
         ja = next((j for rx, j in JA if rx.search(f'{cat} {tax}')), None) or next((j for rx, j in JA if rx.search(allcat)), 'お店')
@@ -139,9 +192,34 @@ def pick(d):
         for u in (p.get('socials') or []) + webs:
             if u and u not in soc:
                 soc.append(u)
-        phone = (p.get('phones') or [None])[0]
+        # 電話番号：同じお店のレコードで何か所の出どころが同じ番号を言っているか
+        votes, when = collections.Counter(), {}
+        for q in group:
+            ds_ = {x.get('dataset') for x in (q.get('sources') or []) if x.get('dataset') not in (None, 'Overture')}
+            ut = max([x.get('update_time') or '' for x in (q.get('sources') or []) if x.get('dataset') != 'Overture'] or [''])
+            for ph in q.get('phones') or []:
+                k = norm_phone(ph)
+                if len(k) == 10:
+                    votes[k] += max(1, len(ds_)); when[k] = max(when.get(k, ''), ut)
+        best = votes.most_common()
+        phone = best[0][0] if best else ""
+        alt = [k for k, _ in best[1:3]]
+        q_ = ""
+        if phone:
+            nsrc = best[0][1]
+            if shared.get(phone, 1) > 1:
+                q_ = "shared"   # 別のお店にも同じ番号
+            elif not phone.startswith(LOCAL):
+                q_ = "far"      # 市外の番号（本社・個人の携帯など）
+            elif nsrc >= 2:
+                q_ = "ok"       # 2か所以上が同じ番号
+            elif (when.get(phone) or "") < "2025":
+                q_ = "old"      # 2025年より前の情報
+            else:
+                q_ = "one"
         out.append({"n": name, "g": g, "c": ja, "a": addr, "t": town, "lat": round(p['lat'], 6), "lon": round(p['lon'], 6),
-                    "p": phone or "", "s": soc[:2], "k": round(p.get('confidence') or 0, 2)})
+                    "p": ("+1" + phone) if phone else "", "pa": ["+1" + x for x in alt], "pq": q_,
+                    "pu": (when.get(phone) or "")[:7], "s": soc[:2], "k": round(p.get('confidence') or 0, 2)})
     return [o for o in out if not MORE_CHAINS.search(o["n"])]
 
 
