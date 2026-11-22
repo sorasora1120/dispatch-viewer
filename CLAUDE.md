@@ -5,9 +5,9 @@
 ## ユーザーについて
 - 返事は日本語で、短く。質問は最小限にして手を動かす（迷ったら妥当な方を選び、何を選んだか一言書く）
 - 留学中の高校生（18歳未満）。iPad / iPhone で見ている
-- 学校のネットワークは github.com / github.io がブロックされる。ページを渡すときは
-  `https://rawcdn.githack.com/sorasora1120/dispatch-viewer/<コミットSHA>/index.html` の形（コミット固定）で渡す
-  （raw.githack.com は 429 になったので使わない）
+- **2026-11-22〜 githack は使わない**（ユーザー「githack使わないでこれから、しんぱいしないで」）。ページは普通の URL で渡す：
+  このリポジトリは `https://sorasora1120.github.io/dispatch-viewer/<ファイル>`（main から GitHub Pages）、
+  ポートフォリオ側は `https://sorasora1120.github.io/<ファイル>`。前は学校で github.io がブロックされたので rawcdn.githack.com を使っていた
 - **ビューアは開くと最新版へ自動で移る**（2026-10-09〜。「毎回新しいリンクを開くのがめんどくさい」とのこと）。
   ユーザーは同じリンクを使い続けるので、ビューアを直すたびに新しいリンクを渡さない。直したら push のあと
   affiliate-pipeline の `viewer_version.yml` を手動実行して、スプレッドシートの「設定」タブ B1 に最新SHAを書く
