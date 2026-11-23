@@ -28,10 +28,10 @@ GOOD = re.compile(r"(restaurant|cafe|coffee|bakery|dessert|ice_cream|bar\b|pub|f
     r"barber|hair|beauty|nail|spa|salon|tattoo|lash|brow|esthetic|massage|florist|flower|gift|boutique|clothing|fashion|jewel|"
     r"pet_groom|pet_store|pet_service|grooming|butcher|meat|market|grocery|specialty_food|candy|chocolate|"
     r"fitness|gym|yoga|martial|dance|music|tutoring|driving_school|child|daycare|"
-    r"auto_detailing|car_wash|auto_repair|tire|mechanic|body_shop|"
+    r"auto_detailing|car_wash|auto_repair|\btire|mechanic|body_shop|"
     r"cleaning|landscap|plumb|electric|handyman|contractor|renovat|roof|painting|moving|"
     r"photograph|print|tailor|alteration|shoe_repair|dry_clean|laundr)", re.I)
-BAD = re.compile(r"(atm|bank|government|school|church|place_of_worship|hospital|doctor|dentist|clinic|medical|pharmacy|parking|"
+BAD = re.compile(r"(retirement|senior|nursing|atm|bank|government|school|church|place_of_worship|hospital|doctor|dentist|clinic|medical|pharmacy|parking|"
     r"bus_stop|gas_station|fuel|park\b|public_|community_center|library|post_office|structure|bridge|landmark|real_estate|insurance|"
     r"financial|lawyer|legal|accountant|organization|association|charity|non_profit|apartment|residential|housing|hotel|motel|"
     r"storage|utility|industrial|manufactur|wholesale|warehouse|transport|logistics|truck|employment|staffing)", re.I)
@@ -50,7 +50,7 @@ GROUPS = [
     ("お店", r"boutique|clothing|fashion|jewel|florist|flower|gift|shoe|butcher|meat|market|grocery|specialty_food|candy|chocolate|"
             r"pet_store|book|music|record|furniture|decor|antique|thrift|vintage|toy|hobby|bridal|store|shop|retail"),
     ("教室・ジム", r"fitness|gym|yoga|pilates|martial|karate|taekwondo|boxing|dance|music_school|tutoring|driving_school|child|daycare|school|academy|studio"),
-    ("車", r"auto|car_|tire|mechanic|body_shop|vehicle|motor"),
+    ("車", r"auto|car_|\btire|mechanic|body_shop|vehicle|motor"),
     ("サービス", r"pet_groom|pet_service|grooming|cleaning|landscap|plumb|electric|handyman|contractor|renovat|roof|painting|moving|photograph|print|tailor|alteration|shoe_repair|dry_clean|laundr|repair|service"),
 ]
 JA = [  # 種類の日本語（上から順に最初に当たったもの）
@@ -67,7 +67,7 @@ JA = [  # 種類の日本語（上から順に最初に当たったもの）
     ("book", "本屋"), ("music|record", "音楽"), ("furniture|antique|thrift|vintage", "家具・古着・アンティーク"), ("toy|hobby", "おもちゃ・ホビー"),
     ("yoga|pilates", "ヨガ・ピラティス"), ("martial|karate|taekwondo|boxing", "武道・ボクシング"), ("dance", "ダンス"),
     ("fitness|gym", "ジム"), ("music_school", "音楽教室"), ("tutoring|academy|school", "塾・教室"), ("daycare|child", "子ども"),
-    ("tire", "タイヤ"), ("body_shop|collision", "車の板金"), ("car_wash|detailing", "洗車"), ("auto|mechanic|vehicle|motor|car_", "車の修理"),
+    ("\\btire", "タイヤ"), ("body_shop|collision", "車の板金"), ("car_wash|detailing", "洗車"), ("auto|mechanic|vehicle|motor|car_", "車の修理"),
     ("tailor|alteration", "お直し"), ("dry_clean|laundr", "クリーニング"), ("photograph", "写真"), ("print", "印刷"),
     ("cleaning", "清掃"), ("landscap", "庭"), ("plumb", "水道"), ("electric", "電気工事"), ("roof|renovat|contractor|handyman|painting", "リフォーム"),
     ("moving", "引っ越し"), ("repair", "修理"), ("store|shop|retail", "お店"),
@@ -90,7 +90,7 @@ def fetch():
     return rows
 
 
-BADNAME = re.compile(r"hospital|clinic|veterinar|\bvet\b|dental|denti|pharmac|church|funeral|chiropract|physio|optometr|medical", re.I)
+BADNAME = re.compile(r"hospital|clinic|veterinar|\bvet\b|dental|denti|pharmac|church|funeral|chiropract|physio|optometr|medical|senior|retirement|long term care|rest home|nursing|apartment|\bmanor\b|\bterrace\b|\bvilla\b|tommy hilfiger|\bcoach\b|g&k services|arena|recreation cent|\bpool\b|jail|detention|fire station|\bpark\b|pickleball|salt depot|publishing|consulting", re.I)
 LOCAL = ("519", "226", "548")  # Windsor-Essex area codes
 STOP = re.compile(r"\b(the|and|inc|ltd|co|llc|corp|company)\b|&|[^a-z0-9 ]", re.I)
 
