@@ -389,25 +389,52 @@ try{ console.log("%cMIPPE!","font:900 40px sans-serif;color:#6e0b0b"); console.l
 })();
 </script>
 <script>
-/* 編集モード（2026-11-24「編集したい」）：URL の最後に #edit を付けて開く → 文字をタップして直せる →
-   「直したところをコピー」で 変更前→変更後 の一覧をコピー → Claude に貼ると本物のページに入れる（ページ自体はここでは保存されない） */
+/* 編集モード（2026-11-24「編集したい」「フォントとか変えれないの？ワードみたいに」）：URL の最後に #edit を付けて開く →
+   文字をタップして直せる・下のバーでフォント／大きさ／太字／色を変えられる →「直したところをコピー」で一覧をコピー →
+   Claude に貼ると本物のページに入れる（ここでは保存されない） */
 (function(){
 if(location.hash!=="#edit") return;
-var sel="h1,h2,h3,p,b,small,dt,dd,time,strong,.btn,.tate,.but,.n";
-var els=[].slice.call(document.querySelectorAll(sel)).filter(function(e){return !e.querySelector(sel)||e.matches("p,h1,h3,dd,.btn,strong")});
+var FONTS=[["そのまま",""],["極太（Dela Gothic）","Dela Gothic One"],["太ゴシック（M PLUS 1）","M PLUS 1"],["丸ゴシック","M PLUS Rounded 1c"],["ふつう（Zen Kaku）","Zen Kaku Gothic New"],
+  ["ポップ（Mochiy Pop）","Mochiy Pop One"],["ロック（RocknRoll）","RocknRoll One"],["手書き風（Yusei Magic）","Yusei Magic"],["まる文字（Hachi Maru Pop）","Hachi Maru Pop"],["やさしい丸（Kosugi Maru）","Kosugi Maru"],["Noto Sans","Noto Sans JP"]];
+var lk=document.createElement("link");lk.rel="stylesheet";lk.href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&family=RocknRoll+One&family=Yusei+Magic&family=Hachi+Maru+Pop&family=Kosugi+Maru&family=Noto+Sans+JP:wght@400;700;900&display=swap";document.head.appendChild(lk);
+var COLORS=[["赤","#6e0b0b"],["明るい赤","#d8262e"],["黄","#ffd34d"],["黒","#2a1608"],["白","#ffffff"],["茶","#7a5a46"],["紺","#1f3c74"]];
+var sel="h1,h2,h3,p,b,small,dt,dd,time,strong,.btn,.tate,.but,.n,.en,.no";
+var els=[].slice.call(document.querySelectorAll(sel)).filter(function(e){return !e.closest("#edbar")});
 els=els.filter(function(e){return !els.some(function(o){return o!==e&&o.contains(e)})});
-els.forEach(function(e){e.contentEditable="true";e.dataset.orig=e.innerText;e.style.outline="2px dashed #ffd34d";e.style.outlineOffset="3px";e.style.cursor="text"});
+els.forEach(function(e){e.contentEditable="true";e.dataset.orig=e.innerText;e.style.outline="2px dashed rgba(255,211,77,.9)";e.style.outlineOffset="3px";e.style.cursor="text";e._st={}});
 document.querySelectorAll(".rv").forEach(function(e){e.classList.add("in")});
 document.querySelectorAll("a").forEach(function(a){a.addEventListener("click",function(ev){ev.preventDefault()})});
-var bar=document.createElement("div");
-bar.style.cssText="position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:99999;display:flex;gap:8px;align-items:center;background:#22140c;color:#fff;padding:10px 12px;border-radius:14px;font:700 13px/1.4 'Zen Kaku Gothic New',sans-serif";
-bar.innerHTML="<span style='flex:1'>編集モード：文字をタップして直せます</span><button style='font:inherit;background:#ffd34d;color:#22140c;border:0;border-radius:10px;padding:10px 12px'>直したところをコピー</button>";
-document.body.appendChild(bar);
-bar.querySelector("button").onclick=function(){
-  var out=[];els.forEach(function(e){if(e.innerText!==e.dataset.orig) out.push("【前】"+e.dataset.orig+"\n【後】"+e.innerText)});
-  var t=out.length?"MIPPE!のページをこう直して：\n\n"+out.join("\n\n"):"";
-  if(!t){alert("まだ何も直していません");return}
-  (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){alert(out.length+"か所をコピーしました。Claude に貼ってください")},function(){prompt("これをコピーして Claude に貼ってください",t)});
+var cur=null;
+var bar=document.createElement("div");bar.id="edbar";
+bar.style.cssText="position:fixed;left:8px;right:8px;bottom:calc(8px + env(safe-area-inset-bottom));z-index:99999;background:#22140c;color:#fff;padding:10px;border-radius:14px;font:700 13px/1.4 'Zen Kaku Gothic New',sans-serif;box-shadow:0 4px 18px rgba(0,0,0,.35)";
+var bs="font:inherit;border:0;border-radius:9px;padding:9px 11px;background:#3d2a1e;color:#fff;min-width:40px";
+bar.innerHTML="<div id='edwho' style='opacity:.8;margin-bottom:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis'>文字をタップして選んでね</div>"+
+ "<div style='display:flex;gap:6px;flex-wrap:wrap;align-items:center'>"+
+ "<select id='edf' style='"+bs+";flex:1;min-width:150px'>"+FONTS.map(function(f){return "<option value='"+f[1]+"'>"+f[0]+"</option>"}).join("")+"</select>"+
+ "<button id='edm' style='"+bs+"'>A−</button><button id='edp' style='"+bs+"'>A＋</button><button id='edb' style='"+bs+";font-weight:900'>B</button></div>"+
+ "<div style='display:flex;gap:6px;margin-top:8px;align-items:center;flex-wrap:wrap'>"+COLORS.map(function(c){return "<button data-c='"+c[1]+"' title='"+c[0]+"' style='width:30px;height:30px;border-radius:50%;border:2px solid #fff;background:"+c[1]+"'></button>"}).join("")+
+ "<button id='edr' style='"+bs+";margin-left:auto'>元に戻す</button></div>"+
+ "<button id='edc' style='"+bs+";width:100%;margin-top:8px;background:#ffd34d;color:#22140c'>直したところをコピー</button>";
+document.body.appendChild(bar);document.body.style.paddingBottom="200px";
+var $=function(id){return bar.querySelector("#"+id)};
+bar.addEventListener("mousedown",function(e){if(e.target.tagName!=="SELECT")e.preventDefault()});
+els.forEach(function(e){e.addEventListener("focus",function(){pick(e)});e.addEventListener("click",function(){pick(e)})});
+function pick(e){if(cur)cur.style.outline="2px dashed rgba(255,211,77,.9)";cur=e;e.style.outline="3px solid #ffd34d";$("edwho").textContent="選択中：「"+e.innerText.replace(/\s+/g," ").slice(0,24)+"」";$("edf").value=e._st.font||""}
+function set(k,v,css){if(!cur)return alert("先に文字をタップして選んでね");cur._st[k]=v;for(var c in css)cur.style[c]=css[c]}
+$("edf").onchange=function(){var f=this.value;set("font",f,{fontFamily:f?'"'+f+'",sans-serif':""})};
+function size(d){if(!cur)return alert("先に文字をタップして選んでね");var px=Math.max(8,Math.round(parseFloat(getComputedStyle(cur).fontSize))+d);set("size",px,{fontSize:px+"px"})}
+$("edm").onclick=function(){size(-2)};$("edp").onclick=function(){size(2)};
+$("edb").onclick=function(){if(!cur)return alert("先に文字をタップして選んでね");var w=parseInt(getComputedStyle(cur).fontWeight)>=700?"400":"900";set("bold",w==="900"?"太く":"細く",{fontWeight:w})};
+bar.querySelectorAll("[data-c]").forEach(function(b){b.onclick=function(){set("color",b.title+"（"+b.dataset.c+"）",{color:b.dataset.c})}});
+$("edr").onclick=function(){if(!cur)return;cur.style.fontFamily=cur.style.fontSize=cur.style.fontWeight=cur.style.color="";cur._st={};cur.innerText=cur.dataset.orig;$("edf").value=""};
+$("edc").onclick=function(){
+  var out=[];els.forEach(function(e){var t=[],st=e._st;
+    if(e.innerText!==e.dataset.orig)t.push("【文字】"+e.innerText);
+    if(st.font)t.push("【フォント】"+st.font);if(st.size)t.push("【大きさ】"+st.size+"px");if(st.bold)t.push("【太さ】"+st.bold);if(st.color)t.push("【色】"+st.color);
+    if(t.length)out.push("■「"+e.dataset.orig.replace(/\s+/g," ").slice(0,40)+"」\n"+t.join("\n"))});
+  if(!out.length)return alert("まだ何も直していません");
+  var txt="MIPPE!のページをこう直して：\n\n"+out.join("\n\n");
+  (navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject()).then(function(){alert(out.length+"か所をコピーしました。Claude に貼ってください")},function(){prompt("これをコピーして Claude に貼ってください",txt)});
 };
 })();
 </script>
