@@ -46,6 +46,7 @@ input,select{font:inherit;border:1px solid var(--line);border-radius:10px;paddin
 .chk{display:inline-flex;margin-top:8px;margin-left:6px;font-size:13px;color:var(--acc);text-decoration:none;border:1px solid var(--line);border-radius:10px;padding:9px 12px;background:#fff}
 .pq{font-size:12.5px;color:var(--mute);margin-top:6px}.pq.ok{color:var(--ok);font-weight:600}.pq.warn{color:var(--no);font-weight:600}
 .pq a{color:var(--acc)}
+.bt{font-size:12.5px;color:var(--mute);margin-top:6px}.bt.now{color:var(--ok);font-weight:700}
 .jp{display:block;font-size:12px;color:var(--mute);margin-top:4px}
 .iv{margin-top:8px;border-top:1px dashed var(--line);padding-top:6px}
 .iv summary{font-size:13px;font-weight:700;color:var(--acc)}
@@ -91,12 +92,15 @@ input,select{font:inherit;border:1px solid var(--line);border-radius:10px;paddin
     <p><b>⑤ 2–3 days later → ask what they'd change</b></p>
     <p class="say">Did you get a chance to look? Is there anything you'd like to change?<span class="jp">見てもらえましたか？直したいところはありますか？</span></p>
     <p style="font-size:13px;color:var(--mute)">If they ask for changes, they're interested. Fix it, then visit with an iPad and talk price ($250 one time, 2 review cards free). Money and contracts go through the friend. <span class="jp">「ここ直して」が来たら買う気がある。直して iPad で見せに行って、ここで値段の話。お金と契約は友達。</span></p>
+    <p><b>⑥ No answer → short voicemail (15 sec)</b></p>
+    <p class="say">Hi, this is <b class="nm">[your name]</b>, a student here in Windsor. I'm doing a short school project about local shops. I'll try again tomorrow. Thanks, bye!<span class="jp">Windsor の学生の[名前]です。地元のお店について学校の課題をしています。明日またかけます。ありがとうございます！</span></p>
+    <p style="font-size:13px;color:var(--mute)">Call back the next day at a different time. After 2 tries, tap “💬 text them instead” (or send a DM from the shop map). <span class="jp">次の日、違う時間にもう一回。2回出なかったら「💬 text them instead」かDMに切り替える。</span></p>
     <p><b>Not interested</b></p>
     <p class="say">No problem, thank you for your time. Have a great day!<span class="jp">大丈夫です、ありがとうございました！</span></p>
     <p><b>Busy?</b></p>
     <p class="say">No worries! When's a better time to call back?<span class="jp">いつかけ直せばいいですか？</span></p>
     <p style="font-size:13px;color:var(--mute)">Shops with ✓ are listed first. If the number is wrong, tap 📵 and “🔎 Check number” to find the right one. <span class="jp">✓のお店が上。番号が違ったら📵を押して、🔎で正しい番号を探す。</span></p>
-    <p style="font-size:13px;color:var(--mute)">Best time: weekdays 2–4 pm. Money and contracts are handled by the friend, not Sora. <span class="jp">平日の午後2〜4時がおすすめ。お金と契約は友達がやる。</span></p>
+    <p style="font-size:13px;color:var(--mute)">Tap “🕒 Good time now” to see only shops that are usually not busy right now (restaurants 2–4:30 pm, salons 10–11:30 am / 2–4 pm, avoid weekends at lunch and dinner). It's a rough guide. Money and contracts are handled by the friend, not Sora. <span class="jp">「🕒 Good time now」で、今ひまそうな時間のお店だけ出る（レストランは午後2〜4時半、美容室は午前10〜11時半か午後2〜4時。土日のお昼と夜は避ける）。目安。お金と契約は友達がやる。</span></p>
   </details>
 
   <div class="row"><input id="q" placeholder="Search name or street"></div>
@@ -121,6 +125,26 @@ const checkUrl = s => "https://www.google.com/search?q=" + encodeURIComponent(`"
 const QS = [["q1", "How new customers find them"], ["q2", "Why no website"], ["q3", "What's hard online"]];
 const WANT = [["card", "💳 Wants review card"], ["sample", "🖥️ Wants free sample site"], ["sent", "📨 Sample sent"], ["changes", "✏️ Asked for changes"]];
 const TO_SHEET = { yes: "like", no: "skip", site: "site" };
+// quieter times to call (2026-11-26, "half the shops don't pick up"). A rough guide, not facts: avoid lunch/dinner rush and the busy part of the day.
+// days: 0=Sun … 6=Sat, hours in Windsor time
+const WIN = {
+  "Food": { d: [1, 2, 3, 4, 5], h: [[14, 16.5]], t: "Mon–Fri 2–4:30 pm" },
+  "Beauty": { d: [2, 3, 4, 5], h: [[10, 11.5], [14, 16]], t: "Tue–Fri 10–11:30 am, 2–4 pm" },
+  "Shops": { d: [1, 2, 3, 4, 5, 6], h: [[10.5, 12], [14, 16.5]], t: "Mon–Sat 10:30–12, 2–4:30 pm" },
+  "Services": { d: [1, 2, 3, 4, 5], h: [[9, 11.5], [13.5, 16]], t: "Mon–Fri 9–11:30 am, 1:30–4 pm" },
+  "Classes & gyms": { d: [1, 2, 3, 4, 5], h: [[10, 15]], t: "Mon–Fri 10 am–3 pm" },
+  "Auto": { d: [1, 2, 3, 4, 5], h: [[9.5, 11.5], [14, 16]], t: "Mon–Fri 9:30–11:30 am, 2–4 pm" }
+};
+function windsorNow() {
+  try {
+    const p = new Intl.DateTimeFormat("en-US", { timeZone: "America/Toronto", weekday: "short", hour: "numeric", minute: "numeric", hourCycle: "h23" }).formatToParts(new Date());
+    const g = t => (p.find(x => x.type === t) || {}).value;
+    return { d: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].indexOf(g("weekday")), h: +g("hour") + (+g("minute")) / 60 };
+  } catch (e) { const n = new Date(); return { d: n.getDay(), h: n.getHours() + n.getMinutes() / 60 }; }
+}
+const goodNow = s => { const w = WIN[s.g], n = windsorNow(); return !!w && w.d.includes(n.d) && w.h.some(([a, b]) => n.h >= a && n.h < b); };
+const smsBody = s => `Hi, this is ${($("me") && $("me").value.trim()) || "[your name]"}, a student in Windsor. I tried calling ${s.n} for a short school project about local shops (3 quick questions). Is there a good time to call back? Thank you! (Reply STOP and I won't text again.)`;
+const smsUrl = s => "sms:" + s.p + "?&body=" + encodeURIComponent(smsBody(s));
 const KEY = "call-list-v1";
 let st = {}; try { st = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) {}
 let sheet = {};  // shops already marked in the sheet by Sora (sent / reply / like / ...)
@@ -152,11 +176,11 @@ function stateOf(s) { const k = keyOf(s); return (st[k] && st[k].r) || ""; }
 function draw() {
   chips($("cats"), CATS.map(c => [c, c]), cat, v => cat = v);
   chips($("towns"), TOWNS.map(c => [c, c === "All" ? "All towns" : c]), town, v => town = v);
-  chips($("flt"), [["todo", "Not called yet"], ["later", "Call back"], ["talked", "🎤 Interviewed"], ["yes", "⭐ Interested"], ["all", "All"]], flt, v => flt = v);
+  chips($("flt"), [["todo", "Not called yet"], ["now", "🕒 Good time now"], ["later", "Call back"], ["talked", "🎤 Interviewed"], ["yes", "⭐ Interested"], ["all", "All"]], flt, v => flt = v);
   const ql = q.toLowerCase();
   const list = SHOPS.filter(s => (cat === "All" || s.g === cat) && (town === "All" || s.t === town) &&
     (!ql || (s.n + " " + s.a + " " + s.c).toLowerCase().includes(ql)) &&
-    (flt === "all" || keep.has(keyOf(s)) || (flt === "todo" ? !stateOf(s) && !sheet[keyOf(s)] : stateOf(s) === flt)));
+    (flt === "all" || keep.has(keyOf(s)) || (flt === "todo" ? !stateOf(s) && !sheet[keyOf(s)] : flt === "now" ? goodNow(s) && (!stateOf(s) || stateOf(s) === "noans" || stateOf(s) === "later") && !sheet[keyOf(s)] : stateOf(s) === flt)));
   $("list").innerHTML = list.slice(0, shown).map(s => {
     const k = keyOf(s), r = stateOf(s), note = (st[k] && st[k].note) || "", sh = sheet[k];
     return `<div class="shop${r && r !== "later" && r !== "talked" && !keep.has(k) ? " done" : ""}" data-k="${esc(k)}">
@@ -164,6 +188,8 @@ function draw() {
       <div class="meta">${esc(s.c)} · ${esc(s.a)}, ${esc(s.t)}</div>
       <a class="call" href="tel:${esc(s.p)}">📞 ${esc(fmtTel(s.p))}</a> <a class="chk" href="${esc(checkUrl(s))}" target="_blank" rel="noopener">🔎 Check number</a>
       ${PQ[s.pq] && PQ[s.pq][0] ? `<div class="pq ${PQ[s.pq][1]}">${PQ[s.pq][0]}</div>` : ""}
+      ${WIN[s.g] ? `<div class="bt${goodNow(s) ? " now" : ""}">🕒 ${goodNow(s) ? "Good time to call now · " : "Best: "}${WIN[s.g].t}</div>` : ""}
+      ${r === "noans" ? `<div class="pq">No answer? Leave the short voicemail (script ⑥), then <a href="${esc(smsUrl(s))}">💬 text them instead</a>.</div>` : ""}
       ${(s.pa || []).length ? `<div class="pq">Other number: ${(s.pa).map(x => `<a href="tel:${esc(x)}">${esc(fmtTel(x))}</a>`).join(", ")}</div>` : ""}
       <div class="res">${RES.map(([v, l]) => `<button data-r="${v}" class="${r === v ? "on" : ""}">${l}</button>`).join("")}</div>
       <div class="want">${WANT.map(([v, l]) => `<button data-w="${v}" class="${st[k] && st[k][v] ? "on" : ""}">${l}</button>`).join("")}</div>
@@ -172,7 +198,7 @@ function draw() {
         ${QS.map(([q, l]) => `<label>${l}</label><textarea data-q="${q}" rows="2">${esc((st[k] && st[k][q]) || "")}</textarea>`).join("")}
       </details>
     </div>`;
-  }).join("") || `<p style="text-align:center;color:var(--mute);padding:30px">Nothing here 🎉</p>`;
+  }).join("") || `<p style="text-align:center;color:var(--mute);padding:30px">${flt === "now" ? "Most shops are busy or closed right now. Try again on a weekday afternoon (2–4 pm). 今はお店が忙しいか閉まっている時間。平日の午後2〜4時にもう一回。" : "Nothing here 🎉"}</p>`;
   $("more").style.display = list.length > shown ? "" : "none";
   const all = Object.values(st), n = r => all.filter(x => x.r === r).length;
   $("stats").innerHTML = `<span>Called ${all.filter(x => x.r).length}</span><span>🎤 ${n("talked")}</span><span>💳 ${all.filter(x => x.card).length}</span><span>🖥️ ${all.filter(x => x.sample).length}</span><span>📨 ${all.filter(x => x.sent).length}</span><span>✏️ ${all.filter(x => x.changes).length}</span><span>⭐ ${n("yes")}</span><span>Call back ${n("later")}</span><span>📵 ${n("wrong")}</span><span>✕ ${n("no")}</span>`;
